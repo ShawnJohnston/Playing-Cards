@@ -1,0 +1,4 @@
+12/18/2020
+  1. The application is kept open with a while loop.
+  2. A class for the card deck. Uses a method to build the deck, using an array to hold each card. Assign each card a value and suit.
+  3. A class for playing card objects. A playing card will have a value and an attribute.
