@@ -1,20 +1,24 @@
+// This class is used to represent a playing card object.
 public class PlayingCard {
-    private String rank;
+    // Fields
+    private String value;
     private String suit;
 
-    public PlayingCard(String rank, String suit) {
-        this.rank = rank;
-        this.suit = suit;
+    // Constructors
+    public PlayingCard() {
     }
 
-    public String getRank() {
-        return rank;
+    // Getters
+    public String getValue() {
+        return value;
     }
     public String getSuit() {
         return suit;
     }
-    public void setRank(String rank) {
-        this.rank = rank;
+    
+    // Setters
+    public void setValue(String value) {
+        this.value = value;
     }
     public void setSuit(String suit) {
         this.suit = suit;

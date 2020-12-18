@@ -1,41 +1,67 @@
-
+// This class is used to represent a playing card deck object.
+// It uses the PlayingCard class.
 public class DeckOfCards {
-    private int size = 52;
-    private PlayingCard[] cards = new PlayingCard[size];
-    private PlayingCard[] discard = new PlayingCard[size];
+    // Fields
+    private int size = 52; // A standard deck of playing cards contains 52 cards.
+    private PlayingCard[] cards = new PlayingCard[size]; // An array of each individual card object.
+    private PlayingCard[] discard = new PlayingCard[size]; // An array of discarded cards from the deck.
 
+    // Constructors
     public DeckOfCards() {
         buildDeck();
     }
     public DeckOfCards(int jokers) {
         this.size += jokers;
     }
+
+    // This method will create the card objects and assign them into the 'cards' array.
     public void buildDeck() {
-        String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
+        // Initialization of variables
+        // These two arrays will contain the features of each card: value and suit. They will be used to build each card object.
+        String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
         String[] suits = {"Club", "Spade", "Heart", "Diamond"};
+        // These ints will be used in the following for loop.
+        int valueCounter = 0; // Counts through each index of 'values'.
+        int suitGroup = 0; // increments the index of 'suits' whenever 'valueCounter' reaches it's maximum.
 
-        int rankCounter = 0;
-        int suitCounter = 0;
+        // This loop will procedurally initialize new card objects, set their value and suit, and assign them to the
+        // 'cards' array that makes up the deck object.
+        // Cards will be added to the deck by matching 'i' to the 'values' array along with a suit. When 'i' reaches the
+        // last index of 'values', it will reset, but the next suit will be assigned.
         for (int i = 0; i < getSize(); i++) {
-            if (rankCounter == ranks.length) {
-                rankCounter = 0;
-            }
-            if (suitCounter == suits.length) {
-                suitCounter = 0;
-            }
-            PlayingCard card = new PlayingCard(ranks[rankCounter], suits[suitCounter]);
-            this.cards[i] = card;
+            PlayingCard card = new PlayingCard(); // Card object.
+            card.setValue(values[valueCounter]); // value is set.
+            card.setSuit(suits[suitGroup]); // Suit is set.
 
-            rankCounter++;
-            suitCounter++;
+            this.cards[i] = card; // Card assigned to 'cards' array at index 'i'.
+            valueCounter++;
+
+            if (i == 52) {
+                // The for loop should break when 'i' reaches 52.
+                // A standard deck of playing cards contains 52 cards, all regular cards should be assigned at this point.
+                // As such, hard-coding '52' here is appropriate due to the
+                // Any further cards are Jokers. They will be added elsewhere.
+                break;
+            }
+            if (valueCounter == values.length) {
+                // The counter has reached the end of the 'values' array. It must reset to the start.
+                // The next set of cards will use the next suit in the array.
+                valueCounter = 0;
+                suitGroup++;
+            }
         }
-
     }
 
+    // Getters
     public PlayingCard[] getCards() {
-        return cards;
+        return this.cards;
     }
     public int getSize() {
-        return size;
+        return this.size;
+    }
+
+    // This method will return true if there are no more cards in the deck object.
+    public boolean isEmpty() {
+        return this.getSize() == 0;
     }
 }
