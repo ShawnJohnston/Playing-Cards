@@ -5,7 +5,8 @@ Playing Card Project
 
 Objective
 
-    This mini-project is designed to be a demonstration of basic Object-Oriented Programming.
+    This mini-project is designed to be a demonstration of basic Object-Oriented Programming using Java. It will start as a 
+    console application and eventually be refactored to support a GUI using Swing.
 
 Setup
     
