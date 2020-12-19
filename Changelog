@@ -1,3 +1,7 @@
+12/19/2020
+  1. Implemented a test file for unit testing. Test cases for size, values, and suits.
+  2. Added a JokerCard subclass that inherits from PlayerCard class.
+
 12/18/2020
   1. The application is kept open with a while loop.
   2. A class for the card deck. Uses a method to build the deck, using an array to hold each card. Assign each card a value and suit.
