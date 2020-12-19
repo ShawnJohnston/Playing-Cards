@@ -11,7 +11,10 @@ public class DeckOfCards {
         buildDeck();
     }
     public DeckOfCards(int jokers) {
-        this.size += jokers;
+        this.size = getSize() + jokers;
+        this.cards = new PlayingCard[size];
+        this.discard = new PlayingCard[size];
+        buildDeck();
     }
 
     // This method will create the card objects and assign them into the 'cards' array.
@@ -29,29 +32,44 @@ public class DeckOfCards {
         // Cards will be added to the deck by matching 'i' to the 'values' array along with a suit. When 'i' reaches the
         // last index of 'values', it will reset, but the next suit will be assigned.
         for (int i = 0; i < getSize(); i++) {
-            PlayingCard card = new PlayingCard(); // Card object.
-            card.setValue(values[valueCounter]); // value is set.
-            card.setSuit(suits[suitGroup]); // Suit is set.
-
-            this.cards[i] = card; // Card assigned to 'cards' array at index 'i'.
-            valueCounter++;
-
-            if (i == 52) {
-                // The for loop should break when 'i' reaches 52.
+            if (i > 52) {
+                // The loop has iterated past the cards in a standard 52-card deck of playing cards.
+                // The remaining cards are expected to be Jokers.
+                if (getSize() == 53) {
+                    cards[52] = new JokerCard(); // Card 53 is a Joker object.
+                }
+                if (getSize() == 54) {
+                    cards[53] = new JokerCard(); // Card 54 is a Joker object.
+                }
+                // The for loop should break when 'i' exceeds 52.
                 // A standard deck of playing cards contains 52 cards, all regular cards should be assigned at this point.
                 // As such, hard-coding '52' here is appropriate due to the
                 // Any further cards are Jokers. They will be added elsewhere.
                 break;
             }
-            if (valueCounter == values.length) {
-                // The counter has reached the end of the 'values' array. It must reset to the start.
-                // The next set of cards will use the next suit in the array.
-                valueCounter = 0;
-                suitGroup++;
+            if (suitGroup >= 4) {
+                // A standard deck of playing cards has 4 different suits. If 'suitGroup' exceeds 3, then break the loop.
+                break;
+            }
+            PlayingCard card = new PlayingCard(); // Card object.
+            card.setValue(values[valueCounter]); // value is set.
+            card.setSuit(suits[suitGroup]); // Suit is set.
+            if (card.getSuit().equals("Heart") || card.getSuit().equals("Diamond")) {
+                card.setColor("Red");
+            } else if (card.getSuit().equals("Club") || card.getSuit().equals("Spade")) {
+                card.setColor("Black");
+            }
+                this.cards[i] = card; // Card assigned to 'cards' array at index 'i'.
+                valueCounter++;
+
+                if (valueCounter == values.length) {
+                    // The counter has reached the end of the 'values' array. It must reset to the start.
+                    // The next set of cards will use the next suit in the array.
+                    valueCounter = 0;
+                    suitGroup++;
+                }
             }
         }
-    }
-
     // Getters
     public PlayingCard[] getCards() {
         return this.cards;

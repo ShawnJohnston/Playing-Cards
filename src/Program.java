@@ -29,12 +29,6 @@ public class Program {
         while (running) {
 
             DeckOfCards deck = new DeckOfCards(); // Initializes the deck of cards.
-
-            // This for loop is test code to ensure that what is built so far is functional.
-            // It will be migrated to a unit testing file later.
-            for (PlayingCard card: deck.getCards()) {
-                System.out.println(card.getValue() + " " + card.getSuit());
-            }
             running = false;
         }
     }
