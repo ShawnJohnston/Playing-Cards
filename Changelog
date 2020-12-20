@@ -1,6 +1,7 @@
 12/19/2020
   1. Implemented a test file for unit testing. Test cases for size, values, and suits.
   2. Added a JokerCard subclass that inherits from PlayerCard class.
+  3. Added a Shuffler class for all procedures related to deck shuffling. Deck randomization implemented to simulate a machine shuffle.
 
 12/18/2020
   1. The application is kept open with a while loop.
