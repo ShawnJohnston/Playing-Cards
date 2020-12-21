@@ -25,26 +25,34 @@ public class Shuffler {
     }
 
     public DeckOfCards handShuffle(DeckOfCards deck) {
-        ArrayList<PlayingCard> topStack = new ArrayList<>();
-        ArrayList<PlayingCard> bottomStack = new ArrayList<>();
-        Random randomizer = new Random();
-        int deckMidPoint = deck.getSize() / 2;
-        int variability = randomizer.nextInt(10) - 5;
-        int splitPoint = deckMidPoint + variability;
+        int proceduralCount = 0;
 
-        for (int i = 0; i < deck.getSize(); i++) {
-            if (i < splitPoint) {
-                topStack.add(deck.getCards()[i]);
+        while (proceduralCount < 5) {
+            ArrayList<PlayingCard> topStack = new ArrayList<>();
+            ArrayList<PlayingCard> bottomStack = new ArrayList<>();
+            Random randomizer = new Random();
+            int deckMidPoint = deck.getSize() / 2;
+            int variability = randomizer.nextInt(10) - 5;
+            int splitPoint = deckMidPoint + variability;
+            int stackNumber = 4;
+
+            for (int i = 0; i < deck.getSize(); i++) {
+                if (i < splitPoint) {
+                    topStack.add(deck.getCards()[i]);
+                }
+                else {
+                    bottomStack.add(deck.getCards()[i]);
+                }
             }
-            else {
-                bottomStack.add(deck.getCards()[i]);
+
+            // Casino Poker Shuffle procedure is riffle, riffle, box, riffle, cut.
+            switch (proceduralCount) {
+                case 0, 1, 3 -> deck.setCards(riffle(deck, topStack, bottomStack)); // Riffle.
+                case 2 -> deck.setCards(box(deck, stackNumber)); // Box.
+                case 4 -> deck.setCards(cutTheDeck(deck.getCards())); // Cut.
             }
-        }
-        deck.setCards(riffle(deck, topStack, bottomStack));
-
-        int stackNumber = 4;
-        deck.setCards(box(deck, stackNumber));
-
+            proceduralCount++;
+            }
         return deck;
     }
     private PlayingCard[] riffle(DeckOfCards deck, ArrayList<PlayingCard> topStack, ArrayList<PlayingCard> bottomStack) {
@@ -130,5 +138,34 @@ public class Shuffler {
 
         stack.addAll(boxTail(cards, stack, boxCount - 1));
         return stack;
+    }
+    private PlayingCard[] cutTheDeck(PlayingCard[] cards) {
+        Random randomizer = new Random();
+        int deckMidpoint = cards.length / 2;
+        int variability = randomizer.nextInt(10) - 5;
+        int splitPoint = deckMidpoint + variability;
+
+        PlayingCard[] topStack = new PlayingCard[splitPoint];
+        PlayingCard[] bottomStack = new PlayingCard[cards.length - splitPoint];
+
+        for (int i = 0; i < cards.length; i++) {
+            if (i < splitPoint) {
+                topStack[i] = cards[i];
+            }
+            else {
+                bottomStack[i - splitPoint] = cards[i];
+            }
+        }
+
+        PlayingCard[] cutDeck = new PlayingCard[cards.length];
+        for (int i = 0; i < cutDeck.length; i++) {
+            if (i < bottomStack.length) {
+                cutDeck[i] = bottomStack[i];
+            }
+            else {
+                cutDeck[i] = topStack[i - bottomStack.length];
+            }
+        }
+        return cutDeck;
     }
 }
