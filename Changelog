@@ -1,5 +1,5 @@
 12/21/2020
-  1. "Hand-shuffling" (i.e. a shuffle method that simulates hand shuffling has been implemented. Includes private methods to riffle, box, and cut.
+  1. "Hand-shuffling" (i.e. a shuffle method that simulates hand shuffling) has been implemented. Includes private methods to riffle, box, and cut.
 
 12/19/2020
   1. Implemented a test file for unit testing. Test cases for size, values, and suits.
