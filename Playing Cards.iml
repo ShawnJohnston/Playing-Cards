@@ -7,8 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="com.bluecatcode.junit:junit-4.12-extended:1.0.4" level="application" />
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library name="JUnit5.4">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/junit-jupiter-5.4.2.jar!/" />
@@ -24,18 +23,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
-      <library name="testng">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/testng-6.14.3.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/jcommander-1.72.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/bsh-2.0b6.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" scope="TEST">
+    <orderEntry type="module-library" exported="" scope="TEST">
       <library name="JUnit5.4">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/junit-jupiter-5.4.2.jar!/" />
@@ -51,5 +39,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="com.bluecatcode.junit:junit-4.12-extended:1.0.3" level="application" />
   </component>
 </module>

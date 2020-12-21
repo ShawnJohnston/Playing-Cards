@@ -22,7 +22,7 @@ public class DeckOfCards {
         // Initialization of variables
         // These two arrays will contain the features of each card: value and suit. They will be used to build each card object.
         String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
-        String[] suits = {"Club", "Spade", "Heart", "Diamond"};
+        String[] suits = {"Spade", "Heart", "Club", "Diamond"};
         // These ints will be used in the following for loop.
         int valueCounter = 0; // Counts through each index of 'values'.
         int suitGroup = 0; // increments the index of 'suits' whenever 'valueCounter' reaches it's maximum.
@@ -76,6 +76,10 @@ public class DeckOfCards {
     }
     public int getSize() {
         return this.size;
+    }
+
+    public void setCards(PlayingCard[] cards) {
+        this.cards = cards;
     }
 
     // This method will return true if there are no more cards in the deck object.

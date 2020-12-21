@@ -29,8 +29,8 @@ public class Program {
             DeckOfCards deck = new DeckOfCards(); // Initializes the deck of cards.
             Shuffler shuffler = new Shuffler();
 
-            deck = shuffler.random(deck);
-
+            deck.setCards(shuffler.random(deck.getCards()));
+            deck = shuffler.handShuffle(deck);
             running = false;
         }
     }

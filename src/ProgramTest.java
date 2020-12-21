@@ -1,5 +1,5 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import static org.junit.Assert.assertEquals;
 
 public class ProgramTest {
     // Initialization of test variables;
@@ -21,13 +21,13 @@ public class ProgramTest {
     @Test
     public void testStandardDeckSize() {
         // This test compares the expected size of a standard deck (52) to the size resulting from class methods.
-        assertEquals(expectedDeckSize, standardDeck.getSize());
+        Assertions.assertEquals(expectedDeckSize, standardDeck.getSize());
     }
     @Test
     public void testVariantDeckSize() {
         // This test tests the expected sizes for variant decks (53 or 54) to the resulting value from class methods.
-        assertEquals(expectedDeckSizeOneJoker, deckWithOneJokers.getSize());
-        assertEquals(expectedDeckSizeTwoJokers, deckWithTwoJokers.getSize());
+        Assertions.assertEquals(expectedDeckSizeOneJoker, deckWithOneJokers.getSize());
+        Assertions.assertEquals(expectedDeckSizeTwoJokers, deckWithTwoJokers.getSize());
     }
     @Test
     public void testCardObjectValueCount() {
@@ -49,7 +49,7 @@ public class ProgramTest {
             // The next index will run through the entire deck for matching values.
         }
         for (int i = 0; i < values.length; i++) {
-            assertEquals(expectedValueCount, valueCounter[i]);
+            Assertions.assertEquals(expectedValueCount, valueCounter[i]);
         }
     }
     @Test
@@ -105,11 +105,11 @@ public class ProgramTest {
             }
 
             // Series of assertion, comparing expected counts to actual counts.
-            assertEquals(expectedSuitCount, clubCounter);
-            assertEquals(expectedSuitCount, heartCounter);
-            assertEquals(expectedSuitCount, spadeCounter);
-            assertEquals(expectedSuitCount, diamondCounter);
-            assertEquals(expectedJokerCount, jokerCounter);
+            Assertions.assertEquals(expectedSuitCount, clubCounter);
+            Assertions.assertEquals(expectedSuitCount, heartCounter);
+            Assertions.assertEquals(expectedSuitCount, spadeCounter);
+            Assertions.assertEquals(expectedSuitCount, diamondCounter);
+            Assertions.assertEquals(expectedJokerCount, jokerCounter);
 
             step++; // Increments the step, which controls the loop and the deck variation.
         }
