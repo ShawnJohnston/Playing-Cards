@@ -1,3 +1,6 @@
+12/23/2020
+  1. Refactored some code from handShuffle into smaller helper methods.
+
 12/21/2020
   1. "Hand-shuffling" (i.e. a shuffle method that simulates hand shuffling) has been implemented. Includes private methods to riffle, box, and cut.
 
