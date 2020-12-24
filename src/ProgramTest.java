@@ -1,6 +1,10 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class ProgramTest {
     // Initialization of test variables;
 
@@ -18,6 +22,7 @@ public class ProgramTest {
     DeckOfCards deckWithOneJokers = new DeckOfCards(1);
     DeckOfCards deckWithTwoJokers = new DeckOfCards(2);
 
+    // Deck of Cards
     @Test
     public void testStandardDeckSize() {
         // This test compares the expected size of a standard deck (52) to the size resulting from class methods.
@@ -114,4 +119,13 @@ public class ProgramTest {
             step++; // Increments the step, which controls the loop and the deck variation.
         }
     }
+
+    // Shuffler
+
+    // Player
+
+    // Dealer
+
+    // Chips
+
 }

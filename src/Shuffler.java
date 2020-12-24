@@ -8,20 +8,19 @@ public class Shuffler {
     public Shuffler() {
     }
 
-    public PlayingCard[] random(PlayingCard[] cards) {
+    public DeckOfCards random(DeckOfCards deck) {
         // This method will shuffle the deck using Java's Random class to randomize the array that contains each card.
         Random randomizer = new Random(); // 'Random' object.
 
 
-        for (int i = 0; i < cards.length; i++) {
-            int randomPosition = randomizer.nextInt(cards.length); // Random integer from 0 to the value of the deck size.
-            PlayingCard temp = cards[i]; // stores the current card in a temporary variable.
-            cards[i] = cards[randomPosition]; // The random index's card is assigned to the current index.
-            cards[randomPosition] = temp; // The temporary variable is assigned to the random index.
+        for (int i = 0; i < deck.getSize(); i++) {
+            int randomPosition = randomizer.nextInt(deck.getSize()); // Random integer from 0 to the value of the deck size.
+            PlayingCard temp = deck.getCards()[i]; // stores the current card in a temporary variable.
+            deck.getCards()[i] = deck.getCards()[randomPosition]; // The random index's card is assigned to the current index.
+            deck.getCards()[randomPosition] = temp; // The temporary variable is assigned to the random index.
         }
-        return cards; // To the deck object in main.
+        return deck; // To the deck object in main.
     }
-
     public DeckOfCards handShuffle(DeckOfCards deck) {
         // This method shuffles the deck using the Casino Poker Shuffle.
         int proceduralCount = 0; // There are 5 main steps to the hand shuffle procedure.

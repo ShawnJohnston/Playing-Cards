@@ -70,6 +70,7 @@ public class DeckOfCards {
                 }
             }
         }
+
     // Getters
     public PlayingCard[] getCards() {
         return this.cards;
@@ -78,6 +79,7 @@ public class DeckOfCards {
         return this.size;
     }
 
+    // Setters
     public void setCards(PlayingCard[] cards) {
         this.cards = cards;
     }
