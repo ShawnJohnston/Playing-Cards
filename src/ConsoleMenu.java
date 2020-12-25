@@ -1,9 +1,15 @@
+import java.nio.channels.Selector;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ConsoleMenu {
     private static String selector = ""; // Will be used to control menu navigation through menuController.
+    private static String gameToStart;
     public static boolean keepRunning = true; // Flips 'running' in Main to false, allowing the application to end.
+
+    public static String getGameToStart() {
+        return gameToStart;
+    }
 
     public ConsoleMenu() {
         Scanner input = new Scanner(System.in); // User input scanner.
@@ -25,6 +31,7 @@ public class ConsoleMenu {
                 keepRunning = false;
                 break;
             case "5 Card Stud":
+                gameToStart = selector;
                 break;
             case "Return to Main Menu":
                 break;

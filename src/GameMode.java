@@ -1,17 +1,16 @@
 public class GameMode {
-    private static playing gameMode;
+    private static String gameMode;
     private static int maximumHandSizeToSet;
 
     public GameMode() {
-        playing game = playing.None;
-        setGameMode(game);
+        setGameMode("");
     }
 
-    public static playing getGameMode() {
+    public static String getGameMode() {
         return gameMode;
     }
-    public static void setGameMode(playing game) {
-        gameMode = game;
+    public static void setGameMode(String gameToStart) {
+        gameMode = gameToStart;
         if (gameMode.equals("5CardStud")) {
             maximumHandSizeToSet = 5;
         }
@@ -23,7 +22,4 @@ public class GameMode {
 
         dealer.setMaxNumCardsInHand(maximumHandSizeToSet);
     }
-}
-enum playing {
-    None, FiveCardStud
 }
