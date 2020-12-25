@@ -11,15 +11,17 @@ public class GameMode {
     }
     public static void setGameMode(String gameToStart) {
         gameMode = gameToStart;
-        if (gameMode.equals("5CardStud")) {
+        if (gameMode.equals("5 Card Stud")) {
             maximumHandSizeToSet = 5;
         }
     }
 
-    public void InitializeGame(Player user, Player dealer) {
+    public void initializeGame(Player user, Player dealer) {
         user.setMaxNumCardsInHand(maximumHandSizeToSet);
-        user.setChipTotal(1000);
-
+        user.setStartingChips(1000);
         dealer.setMaxNumCardsInHand(maximumHandSizeToSet);
+    }
+
+    public void play5CardStud() {
     }
 }

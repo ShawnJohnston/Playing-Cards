@@ -1,20 +1,24 @@
 12/24/2020
-  1. Added Console Menu class and Game Mode class.
-  2. Added a unit test for shuffling.
+    1. ConsoleMenu's gameToStart field changed from an enum state machine to a String.
+    2. GameMode now sets the gameMode by getting gameToStart from ConsoleMenu.
+
+12/24/2020
+    1. Added Console Menu class and Game Mode class.
+    2. Added a unit test for shuffling.
 
 12/23/2020
-  1. Refactored some code from handShuffle into smaller helper methods.
-  2. Added Player, Dealer, and Chips classes.
+    1. Refactored some code from handShuffle into smaller helper methods.
+    2. Added Player, Dealer, and Chips classes.
 
 12/21/2020
-  1. "Hand-shuffling" (i.e. a shuffle method that simulates hand shuffling) has been implemented. Includes private methods to riffle, box, and cut.
+    1. "Hand-shuffling" (i.e. a shuffle method that simulates hand shuffling) has been implemented. Includes private methods to riffle, box, and cut.
 
 12/19/2020
-  1. Implemented a test file for unit testing. Test cases for size, values, and suits.
-  2. Added a JokerCard subclass that inherits from PlayerCard class.
-  3. Added a Shuffler class for all procedures related to deck shuffling. Deck randomization implemented to simulate a machine shuffle.
+    1. Implemented a test file for unit testing. Test cases for size, values, and suits.
+    2. Added a JokerCard subclass that inherits from PlayerCard class.
+    3. Added a Shuffler class for all procedures related to deck shuffling. Deck randomization implemented to simulate a machine shuffle.
 
 12/18/2020
-  1. The application is kept open with a while loop.
-  2. A class for the card deck. Uses a method to build the deck, using an array to hold each card. Assign each card a value and suit.
-  3. A class for playing card objects. A playing card will have a value and an attribute.
+    1. The application is kept open with a while loop.
+    2. A class for the card deck. Uses a method to build the deck, using an array to hold each card. Assign each card a value and suit.
+    3. A class for playing card objects. A playing card will have a value and an attribute.

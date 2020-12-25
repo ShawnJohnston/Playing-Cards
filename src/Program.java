@@ -14,9 +14,8 @@ public class Program {
 
             Player user = new Player();
             Dealer dealer = new Dealer();
-            gameMode.InitializeGame(user, dealer);
+            gameMode.initializeGame(user, dealer);
             GameMode.setGameMode(ConsoleMenu.getGameToStart());
-            System.out.println(GameMode.getGameMode());
 
             DeckOfCards deck = new DeckOfCards(); // Initializes the deck of cards.
             Shuffler shuffler = new Shuffler();

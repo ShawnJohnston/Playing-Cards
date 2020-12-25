@@ -6,6 +6,7 @@ public class Player {
     private static ArrayList<Integer> playerList = new ArrayList<>();
     private int maxNumCardsInHand;
     private ArrayList<PlayingCard> hand;
+    private int startingChips;
     private int chipTotal;
 
     public Player() {
@@ -33,7 +34,6 @@ public class Player {
         return this.chipTotal;
     }
 
-
     public static void setPlayerList(ArrayList<Integer> playerList) {
         Player.playerList = playerList;
     }
@@ -43,7 +43,7 @@ public class Player {
     public void addToHand(PlayingCard card) {
         this.hand.add(card);
     }
-    public void setChipTotal(int chipTotal) {
-        this.chipTotal = chipTotal;
+    public void setStartingChips(int startingChips) {
+        this.startingChips = startingChips;
     }
 }
