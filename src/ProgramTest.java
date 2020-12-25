@@ -15,7 +15,7 @@ public class ProgramTest {
 
     // Arrays representing card attributes.
     String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
-    String[] suits = {"Club", "Spade", "Heart", "Diamond"};
+    String[] suits = {"Spade", "Heart", "Club", "Diamond"};
 
     // Objects of Deck variations.
     DeckOfCards standardDeck = new DeckOfCards();
@@ -24,18 +24,18 @@ public class ProgramTest {
 
     // Deck of Cards
     @Test
-    public void testStandardDeckSize() {
+    public void standardDeckSize() {
         // This test compares the expected size of a standard deck (52) to the size resulting from class methods.
         Assertions.assertEquals(expectedDeckSize, standardDeck.getSize());
     }
     @Test
-    public void testVariantDeckSize() {
+    public void variantDeckSize() {
         // This test tests the expected sizes for variant decks (53 or 54) to the resulting value from class methods.
         Assertions.assertEquals(expectedDeckSizeOneJoker, deckWithOneJokers.getSize());
         Assertions.assertEquals(expectedDeckSizeTwoJokers, deckWithTwoJokers.getSize());
     }
     @Test
-    public void testCardObjectValueCount() {
+    public void cardObjectValueCount() {
         // This test checks that each face value appears in the deck exactly 4 times.
         int[] valueCounter = new int[values.length]; // This array is used to run parallel to 'values' array to count each value.
         int expectedValueCount = 4;
@@ -58,13 +58,12 @@ public class ProgramTest {
         }
     }
     @Test
-    public void testCardObjectSuits() {
+    public void cardObjectSuits() {
         // This test checks that each suit appears in the deck exactly 13 times.
 
         // A while loop will be used to control the logic of this test.
         int step = 0; // Counter used for the while loop. Will work for 3 steps, then the loop will end.
         DeckOfCards deckBeingTested = new DeckOfCards(); // New deck object for testing.
-        deckBeingTested.buildDeck();
         while (step <=2) {
             // Variables and counters.
             int expectedSuitCount = 13; // Each suit should appear 13 times.
@@ -121,11 +120,54 @@ public class ProgramTest {
     }
 
     // Shuffler
+    @Test
+    public void shuffle() {
+        DeckOfCards shuffledDeck = new DeckOfCards();
+        int step = 0;
 
+        for (int i = 0; i < shuffledDeck.getSize(); i++) {
+            // This loop will run through the entire deck. The suit of the card at the current index will increment
+            // it's corresponding suit counter.
+
+            Assertions.assertEquals(standardDeck.getCards()[i].getSuit(), shuffledDeck.getCards()[i].getSuit());
+            Assertions.assertEquals(standardDeck.getCards()[i].getValue(), shuffledDeck.getCards()[i].getValue());
+        }
+        Shuffler shuffler = new Shuffler();
+
+        while (step < 2) {
+            if (step == 0) {
+                shuffledDeck = shuffler.random(shuffledDeck);
+            }
+            else if (step == 1) {
+                shuffledDeck = shuffler.handShuffle(shuffledDeck);
+            }
+
+            String[] standardValues = new String[standardDeck.getSize()];
+            String[] standardSuits = new String[standardDeck.getSize()];
+            String[] shuffledValues = new String[shuffledDeck.getSize()];
+            String[] shuffledSuits = new String[shuffledDeck.getSize()];
+
+            for (int i = 0; i < shuffledDeck.getSize(); i++) {
+                standardValues[i] = standardDeck.getCards()[i].getValue();
+                shuffledValues[i] = shuffledDeck.getCards()[i].getValue();
+            }
+            for (int i = 0; i < shuffledDeck.getSize(); i++) {
+                standardSuits[i] = standardDeck.getCards()[i].getSuit();
+                shuffledSuits[i] = shuffledDeck.getCards()[i].getSuit();
+            }
+
+            Assertions.assertNotEquals(standardValues, shuffledValues);
+            Assertions.assertNotEquals(standardSuits, shuffledSuits);
+
+            step++;
+        }
+    }
     // Player
 
     // Dealer
 
     // Chips
+
+    // Game Mode
 
 }
