@@ -1,6 +1,10 @@
+12/24/2020
+  1. Added Console Menu class and Game Mode class.
+  2. Added a unit test for shuffling.
+
 12/23/2020
   1. Refactored some code from handShuffle into smaller helper methods.
-  2. Added Player, Dealer, and Chips objects.
+  2. Added Player, Dealer, and Chips classes.
 
 12/21/2020
   1. "Hand-shuffling" (i.e. a shuffle method that simulates hand shuffling) has been implemented. Includes private methods to riffle, box, and cut.
