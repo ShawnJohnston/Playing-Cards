@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +22,9 @@ public class ProgramTest {
     DeckOfCards standardDeck = new DeckOfCards();
     DeckOfCards deckWithOneJokers = new DeckOfCards(1);
     DeckOfCards deckWithTwoJokers = new DeckOfCards(2);
+
+    public ProgramTest() throws IOException, InterruptedException {
+    }
 
     // Deck of Cards
     @Test
@@ -167,6 +171,9 @@ public class ProgramTest {
     // Dealer
 
     // Chips
+
+    // Console Menu
+    ConsoleMenu menu = new ConsoleMenu();
 
     // Game Mode
 
