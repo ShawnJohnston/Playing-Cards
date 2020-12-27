@@ -22,7 +22,7 @@ public class DeckOfCards {
         // Initialization of variables
         // These two arrays will contain the features of each card: value and suit. They will be used to build each card object.
         String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
-        String[] suits = {"Spade", "Heart", "Club", "Diamond"};
+        String[] suits = {"Spades", "Hearts", "Clubs", "Diamonds"};
         // These ints will be used in the following for loop.
         int valueCounter = 0; // Counts through each index of 'values'.
         int suitGroup = 0; // increments the index of 'suits' whenever 'valueCounter' reaches it's maximum.
@@ -54,9 +54,9 @@ public class DeckOfCards {
             PlayingCard card = new PlayingCard(); // Card object.
             card.setValue(values[valueCounter]); // value is set.
             card.setSuit(suits[suitGroup]); // Suit is set.
-            if (card.getSuit().equals("Heart") || card.getSuit().equals("Diamond")) {
+            if (card.getSuit().equals("Hearts") || card.getSuit().equals("Diamonds")) {
                 card.setColor("Red");
-            } else if (card.getSuit().equals("Club") || card.getSuit().equals("Spade")) {
+            } else if (card.getSuit().equals("Clubs") || card.getSuit().equals("Spades")) {
                 card.setColor("Black");
             }
                 this.cards[i] = card; // Card assigned to 'cards' array at index 'i'.
@@ -68,6 +68,9 @@ public class DeckOfCards {
                     valueCounter = 0;
                     suitGroup++;
                 }
+            }
+        for (PlayingCard card: cards) {
+            card.setName();
             }
         }
 

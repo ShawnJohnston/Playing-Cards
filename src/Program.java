@@ -10,9 +10,10 @@ public class Program {
         GameMode gameMode = new GameMode();
         while (running) {
             ConsoleMenu menu = new ConsoleMenu();
-            running = ConsoleMenu.keepRunning;
+            running = ConsoleMenu.getKeepRunning();
 
             Player user = new Player();
+            user.setName(ConsoleMenu.getUserName());
             Dealer dealer = new Dealer();
             gameMode.initializeGame(user, dealer);
             GameMode.setGameMode(ConsoleMenu.getGameToStart());
@@ -21,8 +22,6 @@ public class Program {
             Shuffler shuffler = new Shuffler();
             deck = shuffler.random(deck);
             deck = shuffler.handShuffle(deck);
-
-
         }
     }
 }

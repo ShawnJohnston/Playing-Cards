@@ -1,12 +1,8 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 
-public class ProgramTest {
+public class UnitTesting {
     // Initialization of test variables;
 
     // Integers of deck sizes.
@@ -16,14 +12,14 @@ public class ProgramTest {
 
     // Arrays representing card attributes.
     String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
-    String[] suits = {"Spade", "Heart", "Club", "Diamond"};
+    String[] suits = {"Spades", "Hearts", "Clubs", "Diamonds"};
 
     // Objects of Deck variations.
     DeckOfCards standardDeck = new DeckOfCards();
     DeckOfCards deckWithOneJokers = new DeckOfCards(1);
     DeckOfCards deckWithTwoJokers = new DeckOfCards(2);
 
-    public ProgramTest() throws IOException, InterruptedException {
+    public UnitTesting() {
     }
 
     // Deck of Cards
@@ -95,16 +91,16 @@ public class ProgramTest {
             for (int i = 0; i < deckBeingTested.getSize(); i++) {
                 // This loop will run through the entire deck. The suit of the card at the current index will increment
                 // it's corresponding suit counter.
-                if (deckBeingTested.getCards()[i].getSuit().equals("Club")) {
+                if (deckBeingTested.getCards()[i].getSuit().equals("Clubs")) {
                     clubCounter++;
                 }
-                if (deckBeingTested.getCards()[i].getSuit().equals("Heart")) {
+                if (deckBeingTested.getCards()[i].getSuit().equals("Hearts")) {
                     heartCounter++;
                 }
-                if (deckBeingTested.getCards()[i].getSuit().equals("Spade")) {
+                if (deckBeingTested.getCards()[i].getSuit().equals("Spades")) {
                     spadeCounter++;
                 }
-                if (deckBeingTested.getCards()[i].getSuit().equals("Diamond")) {
+                if (deckBeingTested.getCards()[i].getSuit().equals("Diamonds")) {
                     diamondCounter++;
                 }
                 if (deckBeingTested.getCards()[i].getSuit().equals("Joker")) {

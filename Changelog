@@ -1,4 +1,7 @@
-12/24/2020
+12/27/2020
+    1. Minor class changes. user's name is now set in ConsoleMenu and the player object gets it.
+
+12/25/2020
     1. ConsoleMenu's gameToStart field changed from an enum state machine to a String.
     2. GameMode now sets the gameMode by getting gameToStart from ConsoleMenu.
 
