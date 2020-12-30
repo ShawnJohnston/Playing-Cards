@@ -12,8 +12,8 @@ public class DeckOfCards {
     }
     public DeckOfCards(int jokers) {
         this.size = getSize() + jokers;
-        this.cards = new PlayingCard[size];
-        this.discard = new PlayingCard[size];
+        this.cards = new PlayingCard[this.size];
+        this.discard = new PlayingCard[this.size];
         buildDeck();
     }
 
@@ -68,9 +68,6 @@ public class DeckOfCards {
                     valueCounter = 0;
                     suitGroup++;
                 }
-            }
-        for (PlayingCard card: cards) {
-            card.setName();
             }
         }
 

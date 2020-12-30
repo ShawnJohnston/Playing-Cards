@@ -1,6 +1,8 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 
 public class UnitTesting {
     // Initialization of test variables;
@@ -169,8 +171,37 @@ public class UnitTesting {
     // Chips
 
     // Console Menu
-    ConsoleMenu menu = new ConsoleMenu();
 
     // Game Mode
 
+    // Hand Evaluator
+    @Test
+    public void canEvaluateFlushes() {
+        ArrayList<PlayingCard> hand = new ArrayList<>();
+        PlayingCard sevenSpades = new PlayingCard();
+        PlayingCard kingSpades = new PlayingCard();
+        PlayingCard sixSpades = new PlayingCard();
+        PlayingCard twoSpades = new PlayingCard();
+        PlayingCard fourSpades = new PlayingCard();
+
+        sevenSpades.setValue("Seven");
+        sevenSpades.setSuit("Spades");
+        kingSpades.setValue("King");
+        kingSpades.setSuit("Spades");
+        sixSpades.setValue("Six");
+        sixSpades.setSuit("Spades");
+        twoSpades.setValue("Two");
+        twoSpades.setSuit("Spades");
+        fourSpades.setValue("Four");
+        fourSpades.setSuit("Spades");
+
+        hand.add(sevenSpades);
+        hand.add(kingSpades);
+        hand.add(sixSpades);
+        hand.add(twoSpades);
+        hand.add(fourSpades);
+
+        HandEvaluator evaluator = new HandEvaluator(hand);
+        Assertions.assertTrue(evaluator.isAFlush(hand));
+    }
 }

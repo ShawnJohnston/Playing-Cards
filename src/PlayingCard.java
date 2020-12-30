@@ -46,6 +46,7 @@ class JokerCard extends PlayingCard {
     private final String VALUE = "Joker";
     private final String SUIT = "Joker";
     private final String COLOR = "Joker";
+    private final String NAME = "Joker";
 
     // Constructors
     public JokerCard() {
@@ -59,10 +60,14 @@ class JokerCard extends PlayingCard {
     public String getSuit() {
         return SUIT;
     }
-
     public String getColor() {
         return COLOR;
     }
+    public String getNAME() {
+        return NAME;
+    }
+
+
 }
 enum facing {
     faceUp, faceDown
