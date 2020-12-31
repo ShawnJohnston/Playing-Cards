@@ -6,6 +6,9 @@ public class HandEvaluator {
     private static String[] standardPokerRanks = {"High Card", "Pair", "Two Pair", "Trips", "Straight", "Flush",
                                                     "Full House", "Quads", "Straight Flush", "Royal Flush"};
     private String handRank;
+    private ArrayList<String> pairsList = new ArrayList<>();
+    private ArrayList<String> tripsList = new ArrayList<>();
+    private String quadsValue = null;
     private Boolean isHighCard = false;
     private Boolean isPair = false;
     private Boolean isTwoPair = false;
@@ -17,9 +20,7 @@ public class HandEvaluator {
     private Boolean isStraightFlush = false;
     private Boolean isRoyalFlush = false;
 
-    // Constructors
-    public HandEvaluator() {
-    }
+    // Constructor
     public HandEvaluator(ArrayList<PlayingCard> hand) {
     }
 
@@ -37,7 +38,7 @@ public class HandEvaluator {
         int[] valueCounts = new int[values.length];
         ArrayList<String> pairsList = new ArrayList<>();
         ArrayList<String> tripsList = new ArrayList<>();
-        String quadsValue;
+        String quadsValue = null;
         int handCount = 0;
 
         for (int i = 0; i < values.length; i++) {
@@ -64,8 +65,27 @@ public class HandEvaluator {
                 break;
             }
         }
+        if (!(quadsValue == null)) {
+            this.isQuads = true;
+        }
+        else if (tripsList.size() == 1 && pairsList.size() == 1) {
+            this.isFullHouse = true;
+        }
+        else if (tripsList.size() == 1) {
+            this.isTrips = true;
+        }
+        else if (pairsList.size() == 2) {
+            this.isTwoPair = true;
+        }
+        else if (pairsList.size() == 1) {
+            this.isPair = true;
+        }
     }
     public Boolean isAFlush(ArrayList<PlayingCard> hand) {
+        if (this.pairsList.size() > 0 || this.tripsList.size() > 0 || !(this.quadsValue == null)) {
+            return false;
+        }
+
         String[] suits = {"Spades", "Hearts", "Clubs", "Diamonds"};
         int spadesCounter = 0, heartsCounter = 0, clubsCounter = 0, diamondsCounter = 0;
 
@@ -98,19 +118,34 @@ public class HandEvaluator {
         return false;
     }
     public Boolean isAStraight(ArrayList<PlayingCard> hand) {
-        int straightCondition = hand.size();
-        ArrayList<PlayingCard> sortedHand = new ArrayList<>();
-        String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
-
-        for (String value : values) {
-            for (PlayingCard playingCard : hand) {
-                if (value.equals(playingCard.getValue())) {
-                    sortedHand.add(playingCard);
-                    hand.remove(playingCard);
-                }
+        boolean handContainsFiveOrTen = false;
+        if (this.pairsList.size() > 0 || this.tripsList.size() > 0 || !(this.quadsValue == null)) {
+            return false;
+        }
+        for (PlayingCard card: hand) {
+            if (card.getValue().equals("Five") || card.getValue().equals("Ten")) {
+                handContainsFiveOrTen = true;
+                break;
             }
         }
-        return straightCondition == countToStraight(sortedHand, values);
+        if (handContainsFiveOrTen = false) {
+            return false;
+        }
+        else {
+            int straightCondition = hand.size();
+            ArrayList<PlayingCard> sortedHand = new ArrayList<>();
+            String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
+
+            for (String value : values) {
+                for (PlayingCard playingCard : hand) {
+                    if (value.equals(playingCard.getValue())) {
+                        sortedHand.add(playingCard);
+                        hand.remove(playingCard);
+                    }
+                }
+            }
+            return straightCondition == countToStraight(sortedHand, values);
+        }
     }
     public int countToStraight(ArrayList<PlayingCard> sortedHand, String[] values) {
         int straightCount = 1;
