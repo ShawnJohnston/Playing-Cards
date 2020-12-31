@@ -7,11 +7,15 @@ public class ConsoleMenu {
     private static String selector = ""; // Will be used to control menu navigation through menuController.
     private static String gameToStart; // Determines which game mode will start.
     private static String chipsToStart;
-    public static boolean keepRunning = true; // Flips 'running' in Main to false, allowing the application to end.
-
+    private static boolean keepRunning = true; // Flips 'running' in Main to false, allowing the application to end.
+    private static String userName;
     // Constructor
     public ConsoleMenu() {
         Scanner input = new Scanner(System.in); // User input scanner.
+
+        System.out.println("Please enter your name: ");
+        userName = input.next();
+
         mainMenu(input); // Main menu execute upon calling the class.
     }
 
@@ -21,6 +25,12 @@ public class ConsoleMenu {
     }
     public static String getChipsToStart() {
         return chipsToStart; // chipsToStart is used elsewhere to set the starting amount for the player.
+    }
+    public static String getUserName() {
+        return userName;
+    }
+    public static Boolean getKeepRunning() {
+        return keepRunning;
     }
 
     // Methods
@@ -40,7 +50,7 @@ public class ConsoleMenu {
             case "Quit":
                 keepRunning = false; // The boolean in main that keeps the application running is flipped to false.
                 break;
-            case "5 Card Stud":
+            case "5 Card Poker":
                 gameToStart = selector; // The selector is assigned to gameToStart, which will trigger a game instance elsewhere.
                 break;
             case "100", "$200", "$500", "$1000", "$2000", "$2500":
@@ -52,7 +62,7 @@ public class ConsoleMenu {
     }
     private void gameSelectionMenu(Scanner input) {
         String prompt = "Game Modes" + "\n\n" + "Select a Card game:";
-        String[] options = {"5 Card Stud", "Return to Main Menu"};
+        String[] options = {"5 Card Poker", "Return to Main Menu"};
 
         selectionEvaluator(input, prompt, options);
         startingChipsMenu(input);

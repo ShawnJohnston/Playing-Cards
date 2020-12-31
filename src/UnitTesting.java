@@ -1,12 +1,10 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class ProgramTest {
+
+public class UnitTesting {
     // Initialization of test variables;
 
     // Integers of deck sizes.
@@ -16,14 +14,14 @@ public class ProgramTest {
 
     // Arrays representing card attributes.
     String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
-    String[] suits = {"Spade", "Heart", "Club", "Diamond"};
+    String[] suits = {"Spades", "Hearts", "Clubs", "Diamonds"};
 
     // Objects of Deck variations.
     DeckOfCards standardDeck = new DeckOfCards();
     DeckOfCards deckWithOneJokers = new DeckOfCards(1);
     DeckOfCards deckWithTwoJokers = new DeckOfCards(2);
 
-    public ProgramTest() throws IOException, InterruptedException {
+    public UnitTesting() {
     }
 
     // Deck of Cards
@@ -95,16 +93,16 @@ public class ProgramTest {
             for (int i = 0; i < deckBeingTested.getSize(); i++) {
                 // This loop will run through the entire deck. The suit of the card at the current index will increment
                 // it's corresponding suit counter.
-                if (deckBeingTested.getCards()[i].getSuit().equals("Club")) {
+                if (deckBeingTested.getCards()[i].getSuit().equals("Clubs")) {
                     clubCounter++;
                 }
-                if (deckBeingTested.getCards()[i].getSuit().equals("Heart")) {
+                if (deckBeingTested.getCards()[i].getSuit().equals("Hearts")) {
                     heartCounter++;
                 }
-                if (deckBeingTested.getCards()[i].getSuit().equals("Spade")) {
+                if (deckBeingTested.getCards()[i].getSuit().equals("Spades")) {
                     spadeCounter++;
                 }
-                if (deckBeingTested.getCards()[i].getSuit().equals("Diamond")) {
+                if (deckBeingTested.getCards()[i].getSuit().equals("Diamonds")) {
                     diamondCounter++;
                 }
                 if (deckBeingTested.getCards()[i].getSuit().equals("Joker")) {
@@ -173,8 +171,37 @@ public class ProgramTest {
     // Chips
 
     // Console Menu
-    ConsoleMenu menu = new ConsoleMenu();
 
     // Game Mode
 
+    // Hand Evaluator
+    @Test
+    public void canEvaluateFlushes() {
+        ArrayList<PlayingCard> hand = new ArrayList<>();
+        PlayingCard sevenSpades = new PlayingCard();
+        PlayingCard kingSpades = new PlayingCard();
+        PlayingCard sixSpades = new PlayingCard();
+        PlayingCard twoSpades = new PlayingCard();
+        PlayingCard fourSpades = new PlayingCard();
+
+        sevenSpades.setValue("Seven");
+        sevenSpades.setSuit("Spades");
+        kingSpades.setValue("King");
+        kingSpades.setSuit("Spades");
+        sixSpades.setValue("Six");
+        sixSpades.setSuit("Spades");
+        twoSpades.setValue("Two");
+        twoSpades.setSuit("Spades");
+        fourSpades.setValue("Four");
+        fourSpades.setSuit("Spades");
+
+        hand.add(sevenSpades);
+        hand.add(kingSpades);
+        hand.add(sixSpades);
+        hand.add(twoSpades);
+        hand.add(fourSpades);
+
+        HandEvaluator evaluator = new HandEvaluator(hand);
+        Assertions.assertTrue(evaluator.isAFlush(hand));
+    }
 }

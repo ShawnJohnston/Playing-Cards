@@ -1,3 +1,11 @@
+12/30/2020
+    1. HandEvaluator class added. Currently evaluates for straights and flushes.
+    2. 'card.setName()' in DeckOfCards -> buildDeck removed due to issues regarding Jokers. Cards currently no longer
+        have names.
+
+12/27/2020
+    1. Minor class changes. user's name is now set in ConsoleMenu and the player object gets it.
+
 12/25/2020
     1. ConsoleMenu's gameToStart field changed from an enum state machine to a String.
     2. GameMode now sets the gameMode by getting gameToStart from ConsoleMenu.

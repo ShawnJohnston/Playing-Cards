@@ -3,7 +3,11 @@ public class PlayingCard {
     // Fields
     private String value;
     private String suit;
+    private String name;
     private String color;
+    private String front;
+    private String back;
+    private static facing currentFacing = facing.faceDown;
 
     // Constructors
     public PlayingCard() {
@@ -11,13 +15,16 @@ public class PlayingCard {
 
     // Getters
     public String getValue() {
-        return value;
+        return this.value;
     }
     public String getSuit() {
-        return suit;
+        return this.suit;
+    }
+    public String getName() {
+        return name;
     }
     public String getColor() {
-        return color;
+        return this.color;
     }
     
     // Setters
@@ -26,6 +33,9 @@ public class PlayingCard {
     }
     public void setSuit(String suit) {
         this.suit = suit;
+    }
+    public void setName() {
+        this.name = this.value + " of " + this.suit;
     }
     public void setColor(String color) {
         this.color = color;
@@ -36,6 +46,7 @@ class JokerCard extends PlayingCard {
     private final String VALUE = "Joker";
     private final String SUIT = "Joker";
     private final String COLOR = "Joker";
+    private final String NAME = "Joker";
 
     // Constructors
     public JokerCard() {
@@ -49,8 +60,15 @@ class JokerCard extends PlayingCard {
     public String getSuit() {
         return SUIT;
     }
-
     public String getColor() {
         return COLOR;
     }
+    public String getNAME() {
+        return NAME;
+    }
+
+
+}
+enum facing {
+    faceUp, faceDown
 }

@@ -11,7 +11,7 @@ public class GameMode {
     }
     public static void setGameMode(String gameToStart) {
         gameMode = gameToStart;
-        if (gameMode.equals("5 Card Stud")) {
+        if (gameMode.equals("5 Card Poker")) {
             maximumHandSizeToSet = 5;
         }
     }

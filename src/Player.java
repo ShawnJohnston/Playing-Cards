@@ -43,6 +43,9 @@ public class Player {
     }
 
     // Setters
+    public void setName(String name) {
+        this.name = name;
+    }
     public static void setPlayerList(ArrayList<Integer> playerList) {
         Player.playerList = playerList;
     }
