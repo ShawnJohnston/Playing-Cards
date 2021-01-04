@@ -3,84 +3,107 @@ import java.util.ArrayList;
 public class HandEvaluator {
     private static String gameMode;
     private static String[] standardPokerRanks = {"High Card", "Pair", "Two Pair", "Trips", "Straight", "Flush",
-                                                    "Full House", "Quads", "Straight Flush", "Royal Flush"};
-    private String handRank;
+            "Full House", "Quads", "Straight Flush", "Royal Flush"};
+    private Player player;
+    private String rank;
+    private ArrayList<PlayingCard> playerHand;
     private ArrayList<String> pairsList = new ArrayList<>();
     private ArrayList<String> tripsList = new ArrayList<>();
     private String quadsValue = null;
-    private Boolean isHighCard = false;
-    private Boolean isPair = false;
-    private Boolean isTwoPair = false;
-    private Boolean isTrips = false;
-    private Boolean isStraight = false;
-    private Boolean isFlush = false;
-    private Boolean isFullHouse = false;
-    private Boolean isQuads = false;
-    private Boolean isStraightFlush = false;
-    private Boolean isRoyalFlush = false;
 
     // Constructor
-    public HandEvaluator(ArrayList<PlayingCard> hand) {
+    public HandEvaluator(Player player, ArrayList<PlayingCard> hand) {
+        this.player = player;
+        this.playerHand = sortHand(hand);
+
+        checkForMultiples();
+        if (isAFlush()) {
+            this.rank = "Flush";
+        }
+        if (isAStraight()) {
+            this.rank = "Straight";
+        }
     }
 
     // Getters
     public static String getGameMode() {
         return gameMode;
     }
+    public String getRank() {
+        return this.rank;
+    }
+    public Player getPlayer() {
+        return this.player;
+    }
     // Setters
     public static void setGameMode(String gameMode) {
         HandEvaluator.gameMode = gameMode;
     }
+
     // Methods
-    public void checkForMultiples(ArrayList<PlayingCard> hand) {
+    public ArrayList<PlayingCard> sortHand(ArrayList<PlayingCard> hand) {
+        ArrayList<PlayingCard> sortedHand = new ArrayList<>();
         String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
+
+        for (String value : values) {
+            for (PlayingCard playingCard : hand) {
+                if (value.equals(playingCard.getValue())) {
+                    sortedHand.add(playingCard);
+                    hand.remove(playingCard);
+                }
+            }
+        }
+        return sortedHand;
+    }
+    public void checkForMultiples() {
+        String[] values = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
         int[] valueCounts = new int[values.length];
-        ArrayList<String> pairsList = new ArrayList<>();
-        ArrayList<String> tripsList = new ArrayList<>();
-        String quadsValue = null;
         int handCount = 0;
 
         for (int i = 0; i < values.length; i++) {
-            for (PlayingCard playingCard : hand) {
+            for (PlayingCard playingCard : this.playerHand) {
                 if (playingCard.getValue().equals(values[i])) {
                     valueCounts[i] += 1;
                 }
             }
         }
         for (int i = 0; i < values.length; i++) {
-            if (handCount >= hand.size()) {
+            if (handCount >= this.playerHand.size()) {
                 break;
             }
             if (valueCounts[i] == 2) {
-                pairsList.add(values[i]);
+                this.pairsList.add(values[i]);
                 handCount += 2;
             }
             if (valueCounts[i] == 3) {
-                tripsList.add(values[i]);
+                this.tripsList.add(values[i]);
                 handCount += 3;
             }
             if (valueCounts[i] == 4) {
-                quadsValue = values[i];
+                this.quadsValue = values[i];
                 break;
             }
         }
-        if (!(quadsValue == null)) {
-            this.isQuads = true;
+        if (!(this.quadsValue == null)) {
+            this.rank = "Quads";
         }
-        else if (tripsList.size() == 1 && pairsList.size() == 1) {
-            this.isFullHouse = true;
+        else if (this.tripsList.size() == 1 && this.pairsList.size() == 1) {
+            this.rank = "Full House";
         }
-        else if (tripsList.size() == 1) {
-            this.isTrips = true;
+        else if (this.tripsList.size() == 1) {
+            this.rank = "Trips";
         }
-        else if (pairsList.size() == 2) {
-            this.isTwoPair = true;
+        else if (this.pairsList.size() == 2) {
+            this.rank = "Two Pair";
         }
-        else if (pairsList.size() == 1) {
-            this.isPair = true;
+        else if (this.pairsList.size() == 1) {
+            this.rank = "Pair";
+        }
+        else {
+            this.rank = "High Card";
         }
     }
-    public Boolean isAFlush(ArrayList<PlayingCard> hand) {
+    public Boolean isAFlush() {
         if (this.pairsList.size() > 0 || this.tripsList.size() > 0 || !(this.quadsValue == null)) {
             return false;
         }
@@ -88,7 +111,7 @@ public class HandEvaluator {
         String[] suits = {"Spades", "Hearts", "Clubs", "Diamonds"};
         int spadesCounter = 0, heartsCounter = 0, clubsCounter = 0, diamondsCounter = 0;
 
-        for (PlayingCard card: hand) {
+        for (PlayingCard card: this.playerHand) {
             switch (card.getSuit()) {
                 case "Spades":
                     spadesCounter++;
@@ -116,12 +139,12 @@ public class HandEvaluator {
         }
         return false;
     }
-    public Boolean isAStraight(ArrayList<PlayingCard> hand) {
+    public Boolean isAStraight() {
         boolean handContainsFiveOrTen = false;
         if (this.pairsList.size() > 0 || this.tripsList.size() > 0 || !(this.quadsValue == null)) {
             return false;
         }
-        for (PlayingCard card: hand) {
+        for (PlayingCard card: this.playerHand) {
             if (card.getValue().equals("Five") || card.getValue().equals("Ten")) {
                 handContainsFiveOrTen = true;
                 break;
@@ -131,15 +154,15 @@ public class HandEvaluator {
             return false;
         }
         else {
-            int straightCondition = hand.size();
+            int straightCondition = this.playerHand.size();
             ArrayList<PlayingCard> sortedHand = new ArrayList<>();
             String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
 
             for (String value : values) {
-                for (PlayingCard playingCard : hand) {
+                for (PlayingCard playingCard : this.playerHand) {
                     if (value.equals(playingCard.getValue())) {
                         sortedHand.add(playingCard);
-                        hand.remove(playingCard);
+                        this.playerHand.remove(playingCard);
                     }
                 }
             }

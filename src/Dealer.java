@@ -23,5 +23,4 @@ public class Dealer extends Player {
     }
 
     //Methods
-
 }

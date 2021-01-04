@@ -177,6 +177,7 @@ public class UnitTesting {
     // Hand Evaluator
     @Test
     public void canEvaluateFlushes() {
+        Player player = new Player();
         ArrayList<PlayingCard> hand = new ArrayList<>();
         PlayingCard sevenSpades = new PlayingCard();
         PlayingCard kingSpades = new PlayingCard();
@@ -201,7 +202,7 @@ public class UnitTesting {
         hand.add(twoSpades);
         hand.add(fourSpades);
 
-        HandEvaluator evaluator = new HandEvaluator(hand);
-        Assertions.assertTrue(evaluator.isAFlush(hand));
+        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        Assertions.assertTrue(evaluator.isAFlush());
     }
 }

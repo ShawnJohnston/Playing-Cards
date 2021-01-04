@@ -1,8 +1,15 @@
+01/04/2021
+    1. HandEvaluator executes 'checksForMultiples', 'isAFLush', and 'isAStraight' in the constructor.
+    2. HandEvaluator now uses the 'sortHand' method, taken from 'isAStraight', since it will need to be sorted anyway.
+    3. Getters added to HandEvaluator.
+    4. GameOutcome class added. Uses information from the HandEvaluators to compare hands and determine winner. It
+        currently determines a winner by hand rank. It does not yet compare further in the event of a ranking match.
+
 12/30/2020
     1. HandEvaluator class added. Currently evaluates for straights and flushes.
     2. 'card.setName()' in DeckOfCards -> buildDeck removed due to issues regarding Jokers. Cards currently no longer
         have names.
-    3. Method added to HandEvaluator to check for pairs, trips, and quads in a hand. It currently counts fpr multiples of
+    3. Method added to HandEvaluator to check for pairs, trips, and quads in a hand. It currently counts multiples of
        every card. It does not yet determine the final hand rank.
 
 12/27/2020
