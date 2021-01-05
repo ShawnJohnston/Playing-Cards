@@ -29,29 +29,4 @@ public class TestingSandbox {
             System.out.println(card.getName());
         }
     }
-
-    @Test
-    public void viewPlayers() {
-        System.out.println("List of players: " + Player.getPlayerList());
-        System.out.println("Number of players: " + Player.getPlayerNumber());
-
-        System.out.println();
-
-        Player player = new Player();
-        Player dealer = new Player();
-        System.out.println("List of players: " + Player.getPlayerList());
-        System.out.println("Number of players: " + Player.getPlayerNumber());
-
-        System.out.println();
-
-        Player player1 = new Player();
-        System.out.println("List of players: " + Player.getPlayerList());
-        System.out.println("Number of players: " + Player.getPlayerNumber());
-
-        System.out.println();
-
-        Player player2 = new Player();
-        System.out.println("List of players: " + Player.getPlayerList());
-        System.out.println("Number of players: " + Player.getPlayerNumber());
-    }
 }

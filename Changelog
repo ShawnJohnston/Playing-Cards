@@ -1,3 +1,6 @@
+01/05/2021
+    1. Playing environment started.
+
 01/04/2021
     1. HandEvaluator executes 'checksForMultiples', 'isAFLush', and 'isAStraight' in the constructor.
     2. HandEvaluator now uses the 'sortHand' method, taken from 'isAStraight', since it will need to be sorted anyway.

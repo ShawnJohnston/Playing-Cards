@@ -13,15 +13,12 @@ public class Program {
             running = ConsoleMenu.getKeepRunning();
 
             Player user = new Player();
+            Player computer = new Player();
             user.setName(ConsoleMenu.getUserName());
-            Dealer dealer = new Dealer();
-            gameMode.initializeGame(user, dealer);
+            gameMode.initializeGame(user, computer);
             GameMode.setGameMode(ConsoleMenu.getGameToStart());
 
-            DeckOfCards deck = new DeckOfCards(); // Initializes the deck of cards.
-            Shuffler shuffler = new Shuffler();
-            deck = shuffler.random(deck);
-            deck = shuffler.handShuffle(deck);
+            gameMode.play5CardPoker(user, computer);
         }
     }
 }
