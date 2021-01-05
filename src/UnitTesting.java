@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -20,9 +21,6 @@ public class UnitTesting {
     DeckOfCards standardDeck = new DeckOfCards();
     DeckOfCards deckWithOneJokers = new DeckOfCards(1);
     DeckOfCards deckWithTwoJokers = new DeckOfCards(2);
-
-    public UnitTesting() {
-    }
 
     // Deck of Cards
     @Test
@@ -164,17 +162,11 @@ public class UnitTesting {
             step++;
         }
     }
-    // Player
-
-    // Dealer
 
     // Chips
 
-    // Console Menu
-
-    // Game Mode
-
     // Hand Evaluator
+    // Straights and Flushes
     @Test
     public void canEvaluateFlushes() {
         Player player = new Player();
@@ -185,15 +177,15 @@ public class UnitTesting {
         PlayingCard twoSpades = new PlayingCard();
         PlayingCard fourSpades = new PlayingCard();
 
-        sevenSpades.setValue("Seven");
+        sevenSpades.setValue("7");
         sevenSpades.setSuit("Spades");
         kingSpades.setValue("King");
         kingSpades.setSuit("Spades");
-        sixSpades.setValue("Six");
+        sixSpades.setValue("6");
         sixSpades.setSuit("Spades");
-        twoSpades.setValue("Two");
+        twoSpades.setValue("2");
         twoSpades.setSuit("Spades");
-        fourSpades.setValue("Four");
+        fourSpades.setValue("4");
         fourSpades.setSuit("Spades");
 
         hand.add(sevenSpades);
@@ -204,5 +196,246 @@ public class UnitTesting {
 
         HandEvaluator evaluator = new HandEvaluator(player, hand);
         Assertions.assertTrue(evaluator.isAFlush());
+    }
+    @Test
+    public void canEvaluateFlushes1() {
+        Player player = new Player();
+        ArrayList<PlayingCard> hand = new ArrayList<>();
+        PlayingCard sevenHearts = new PlayingCard();
+        PlayingCard kingSpades = new PlayingCard();
+        PlayingCard sixSpades = new PlayingCard();
+        PlayingCard twoSpades = new PlayingCard();
+        PlayingCard fourSpades = new PlayingCard();
+
+        sevenHearts.setValue("7");
+        sevenHearts.setSuit("Hearts");
+        kingSpades.setValue("King");
+        kingSpades.setSuit("Spades");
+        sixSpades.setValue("6");
+        sixSpades.setSuit("Spades");
+        twoSpades.setValue("2");
+        twoSpades.setSuit("Spades");
+        fourSpades.setValue("4");
+        fourSpades.setSuit("Spades");
+
+        hand.add(sevenHearts);
+        hand.add(kingSpades);
+        hand.add(sixSpades);
+        hand.add(twoSpades);
+        hand.add(fourSpades);
+
+        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        Assertions.assertFalse(evaluator.isAFlush());
+    }
+    @Test
+    public void canEvaluateStraights() {
+        Player player = new Player();
+        ArrayList<PlayingCard> hand = new ArrayList<>();
+        PlayingCard sevenSpades = new PlayingCard();
+        PlayingCard eightClubs = new PlayingCard();
+        PlayingCard nineHearts = new PlayingCard();
+        PlayingCard tenSpades = new PlayingCard();
+        PlayingCard jackHearts = new PlayingCard();
+
+        sevenSpades.setValue("7");
+        sevenSpades.setSuit("Spades");
+        eightClubs.setValue("8");
+        eightClubs.setSuit("Clubs");
+        nineHearts.setValue("9");
+        nineHearts.setSuit("Hearts");
+        tenSpades.setValue("10");
+        tenSpades.setSuit("Spades");
+        jackHearts.setValue("Jack");
+        jackHearts.setSuit("Hearts");
+
+        hand.add(sevenSpades);
+        hand.add(jackHearts);
+        hand.add(nineHearts);
+        hand.add(eightClubs);
+        hand.add(tenSpades);
+
+        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        Assertions.assertTrue(evaluator.isAStraight());
+    }
+    @Test
+    public void canEvaluateStraights1() {
+        Player player = new Player();
+        ArrayList<PlayingCard> hand = new ArrayList<>();
+        PlayingCard aceSpades = new PlayingCard();
+        PlayingCard twoHearts = new PlayingCard();
+        PlayingCard threeHearts = new PlayingCard();
+        PlayingCard fourClubs = new PlayingCard();
+        PlayingCard fiveSpades = new PlayingCard();
+
+        aceSpades.setValue("Ace");
+        aceSpades.setSuit("Spades");
+        twoHearts.setValue("2");
+        twoHearts.setSuit("Hearts");
+        threeHearts.setValue("3");
+        threeHearts.setSuit("Hearts");
+        fourClubs.setValue("4");
+        fourClubs.setSuit("Clubs");
+        fiveSpades.setValue("5");
+        fiveSpades.setSuit("Spades");
+
+        hand.add(aceSpades);
+        hand.add(threeHearts);
+        hand.add(fiveSpades);
+        hand.add(fourClubs);
+        hand.add(twoHearts);
+
+        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        Assertions.assertTrue(evaluator.isAStraight());
+    }
+    @Test
+    public void canEvaluateStraights2() {
+        Player player = new Player();
+        ArrayList<PlayingCard> hand = new ArrayList<>();
+        PlayingCard tenSpades = new PlayingCard();
+        PlayingCard jackHearts = new PlayingCard();
+        PlayingCard queenHearts = new PlayingCard();
+        PlayingCard kingClubs = new PlayingCard();
+        PlayingCard aceSpades = new PlayingCard();
+
+        tenSpades.setValue("10");
+        tenSpades.setSuit("Spades");
+        jackHearts.setValue("Jack");
+        jackHearts.setSuit("Hearts");
+        queenHearts.setValue("Queen");
+        queenHearts.setSuit("Hearts");
+        kingClubs.setValue("King");
+        kingClubs.setSuit("Clubs");
+        aceSpades.setValue("Ace");
+        aceSpades.setSuit("Spades");
+
+        hand.add(aceSpades);
+        hand.add(jackHearts);
+        hand.add(kingClubs);
+        hand.add(tenSpades);
+        hand.add(queenHearts);
+
+        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        Assertions.assertTrue(evaluator.isAStraight());
+    }
+    @Test
+    public void canEvaluateStraights3() {
+        Player player = new Player();
+        ArrayList<PlayingCard> hand = new ArrayList<>();
+        PlayingCard tenSpades = new PlayingCard();
+        PlayingCard jackHearts = new PlayingCard();
+        PlayingCard queenHearts = new PlayingCard();
+        PlayingCard kingClubs = new PlayingCard();
+        PlayingCard fourSpades = new PlayingCard();
+
+        tenSpades.setValue("10");
+        tenSpades.setSuit("Spades");
+        jackHearts.setValue("Jack");
+        jackHearts.setSuit("Hearts");
+        queenHearts.setValue("Queen");
+        queenHearts.setSuit("Hearts");
+        kingClubs.setValue("King");
+        kingClubs.setSuit("Clubs");
+        fourSpades.setValue("4");
+        fourSpades.setSuit("Spades");
+
+        hand.add(fourSpades);
+        hand.add(jackHearts);
+        hand.add(kingClubs);
+        hand.add(tenSpades);
+        hand.add(queenHearts);
+
+        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        Assertions.assertFalse(evaluator.isAStraight());
+    }
+    @Test
+    public void canEvaluateStraights4() {
+        Player player = new Player();
+        ArrayList<PlayingCard> hand = new ArrayList<>();
+        PlayingCard aceSpades = new PlayingCard();
+        PlayingCard twoHearts = new PlayingCard();
+        PlayingCard threeHearts = new PlayingCard();
+        PlayingCard fourClubs = new PlayingCard();
+        PlayingCard sixSpades = new PlayingCard();
+
+        aceSpades.setValue("Ace");
+        aceSpades.setSuit("Spades");
+        twoHearts.setValue("2");
+        twoHearts.setSuit("Hearts");
+        threeHearts.setValue("3");
+        threeHearts.setSuit("Hearts");
+        fourClubs.setValue("4");
+        fourClubs.setSuit("Clubs");
+        sixSpades.setValue("6");
+        sixSpades.setSuit("Spades");
+
+        hand.add(aceSpades);
+        hand.add(threeHearts);
+        hand.add(sixSpades);
+        hand.add(fourClubs);
+        hand.add(twoHearts);
+
+        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        Assertions.assertFalse(evaluator.isAStraight());
+    }
+    @Test
+    public void canEvaluateStraightFlush() {
+        Player player = new Player();
+        ArrayList<PlayingCard> hand = new ArrayList<>();
+        PlayingCard aceSpades = new PlayingCard();
+        PlayingCard twoSpades = new PlayingCard();
+        PlayingCard threeSpades = new PlayingCard();
+        PlayingCard fourSpades = new PlayingCard();
+        PlayingCard fiveSpades = new PlayingCard();
+
+        aceSpades.setValue("Ace");
+        aceSpades.setSuit("Spades");
+        twoSpades.setValue("2");
+        twoSpades.setSuit("Spades");
+        threeSpades.setValue("3");
+        threeSpades.setSuit("Spades");
+        fourSpades.setValue("4");
+        fourSpades.setSuit("Spades");
+        fiveSpades.setValue("5");
+        fiveSpades.setSuit("Spades");
+
+        hand.add(aceSpades);
+        hand.add(twoSpades);
+        hand.add(fiveSpades);
+        hand.add(fourSpades);
+        hand.add(threeSpades);
+
+        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        Assertions.assertTrue(evaluator.isAStraightFlush());
+        Assertions.assertFalse(evaluator.isARoyalFlush());
+    }
+    @Test
+    public void canEvaluateRoyalFlush() {
+        Player player = new Player();
+        ArrayList<PlayingCard> hand = new ArrayList<>();
+        PlayingCard tenSpades = new PlayingCard();
+        PlayingCard jackSpades = new PlayingCard();
+        PlayingCard queenSpades = new PlayingCard();
+        PlayingCard kingSpades = new PlayingCard();
+        PlayingCard aceSpades = new PlayingCard();
+
+        tenSpades.setValue("10");
+        tenSpades.setSuit("Spades");
+        jackSpades.setValue("Jack");
+        jackSpades.setSuit("Spades");
+        queenSpades.setValue("Queen");
+        queenSpades.setSuit("Spades");
+        kingSpades.setValue("King");
+        kingSpades.setSuit("Spades");
+        aceSpades.setValue("Ace");
+        aceSpades.setSuit("Spades");
+
+        hand.add(aceSpades);
+        hand.add(jackSpades);
+        hand.add(kingSpades);
+        hand.add(tenSpades);
+        hand.add(queenSpades);
+
+        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        Assertions.assertTrue(evaluator.isARoyalFlush());
     }
 }

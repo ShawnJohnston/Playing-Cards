@@ -15,14 +15,6 @@ public class HandEvaluator {
     public HandEvaluator(Player player, ArrayList<PlayingCard> hand) {
         this.player = player;
         this.playerHand = sortHand(hand);
-
-        checkForMultiples();
-        if (isAFlush()) {
-            this.rank = "Flush";
-        }
-        if (isAStraight()) {
-            this.rank = "Straight";
-        }
     }
 
     // Getters
@@ -35,6 +27,10 @@ public class HandEvaluator {
     public Player getPlayer() {
         return this.player;
     }
+    public ArrayList<PlayingCard> getHand() {
+        return this.playerHand;
+    }
+
     // Setters
     public static void setGameMode(String gameMode) {
         HandEvaluator.gameMode = gameMode;
@@ -43,17 +39,34 @@ public class HandEvaluator {
     // Methods
     public ArrayList<PlayingCard> sortHand(ArrayList<PlayingCard> hand) {
         ArrayList<PlayingCard> sortedHand = new ArrayList<>();
-        String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
+        String[] values = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
+        int cardsSorted = 0;
 
-        for (String value : values) {
-            for (PlayingCard playingCard : hand) {
-                if (value.equals(playingCard.getValue())) {
-                    sortedHand.add(playingCard);
-                    hand.remove(playingCard);
+        for (int i = 0; i < values.length; i++) {
+            if (cardsSorted == hand.size()) {
+                break;
+            }
+            for (PlayingCard card: hand) {
+                if (card.getValue().equals(values[i])) {
+                    sortedHand.add(card);
+                    cardsSorted++;
                 }
             }
         }
+
         return sortedHand;
+    }
+    private boolean checkForWheel() {
+        if (this.playerHand.get(0).getValue().equals("2") &&
+                this.playerHand.get(1).getValue().equals("3") &&
+                this.playerHand.get(2).getValue().equals("4") &&
+                this.playerHand.get(3).getValue().equals("5") &&
+                this.playerHand.get(4).getValue().equals("Ace")) {
+            this.playerHand.add(0, this.playerHand.get(4));
+            this.playerHand.remove(5);
+            return true;
+        }
+        return false;
     }
     public void checkForMultiples() {
         String[] values = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
@@ -145,44 +158,55 @@ public class HandEvaluator {
             return false;
         }
         for (PlayingCard card: this.playerHand) {
-            if (card.getValue().equals("Five") || card.getValue().equals("Ten")) {
+            if (card.getValue().equals("5") || card.getValue().equals("10")) {
                 handContainsFiveOrTen = true;
                 break;
             }
         }
-        if (handContainsFiveOrTen = false) {
+        if (!handContainsFiveOrTen) {
             return false;
         }
         else {
-            int straightCondition = this.playerHand.size();
-            ArrayList<PlayingCard> sortedHand = new ArrayList<>();
+            int straightLength = 1;
             String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
+            int indexPoint = 0;
 
-            for (String value : values) {
-                for (PlayingCard playingCard : this.playerHand) {
-                    if (value.equals(playingCard.getValue())) {
-                        sortedHand.add(playingCard);
-                        this.playerHand.remove(playingCard);
+            for (int i = 0; i < values.length; i++) {
+                if (this.playerHand.get(0).getValue().equals(values[i])) {
+                    indexPoint = i;
+                }
+            }
+
+            int j = 0;
+            for (int i = indexPoint; i < indexPoint + this.playerHand.size(); i++) {
+                if (this.playerHand.get(j).getValue().equals(values[i])) {
+                    straightLength++;
+                    j++;
+                    if (straightLength == 5) {
+                        return true;
                     }
                 }
             }
-            return straightCondition == countToStraight(sortedHand, values);
+
         }
+        return false;
     }
-    public int countToStraight(ArrayList<PlayingCard> sortedHand, String[] values) {
-        int straightCount = 1;
-        for (int i = 0; i < values.length; i++) {
-            for (int j = 0; j < sortedHand.size(); j++) {
-                if (straightCount == 5) {
-                    break;
-                }
-                if (sortedHand.get(j).getValue().equals(values[i])) {
-                    if (sortedHand.get(j + 1).getValue().equals(values[i + 1])) {
-                        straightCount++;
-                    }
-                }
+    public Boolean isAStraightFlush() {
+        if (isAStraight() && isAFlush()) {
+            return true;
+        }
+        return false;
+    }
+    public Boolean isARoyalFlush() {
+        if (isAStraightFlush()) {
+            if (this.playerHand.get(0).getValue().equals("10") &&
+                this.playerHand.get(1).getValue().equals("Jack") &&
+                this.playerHand.get(2).getValue().equals("Queen") &&
+                this.playerHand.get(3).getValue().equals("King") &&
+                this.playerHand.get(4).getValue().equals("Ace")) {
+                return true;
             }
         }
-        return straightCount;
+        return false;
     }
 }
