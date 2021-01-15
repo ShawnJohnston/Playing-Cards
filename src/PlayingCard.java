@@ -12,6 +12,10 @@ public class PlayingCard {
     // Constructors
     public PlayingCard() {
     }
+    public PlayingCard(String value, String suit) {
+        this.setValue(value);
+        this.setSuit(suit);
+    }
 
     // Getters
     public String getValue() {

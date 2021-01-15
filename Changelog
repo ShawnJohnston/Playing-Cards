@@ -1,3 +1,6 @@
+01/15/2021
+    1. Added overloaded constructors to Player class and PlayingCard class for ease of initializing certain attributes.
+
 01/05/2021
     1. Playing environment started.
 

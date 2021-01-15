@@ -199,24 +199,13 @@ public class UnitTesting {
     }
     @Test
     public void canEvaluateFlushes1() {
-        Player player = new Player();
+        Player player = new Player("Bob");
         ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard sevenHearts = new PlayingCard();
-        PlayingCard kingSpades = new PlayingCard();
-        PlayingCard sixSpades = new PlayingCard();
-        PlayingCard twoSpades = new PlayingCard();
-        PlayingCard fourSpades = new PlayingCard();
-
-        sevenHearts.setValue("7");
-        sevenHearts.setSuit("Hearts");
-        kingSpades.setValue("King");
-        kingSpades.setSuit("Spades");
-        sixSpades.setValue("6");
-        sixSpades.setSuit("Spades");
-        twoSpades.setValue("2");
-        twoSpades.setSuit("Spades");
-        fourSpades.setValue("4");
-        fourSpades.setSuit("Spades");
+        PlayingCard sevenHearts = new PlayingCard("7", "Hearts");
+        PlayingCard kingSpades = new PlayingCard("King", "Spades");
+        PlayingCard sixSpades = new PlayingCard("6", "Spades");
+        PlayingCard twoSpades = new PlayingCard("2","Spades");
+        PlayingCard fourSpades = new PlayingCard("4", "Spades");
 
         hand.add(sevenHearts);
         hand.add(kingSpades);
@@ -229,24 +218,13 @@ public class UnitTesting {
     }
     @Test
     public void canEvaluateStraights() {
-        Player player = new Player();
+        Player player = new Player("Bill");
         ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard sevenSpades = new PlayingCard();
-        PlayingCard eightClubs = new PlayingCard();
-        PlayingCard nineHearts = new PlayingCard();
-        PlayingCard tenSpades = new PlayingCard();
-        PlayingCard jackHearts = new PlayingCard();
-
-        sevenSpades.setValue("7");
-        sevenSpades.setSuit("Spades");
-        eightClubs.setValue("8");
-        eightClubs.setSuit("Clubs");
-        nineHearts.setValue("9");
-        nineHearts.setSuit("Hearts");
-        tenSpades.setValue("10");
-        tenSpades.setSuit("Spades");
-        jackHearts.setValue("Jack");
-        jackHearts.setSuit("Hearts");
+        PlayingCard sevenSpades = new PlayingCard("7", "Spades");
+        PlayingCard eightClubs = new PlayingCard("8", "Clubs");
+        PlayingCard nineHearts = new PlayingCard("9", "Hearts");
+        PlayingCard tenSpades = new PlayingCard("10", "Spades");
+        PlayingCard jackHearts = new PlayingCard("Jack", "Hearts");
 
         hand.add(sevenSpades);
         hand.add(jackHearts);
@@ -261,22 +239,11 @@ public class UnitTesting {
     public void canEvaluateStraights1() {
         Player player = new Player();
         ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard aceSpades = new PlayingCard();
-        PlayingCard twoHearts = new PlayingCard();
-        PlayingCard threeHearts = new PlayingCard();
-        PlayingCard fourClubs = new PlayingCard();
-        PlayingCard fiveSpades = new PlayingCard();
-
-        aceSpades.setValue("Ace");
-        aceSpades.setSuit("Spades");
-        twoHearts.setValue("2");
-        twoHearts.setSuit("Hearts");
-        threeHearts.setValue("3");
-        threeHearts.setSuit("Hearts");
-        fourClubs.setValue("4");
-        fourClubs.setSuit("Clubs");
-        fiveSpades.setValue("5");
-        fiveSpades.setSuit("Spades");
+        PlayingCard aceSpades = new PlayingCard("Ace", "Spades");
+        PlayingCard twoHearts = new PlayingCard("2", "Hearts");
+        PlayingCard threeHearts = new PlayingCard("3", "Hearts");
+        PlayingCard fourClubs = new PlayingCard("4", "Clubs");
+        PlayingCard fiveSpades = new PlayingCard("5", "Spades");
 
         hand.add(aceSpades);
         hand.add(threeHearts);
@@ -291,22 +258,11 @@ public class UnitTesting {
     public void canEvaluateStraights2() {
         Player player = new Player();
         ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard tenSpades = new PlayingCard();
-        PlayingCard jackHearts = new PlayingCard();
-        PlayingCard queenHearts = new PlayingCard();
-        PlayingCard kingClubs = new PlayingCard();
-        PlayingCard aceSpades = new PlayingCard();
-
-        tenSpades.setValue("10");
-        tenSpades.setSuit("Spades");
-        jackHearts.setValue("Jack");
-        jackHearts.setSuit("Hearts");
-        queenHearts.setValue("Queen");
-        queenHearts.setSuit("Hearts");
-        kingClubs.setValue("King");
-        kingClubs.setSuit("Clubs");
-        aceSpades.setValue("Ace");
-        aceSpades.setSuit("Spades");
+        PlayingCard tenSpades = new PlayingCard("10", "Spades");
+        PlayingCard jackHearts = new PlayingCard("Jack", "Hearts");
+        PlayingCard queenHearts = new PlayingCard("Queen", "Hearts");
+        PlayingCard kingClubs = new PlayingCard("King", "Clubs");
+        PlayingCard aceSpades = new PlayingCard("Ace", "Spades");
 
         hand.add(aceSpades);
         hand.add(jackHearts);
@@ -321,22 +277,11 @@ public class UnitTesting {
     public void canEvaluateStraights3() {
         Player player = new Player();
         ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard tenSpades = new PlayingCard();
-        PlayingCard jackHearts = new PlayingCard();
-        PlayingCard queenHearts = new PlayingCard();
-        PlayingCard kingClubs = new PlayingCard();
-        PlayingCard fourSpades = new PlayingCard();
-
-        tenSpades.setValue("10");
-        tenSpades.setSuit("Spades");
-        jackHearts.setValue("Jack");
-        jackHearts.setSuit("Hearts");
-        queenHearts.setValue("Queen");
-        queenHearts.setSuit("Hearts");
-        kingClubs.setValue("King");
-        kingClubs.setSuit("Clubs");
-        fourSpades.setValue("4");
-        fourSpades.setSuit("Spades");
+        PlayingCard tenSpades = new PlayingCard("10", "Spades");
+        PlayingCard jackHearts = new PlayingCard("Jack", "Hearts");
+        PlayingCard queenHearts = new PlayingCard("Queen", "Hearts");
+        PlayingCard kingClubs = new PlayingCard("King", "Clubs");
+        PlayingCard fourSpades = new PlayingCard("4", "Spades");
 
         hand.add(fourSpades);
         hand.add(jackHearts);
@@ -351,22 +296,11 @@ public class UnitTesting {
     public void canEvaluateStraights4() {
         Player player = new Player();
         ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard aceSpades = new PlayingCard();
-        PlayingCard twoHearts = new PlayingCard();
-        PlayingCard threeHearts = new PlayingCard();
-        PlayingCard fourClubs = new PlayingCard();
-        PlayingCard sixSpades = new PlayingCard();
-
-        aceSpades.setValue("Ace");
-        aceSpades.setSuit("Spades");
-        twoHearts.setValue("2");
-        twoHearts.setSuit("Hearts");
-        threeHearts.setValue("3");
-        threeHearts.setSuit("Hearts");
-        fourClubs.setValue("4");
-        fourClubs.setSuit("Clubs");
-        sixSpades.setValue("6");
-        sixSpades.setSuit("Spades");
+        PlayingCard aceSpades = new PlayingCard("Ace", "Spades");
+        PlayingCard twoHearts = new PlayingCard("2", "Hearts");
+        PlayingCard threeHearts = new PlayingCard("3", "Hearts");
+        PlayingCard fourClubs = new PlayingCard("4", "Clubs");
+        PlayingCard sixSpades = new PlayingCard("6", "Spades");
 
         hand.add(aceSpades);
         hand.add(threeHearts);
@@ -381,22 +315,11 @@ public class UnitTesting {
     public void canEvaluateStraightFlush() {
         Player player = new Player();
         ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard aceSpades = new PlayingCard();
-        PlayingCard twoSpades = new PlayingCard();
-        PlayingCard threeSpades = new PlayingCard();
-        PlayingCard fourSpades = new PlayingCard();
-        PlayingCard fiveSpades = new PlayingCard();
-
-        aceSpades.setValue("Ace");
-        aceSpades.setSuit("Spades");
-        twoSpades.setValue("2");
-        twoSpades.setSuit("Spades");
-        threeSpades.setValue("3");
-        threeSpades.setSuit("Spades");
-        fourSpades.setValue("4");
-        fourSpades.setSuit("Spades");
-        fiveSpades.setValue("5");
-        fiveSpades.setSuit("Spades");
+        PlayingCard aceSpades = new PlayingCard("Ace", "Spades");
+        PlayingCard twoSpades = new PlayingCard("2", "Spades");
+        PlayingCard threeSpades = new PlayingCard("3", "Spades");
+        PlayingCard fourSpades = new PlayingCard("4", "Spades");
+        PlayingCard fiveSpades = new PlayingCard("5", "Spades");
 
         hand.add(aceSpades);
         hand.add(twoSpades);
@@ -412,22 +335,11 @@ public class UnitTesting {
     public void canEvaluateRoyalFlush() {
         Player player = new Player();
         ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard tenSpades = new PlayingCard();
-        PlayingCard jackSpades = new PlayingCard();
-        PlayingCard queenSpades = new PlayingCard();
-        PlayingCard kingSpades = new PlayingCard();
-        PlayingCard aceSpades = new PlayingCard();
-
-        tenSpades.setValue("10");
-        tenSpades.setSuit("Spades");
-        jackSpades.setValue("Jack");
-        jackSpades.setSuit("Spades");
-        queenSpades.setValue("Queen");
-        queenSpades.setSuit("Spades");
-        kingSpades.setValue("King");
-        kingSpades.setSuit("Spades");
-        aceSpades.setValue("Ace");
-        aceSpades.setSuit("Spades");
+        PlayingCard tenSpades = new PlayingCard("10", "Spades");
+        PlayingCard jackSpades = new PlayingCard("Jack", "Spades");
+        PlayingCard queenSpades = new PlayingCard("Queen", "Spades");
+        PlayingCard kingSpades = new PlayingCard("King", "Spades");
+        PlayingCard aceSpades = new PlayingCard("Ace", "Spades");
 
         hand.add(aceSpades);
         hand.add(jackSpades);

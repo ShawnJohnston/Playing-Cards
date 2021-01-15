@@ -8,8 +8,11 @@ public class Player {
     private int startingChips; // Amount of Chips the player starts a game session with.
     private int chipTotal; // The player's total number of chips.
 
-    // Constructor
+    // Constructors
     public Player() {
+    }
+    public Player(String playerName) {
+        this.setName(playerName);
     }
 
     // Getters
