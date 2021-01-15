@@ -10,7 +10,7 @@ public class TestingSandbox {
     @Test
     public void viewUnshuffledDeck() {
         for (PlayingCard card: deck.getCards()) {
-            System.out.println(card.getName());
+            System.out.println(card.getValue() + " of " + card.getSuit());
         }
     }
 
@@ -18,7 +18,7 @@ public class TestingSandbox {
     public void viewRandomShuffledDeck() {
         deck = shuffler.random(deck);
         for (PlayingCard card: deck.getCards()) {
-            System.out.println(card.getName());
+            System.out.println(card.getValue() + " of " + card.getSuit());
         }
     }
 
@@ -26,7 +26,7 @@ public class TestingSandbox {
     public void viewHandShuffledDeck() {
         deck = shuffler.random(deck);
         for (PlayingCard card: deck.getCards()) {
-            System.out.println(card.getName());
+            System.out.println(card.getValue() + " of " + card.getSuit());
         }
     }
 }
