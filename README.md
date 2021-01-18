@@ -35,10 +35,11 @@ Current Status of this Project
     key components of the most up-to-date build.
     
     Playing card:
-        This class is mostly complete. The necessary elements describing a playing card. A card can have a value, suit, color, 
-        etc. The cards do not have images for visual display yet.
+        This class will represent a playing card and encompasses the necessary elements that describe one. A card can have a value, 
+        suit, color, can be face-up or face-down, etc. The cards do not have images for visual display yet.
     Deck of cards:
-        This component is complete. A deck of cards containing 52 cards, plus Jokers if desired.
+        A deck of cards containing 52 cards, plus Jokers if desired. The deck of cards builds itself upon instantiation by filling
+        an array with every playing card that must be included. The playing cards are assigned in order of suit, then value.
     Shuffler:
         This class can shuffle a deck of cards, either by using a simple randomization method or by using a hand shuffling method
         that is indented to replicate a realistic shuffle.
