@@ -1,3 +1,6 @@
+01/17/2021
+    1. A variety of additional unit tests for Straights, Flushes, Straight Flushes, Royal Flushes, and their inverses.
+
 01/15/2021
     1. Added overloaded constructors to Player class and PlayingCard class for ease of initializing certain attributes.
 

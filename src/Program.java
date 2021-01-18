@@ -16,6 +16,7 @@ public class Program {
         boolean running = true;
         GameMode gameMode = new GameMode();
         while (running) {
+            ConsoleMenu console = new ConsoleMenu();
             Player user = new Player();
             Player computer = new Player();
             user.setName(ConsoleMenu.getUserName());
