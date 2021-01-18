@@ -26,8 +26,13 @@ Current Status of this Project
 
     This project is in stage 3 of the preceding design plan.
 
-    At this time, the project will be put on hiatus in lieu of the start of the Spring Semester. Development of this project will 
+    At this time, the project will be put on hiatus in lieu of the start of the Spring semester. Development of this project will 
     resume in Summer 2021.
+    
+    The project currently exists as a collection of components. A poker game cannot be played at this time. Some components
+    for game scenarios exist in a partially built form. A GUI was intended to be designed along side a console menu. Because
+    these components are not finished, the project can't actually be "played" yet. Below is a brief description of some of the
+    key components of the most up-to-date build.
     
     Playing card:
         This class is mostly complete. The necessary elements describing a playing card. A card can have a value, suit, color, 
@@ -45,7 +50,3 @@ Current Status of this Project
         This class takes in two player hands, compares them, and determines a winner, loser, or tie. Currently, it only
         compares by ranking. In the even of equivalent ranks, more methods will need to be written to consider the values
         within the hand beyond just simply the rank.
-    
-    The project currently exists as a collection of components. A poker game cannot be played at this time. Some components
-    for game scenarios exist in a partially built form. A GUI was intended to be designed along side a console menu. Because
-    these components are not finished, the project can't actually be "played" yet.
