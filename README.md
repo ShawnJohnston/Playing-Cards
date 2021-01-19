@@ -51,3 +51,19 @@ Current Status of this Project
         This class takes in two player hands, compares them, and determines a winner, loser, or tie. Currently, it only
         compares by ranking. In the even of equivalent ranks, more methods will need to be written to consider the values
         within the hand beyond just simply the rank.
+
+Programming techniques used
+    
+    1.  Object-oriented programming design. Classes, constructors, overloaded constructors, getters, setters, class methods. Privatization of internal features. 
+    2.  While-loop to control flow through the application, itself controlled by a boolean variable.
+    3.  If-else statements, switch statements, and nesting of these for conditional control throughout the aplication.
+    4.  For-loops and for-each loops for various purposes throughout the application, including loop nesting.
+    5.  Use of counters to aid in conditional control.
+    6.  Helper methods within consoleMenu class to procedurally build menus.
+    7.  Exception handling for invalid inputs in consoleMenu.
+    8.  Enumerator states in PlayingCard class. A card card either be face-up or face-down.
+    9.  Use of arrays and array lists for storing related information, as well as procedural generation of things such as a sorted deck of cards and poker hands.
+    10. Sorting of a poker hand. A method using a 2D for-loop compares each card in the hand to the value in index i of an array of playing card values.
+    11. Tail recursion used in the Shuffler class.
+    12. Java's Random class used for the random method in Shuffler, and to support secondary randomization in the handShuffle method.
+    13. Unit testing using JUnit.
