@@ -39,16 +39,49 @@ public class Shuffler {
         return deck; // To deck object in main.
     }
     private int setSplitPoint(DeckOfCards deck) {
+        // This method defines the location in a deck of cards in which a top stack will separate from the rest of the deck.
+        // This default version of the method is intended to separate a full deck of cards into two half stacks.
         Random randomizer = new Random();
         int deckMidPoint = deck.getSize() / 2;
-        int variability = randomizer.nextInt(10) - 5;
+        int variability = randomValueFromNormalDistribution(5);
         return deckMidPoint + variability;
     }
     private int setSplitPoint(DeckOfCards deck, int bounds) {
-        Random randomizer = new Random();
-        int deckMidPoint = deck.getSize() / 2;
-        int variability = randomizer.nextInt(bounds) - (bounds / 2);
+        // This overloaded method is used in the "Cut" step of the hand shuffle.
+        int deckMidPoint = deck.getSize() / 2; // The index position representing the halfway point into the deck.
+        int variability = randomValueFromNormalDistribution(bounds);
         return deckMidPoint + variability;
+    }
+    private int setSplitPointForBox(int cardsSize, int boxCount) {
+        // This variant of setSplitPoint is intended for the "Box" step in the hand shuffle. Every time the recursive box
+        // uses this method, cardsSize (the size of the deck) will be smaller due to previous calls removing from it.
+        Random randomizer = new Random();
+        int deckSegment = cardsSize / boxCount; // boxCount is decremented each level into the recursion. The deck gets
+        // smaller every level, but the segments become relatively larger.
+        int variability = randomValueFromNormalDistribution(5); // Variability of +/- 5 cards.
+        return deckSegment + variability;
+    }
+    private int randomValueFromNormalDistribution(int bounds) {
+        // This method is used to create a normal distribution of values (resembling a bell curve). Mainly used in setSplitPoint methods.
+        // The rationale behind this method is that for many situations of random values within a range of possibilities,
+        // some values are more likely than others. For example, when cutting a deck of cards, it is possible for the cut to
+        // happen 10 steps from the midpoint, but it is more likely that the cut will be closer. (Refer to "standard deviation" in Statistics texts.)
+        // To select any random card from a deck of cards, however, all possibilities are equally likely. This results in a flat distribution.
+        // This method is NOT to be used for any scenario of a flat distribution.
+        Random randomizer = new Random();
+        int absoluteBounds = (bounds / 2); // Absolute value for creating a +/- effect.
+        ArrayList<Integer> numberSpread = new ArrayList<>(); // The absoluteBounds range of numbers are added here.
+                                                             // Numbers are included here (absoluteBounds) times - their distance from 0.
+        // This 2D for-loop will add to numberSpread as to create a normal distribution of values, with 0 as the median.
+        // Outer loop: (-absoluteBounds <= i <= absoluteBounds).
+        // Inner loop: The current i value is added to numberSpread i times.
+        for (int i = -absoluteBounds; i <= absoluteBounds; i++) {
+            int constantMultiplier = absoluteBounds - Math.abs(i); // This is used to control the number of times i is added to numberSpread.
+            for (int j = 0; j < constantMultiplier + 1; j++) {
+                numberSpread.add(i);
+            }
+        }
+        return numberSpread.get(randomizer.nextInt(numberSpread.size())); // A random value from the numberSpread returns.
     }
     private PlayingCard[] riffle(DeckOfCards deck) {
         // This method will split the deck into two stacks, then be riffled back together to make a new full stack.
@@ -130,13 +163,9 @@ public class Shuffler {
             return stack; // The stack returns recursively to box method.
         }
 
-        // Instead of overloading the setSplitPoint method, I will just code the same functionality here since it is
-        // unlikely that this variation of the method will be needed again.
-        Random randomizer = new Random();
-        int deckSegment = cards.size() / boxCount; // boxCount is decremented each level into the recursion. The deck gets
-                                                    // smaller every level, but the segments become relatively larger.
-        int variability = randomizer.nextInt(10) - 5; // Variability of +/- 5 cards.
-        int splitPoint = deckSegment + variability; // The box stack splits from the deck at the deckSegment with variability.
+        // Instead of overloading the setSplitPoint method, I will just code the same functionality here since this approach
+        // is tailored exclusively for this specific implementation.
+        int splitPoint = setSplitPointForBox(cards.size(), boxCount);
         ArrayList<PlayingCard> tempStack = new ArrayList<>(); // Buffer list to store card information.
 
         if (splitPoint > cards.size()) {
@@ -158,7 +187,7 @@ public class Shuffler {
         return stack; // Returns the stack to the next highest recursion level.
     }
     private PlayingCard[] cutTheDeck(DeckOfCards deck) {
-        // This method will split the deck into two stacks swap the position of the top and bottom stacks.
+        // This method will split the deck into two stacks, then swap the position of the top and bottom stacks.
         PlayingCard[] topStack = new PlayingCard[setSplitPoint(deck, 20)]; // Top stack will split at the deck midpoint (+/-) 10.
         PlayingCard[] bottomStack = new PlayingCard[deck.getSize() - topStack.length]; // The remaining cards make up the bottom stack.
         int j = 0; // Secondary incrementer.
