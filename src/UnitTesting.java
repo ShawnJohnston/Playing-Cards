@@ -3,7 +3,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-
 public class UnitTesting {
     // Initialization of test variables;
 
@@ -25,11 +24,20 @@ public class UnitTesting {
     @Test
     public void standardDeckSizeIsCorrect() {
         // This test compares the expected size of a standard deck (52) to the size resulting from class methods.
+        System.out.println("Standard deck size: \n" +
+                            "Expected: " + expectedDeckSize + "\n" +
+                            "Actual: " + standardDeck.getSize());
         Assertions.assertEquals(expectedDeckSize, standardDeck.getSize());
     }
     @Test
     public void variantDeckSizeIsCorrectGivenJokerCount() {
         // This test tests the expected sizes for variant decks (53 or 54) to the resulting value from class methods.
+        System.out.println("Standard deck size w/ one Joker: \n" +
+                "Expected: " + expectedDeckSizeOneJoker + "\n" +
+                "Actual: " + deckWithOneJokers.getSize());
+        System.out.println("Standard deck size w/ two Jokers: \n" +
+                "Expected: " + expectedDeckSizeTwoJokers + "\n" +
+                "Actual: " + deckWithTwoJokers.getSize());
         Assertions.assertEquals(expectedDeckSizeOneJoker, deckWithOneJokers.getSize());
         Assertions.assertEquals(expectedDeckSizeTwoJokers, deckWithTwoJokers.getSize());
     }
@@ -53,6 +61,7 @@ public class UnitTesting {
             // The next index will run through the entire deck for matching values.
         }
         for (int i = 0; i < values.length; i++) {
+            System.out.println("Card value: " + standardDeck.getCards()[i].getValue() + " x " + valueCounter[i]);
             Assertions.assertEquals(expectedValueCount, valueCounter[i]);
         }
     }
@@ -106,7 +115,12 @@ public class UnitTesting {
                     jokerCounter++;
                 }
             }
-
+            System.out.println("Suit count with " + step + " Jokers" + "\n" +
+                    "Clubs count: " + clubCounter + "\n" +
+                    "Hearts count: " + heartCounter + "\n" +
+                    "Spades count: " + spadeCounter + "\n" +
+                    "Diamond count: " + diamondCounter + "\n" +
+                    "Joker count: " + jokerCounter + "\n");
             // Series of assertion, comparing expected counts to actual counts.
             Assertions.assertEquals(expectedSuitCount, clubCounter);
             Assertions.assertEquals(expectedSuitCount, heartCounter);
@@ -122,11 +136,13 @@ public class UnitTesting {
     public void theDeckCanBeShuffledUsingEachMethodInTheShufflerClass() {
         DeckOfCards shuffledDeck = new DeckOfCards();
         int step = 0;
-
+        System.out.println("Unshuffled:");
         for (int i = 0; i < shuffledDeck.getSize(); i++) {
             // This loop will run through the entire deck. The suit of the card at the current index will increment
             // it's corresponding suit counter.
-
+            System.out.printf("%d. Unshuffled: %s of %s", i, standardDeck.getCards()[i].getValue(), standardDeck.getCards()[i].getSuit());
+            System.out.printf("    Shuffled: %s of %s", shuffledDeck.getCards()[i].getValue(), shuffledDeck.getCards()[i].getSuit());
+            System.out.println();
             Assertions.assertEquals(standardDeck.getCards()[i].getSuit(), shuffledDeck.getCards()[i].getSuit());
             Assertions.assertEquals(standardDeck.getCards()[i].getValue(), shuffledDeck.getCards()[i].getValue());
         }
@@ -153,13 +169,19 @@ public class UnitTesting {
                 standardSuits[i] = standardDeck.getCards()[i].getSuit();
                 shuffledSuits[i] = shuffledDeck.getCards()[i].getSuit();
             }
-
+            System.out.println("\nShuffled");
+            for (int i = 0; i < shuffledDeck.getSize(); i++) {
+                System.out.printf("%d. Unshuffled: %s of %s", i, standardDeck.getCards()[i].getValue(), standardDeck.getCards()[i].getSuit());
+                System.out.printf("    Shuffled: %s of %s", shuffledDeck.getCards()[i].getValue(), shuffledDeck.getCards()[i].getSuit());
+                System.out.println();
+            }
             Assertions.assertNotEquals(standardValues, shuffledValues);
             Assertions.assertNotEquals(standardSuits, shuffledSuits);
 
             step++;
         }
     }
+
     // Hand Evaluator
     // Straights and Flushes
     @Test
@@ -182,6 +204,8 @@ public class UnitTesting {
         hand.add(twoSpades);
         hand.add(fourSpades);
 
+        printHand(hand);
+
         // The evaluator will check if the player's hand evaluates to be a flush.
         // Finally, it is tested for truth. If true, the test passes.
         HandEvaluator evaluator = new HandEvaluator(player, hand);
@@ -202,6 +226,8 @@ public class UnitTesting {
         hand.add(sixSpades);
         hand.add(twoSpades);
         hand.add(fourSpades);
+
+        printHand(hand);
 
         HandEvaluator evaluator = new HandEvaluator(player, hand);
         Assertions.assertFalse(evaluator.isAFlush());
@@ -225,6 +251,8 @@ public class UnitTesting {
         hand.add(sixSpades);
         hand.add(twoSpades);
         hand.add(fourHearts);
+
+        printHand(hand);
 
         // The evaluator will check if the player's hand evaluates to be a flush.
         // Finally, it is tested for truth. If true, the test passes.
@@ -252,6 +280,8 @@ public class UnitTesting {
         hand.add(eightClubs);
         hand.add(tenSpades);
 
+        printHand(hand);
+
         // The evaluator will check if the hand values are consecutive.
         // The boolean value is checked for truth. If true, the test passes.
         HandEvaluator evaluator = new HandEvaluator(player, hand);
@@ -273,6 +303,8 @@ public class UnitTesting {
         hand.add(fourClubs);
         hand.add(twoHearts);
 
+        printHand(hand);
+
         HandEvaluator evaluator = new HandEvaluator(player, hand);
         Assertions.assertTrue(evaluator.isAStraight());
     }
@@ -292,6 +324,8 @@ public class UnitTesting {
         hand.add(tenSpades);
         hand.add(queenHearts);
 
+        printHand(hand);
+
         HandEvaluator evaluator = new HandEvaluator(player, hand);
         Assertions.assertTrue(evaluator.isAStraight());
     }
@@ -307,13 +341,14 @@ public class UnitTesting {
         String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
         PlayingCard[] cardsInHand;
 
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 10; i++) {
             hand.clear();
             cardsInHand = new PlayingCard[5];
             for (int j = 0; j < 5; j++) {
                 cardsInHand[j] = new PlayingCard(values[j + i], "Spades");
                 hand.add(cardsInHand[j]);
             }
+            printHand(hand);
             HandEvaluator evaluator = new HandEvaluator(player, hand);
             Assertions.assertTrue(evaluator.isAStraight());
         }
@@ -337,6 +372,8 @@ public class UnitTesting {
         hand.add(tenSpades);
         hand.add(queenHearts);
 
+        printHand(hand);
+
         HandEvaluator evaluator = new HandEvaluator(player, hand);
         Assertions.assertFalse(evaluator.isAStraight());
     }
@@ -355,6 +392,8 @@ public class UnitTesting {
         hand.add(sixSpades);
         hand.add(fourClubs);
         hand.add(twoHearts);
+
+        printHand(hand);
 
         HandEvaluator evaluator = new HandEvaluator(player, hand);
         Assertions.assertFalse(evaluator.isAStraight());
@@ -380,6 +419,8 @@ public class UnitTesting {
         hand.add(sevenSpades);
         hand.add(eightSpades);
 
+        printHand(hand);
+
         // The Hand is to be asserted true for Straight Flush, but false for Royal Flush.
         HandEvaluator evaluator = new HandEvaluator(player, hand);
         Assertions.assertTrue(evaluator.isAStraightFlush());
@@ -402,6 +443,8 @@ public class UnitTesting {
         hand.add(sevenSpades);
         hand.add(eightSpades);
 
+        printHand(hand);
+
         HandEvaluator evaluator = new HandEvaluator(player, hand);
         Assertions.assertFalse(evaluator.isAStraightFlush());
         Assertions.assertFalse(evaluator.isARoyalFlush());
@@ -422,6 +465,8 @@ public class UnitTesting {
         hand.add(fiveSpades);
         hand.add(fourSpades);
         hand.add(threeSpades);
+
+        printHand(hand);
 
         HandEvaluator evaluator = new HandEvaluator(player, hand);
         Assertions.assertTrue(evaluator.isAStraightFlush());
@@ -449,6 +494,7 @@ public class UnitTesting {
                 cardsInHand[j] = new PlayingCard(values[j + i], "Spades");
                 hand.add(cardsInHand[j]);
             }
+            printHand(hand);
             HandEvaluator evaluator = new HandEvaluator(player, hand);
             Assertions.assertTrue(evaluator.isAStraightFlush());
         }
@@ -469,6 +515,8 @@ public class UnitTesting {
         hand.add(tenSpades);
         hand.add(queenSpades);
 
+        printHand(hand);
+
         HandEvaluator evaluator = new HandEvaluator(player, hand);
         Assertions.assertTrue(evaluator.isARoyalFlush());
 
@@ -486,5 +534,13 @@ public class UnitTesting {
             card.setSuit("Diamonds");
         }
         Assertions.assertTrue(evaluator.isARoyalFlush());
+    }
+
+    public void printHand(ArrayList<PlayingCard> hand) {
+        System.out.println("Player hand:");
+        for (PlayingCard card: hand) {
+            System.out.printf("%s of %s \n", card.getValue(), card.getSuit());
+        }
+        System.out.println();
     }
 }
