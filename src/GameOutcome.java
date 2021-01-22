@@ -16,12 +16,14 @@ public class GameOutcome {
         int userRankNum = 0;
         int dealerRankNum = 0;
         for (int i = standardPokerRanks.length; i >= 0; i--) {
+            /*
             if (this.userHand.getRank().equals(standardPokerRanks[i])) {
                 userRankNum = i;
             }
             if (this.dealerHand.getRank().equals(standardPokerRanks[i])) {
                 dealerRankNum = i;
             }
+            */
         }
         if (userRankNum > dealerRankNum) {
             this.winner = userHand.getPlayer();

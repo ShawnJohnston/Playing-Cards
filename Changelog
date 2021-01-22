@@ -1,3 +1,10 @@
+01/22/2021
+    1. Unit tests refactored to be more procedural. Tests for straights within 6 card hands have been added, though they
+        don't currently use helper methods and should also be further explored to be more thorough.
+    2. HandEvaluator is updated to properly adjust the player hand for 5-high straights ("wheel").
+    3. HandEvaluator has had the rank attribute removed. Because Strings are immutable, it was not suitable for storing
+        the final hand ranking. Will fix this soon.
+
 01/20/2021
     1. Updated the setSplitPoint methods. They now use the helper method randomValueFromNormalDistribution to create a more
        theoretically sound simulation of a hand shuffle by making random values less likely the more they deviate from the median.

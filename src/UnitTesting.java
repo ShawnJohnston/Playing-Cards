@@ -2,6 +2,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class UnitTesting {
     // Initialization of test variables;
@@ -186,153 +187,116 @@ public class UnitTesting {
     // Straights and Flushes
     @Test
     public void canEvaluateFlushes() {
-        // This single test case will evaluate whether or not the given Poker hand evaluates to be the Flush rank.
-        // A player, 5 playing cards, and the hand evaluator are used for the test.
-        // Every card is the same suit and the values do not matter for this scenario.
-        Player player = new Player();
-        ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard sevenSpades = new PlayingCard("7", "Spades");
-        PlayingCard kingSpades = new PlayingCard("King", "Spades");
-        PlayingCard sixSpades = new PlayingCard("6", "Spades");
-        PlayingCard twoSpades = new PlayingCard("2", "Spades");
-        PlayingCard fourSpades = new PlayingCard("4", "Spades");
+        // Explicit cases.
+        System.out.println("Iteration 1");
+        fiveCard_Flush_5CardHand_True(
+                "King", "7", "5", "2", "Ace",
+                "Spades", "Spades", "Spades", "Spades", "Spades",
+                1);
 
-        // All 5 cards are added to the player's hand.
-        hand.add(sevenSpades);
-        hand.add(kingSpades);
-        hand.add(sixSpades);
-        hand.add(twoSpades);
-        hand.add(fourSpades);
+        System.out.println("Iteration 2");
+        fiveCard_Flush_5CardHand_True(
+                "King", "7", "5", "2", "Ace",
+                "Hearts", "Hearts", "Hearts", "Hearts", "Hearts",
+                2);
 
-        printHand(hand);
+        System.out.println("Iteration 3");
+        fiveCard_Flush_5CardHand_True("King", "7", "5", "2", "Ace",
+                "Clubs", "Clubs", "Clubs", "Clubs", "Clubs",
+                3);
 
-        // The evaluator will check if the player's hand evaluates to be a flush.
-        // Finally, it is tested for truth. If true, the test passes.
-        HandEvaluator evaluator = new HandEvaluator(player, hand);
-        Assertions.assertTrue(evaluator.isAFlush());
-    }
-    @Test
-    public void canEvaluateFlushes1() {
-        Player player = new Player("Bob");
-        ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard sevenHearts = new PlayingCard("7", "Hearts");
-        PlayingCard kingSpades = new PlayingCard("King", "Spades");
-        PlayingCard sixSpades = new PlayingCard("6", "Spades");
-        PlayingCard twoSpades = new PlayingCard("2","Spades");
-        PlayingCard fourSpades = new PlayingCard("4", "Spades");
+        System.out.println("Iteration 4");
+        fiveCard_Flush_5CardHand_True("King", "7", "5", "2", "Ace",
+                "Diamonds", "Diamonds", "Diamonds", "Diamonds", "Diamonds",
+                3);
 
-        hand.add(sevenHearts);
-        hand.add(kingSpades);
-        hand.add(sixSpades);
-        hand.add(twoSpades);
-        hand.add(fourSpades);
-
-        printHand(hand);
-
-        HandEvaluator evaluator = new HandEvaluator(player, hand);
-        Assertions.assertFalse(evaluator.isAFlush());
+        // Random value cases.
+        System.out.println("Iteration 9999");
+        Random randomizer = new Random();
+        String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
+        String[] suits = {"Spades", "Hearts", "Clubs", "Diamonds"};
+        for (int i = 0; i < 1000; i++) {
+            for (String suit: suits) {
+                fiveCard_Flush_5CardHand_True(
+                        values[randomizer.nextInt(12)],values[randomizer.nextInt(12)],values[randomizer.nextInt(12)],values[randomizer.nextInt(12)],values[randomizer.nextInt(12)],
+                        suit, suit, suit, suit, suit,
+                        9999);
+            }
+        }
     }
     @Test
     public void canEvaluateNotFlushes() {
-        // This single test case will evaluate the inverse case of a flush evaluation for a hand.
-        // A player, 5 playing cards, and the hand evaluator are used for the test.
-        // The hand must not contain all matching suits and the values do not matter for this scenario.
-        Player player = new Player();
-        ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard sevenSpades = new PlayingCard("7", "Spades");
-        PlayingCard kingSpades = new PlayingCard("King", "Spades");
-        PlayingCard sixSpades = new PlayingCard("6", "Spades");
-        PlayingCard twoSpades = new PlayingCard("2", "Spades");
-        PlayingCard fourHearts = new PlayingCard("4", "Hearts");
+        System.out.println("Iteration 1");
+        fiveCard_Flush_5CardHand_False("King", "7", "5", "2", "Ace",
+                "Hearts", "Spades", "Spades", "Spades", "Spades",
+                1);
 
-        // All 5 cards are added to the player's hand.
-        hand.add(sevenSpades);
-        hand.add(kingSpades);
-        hand.add(sixSpades);
-        hand.add(twoSpades);
-        hand.add(fourHearts);
+        System.out.println("Iteration 2");
+        fiveCard_Flush_5CardHand_False("King", "7", "5", "2", "Ace",
+                "Spades", "Hearts", "Spades", "Spades", "Spades",
+                2);
 
-        printHand(hand);
+        System.out.println("Iteration 3");
+        fiveCard_Flush_5CardHand_False("King", "7", "5", "2", "Ace",
+                "Spades", "Spades", "Hearts", "Spades", "Spades",
+                3);
 
-        // The evaluator will check if the player's hand evaluates to be a flush.
-        // Finally, it is tested for truth. If true, the test passes.
-        HandEvaluator evaluator = new HandEvaluator(player, hand);
-        Assertions.assertFalse(evaluator.isAFlush());
+        System.out.println("Iteration 4");
+        fiveCard_Flush_5CardHand_False("King", "7", "5", "2", "Ace",
+                "Spades", "Spades", "Spades", "Hearts", "Spades",
+                4);
+
+        System.out.println("Iteration 5");
+        fiveCard_Flush_5CardHand_False("King", "7", "5", "2", "Ace",
+                "Spades", "Spades", "Spades", "Spades", "Hearts",
+                5);
+
+        System.out.println("Iteration 6");
+        fiveCard_Flush_5CardHand_False("King", "7", "5", "2", "Ace",
+                "Spades", "Spades", "Spades", "Spades", "asdf",
+                6);
+
+        System.out.println("Iteration 7");
+        fiveCard_Flush_5CardHand_False("King", "7", "5", "2", "Ace",
+                "asdf", "asdf", "asdf", "asdf", "asdf",
+                7);
     }
     @Test
     public void canEvaluateStraights() {
-        // This single test case will evaluate whether or not the given Poker hand evaluates to be the Straight rank.
-        // A player, 5 playing cards, and the hand evaluator are used for the test.
-        // Each card will be sorted, then the hand will be checked to see if the values are in sequence.
-        Player player = new Player("Bill");
-        ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard sevenSpades = new PlayingCard("7", "Spades");
-        PlayingCard eightClubs = new PlayingCard("8", "Clubs");
-        PlayingCard nineHearts = new PlayingCard("9", "Hearts");
-        PlayingCard tenSpades = new PlayingCard("10", "Spades");
-        PlayingCard jackHearts = new PlayingCard("Jack", "Hearts");
+        System.out.println("Iteration 1");
+        fiveCard_Straight_5CardHand_True(
+                "Ace", "2", "3", "4", "5",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
+                1);
 
-        // Each card is added to the player's hand. They are added out of order intentionally.
-        // The hand evaluator must sort the hand correctly in order for its internal methods to identify a Straight.
-        hand.add(sevenSpades);
-        hand.add(jackHearts);
-        hand.add(nineHearts);
-        hand.add(eightClubs);
-        hand.add(tenSpades);
+        System.out.println("Iteration 2");
+        fiveCard_Straight_5CardHand_True(
+                "2", "3", "4", "5", "6",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
+                2);
 
-        printHand(hand);
+        System.out.println("Iteration 3");
+        fiveCard_Straight_5CardHand_True(
+                "5", "6", "7", "8", "9",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
+                3);
 
-        // The evaluator will check if the hand values are consecutive.
-        // The boolean value is checked for truth. If true, the test passes.
-        HandEvaluator evaluator = new HandEvaluator(player, hand);
-        Assertions.assertTrue(evaluator.isAStraight());
-    }
-    @Test
-    public void canEvaluateStraights1() {
-        Player player = new Player();
-        ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard aceSpades = new PlayingCard("Ace", "Spades");
-        PlayingCard twoHearts = new PlayingCard("2", "Hearts");
-        PlayingCard threeHearts = new PlayingCard("3", "Hearts");
-        PlayingCard fourClubs = new PlayingCard("4", "Clubs");
-        PlayingCard fiveSpades = new PlayingCard("5", "Spades");
+        System.out.println("Iteration 4");
+        fiveCard_Straight_5CardHand_True(
+                "9", "10", "Jack", "Queen", "King",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
+                4);
 
-        hand.add(aceSpades);
-        hand.add(threeHearts);
-        hand.add(fiveSpades);
-        hand.add(fourClubs);
-        hand.add(twoHearts);
-
-        printHand(hand);
-
-        HandEvaluator evaluator = new HandEvaluator(player, hand);
-        Assertions.assertTrue(evaluator.isAStraight());
-    }
-    @Test
-    public void canEvaluateStraights2() {
-        Player player = new Player();
-        ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard tenSpades = new PlayingCard("10", "Spades");
-        PlayingCard jackHearts = new PlayingCard("Jack", "Hearts");
-        PlayingCard queenHearts = new PlayingCard("Queen", "Hearts");
-        PlayingCard kingClubs = new PlayingCard("King", "Clubs");
-        PlayingCard aceSpades = new PlayingCard("Ace", "Spades");
-
-        hand.add(aceSpades);
-        hand.add(jackHearts);
-        hand.add(kingClubs);
-        hand.add(tenSpades);
-        hand.add(queenHearts);
-
-        printHand(hand);
-
-        HandEvaluator evaluator = new HandEvaluator(player, hand);
-        Assertions.assertTrue(evaluator.isAStraight());
+        System.out.println("Iteration 5");
+        fiveCard_Straight_5CardHand_True(
+                "10", "Jack", "Queen", "King", "Ace",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
+                5);
     }
     @Test
     public void canEvaluateAllStraights() {
         // This test will procedurally check ALL value combinations that are supposed to indicate the Straight rank.
-        // An assertion will be made for each instance of a Straight hand.
+        // An assertion will be made for each Iteration of a Straight hand.
         Player player = new Player();
         ArrayList<PlayingCard> hand = new ArrayList<>();
 
@@ -355,76 +319,180 @@ public class UnitTesting {
     }
     @Test
     public void canEvaluateNotStraights() {
-        // This test check that a particular 5 card poker hand does NOT evaluate to be a straight.
-        // The hand is consecutive to 4 cards (in other words a "4-card straight", which is not a straight).
-        // When evaluated in the handEvaluator, the boolean should return false. If so, the test passes.
+        System.out.println("Iteration 1");
+        fiveCard_Straight_5CardHand_False(
+                "Ace", "2", "3", "4", "6",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
+                1);
+
+        System.out.println("Iteration 2");
+        fiveCard_Straight_5CardHand_False(
+                "Ace", "3", "4", "5", "6",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
+                2);
+
+        System.out.println("Iteration 3");
+        fiveCard_Straight_5CardHand_False(
+                "Ace", "2", "4", "5", "6",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
+                3);
+
+        System.out.println("Iteration 4");
+        fiveCard_Straight_5CardHand_False(
+                "Ace", "3", "5", "7", "9",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
+                4);
+
+        System.out.println("Iteration 5");
+        fiveCard_Straight_5CardHand_False(
+                "Ace", "Ace", "Ace", "Ace", "Ace",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
+                5);
+
+        System.out.println("Iteration 6");
+        fiveCard_Straight_5CardHand_False(
+                "2", "3", "4", "5", "5",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
+                6);
+
+        System.out.println("Iteration 7");
+        fiveCard_Straight_5CardHand_False(
+                "2", "3", "Jack", "5", "6",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
+                7);
+
+        System.out.println("Iteration 8");
+        fiveCard_Straight_5CardHand_False(
+                "9", "10", "Jack", "King", "Ace",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
+                8);
+    }
+    @Test
+    public void canEvaluateStraights6CardHand() {
+        // This single test case will evaluate whether or not the given Poker hand evaluates to be the Straight rank.
+        // A player, 5 playing cards, and the hand evaluator are used for the test.
+        // Each card will be sorted, then the hand will be checked to see if the values are in sequence.
         Player player = new Player();
         ArrayList<PlayingCard> hand = new ArrayList<>();
+        PlayingCard sevenSpades = new PlayingCard("7", "Spades");
+        PlayingCard eightClubs = new PlayingCard("8", "Clubs");
+        PlayingCard nineHearts = new PlayingCard("9", "Hearts");
         PlayingCard tenSpades = new PlayingCard("10", "Spades");
         PlayingCard jackHearts = new PlayingCard("Jack", "Hearts");
         PlayingCard queenHearts = new PlayingCard("Queen", "Hearts");
-        PlayingCard kingClubs = new PlayingCard("King", "Clubs");
-        PlayingCard fourSpades = new PlayingCard("4", "Spades");
 
-        hand.add(fourSpades);
+        // Each card is added to the player's hand. They are added out of order intentionally.
+        // The hand evaluator must sort the hand correctly in order for its internal methods to identify a Straight.
+        hand.add(sevenSpades);
         hand.add(jackHearts);
-        hand.add(kingClubs);
+        hand.add(nineHearts);
+        hand.add(eightClubs);
         hand.add(tenSpades);
         hand.add(queenHearts);
 
         printHand(hand);
 
+        // The evaluator will check if the hand values are consecutive.
+        // The boolean value is checked for truth. If true, the test passes.
         HandEvaluator evaluator = new HandEvaluator(player, hand);
-        Assertions.assertFalse(evaluator.isAStraight());
+        evaluator.setHandSize(6);
+        Assertions.assertTrue(evaluator.isAStraight());
     }
     @Test
-    public void canEvaluateNotStraights1() {
+    public void canEvaluateStraights6CardHand1() {
+        // This single test case will evaluate whether or not the given Poker hand evaluates to be the Straight rank.
+        // A player, 5 playing cards, and the hand evaluator are used for the test.
+        // Each card will be sorted, then the hand will be checked to see if the values are in sequence.
         Player player = new Player();
         ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard aceSpades = new PlayingCard("Ace", "Spades");
-        PlayingCard twoHearts = new PlayingCard("2", "Hearts");
-        PlayingCard threeHearts = new PlayingCard("3", "Hearts");
-        PlayingCard fourClubs = new PlayingCard("4", "Clubs");
-        PlayingCard sixSpades = new PlayingCard("6", "Spades");
-
-        hand.add(aceSpades);
-        hand.add(threeHearts);
-        hand.add(sixSpades);
-        hand.add(fourClubs);
-        hand.add(twoHearts);
-
-        printHand(hand);
-
-        HandEvaluator evaluator = new HandEvaluator(player, hand);
-        Assertions.assertFalse(evaluator.isAStraight());
-    }
-    @Test
-    public void canEvaluateStraightFlushes() {
-        // This test determines if the HandEvaluator can identify Straight Flushes.
-        // 5 cards of consecutive values and matching suits are added to a player's hand.
-        // Truth will be asserted upon the evaluation of a Straight Flush. If true, the test passes.
-        Player player = new Player();
-        ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard fiveSpades = new PlayingCard("5", "Spades");
-        PlayingCard sixSpades = new PlayingCard("6", "Spades");
         PlayingCard sevenSpades = new PlayingCard("7", "Spades");
-        PlayingCard eightSpades = new PlayingCard("8", "Spades");
-        PlayingCard nineSpades = new PlayingCard("9", "Spades");
+        PlayingCard eightClubs = new PlayingCard("8", "Clubs");
+        PlayingCard nineHearts = new PlayingCard("9", "Hearts");
+        PlayingCard tenSpades = new PlayingCard("10", "Spades");
+        PlayingCard jackHearts = new PlayingCard("Jack", "Hearts");
+        PlayingCard kingHearts = new PlayingCard("King", "Hearts");
 
-        // Cards added to the hand out of order in order to validate HandEvaluator's ability to sort properly.
-        // HandEvaluator cannot read Straights if the hand is out of order.
-        hand.add(fiveSpades);
-        hand.add(sixSpades);
-        hand.add(nineSpades);
+        // Each card is added to the player's hand. They are added out of order intentionally.
+        // The hand evaluator must sort the hand correctly in order for its internal methods to identify a Straight.
         hand.add(sevenSpades);
-        hand.add(eightSpades);
+        hand.add(jackHearts);
+        hand.add(nineHearts);
+        hand.add(eightClubs);
+        hand.add(tenSpades);
+        hand.add(kingHearts);
 
         printHand(hand);
 
-        // The Hand is to be asserted true for Straight Flush, but false for Royal Flush.
+        // The evaluator will check if the hand values are consecutive.
+        // The boolean value is checked for truth. If true, the test passes.
         HandEvaluator evaluator = new HandEvaluator(player, hand);
-        Assertions.assertTrue(evaluator.isAStraightFlush());
-        Assertions.assertFalse(evaluator.isARoyalFlush());
+        evaluator.setHandSize(6);
+        Assertions.assertTrue(evaluator.isAStraight());
+    }
+    @Test
+    public void canEvaluateNotStraights6CardHand() {
+        // This single test case will evaluate whether or not the given Poker hand evaluates to be the Straight rank.
+        // A player, 5 playing cards, and the hand evaluator are used for the test.
+        // Each card will be sorted, then the hand will be checked to see if the values are in sequence.
+        Player player = new Player();
+        ArrayList<PlayingCard> hand = new ArrayList<>();
+        PlayingCard sevenSpades = new PlayingCard("7", "Spades");
+        PlayingCard eightClubs = new PlayingCard("8", "Clubs");
+        PlayingCard nineHearts = new PlayingCard("9", "Hearts");
+        PlayingCard tenSpades = new PlayingCard("10", "Spades");
+        PlayingCard queenHearts = new PlayingCard("Queen", "Hearts");
+        PlayingCard kingHearts = new PlayingCard("King", "Hearts");
+
+        // Each card is added to the player's hand. They are added out of order intentionally.
+        // The hand evaluator must sort the hand correctly in order for its internal methods to identify a Straight.
+        hand.add(sevenSpades);
+        hand.add(nineHearts);
+        hand.add(eightClubs);
+        hand.add(tenSpades);
+        hand.add(queenHearts);
+        hand.add(kingHearts);
+
+        printHand(hand);
+
+        // The evaluator will check if the hand values are consecutive.
+        // The boolean value is checked for truth. If true, the test passes.
+        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        evaluator.setHandSize(6);
+        Assertions.assertFalse(evaluator.isAStraight());
+    }
+    @Test
+    public void canEvaluateAllStraightFlushes() {
+        // Note: This test is identical to the 'canEvaluateAllFlushes()' test. It is reused for the
+        // distinct purpose to demonstrate the evaluation of Straight Flushes specifically.
+
+        // This test will procedurally check ALL Straight possibilities (with disregard to suits).
+        // An assertion will be made for each Iteration of a Straight hand.
+        Player player = new Player();
+        ArrayList<PlayingCard> hand = new ArrayList<>();
+
+        // These values compose every value in a standard deck of playing cards.
+        // A "low-Ace" and "high-Ace" are necessary for determining the existence of a 5-high Straight (aka "wheel").
+        String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
+        String[] suits = {"Spades", "Hearts", "Clubs", "Diamonds"};
+        PlayingCard[] cardsInHand;
+        int iterationCount = 1;
+
+        for (String suit : suits) {
+            for (int j = 0; j < 9; j++) {
+                hand.clear();
+                cardsInHand = new PlayingCard[5];
+                System.out.println("Iteration " + iterationCount + ": " + suit);
+                for (int k = 0; k < 5; k++) {
+                    cardsInHand[k] = new PlayingCard(values[k + j], suit);
+                    hand.add(cardsInHand[k]);
+                }
+                iterationCount++;
+                printHand(hand);
+                HandEvaluator evaluator = new HandEvaluator(player, hand);
+                Assertions.assertTrue(evaluator.isAStraightFlush());
+            }
+        }
+
     }
     @Test
     public void canEvaluateNotStraightFlushes() {
@@ -450,95 +518,152 @@ public class UnitTesting {
         Assertions.assertFalse(evaluator.isARoyalFlush());
     }
     @Test
-    public void canEvaluateStraightFlushWheel() {
-        // This test evaluates the "wheel" special straight case as a Straight Flush.
-        Player player = new Player();
-        ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard aceSpades = new PlayingCard("Ace", "Spades");
-        PlayingCard twoSpades = new PlayingCard("2", "Spades");
-        PlayingCard threeSpades = new PlayingCard("3", "Spades");
-        PlayingCard fourSpades = new PlayingCard("4", "Spades");
-        PlayingCard fiveSpades = new PlayingCard("5", "Spades");
-
-        hand.add(aceSpades);
-        hand.add(twoSpades);
-        hand.add(fiveSpades);
-        hand.add(fourSpades);
-        hand.add(threeSpades);
-
-        printHand(hand);
-
-        HandEvaluator evaluator = new HandEvaluator(player, hand);
-        Assertions.assertTrue(evaluator.isAStraightFlush());
-        Assertions.assertFalse(evaluator.isARoyalFlush());
-    }
-    @Test
-    public void canEvaluateAllStraightFlushes() {
-        // Note: This test is identical to the 'canEvaluateAllFlushes()' test. It is reused for the
-        // distinct purpose to demonstrate the evaluation of Straight Flushes specifically.
-
-        // This test will procedurally check ALL Straight possibilities (with disregard to suits).
-        // An assertion will be made for each instance of a Straight hand.
-        Player player = new Player();
-        ArrayList<PlayingCard> hand = new ArrayList<>();
-
-        // These values compose every value in a standard deck of playing cards.
-        // A "low-Ace" and "high-Ace" are necessary for determining the existence of a 5-high Straight (aka "wheel").
-        String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
-        PlayingCard[] cardsInHand;
-
-        for (int i = 0; i < 9; i++) {
-            hand.clear();
-            cardsInHand = new PlayingCard[5];
-            for (int j = 0; j < 5; j++) {
-                cardsInHand[j] = new PlayingCard(values[j + i], "Spades");
-                hand.add(cardsInHand[j]);
-            }
-            printHand(hand);
-            HandEvaluator evaluator = new HandEvaluator(player, hand);
-            Assertions.assertTrue(evaluator.isAStraightFlush());
-        }
-    }
-    @Test
     public void canEvaluateAllRoyalFlushes() {
+        for (int i = 0; i < suits.length; i++) {
+            fiveCard_RoyalFlush_5CardHand_True(suits[i], (i + 1));
+        }
+    }
+
+    // Methods
+    public void fiveCard_Flush_5CardHand_True(String value1, String value2, String value3, String value4, String value5,
+                                              String suit1, String suit2, String suit3, String suit4, String suit5,
+                                              int iterationNumber) {
+        // This single test case will evaluate whether or not a given Poker hand evaluates to be the Flush rank.
+        // A player, 5 playing cards, and the hand evaluator are used for the test.
+        // Every card is the same suit and the values do not matter for this scenario.
         Player player = new Player();
         ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard tenSpades = new PlayingCard("10", "Spades");
-        PlayingCard jackSpades = new PlayingCard("Jack", "Spades");
-        PlayingCard queenSpades = new PlayingCard("Queen", "Spades");
-        PlayingCard kingSpades = new PlayingCard("King", "Spades");
-        PlayingCard aceSpades = new PlayingCard("Ace", "Spades");
+        PlayingCard card1 = new PlayingCard(value1, suit1);
+        PlayingCard card2 = new PlayingCard(value2, suit2);
+        PlayingCard card3 = new PlayingCard(value3, suit3);
+        PlayingCard card4 = new PlayingCard(value4, suit4);
+        PlayingCard card5 = new PlayingCard(value5, suit5);
 
-        hand.add(aceSpades);
-        hand.add(jackSpades);
-        hand.add(kingSpades);
-        hand.add(tenSpades);
-        hand.add(queenSpades);
+        // All 5 cards are added to the player's hand.
+        hand.add(card3);
+        hand.add(card5);
+        hand.add(card1);
+        hand.add(card2);
+        hand.add(card4);
 
+        printHand(hand);
+
+        // The evaluator will check if the player's hand evaluates to be a flush.
+        // Finally, it is tested for truth. If true, the test passes.
+        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        Assertions.assertTrue(evaluator.isAFlush(), "Failure at iteration #" + iterationNumber);
+    }
+
+    public void fiveCard_Flush_5CardHand_False(String value1, String value2, String value3, String value4, String value5,
+                                               String suit1, String suit2, String suit3, String suit4, String suit5,
+                                               int iterationNumber) {
+        // This test case will evaluate the inverse case of a flush evaluation for a hand.
+        // A player, 5 playing cards, and the hand evaluator are used for the test.
+        // The hand must not contain all matching suits and the values do not matter for this scenario.
+        Player player = new Player();
+        ArrayList<PlayingCard> hand = new ArrayList<>();
+        PlayingCard card1 = new PlayingCard(value1, suit1);
+        PlayingCard card2 = new PlayingCard(value2, suit2);
+        PlayingCard card3 = new PlayingCard(value3, suit3);
+        PlayingCard card4 = new PlayingCard(value4, suit4);
+        PlayingCard card5 = new PlayingCard(value5, suit5);
+
+        // All 5 cards are added to the player's hand.
+        hand.add(card3);
+        hand.add(card5);
+        hand.add(card1);
+        hand.add(card2);
+        hand.add(card4);
+
+        printHand(hand);
+
+        // The evaluator will check if the player's hand evaluates to be a flush.
+        // Finally, it is tested for truth. If true, the test passes.
+        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        Assertions.assertFalse(evaluator.isAFlush());
+    }
+    public void fiveCard_Straight_5CardHand_True(String value1, String value2, String value3, String value4, String value5,
+                                                 String suit1, String suit2, String suit3, String suit4, String suit5,
+                                                 int iterationNumber) {
+        // This single test case will evaluate whether or not the given Poker hand evaluates to be the Straight rank.
+        // A player, 5 playing cards, and the hand evaluator are used for the test.
+        // Each card will be sorted, then the hand will be checked to see if the values are in sequence.
+        Player player = new Player();
+        ArrayList<PlayingCard> hand = new ArrayList<>();
+        PlayingCard card1 = new PlayingCard(value1, suit1);
+        PlayingCard card2 = new PlayingCard(value2, suit2);
+        PlayingCard card3 = new PlayingCard(value3, suit3);
+        PlayingCard card4 = new PlayingCard(value4, suit4);
+        PlayingCard card5 = new PlayingCard(value5, suit5);
+
+        // All 5 cards are added to the player's hand.
+        hand.add(card3);
+        hand.add(card5);
+        hand.add(card1);
+        hand.add(card2);
+        hand.add(card4);
+
+        printHand(hand);
+
+        // The evaluator will check if the hand values are consecutive.
+        // The boolean value is checked for truth. If true, the test passes.
+        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        Assertions.assertTrue(evaluator.isAStraight(), "Failure at iteration " + iterationNumber);
+    }
+    public void fiveCard_Straight_5CardHand_False(String value1, String value2, String value3, String value4, String value5,
+                                                  String suit1, String suit2, String suit3, String suit4, String suit5,
+                                                  int iterationNumber) {
+        // This test check that a particular 5 card poker hand does NOT evaluate to be a straight.
+        // The hand is consecutive to 4 cards (in other words a "4-card straight", which is not a straight).
+        // When evaluated in the handEvaluator, the boolean should return false. If so, the test passes.
+        Player player = new Player();
+        ArrayList<PlayingCard> hand = new ArrayList<>();
+        PlayingCard card1 = new PlayingCard(value1, suit1);
+        PlayingCard card2 = new PlayingCard(value2, suit2);
+        PlayingCard card3 = new PlayingCard(value3, suit3);
+        PlayingCard card4 = new PlayingCard(value4, suit4);
+        PlayingCard card5 = new PlayingCard(value5, suit5);
+
+        // All 5 cards are added to the player's hand.
+        hand.add(card3);
+        hand.add(card5);
+        hand.add(card1);
+        hand.add(card2);
+        hand.add(card4);
+
+        printHand(hand);
+
+        // The evaluator will check if the hand values are consecutive.
+        // The boolean value is checked for truth. If false, the test passes.
+        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        Assertions.assertFalse(evaluator.isAStraight(), "Failure at iteration " + iterationNumber);
+    }
+    public void fiveCard_RoyalFlush_5CardHand_True(String suit, int iterationNumber) {
+        Player player = new Player();
+        ArrayList<PlayingCard> hand = new ArrayList<>();
+        PlayingCard tenSuit = new PlayingCard("10", suit);
+        PlayingCard jackSuit = new PlayingCard("Jack", suit);
+        PlayingCard queenSuit = new PlayingCard("Queen", suit);
+        PlayingCard kingSuit = new PlayingCard("King", suit);
+        PlayingCard aceSuit = new PlayingCard("Ace", suit);
+
+        hand.add(aceSuit);
+        hand.add(jackSuit);
+        hand.add(kingSuit);
+        hand.add(tenSuit);
+        hand.add(queenSuit);
+
+        System.out.println("Iteration " + iterationNumber);
         printHand(hand);
 
         HandEvaluator evaluator = new HandEvaluator(player, hand);
         Assertions.assertTrue(evaluator.isARoyalFlush());
-
-        for (PlayingCard card: hand) {
-            card.setSuit("Hearts");
-        }
-        Assertions.assertTrue(evaluator.isARoyalFlush());
-
-        for (PlayingCard card: hand) {
-            card.setSuit("Clubs");
-        }
-        Assertions.assertTrue(evaluator.isARoyalFlush());
-
-        for (PlayingCard card: hand) {
-            card.setSuit("Diamonds");
-        }
-        Assertions.assertTrue(evaluator.isARoyalFlush());
     }
-
     public void printHand(ArrayList<PlayingCard> hand) {
+        Player player = new Player();
+        HandEvaluator evaluator = new HandEvaluator(player, hand);
         System.out.println("Player hand:");
-        for (PlayingCard card: hand) {
+        for (PlayingCard card : evaluator.getPlayerHand()) {
             System.out.printf("%s of %s \n", card.getValue(), card.getSuit());
         }
         System.out.println();
