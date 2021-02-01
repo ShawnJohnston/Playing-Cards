@@ -1,6 +1,5 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -188,110 +187,93 @@ public class UnitTesting {
     @Test
     public void canEvaluateFlushes() {
         // Explicit cases.
-        System.out.println("Iteration 1");
-        fiveCard_Flush_5CardHand_True(
-                "King", "7", "5", "2", "Ace",
-                "Spades", "Spades", "Spades", "Spades", "Spades",
-                1);
+        int iterationNumber = 1;
+        Player player = new Player();
 
-        System.out.println("Iteration 2");
-        fiveCard_Flush_5CardHand_True(
-                "King", "7", "5", "2", "Ace",
-                "Hearts", "Hearts", "Hearts", "Hearts", "Hearts",
-                2);
+        // This loop will test each suit possibility for a 5-card flush. Card values are irrelevant.
+        for (String suit: suits) {
+            player.setHand(handBuilder("King", "7", "5", "2", "Ace",
+                    suit, suit, suit, suit, suit));
+            fiveCardHand_fiveCardFlush_True(player, iterationNumber);
+            iterationNumber++;
+        }
 
-        System.out.println("Iteration 3");
-        fiveCard_Flush_5CardHand_True("King", "7", "5", "2", "Ace",
-                "Clubs", "Clubs", "Clubs", "Clubs", "Clubs",
-                3);
-
-        System.out.println("Iteration 4");
-        fiveCard_Flush_5CardHand_True("King", "7", "5", "2", "Ace",
-                "Diamonds", "Diamonds", "Diamonds", "Diamonds", "Diamonds",
-                3);
+        // 6-Card hand.
+        for (String suit: suits) {
+            player.setHand(handBuilder("King", "7", "5", "2", "Ace", "3",
+                    suit, suit, suit, suit, suit, suit));
+            fiveCardHand_fiveCardFlush_True(player, iterationNumber);
+            iterationNumber++;
+        }
 
         // Random value cases.
-        System.out.println("Iteration 9999");
+        System.out.println("Iteration: Random 1");
         Random randomizer = new Random();
         String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
         String[] suits = {"Spades", "Hearts", "Clubs", "Diamonds"};
         for (int i = 0; i < 1000; i++) {
             for (String suit: suits) {
-                fiveCard_Flush_5CardHand_True(
-                        values[randomizer.nextInt(12)],values[randomizer.nextInt(12)],values[randomizer.nextInt(12)],values[randomizer.nextInt(12)],values[randomizer.nextInt(12)],
-                        suit, suit, suit, suit, suit,
-                        9999);
+                player.setHand(handBuilder(values[randomizer.nextInt(12)],values[randomizer.nextInt(12)],values[randomizer.nextInt(12)],values[randomizer.nextInt(12)],values[randomizer.nextInt(12)],
+                        suit, suit, suit, suit, suit));
+                fiveCardHand_fiveCardFlush_True(player, 9999);
             }
         }
     }
     @Test
     public void canEvaluateNotFlushes() {
-        System.out.println("Iteration 1");
-        fiveCard_Flush_5CardHand_False("King", "7", "5", "2", "Ace",
-                "Hearts", "Spades", "Spades", "Spades", "Spades",
-                1);
+        Player player = new Player();
 
-        System.out.println("Iteration 2");
-        fiveCard_Flush_5CardHand_False("King", "7", "5", "2", "Ace",
-                "Spades", "Hearts", "Spades", "Spades", "Spades",
-                2);
+        player.setHand(handBuilder("King", "7", "5", "2", "Ace",
+                "Hearts", "Spades", "Spades", "Spades", "Spades"));
+        fiveCardHand_fiveCard_Flush_False(player, 1);
 
-        System.out.println("Iteration 3");
-        fiveCard_Flush_5CardHand_False("King", "7", "5", "2", "Ace",
-                "Spades", "Spades", "Hearts", "Spades", "Spades",
-                3);
+        player.setHand(handBuilder("King", "7", "5", "2", "Ace",
+                "Spades", "Hearts", "Spades", "Spades", "Spades"));
+        fiveCardHand_fiveCard_Flush_False(player, 2);
 
-        System.out.println("Iteration 4");
-        fiveCard_Flush_5CardHand_False("King", "7", "5", "2", "Ace",
-                "Spades", "Spades", "Spades", "Hearts", "Spades",
-                4);
+        player.setHand(handBuilder("King", "7", "5", "2", "Ace",
+                "Spades", "Spades", "Hearts", "Spades", "Spades"));
+        fiveCardHand_fiveCard_Flush_False(player, 3);
 
-        System.out.println("Iteration 5");
-        fiveCard_Flush_5CardHand_False("King", "7", "5", "2", "Ace",
-                "Spades", "Spades", "Spades", "Spades", "Hearts",
-                5);
+        player.setHand(handBuilder("King", "7", "5", "2", "Ace",
+                "Spades", "Spades", "Spades", "Hearts", "Spades"));
+        fiveCardHand_fiveCard_Flush_False(player, 4);
 
-        System.out.println("Iteration 6");
-        fiveCard_Flush_5CardHand_False("King", "7", "5", "2", "Ace",
-                "Spades", "Spades", "Spades", "Spades", "asdf",
-                6);
+        player.setHand(handBuilder("King", "7", "5", "2", "Ace",
+                "Spades", "Spades", "Spades", "Spades", "Hearts"));
+        fiveCardHand_fiveCard_Flush_False(player, 5);
 
-        System.out.println("Iteration 7");
-        fiveCard_Flush_5CardHand_False("King", "7", "5", "2", "Ace",
-                "asdf", "asdf", "asdf", "asdf", "asdf",
-                7);
+        player.setHand(handBuilder("King", "7", "5", "2", "Ace",
+                "Spades", "Spades", "Spades", "Spades", "asdf"));
+        fiveCardHand_fiveCard_Flush_False(player, 6);
+
+        player.setHand(handBuilder("King", "7", "5", "2", "Ace",
+                "asdf", "asdf", "asdf", "asdf", "asdf"));
+        fiveCardHand_fiveCard_Flush_False(player, 7);
     }
     @Test
     public void canEvaluateStraights() {
-        System.out.println("Iteration 1");
-        fiveCard_Straight_5CardHand_True(
-                "Ace", "2", "3", "4", "5",
-                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
-                1);
+        Player player = new Player();
 
-        System.out.println("Iteration 2");
-        fiveCard_Straight_5CardHand_True(
-                "2", "3", "4", "5", "6",
-                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
-                2);
+        player.setHand(handBuilder("Ace", "2", "3", "4", "5",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds"));
+        fiveCardHand_fiveCard_Straight_True(player, 1);
 
-        System.out.println("Iteration 3");
-        fiveCard_Straight_5CardHand_True(
-                "5", "6", "7", "8", "9",
-                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
-                3);
+        player.setHand(handBuilder("2", "3", "4", "5", "6",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds"));
+        fiveCardHand_fiveCard_Straight_True(player, 2);
 
-        System.out.println("Iteration 4");
-        fiveCard_Straight_5CardHand_True(
-                "9", "10", "Jack", "Queen", "King",
-                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
-                4);
+        player.setHand(handBuilder("5", "6", "7", "8", "9",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds"));
+        fiveCardHand_fiveCard_Straight_True(player, 3);
 
-        System.out.println("Iteration 5");
-        fiveCard_Straight_5CardHand_True(
-                "10", "Jack", "Queen", "King", "Ace",
-                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
-                5);
+        player.setHand(handBuilder("9", "10", "Jack", "Queen", "King",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds"));
+        fiveCardHand_fiveCard_Straight_True(player, 4);
+
+        player.setHand(handBuilder("10", "Jack", "Queen", "King", "Ace",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds"));
+        fiveCardHand_fiveCard_Straight_True(player, 5);
     }
     @Test
     public void canEvaluateAllStraights() {
@@ -315,57 +297,43 @@ public class UnitTesting {
             printHand(hand);
             HandEvaluator evaluator = new HandEvaluator(player, hand);
             Assertions.assertTrue(evaluator.isAStraight());
+            printHandRanking(evaluator);
         }
     }
     @Test
     public void canEvaluateNotStraights() {
-        System.out.println("Iteration 1");
-        fiveCard_Straight_5CardHand_False(
-                "Ace", "2", "3", "4", "6",
-                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
-                1);
+        Player player = new Player();
 
-        System.out.println("Iteration 2");
-        fiveCard_Straight_5CardHand_False(
-                "Ace", "3", "4", "5", "6",
-                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
-                2);
+        player.setHand(handBuilder("Ace", "2", "3", "4", "6",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds"));
+        fiveCardHand_fiveCardStraight_False(player, 1);
 
-        System.out.println("Iteration 3");
-        fiveCard_Straight_5CardHand_False(
-                "Ace", "2", "4", "5", "6",
-                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
-                3);
+        player.setHand(handBuilder("Ace", "3", "4", "5", "6",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds"));
+        fiveCardHand_fiveCardStraight_False(player, 2);
 
-        System.out.println("Iteration 4");
-        fiveCard_Straight_5CardHand_False(
-                "Ace", "3", "5", "7", "9",
-                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
-                4);
+        player.setHand(handBuilder("Ace", "2", "4", "5", "6",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds"));
+        fiveCardHand_fiveCardStraight_False(player, 3);
 
-        System.out.println("Iteration 5");
-        fiveCard_Straight_5CardHand_False(
-                "Ace", "Ace", "Ace", "Ace", "Ace",
-                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
-                5);
+        player.setHand(handBuilder("Ace", "3", "5", "7", "9",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds"));
+        fiveCardHand_fiveCardStraight_False(player, 4);
 
-        System.out.println("Iteration 6");
-        fiveCard_Straight_5CardHand_False(
-                "2", "3", "4", "5", "5",
-                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
-                6);
+        player.setHand(handBuilder("Ace", "Ace", "Ace", "Ace", "Ace",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds"));
+        fiveCardHand_fiveCardStraight_False(player, 5);
+        player.setHand(handBuilder("2", "3", "4", "5", "5",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds"));
+        fiveCardHand_fiveCardStraight_False(player, 6);
 
-        System.out.println("Iteration 7");
-        fiveCard_Straight_5CardHand_False(
-                "2", "3", "Jack", "5", "6",
-                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
-                7);
+        player.setHand(handBuilder("2", "3", "Jack", "5", "6",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds"));
+        fiveCardHand_fiveCardStraight_False(player, 7);
 
-        System.out.println("Iteration 8");
-        fiveCard_Straight_5CardHand_False(
-                "9", "10", "Jack", "King", "Ace",
-                "Spades", "Spades", "Hearts", "Clubs", "Diamonds",
-                8);
+        player.setHand(handBuilder("9", "10", "Jack", "King", "Ace",
+                "Spades", "Spades", "Hearts", "Clubs", "Diamonds"));
+        fiveCardHand_fiveCardStraight_False(player, 8);
     }
     @Test
     public void canEvaluateStraights6CardHand() {
@@ -397,6 +365,7 @@ public class UnitTesting {
         HandEvaluator evaluator = new HandEvaluator(player, hand);
         evaluator.setHandSize(6);
         Assertions.assertTrue(evaluator.isAStraight());
+        printHandRanking(evaluator);
     }
     @Test
     public void canEvaluateStraights6CardHand1() {
@@ -428,6 +397,7 @@ public class UnitTesting {
         HandEvaluator evaluator = new HandEvaluator(player, hand);
         evaluator.setHandSize(6);
         Assertions.assertTrue(evaluator.isAStraight());
+        printHandRanking(evaluator);
     }
     @Test
     public void canEvaluateNotStraights6CardHand() {
@@ -459,6 +429,7 @@ public class UnitTesting {
         HandEvaluator evaluator = new HandEvaluator(player, hand);
         evaluator.setHandSize(6);
         Assertions.assertFalse(evaluator.isAStraight());
+        printHandRanking(evaluator);
     }
     @Test
     public void canEvaluateAllStraightFlushes() {
@@ -490,6 +461,7 @@ public class UnitTesting {
                 printHand(hand);
                 HandEvaluator evaluator = new HandEvaluator(player, hand);
                 Assertions.assertTrue(evaluator.isAStraightFlush());
+                printHandRanking(evaluator);
             }
         }
 
@@ -516,129 +488,139 @@ public class UnitTesting {
         HandEvaluator evaluator = new HandEvaluator(player, hand);
         Assertions.assertFalse(evaluator.isAStraightFlush());
         Assertions.assertFalse(evaluator.isARoyalFlush());
+        printHandRanking(evaluator);
     }
     @Test
     public void canEvaluateAllRoyalFlushes() {
         for (int i = 0; i < suits.length; i++) {
-            fiveCard_RoyalFlush_5CardHand_True(suits[i], (i + 1));
+            fiveCardHand_fiveCardRoyalFlush_True(suits[i], (i + 1));
         }
     }
 
+    // Determine Winner
+    @Test
+    public void canDetermineWinner() {
+        Player player = new Player("Player");
+        Player dealer = new Player(("Dealer"));
+
+        player.setHand(handBuilder("Ace", "Queen", "Jack", "10", "9",
+                "Diamond", "Diamond", "Diamond", "Diamond", "Diamond"));
+        dealer.setHand(handBuilder("Ace", "Queen", "Jack", "10", "9",
+                "Hearts", "Hearts", "Hearts", "Hearts", "Hearts"));
+
+        HandEvaluator playerEvaluator = new HandEvaluator(player);
+        HandEvaluator dealerEvaluator = new HandEvaluator(dealer);
+
+        GameOutcome gameOutcome = new GameOutcome(playerEvaluator, dealerEvaluator);
+        gameOutcome.compareRanks();
+
+        printHandRanking(playerEvaluator);
+        printHandRanking(dealerEvaluator);
+        Assertions.assertNull(gameOutcome.getWinner());
+    }
+
     // Methods
-    public void fiveCard_Flush_5CardHand_True(String value1, String value2, String value3, String value4, String value5,
-                                              String suit1, String suit2, String suit3, String suit4, String suit5,
-                                              int iterationNumber) {
+    public ArrayList<PlayingCard> handBuilder(String value1, String value2, String value3, String value4, String value5,
+                                                String suit1, String suit2, String suit3, String suit4, String suit5) {
+        ArrayList<PlayingCard> hand = new ArrayList<>();
+        PlayingCard card1 = new PlayingCard(value1, suit1);
+        PlayingCard card2 = new PlayingCard(value2, suit2);
+        PlayingCard card3 = new PlayingCard(value3, suit3);
+        PlayingCard card4 = new PlayingCard(value4, suit4);
+        PlayingCard card5 = new PlayingCard(value5, suit5);
+        hand.add(card1);
+        hand.add(card2);
+        hand.add(card3);
+        hand.add(card4);
+        hand.add(card5);
+
+        return hand;
+    }
+    public ArrayList<PlayingCard> handBuilder(String value1, String value2, String value3, String value4, String value5, String value6,
+                                              String suit1, String suit2, String suit3, String suit4, String suit5, String suit6) {
+        ArrayList<PlayingCard> hand = new ArrayList<>();
+        PlayingCard card1 = new PlayingCard(value1, suit1);
+        PlayingCard card2 = new PlayingCard(value2, suit2);
+        PlayingCard card3 = new PlayingCard(value3, suit3);
+        PlayingCard card4 = new PlayingCard(value4, suit4);
+        PlayingCard card5 = new PlayingCard(value5, suit5);
+        PlayingCard card6 = new PlayingCard(value6, suit6);
+
+        hand.add(card1);
+        hand.add(card2);
+        hand.add(card3);
+        hand.add(card4);
+        hand.add(card5);
+        hand.add(card6);
+
+        return hand;
+    }
+    public void printHand(ArrayList<PlayingCard> hand) {
+        Player player = new Player();
+        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        System.out.println("Player hand:");
+        for (PlayingCard card : evaluator.getPlayerHand()) {
+            System.out.printf("%s of %s \n", card.getValue(), card.getSuit());
+        }
+    }
+    public void printHandRanking(HandEvaluator evaluator) {
+        System.out.println("Hand rank evaluates to: " + evaluator.getHandRank().toString() + "\n");
+    }
+    public void fiveCardHand_fiveCardFlush_True(Player player, int iterationNumber) {
         // This single test case will evaluate whether or not a given Poker hand evaluates to be the Flush rank.
         // A player, 5 playing cards, and the hand evaluator are used for the test.
         // Every card is the same suit and the values do not matter for this scenario.
-        Player player = new Player();
-        ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard card1 = new PlayingCard(value1, suit1);
-        PlayingCard card2 = new PlayingCard(value2, suit2);
-        PlayingCard card3 = new PlayingCard(value3, suit3);
-        PlayingCard card4 = new PlayingCard(value4, suit4);
-        PlayingCard card5 = new PlayingCard(value5, suit5);
 
-        // All 5 cards are added to the player's hand.
-        hand.add(card3);
-        hand.add(card5);
-        hand.add(card1);
-        hand.add(card2);
-        hand.add(card4);
-
-        printHand(hand);
+        System.out.println("Iteration " + iterationNumber);
+        printHand(player.getHand());
 
         // The evaluator will check if the player's hand evaluates to be a flush.
         // Finally, it is tested for truth. If true, the test passes.
-        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        HandEvaluator evaluator = new HandEvaluator(player);
         Assertions.assertTrue(evaluator.isAFlush(), "Failure at iteration #" + iterationNumber);
+        printHandRanking(evaluator);
     }
-
-    public void fiveCard_Flush_5CardHand_False(String value1, String value2, String value3, String value4, String value5,
-                                               String suit1, String suit2, String suit3, String suit4, String suit5,
-                                               int iterationNumber) {
+    public void fiveCardHand_fiveCard_Flush_False(Player player, int iterationNumber) {
         // This test case will evaluate the inverse case of a flush evaluation for a hand.
         // A player, 5 playing cards, and the hand evaluator are used for the test.
         // The hand must not contain all matching suits and the values do not matter for this scenario.
-        Player player = new Player();
-        ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard card1 = new PlayingCard(value1, suit1);
-        PlayingCard card2 = new PlayingCard(value2, suit2);
-        PlayingCard card3 = new PlayingCard(value3, suit3);
-        PlayingCard card4 = new PlayingCard(value4, suit4);
-        PlayingCard card5 = new PlayingCard(value5, suit5);
-
-        // All 5 cards are added to the player's hand.
-        hand.add(card3);
-        hand.add(card5);
-        hand.add(card1);
-        hand.add(card2);
-        hand.add(card4);
-
-        printHand(hand);
+        System.out.println("Iteration " + iterationNumber);
+        printHand(player.getHand());
 
         // The evaluator will check if the player's hand evaluates to be a flush.
         // Finally, it is tested for truth. If true, the test passes.
-        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        HandEvaluator evaluator = new HandEvaluator(player);
         Assertions.assertFalse(evaluator.isAFlush());
+        printHandRanking(evaluator);
     }
-    public void fiveCard_Straight_5CardHand_True(String value1, String value2, String value3, String value4, String value5,
-                                                 String suit1, String suit2, String suit3, String suit4, String suit5,
-                                                 int iterationNumber) {
+    public void fiveCardHand_fiveCard_Straight_True(Player player, int iterationNumber) {
         // This single test case will evaluate whether or not the given Poker hand evaluates to be the Straight rank.
         // A player, 5 playing cards, and the hand evaluator are used for the test.
         // Each card will be sorted, then the hand will be checked to see if the values are in sequence.
-        Player player = new Player();
-        ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard card1 = new PlayingCard(value1, suit1);
-        PlayingCard card2 = new PlayingCard(value2, suit2);
-        PlayingCard card3 = new PlayingCard(value3, suit3);
-        PlayingCard card4 = new PlayingCard(value4, suit4);
-        PlayingCard card5 = new PlayingCard(value5, suit5);
 
-        // All 5 cards are added to the player's hand.
-        hand.add(card3);
-        hand.add(card5);
-        hand.add(card1);
-        hand.add(card2);
-        hand.add(card4);
-
-        printHand(hand);
+        System.out.println("Iteration " + iterationNumber);
+        printHand(player.getHand());
 
         // The evaluator will check if the hand values are consecutive.
         // The boolean value is checked for truth. If true, the test passes.
-        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        HandEvaluator evaluator = new HandEvaluator(player);
         Assertions.assertTrue(evaluator.isAStraight(), "Failure at iteration " + iterationNumber);
+        printHandRanking(evaluator);
     }
-    public void fiveCard_Straight_5CardHand_False(String value1, String value2, String value3, String value4, String value5,
-                                                  String suit1, String suit2, String suit3, String suit4, String suit5,
-                                                  int iterationNumber) {
+    public void fiveCardHand_fiveCardStraight_False(Player player, int iterationNumber) {
         // This test check that a particular 5 card poker hand does NOT evaluate to be a straight.
         // The hand is consecutive to 4 cards (in other words a "4-card straight", which is not a straight).
         // When evaluated in the handEvaluator, the boolean should return false. If so, the test passes.
-        Player player = new Player();
-        ArrayList<PlayingCard> hand = new ArrayList<>();
-        PlayingCard card1 = new PlayingCard(value1, suit1);
-        PlayingCard card2 = new PlayingCard(value2, suit2);
-        PlayingCard card3 = new PlayingCard(value3, suit3);
-        PlayingCard card4 = new PlayingCard(value4, suit4);
-        PlayingCard card5 = new PlayingCard(value5, suit5);
 
-        // All 5 cards are added to the player's hand.
-        hand.add(card3);
-        hand.add(card5);
-        hand.add(card1);
-        hand.add(card2);
-        hand.add(card4);
-
-        printHand(hand);
+        printHand(player.getHand());
 
         // The evaluator will check if the hand values are consecutive.
         // The boolean value is checked for truth. If false, the test passes.
-        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        HandEvaluator evaluator = new HandEvaluator(player);
         Assertions.assertFalse(evaluator.isAStraight(), "Failure at iteration " + iterationNumber);
+        printHandRanking(evaluator);
     }
-    public void fiveCard_RoyalFlush_5CardHand_True(String suit, int iterationNumber) {
+    public void fiveCardHand_fiveCardRoyalFlush_True(String suit, int iterationNumber) {
         Player player = new Player();
         ArrayList<PlayingCard> hand = new ArrayList<>();
         PlayingCard tenSuit = new PlayingCard("10", suit);
@@ -658,14 +640,7 @@ public class UnitTesting {
 
         HandEvaluator evaluator = new HandEvaluator(player, hand);
         Assertions.assertTrue(evaluator.isARoyalFlush());
+        printHandRanking(evaluator);
     }
-    public void printHand(ArrayList<PlayingCard> hand) {
-        Player player = new Player();
-        HandEvaluator evaluator = new HandEvaluator(player, hand);
-        System.out.println("Player hand:");
-        for (PlayingCard card : evaluator.getPlayerHand()) {
-            System.out.printf("%s of %s \n", card.getValue(), card.getSuit());
-        }
-        System.out.println();
-    }
+
 }

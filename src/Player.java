@@ -36,6 +36,9 @@ public class Player {
     public void setStartingChips(int startingChips) {
         this.startingChips = startingChips;
     }
+    public void setHand(ArrayList<PlayingCard> hand) {
+        this.hand = hand;
+    }
 
     // Methods
     public void addToHand(PlayingCard card) {

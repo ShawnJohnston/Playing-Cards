@@ -2,17 +2,25 @@ import java.util.ArrayList;
 
 public class HandEvaluator {
     private static String gameMode = "5 Card Poker";
-    private static String[] standardPokerRanks = {"High Card", "Pair", "Two Pair", "Trips", "Straight", "Flush",
-            "Full House", "Quads", "Straight Flush", "Royal Flush"};
+    private static String[] standardPokerRanks = {"HighCard", "Pair", "TwoPair", "Trips", "Straight", "Flush",
+            "FullHouse", "Quads", "StraightFlush", "RoyalFlush"};
     private Player player;
     private ArrayList<PlayingCard> playerHand;
     private int handSize;
+    private rankState handRank = rankState.None;
     private ArrayList<String> pairsList = new ArrayList<>();
     private ArrayList<String> tripsList = new ArrayList<>();
     private String quadsValue = null;
     private int straightSize = 5;
 
     // Constructor
+    public HandEvaluator(Player player) {
+        this.player = player;
+        this.playerHand = player.getHand();
+        this.handSize = playerHand.size();
+        sortHand(this.playerHand);
+        checkForWheel(this.playerHand);
+    }
     public HandEvaluator(Player player, ArrayList<PlayingCard> hand) {
         this.player = player;
         this.playerHand = hand;
@@ -34,6 +42,9 @@ public class HandEvaluator {
     public int getHandSize() {
         return this.handSize;
     }
+    public rankState getHandRank() {
+        return this.handRank;
+    }
     public int getStraightSize() {
         return this.straightSize;
     }
@@ -41,9 +52,6 @@ public class HandEvaluator {
     // Setters
     public static void setGameMode(String gameMode) {
         HandEvaluator.gameMode = gameMode;
-    }
-    public void setPlayerHand(ArrayList<PlayingCard> hand) {
-        this.playerHand = hand;
     }
     public void setHandSize(int size) {
         this.handSize = size;
@@ -174,7 +182,7 @@ public class HandEvaluator {
         int[] suitCounters =  {spadesCounter, heartsCounter, clubsCounter, diamondsCounter};
         for (int counter: suitCounters) {
             if (counter >= 5) {
-
+                this.handRank = rankState.Flush;
                 return true;
             }
         }
@@ -230,6 +238,7 @@ public class HandEvaluator {
                         handIndex++;
                     }
                     if (straightCount == this.straightSize) {
+                        this.handRank = rankState.Straight;
                         return true;
                     }
                 }
@@ -239,6 +248,7 @@ public class HandEvaluator {
     }
     public Boolean isAStraightFlush() {
         if (isAStraight() && isAFlush()) {
+            this.handRank = rankState.StraightFlush;
             return true;
         }
         return false;
@@ -250,9 +260,13 @@ public class HandEvaluator {
                 this.playerHand.get(2).getValue().equals("Queen") &&
                 this.playerHand.get(3).getValue().equals("King") &&
                 this.playerHand.get(4).getValue().equals("Ace")) {
+                this.handRank = rankState.RoyalFlush;
                 return true;
             }
         }
         return false;
     }
+}
+enum rankState {
+    None, HighCard, Pair, TwoPair, Trips, Straight, Flush, FullHouse, Quads, StraightFlush, RoyalFlush
 }
