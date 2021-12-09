@@ -4,7 +4,6 @@ public class DeckOfCards {
     // Fields
     private int size = 52; // A standard deck of playing cards contains 52 cards.
     private PlayingCard[] cards = new PlayingCard[size]; // An array of each individual card object.
-    private PlayingCard[] discard = new PlayingCard[size]; // An array of discarded cards from the deck.
 
     // Constructors
     public DeckOfCards() {
@@ -13,7 +12,6 @@ public class DeckOfCards {
     public DeckOfCards(int jokers) {
         this.size = getSize() + jokers;
         this.cards = new PlayingCard[this.size];
-        this.discard = new PlayingCard[this.size];
         buildDeck();
     }
 

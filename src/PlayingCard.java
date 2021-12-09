@@ -1,13 +1,13 @@
 // This class is used to represent a playing card object.
 public class PlayingCard {
     // Fields
-    private String value;
-    private String suit;
-    private String name;
-    private String color;
-    private String front;
-    private String back;
-    private static facing currentFacing = facing.faceDown;
+    protected String value;
+    protected String suit;
+    protected String name;
+    protected String color;
+    protected String front;
+    protected String back;
+    protected static facing currentFacing = facing.faceDown;
 
     // Constructors
     public PlayingCard() {
@@ -15,6 +15,7 @@ public class PlayingCard {
     public PlayingCard(String value, String suit) {
         this.setValue(value);
         this.setSuit(suit);
+        this.setName();
     }
 
     // Getters
@@ -38,7 +39,7 @@ public class PlayingCard {
     public void setSuit(String suit) {
         this.suit = suit;
     }
-    public void setName() {
+    private void setName() {
         this.name = this.value + " of " + this.suit;
     }
     public void setColor(String color) {
@@ -47,31 +48,29 @@ public class PlayingCard {
 }
 // The JokerCard class inherits from PlayingCard. Is used to ensure that Jokers are distinct from other cards.
 class JokerCard extends PlayingCard {
-    private final String VALUE = "Joker";
-    private final String SUIT = "Joker";
-    private final String COLOR = "Joker";
-    private final String NAME = "Joker";
 
     // Constructors
     public JokerCard() {
+        value = "Joker";
+        suit = "Joker";
+        name = "Joker";
+        color = "Joker";
     }
 
     // Getters
     public String getValue() {
-        return VALUE;
+        return value;
     }
 
     public String getSuit() {
-        return SUIT;
+        return suit;
     }
     public String getColor() {
-        return COLOR;
+        return color;
     }
-    public String getNAME() {
-        return NAME;
+    public String getName() {
+        return name;
     }
-
-
 }
 enum facing {
     faceUp, faceDown

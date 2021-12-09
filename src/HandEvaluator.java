@@ -20,6 +20,7 @@ public class HandEvaluator {
         this.handSize = playerHand.size();
         sortHand(this.playerHand);
         checkForWheel(this.playerHand);
+
     }
     public HandEvaluator(Player player, ArrayList<PlayingCard> hand) {
         this.player = player;

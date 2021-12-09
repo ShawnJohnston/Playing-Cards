@@ -188,7 +188,7 @@ public class UnitTesting {
     public void canEvaluateFlushes() {
         // Explicit cases.
         int iterationNumber = 1;
-        Player player = new Player();
+        Player player = new Player("Thomas");
 
         // This loop will test each suit possibility for a 5-card flush. Card values are irrelevant.
         for (String suit: suits) {
@@ -336,7 +336,7 @@ public class UnitTesting {
         fiveCardHand_fiveCardStraight_False(player, 8);
     }
     @Test
-    public void canEvaluateStraights6CardHand() {
+    public void scanEvaluateStraights6CardHand() {
         // This single test case will evaluate whether or not the given Poker hand evaluates to be the Straight rank.
         // A player, 5 playing cards, and the hand evaluator are used for the test.
         // Each card will be sorted, then the hand will be checked to see if the values are in sequence.
@@ -368,7 +368,7 @@ public class UnitTesting {
         printHandRanking(evaluator);
     }
     @Test
-    public void canEvaluateStraights6CardHand1() {
+    public void canEvaluateStraight6CardHand1() {
         // This single test case will evaluate whether or not the given Poker hand evaluates to be the Straight rank.
         // A player, 5 playing cards, and the hand evaluator are used for the test.
         // Each card will be sorted, then the hand will be checked to see if the values are in sequence.
