@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
 
 public class Shuffler {
@@ -175,11 +173,10 @@ public class Shuffler {
         }
         else {
             // The tempStack is filled with each card until the split point is reached.
-            for (int i = 0; i < splitPoint; i++) {
+            for (int i = splitPoint - 1; i >= 0; i--) {
                 tempStack.add(cards.get(cards.size() - 1)); // Add to tempStack.
                 cards.remove(cards.size() - 1); // Remove from card list.
             }
-            Collections.reverse(tempStack); // The tempStack reverses because the procedure used here adds cards in reverse order.
             stack.addAll(tempStack); // The cards from the tempStack are added to stack.
         }
 

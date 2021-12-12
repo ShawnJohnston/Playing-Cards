@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class UnitTesting {
@@ -503,6 +504,24 @@ public class UnitTesting {
         printHandRanking(playerEvaluator);
         printHandRanking(dealerEvaluator);
         Assertions.assertNull(gameOutcome.getWinner());
+    }
+    @Test
+    public void canReadHandOfCards() {
+        Hand hand = new Hand();
+        ArrayList<PlayingCard> cards = handBuilder("Ace", "Queen", "Jack", "10", "9",
+                "Diamond", "Diamond", "Diamond", "Diamond", "Diamond");
+        hand.setHand(cards);
+        for (int i = 0; i < hand.getCards().size(); i++) {
+            System.out.println(hand.getCards().get(i).getName());
+        }
+    }
+    @Test
+    public void canCountValuesInHand() {
+        Hand hand = new Hand();
+        ArrayList<PlayingCard> cards = handBuilder("Ace", "Queen", "Jack", "10", "9",
+                "Diamond", "Diamond", "Diamond", "Diamond", "Diamond");
+        hand.setHand(cards);
+        System.out.println(Arrays.toString(hand.getValueData()));
     }
 
     // Methods
