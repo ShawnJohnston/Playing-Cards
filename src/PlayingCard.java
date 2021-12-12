@@ -26,7 +26,7 @@ public class PlayingCard {
         return this.suit;
     }
     public String getName() {
-        return name;
+        return this.name;
     }
     public String getColor() {
         return this.color;
@@ -39,7 +39,7 @@ public class PlayingCard {
     public void setSuit(String suit) {
         this.suit = suit;
     }
-    private void setName() {
+    public void setName() {
         this.name = this.value + " of " + this.suit;
     }
     public void setColor(String color) {
@@ -48,28 +48,14 @@ public class PlayingCard {
 }
 // The JokerCard class inherits from PlayingCard. Is used to ensure that Jokers are distinct from other cards.
 class JokerCard extends PlayingCard {
-
     // Constructors
     public JokerCard() {
         value = "Joker";
-        suit = "Joker";
         name = "Joker";
-        color = "Joker";
-    }
-
-    // Getters
-    public String getValue() {
-        return value;
     }
 
     public String getSuit() {
-        return suit;
-    }
-    public String getColor() {
-        return color;
-    }
-    public String getName() {
-        return name;
+        return "Joker";
     }
 }
 enum facing {

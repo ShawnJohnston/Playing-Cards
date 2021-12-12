@@ -12,8 +12,8 @@ public class UnitTesting {
     int expectedDeckSizeTwoJokers = 54;
 
     // Arrays representing card attributes.
-    String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
-    String[] suits = {"Spades", "Hearts", "Clubs", "Diamonds"};
+    public static final String[] VALUES = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
+    public static final String[] SUITS = {"Spades", "Hearts", "Clubs", "Diamonds", "Jokers"};
 
     // Objects of Deck variations.
     DeckOfCards standardDeck = new DeckOfCards();
@@ -44,15 +44,15 @@ public class UnitTesting {
     @Test
     public void thereAreFourOfEachCardValueInTheDeck() {
         // This test checks that each face value appears in the deck exactly 4 times.
-        int[] valueCounter = new int[values.length]; // This array is used to run parallel to 'values' array to count each value.
+        int[] valueCounter = new int[VALUES.length]; // This array is used to run parallel to 'values' array to count each value.
         int expectedValueCount = 4;
 
         // 2D for loop.
         // Outer loop runs through each index of the 'values' array.
         // Inner loop runs through each index of 'cards' array that composes the deck object.
-        for (int i = 0; i < values.length; i++) {
+        for (int i = 0; i < VALUES.length; i++) {
             for (int j = 0; j < standardDeck.getSize(); j++) {
-                if (values[i].equals(standardDeck.getCards()[j].getValue())) {
+                if (VALUES[i].equals(standardDeck.getCards().get(j).getValue())) {
                     // If the current 'i' index of 'values' matches the current 'j' index of cards in the deck.
                     valueCounter[i]++; // Increments the count for that value.
                 }
@@ -60,8 +60,8 @@ public class UnitTesting {
             // At this point, the value at the current index  of 'values' has run through each card in the deck.
             // The next index will run through the entire deck for matching values.
         }
-        for (int i = 0; i < values.length; i++) {
-            System.out.println("Card value: " + standardDeck.getCards()[i].getValue() + " x " + valueCounter[i]);
+        for (int i = 0; i < VALUES.length; i++) {
+            System.out.println("Card value: " + standardDeck.getCards().get(i).getValue() + " x " + valueCounter[i]);
             Assertions.assertEquals(expectedValueCount, valueCounter[i]);
         }
     }
@@ -71,62 +71,49 @@ public class UnitTesting {
 
         // A while loop will be used to control the logic of this test.
         int step = 0; // Counter used for the while loop. Will work for 3 steps, then the loop will end.
-        DeckOfCards deckBeingTested = new DeckOfCards(); // New deck object for testing.
+        int expectedSuitCount = 13; // Each suit should appear 13 times.
+
         while (step <=2) {
+            int expectedJokerCount = step;
+            DeckOfCards deckBeingTested = new DeckOfCards(step); // New deck object for testing.
             // Variables and counters.
-            int expectedSuitCount = 13; // Each suit should appear 13 times.
-            int expectedJokerCount = 0; // Depends on the deck variant. Is 0 normally.
             int clubCounter = 0;
             int heartCounter = 0;
             int spadeCounter = 0;
             int diamondCounter = 0;
             int jokerCounter = 0;
 
-            if (step == 1) {
-                // Re-instantiation of the deck to include 1 Joker.
-                deckBeingTested = new DeckOfCards(1);
-                expectedJokerCount = 1;
-                deckBeingTested.getCards()[52] = new JokerCard();
-            }
-            else if (step == 2) {
-                // // Re-instantiation of the deck to include 2 Jokers.
-                deckBeingTested = new DeckOfCards(2);
-                expectedJokerCount = 2;
-                deckBeingTested.getCards()[52] = new JokerCard();
-                deckBeingTested.getCards()[53] = new JokerCard();
+            if (step >= 1) {
+                for (int i = 0; i < step; i++) {
+                    deckBeingTested.getCards().add(new JokerCard());
+                }
             }
 
             for (int i = 0; i < deckBeingTested.getSize(); i++) {
                 // This loop will run through the entire deck. The suit of the card at the current index will increment
                 // it's corresponding suit counter.
-                if (deckBeingTested.getCards()[i].getSuit().equals("Clubs")) {
-                    clubCounter++;
-                }
-                if (deckBeingTested.getCards()[i].getSuit().equals("Hearts")) {
-                    heartCounter++;
-                }
-                if (deckBeingTested.getCards()[i].getSuit().equals("Spades")) {
-                    spadeCounter++;
-                }
-                if (deckBeingTested.getCards()[i].getSuit().equals("Diamonds")) {
-                    diamondCounter++;
-                }
-                if (deckBeingTested.getCards()[i].getSuit().equals("Joker")) {
-                    jokerCounter++;
+
+                switch (deckBeingTested.getCards().get(i).getSuit()) {
+                    case "Spades" -> spadeCounter++;
+                    case "Hearts" -> heartCounter++;
+                    case "Clubs" -> clubCounter++;
+                    case "Diamonds" -> diamondCounter++;
+                    default -> jokerCounter++;
                 }
             }
-            System.out.println("Suit count with " + step + " Jokers" + "\n" +
-                    "Clubs count: " + clubCounter + "\n" +
-                    "Hearts count: " + heartCounter + "\n" +
-                    "Spades count: " + spadeCounter + "\n" +
-                    "Diamond count: " + diamondCounter + "\n" +
-                    "Joker count: " + jokerCounter + "\n");
-            // Series of assertion, comparing expected counts to actual counts.
-            Assertions.assertEquals(expectedSuitCount, clubCounter);
-            Assertions.assertEquals(expectedSuitCount, heartCounter);
-            Assertions.assertEquals(expectedSuitCount, spadeCounter);
-            Assertions.assertEquals(expectedSuitCount, diamondCounter);
-            Assertions.assertEquals(expectedJokerCount, jokerCounter);
+
+            int[] counters = { spadeCounter, heartCounter, clubCounter, diamondCounter, jokerCounter};
+            System.out.println("\nSuit count with deck containing " + step + " Jokers" + "\n");
+            for (int i = 0; i < counters.length; i++) {
+                    System.out.println(SUITS[i] + ": " + counters[i]);
+                    // Comparing expected counts to actual counts.
+                    if (i < counters.length - 1) {
+                        Assertions.assertEquals(expectedSuitCount, counters[i]);
+                    }
+                    else {
+                        Assertions.assertEquals(expectedJokerCount, counters[i]);
+                    }
+            }
 
             step++; // Increments the step, which controls the loop and the deck variation.
         }
@@ -136,47 +123,42 @@ public class UnitTesting {
     public void theDeckCanBeShuffledUsingEachMethodInTheShufflerClass() {
         DeckOfCards shuffledDeck = new DeckOfCards();
         int step = 0;
-        System.out.println("Unshuffled:");
+        System.out.println("Pre-Shuffle:");
+        System.out.println("Unshuffled          Shuffled");
         for (int i = 0; i < shuffledDeck.getSize(); i++) {
             // This loop will run through the entire deck. The suit of the card at the current index will increment
             // it's corresponding suit counter.
-            System.out.printf("%d. Unshuffled: %s of %s", i, standardDeck.getCards()[i].getValue(), standardDeck.getCards()[i].getSuit());
-            System.out.printf("    Shuffled: %s of %s", shuffledDeck.getCards()[i].getValue(), shuffledDeck.getCards()[i].getSuit());
+            System.out.print(i + ". " + standardDeck.getCards().get(i).getName() + "      ");
+            System.out.print(shuffledDeck.getCards().get(i).getName() + "    ");
             System.out.println();
-            Assertions.assertEquals(standardDeck.getCards()[i].getSuit(), shuffledDeck.getCards()[i].getSuit());
-            Assertions.assertEquals(standardDeck.getCards()[i].getValue(), shuffledDeck.getCards()[i].getValue());
+            Assertions.assertEquals(standardDeck.getCards().get(i).getName(), shuffledDeck.getCards().get(i).getName());
         }
         Shuffler shuffler = new Shuffler();
 
         while (step < 2) {
             if (step == 0) {
+                System.out.println("\nComputerized Random Shuffle");
                 shuffledDeck = shuffler.random(shuffledDeck);
             }
             else if (step == 1) {
+                System.out.println("\nHand Shuffle");
                 shuffledDeck = shuffler.handShuffle(shuffledDeck);
             }
 
-            String[] standardValues = new String[standardDeck.getSize()];
-            String[] standardSuits = new String[standardDeck.getSize()];
-            String[] shuffledValues = new String[shuffledDeck.getSize()];
-            String[] shuffledSuits = new String[shuffledDeck.getSize()];
+            String[] standardCards = new String[standardDeck.getSize()];
+            String[] shuffledCards = new String[shuffledDeck.getSize()];
 
             for (int i = 0; i < shuffledDeck.getSize(); i++) {
-                standardValues[i] = standardDeck.getCards()[i].getValue();
-                shuffledValues[i] = shuffledDeck.getCards()[i].getValue();
+                standardCards[i] = standardDeck.getCards().get(i).getName();
+                shuffledCards[i] = shuffledDeck.getCards().get(i).getName();
             }
+            System.out.println("Unshuffled          Shuffled");
             for (int i = 0; i < shuffledDeck.getSize(); i++) {
-                standardSuits[i] = standardDeck.getCards()[i].getSuit();
-                shuffledSuits[i] = shuffledDeck.getCards()[i].getSuit();
-            }
-            System.out.println("\nShuffled");
-            for (int i = 0; i < shuffledDeck.getSize(); i++) {
-                System.out.printf("%d. Unshuffled: %s of %s", i, standardDeck.getCards()[i].getValue(), standardDeck.getCards()[i].getSuit());
-                System.out.printf("    Shuffled: %s of %s", shuffledDeck.getCards()[i].getValue(), shuffledDeck.getCards()[i].getSuit());
+                System.out.print(i + ". " + standardDeck.getCards().get(i).getName() + "      ");
+                System.out.print(shuffledDeck.getCards().get(i).getName() + "    ");
                 System.out.println();
             }
-            Assertions.assertNotEquals(standardValues, shuffledValues);
-            Assertions.assertNotEquals(standardSuits, shuffledSuits);
+            Assertions.assertNotEquals(standardCards, shuffledCards);
 
             step++;
         }
@@ -191,19 +173,23 @@ public class UnitTesting {
         Player player = new Player("Thomas");
 
         // This loop will test each suit possibility for a 5-card flush. Card values are irrelevant.
-        for (String suit: suits) {
-            player.setHand(handBuilder("King", "7", "5", "2", "Ace",
-                    suit, suit, suit, suit, suit));
-            fiveCardHand_fiveCardFlush_True(player, iterationNumber);
-            iterationNumber++;
+        for (String suit: SUITS) {
+            if (!suit.equals("Jokers")) {
+                player.setHand(handBuilder("King", "7", "5", "2", "Ace",
+                        suit, suit, suit, suit, suit));
+                fiveCardHand_fiveCardFlush_True(player, iterationNumber);
+                iterationNumber++;
+            }
         }
 
         // 6-Card hand.
-        for (String suit: suits) {
-            player.setHand(handBuilder("King", "7", "5", "2", "Ace", "3",
-                    suit, suit, suit, suit, suit, suit));
-            fiveCardHand_fiveCardFlush_True(player, iterationNumber);
-            iterationNumber++;
+        for (String suit: SUITS) {
+            if (!suit.equals("Jokers")) {
+                player.setHand(handBuilder("King", "7", "5", "2", "Ace", "3",
+                        suit, suit, suit, suit, suit, suit));
+                fiveCardHand_fiveCardFlush_True(player, iterationNumber);
+                iterationNumber++;
+            }
         }
 
         // Random value cases.
@@ -492,8 +478,8 @@ public class UnitTesting {
     }
     @Test
     public void canEvaluateAllRoyalFlushes() {
-        for (int i = 0; i < suits.length; i++) {
-            fiveCardHand_fiveCardRoyalFlush_True(suits[i], (i + 1));
+        for (int i = 0; i < SUITS.length - 1; i++) {
+            fiveCardHand_fiveCardRoyalFlush_True(SUITS[i], (i + 1));
         }
     }
 

@@ -15,9 +15,9 @@ public class Shuffler {
 
         for (int i = 0; i < deck.getSize(); i++) {
             int randomPosition = randomizer.nextInt(deck.getSize()); // Random integer from 0 to the value of the deck size.
-            PlayingCard temp = deck.getCards()[i]; // stores the current card in a temporary variable.
-            deck.getCards()[i] = deck.getCards()[randomPosition]; // The random index's card is assigned to the current index.
-            deck.getCards()[randomPosition] = temp; // The temporary variable is assigned to the random index.
+            PlayingCard temp = deck.getCards().get(i); // stores the current card in a temporary variable.
+            deck.getCards().set(i, deck.getCards().get(randomPosition)); // The random index's card is assigned to the current index.
+            deck.getCards().set(randomPosition, temp); // The temporary variable is assigned to the random index.
         }
         return deck; // To the deck object in main.
     }
@@ -83,24 +83,21 @@ public class Shuffler {
         }
         return numberSpread.get(randomizer.nextInt(numberSpread.size())); // A random value from the numberSpread returns.
     }
-    private PlayingCard[] riffle(DeckOfCards deck) {
+    private ArrayList<PlayingCard> riffle(DeckOfCards deck) {
         // This method will split the deck into two stacks, then be riffled back together to make a new full stack.
         ArrayList<PlayingCard> topStack = new ArrayList<>(); // Top half of the deck.
-        ArrayList<PlayingCard> bottomStack = new ArrayList<>(); // Bottom half of the deck.
+        ArrayList<PlayingCard> bottomStack = new ArrayList<PlayingCard>(); // Bottom half of the deck.
 
         // For every card in the deck up to and including the split point (the deck's midpoint with +/- 5 variance),
         // the current card index will be added to the top stack. The rest will be added to the bottom stack.
-        for (int i = 0; i < deck.getSize(); i++) {
+        for (int i = deck.getSize() - 1; i >= 0; i--) {
             if (i < setSplitPoint(deck)) {
-                topStack.add(deck.getCards()[i]);
+                topStack.add(deck.getCards().get(i));
             }
             else {
-                bottomStack.add(deck.getCards()[i]);
+                bottomStack.add(deck.getCards().get(i));
             }
         }
-        // Riffling starts at the bottom of each stack and proceeds upwards. Each stack is simply reversed.
-        Collections.reverse(topStack);
-        Collections.reverse(bottomStack);
 
         ArrayList<PlayingCard> riffledDeck = new ArrayList<>(); // New arrangement of cards post-riffle.
 
@@ -113,7 +110,7 @@ public class Shuffler {
         }
         // This loop incrementally assigns each card in the riffledDeck list to the deck's corresponding card index.
         for (int i = 0; i < deck.getSize(); i++) {
-            deck.getCards()[i] = riffledDeck.get(i);
+            deck.getCards().set(i, riffledDeck.get(i));
         }
         return deck.getCards(); // The riffle is complete. The result returns to main to overwrite the deck's card array.
     }
@@ -141,15 +138,18 @@ public class Shuffler {
             }
         }
     }
-    private PlayingCard[] box(DeckOfCards deck, int boxCount) {
+    private ArrayList<PlayingCard> box(DeckOfCards deck, int boxCount) {
         // The box method will use several lists, and use recursion to perform the entire procedure.
 
-        ArrayList<PlayingCard> cards = new ArrayList<>(Arrays.asList(deck.getCards())); // The deck's cards are stored as a list.
+        ArrayList<PlayingCard> cards = deck.getCards(); // The deck's cards are stored as a list.
         ArrayList<PlayingCard> deckBox; // This list will have stacks added to it recursively.
         ArrayList<PlayingCard> stack = new ArrayList<>(); // Individual stacks will contain cards, and the stack will be added to deckBox.
         deckBox = boxTail(cards, stack, boxCount); // Recursive method to perform the box procedure.
+
+        deck.setCards(deckBox);
         for (int i = 0; i < deck.getSize(); i++) {
-            deck.getCards()[i] = deckBox.get(i); // Each card index in the deck is reassigned a corresponding card from deckBox.
+
+            //deck.getCards().set(i, deckBox.get(i)); // Each card index in the deck is reassigned a corresponding card from deckBox.
         }
         return deck.getCards(); // To deck in handShuffle method.
     }
@@ -186,32 +186,38 @@ public class Shuffler {
         stack.addAll(boxTail(cards, stack, boxCount - 1)); // Tail recursion to continue the procedure.
         return stack; // Returns the stack to the next highest recursion level.
     }
-    private PlayingCard[] cutTheDeck(DeckOfCards deck) {
+    private ArrayList<PlayingCard> cutTheDeck(DeckOfCards deck) {
         // This method will split the deck into two stacks, then swap the position of the top and bottom stacks.
-        PlayingCard[] topStack = new PlayingCard[setSplitPoint(deck, 20)]; // Top stack will split at the deck midpoint (+/-) 10.
-        PlayingCard[] bottomStack = new PlayingCard[deck.getSize() - topStack.length]; // The remaining cards make up the bottom stack.
+
+        int topStackSize = setSplitPoint(deck, 20); // Top stack will split at the deck midpoint (+/-) 10.
+        int bottomStackSize = deck.getSize() - topStackSize; // The remaining cards make up the bottom stack.
+
+
+        ArrayList<PlayingCard> topStack = new ArrayList<>();
+        ArrayList<PlayingCard> bottomStack = new ArrayList<>();
+
         int j = 0; // Secondary incrementer.
         // This for loop will assign each index of cards in the deck to the corresponding topStack index.
         for (int i = 0; i < deck.getSize(); i++) {
-            if (i < topStack.length) {
-                topStack[i] = deck.getCards()[i];
+            if (i < topStackSize) {
+                topStack.add(deck.getCards().get(i));
             }
             else {
                 // The split point has been passed, the card is assigned to bottomStack at index j.
-                bottomStack[j] = deck.getCards()[i];
+                bottomStack.add(deck.getCards().get(i));
                 j++;
             }
         }
 
-        PlayingCard[] cutDeck = new PlayingCard[deck.getSize()]; // For containing the resulting card array.
+        ArrayList<PlayingCard> cutDeck = new ArrayList<>(); // For containing the resulting card array.
         // This for loop will assign each card in bottomStack to the new deck array, then cards from topStack when it
         // increments beyond the length of bottomStack.
-        for (int i = 0; i < cutDeck.length; i++) {
-            if (i < bottomStack.length) {
-                cutDeck[i] = bottomStack[i];
+        for (int i = 0; i < deck.getSize(); i++) {
+            if (i < bottomStackSize) {
+                cutDeck.add(bottomStack.get(i));
             }
             else {
-                cutDeck[i] = topStack[i - bottomStack.length];
+                cutDeck.add(topStack.get(i - bottomStackSize));
             }
         }
         return cutDeck; // To handShuffle method. Overwrites the deck's card array.

@@ -36,10 +36,10 @@ public class GameMode {
             ArrayList<PlayingCard> drawnCards = new ArrayList<>();
 
             for (int i = 0; i < 10; i++) {
-                System.out.println(deck.getCards()[i].getValue() + " " + deck.getCards()[i].getSuit());
+                System.out.println(deck.getCards().get(i).getValue() + " " + deck.getCards().get(i).getSuit());
             }
             for (int i = 0; i < 10; i++) {
-                drawnCards.add(deck.getCards()[i]);
+                drawnCards.add(deck.getCards().get(i));
             }
             for (int i = 0; i < drawnCards.size();) {
                 user.addToHand(drawnCards.get(i));
