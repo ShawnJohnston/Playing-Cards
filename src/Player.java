@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Player {
     private String name = ""; // The player can set a name.
     private int maxNumCardsInHand; // Used for game purposes.
-    private ArrayList<PlayingCard> hand = new ArrayList<>(); // The player's hand of cards.
+    private Hand hand = new Hand(); // The player's hand of cards.
     private int startingChips; // Amount of Chips the player starts a game session with.
     private int chipTotal; // The player's total number of chips.
 
@@ -19,7 +19,7 @@ public class Player {
     public int getMaxNumCardsInHand() {
         return maxNumCardsInHand;
     }
-    public ArrayList<PlayingCard> getHand() {
+    public Hand getHand() {
         return this.hand;
     }
     public int getChipTotal() {
@@ -36,12 +36,12 @@ public class Player {
     public void setStartingChips(int startingChips) {
         this.startingChips = startingChips;
     }
-    public void setHand(ArrayList<PlayingCard> hand) {
-        this.hand = hand;
+    public void setHand(ArrayList<PlayingCard> cards) {
+        this.hand.setHand(cards);
     }
 
     // Methods
     public void addToHand(PlayingCard card) {
-        this.hand.add(card);
+        this.hand.addCard(card);
     }
 }

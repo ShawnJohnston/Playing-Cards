@@ -65,9 +65,9 @@ public class DeckOfCards {
             card.setSuit(SUITS[suitGroup]); // Suit is set.
             card.setName();
             if (card.getSuit().equals("Hearts") || card.getSuit().equals("Diamonds")) {
-                card.setColor("Red");
+                card.setColor();
             } else if (card.getSuit().equals("Clubs") || card.getSuit().equals("Spades")) {
-                card.setColor("Black");
+                card.setColor();
             }
             this.cards.add(card); // Card assigned to 'cards' array at index 'i'.
             valueCounter++;

@@ -1,202 +1,101 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class HandEvaluator {
-    private static String gameMode = "5 Card Poker";
     private static String[] standardPokerRanks = {"HighCard", "Pair", "TwoPair", "Trips", "Straight", "Flush",
             "FullHouse", "Quads", "StraightFlush", "RoyalFlush"};
+    private final boolean[] RANKDATA = new boolean[standardPokerRanks.length];
     private Player player;
-    private ArrayList<PlayingCard> playerHand;
+    private Hand hand;
     private int handSize;
+    private int straightFlushSize = 5;
     private rankState handRank = rankState.None;
+
+
     private ArrayList<String> pairsList = new ArrayList<>();
     private ArrayList<String> tripsList = new ArrayList<>();
     private String quadsValue = null;
-    private int straightSize = 5;
 
-    // Constructor
-    public HandEvaluator(Player player) {
+    public HandEvaluator() {
+    }
+    public HandEvaluator(Player player, Hand hand) {
         this.player = player;
-        this.playerHand = player.getHand();
-        this.handSize = playerHand.size();
-        sortHand(this.playerHand);
-        checkForWheel(this.playerHand);
-
-    }
-    public HandEvaluator(Player player, ArrayList<PlayingCard> hand) {
-        this.player = player;
-        this.playerHand = hand;
-        this.handSize = playerHand.size();
-        sortHand(this.playerHand);
-        checkForWheel(this.playerHand);
+        this.hand = hand;
+        this.handSize = hand.getCards().size();
+        Arrays.fill(RANKDATA, false);
+        this.RANKDATA[0] = true;
+        this.hand.sortHand();
+        checkForWheel();
     }
 
-    // Getters
-    public static String getGameMode() {
-        return gameMode;
-    }
     public Player getPlayer() {
         return this.player;
     }
-    public ArrayList<PlayingCard> getPlayerHand() {
-        return this.playerHand;
-    }
-    public int getHandSize() {
-        return this.handSize;
+    public Hand getHand() {
+        return this.hand;
     }
     public rankState getHandRank() {
-        return this.handRank;
-    }
-    public int getStraightSize() {
-        return this.straightSize;
+        return handRank;
     }
 
-    // Setters
-    public static void setGameMode(String gameMode) {
-        HandEvaluator.gameMode = gameMode;
+    public void setHand(Hand hand) {
+        this.hand = hand;
+    }
+    public void setPlayer(Player player) {
+        this.player = player;
     }
     public void setHandSize(int size) {
         this.handSize = size;
     }
-    public void setStraightSize(int size) {
-        this.straightSize = size;
+    public void setStraightFlushSize(int size) {
+        this.straightFlushSize = size;
     }
 
-    // Methods
-    public void sortHand(ArrayList<PlayingCard> hand) {
-        ArrayList<PlayingCard> sortedHand = new ArrayList<>(); // Buffer hand to overwrite playerHand.
-        String[] values = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"}; // Value order, excluding 'low Ace'.
-        int cardsSorted = 0; // Counter used to break out of the following loop when the hand has been sorted.
-
-        // This 2D loop will compare each card to each index in the values array. If they match, the card will be added
-        // to the buffer array and the counter will increment.
-        // The counter will break the loop when it increments to the value equal to the number of cards in the hand.
-        for (String value : values) {
-            for (PlayingCard card : hand) {
-                // The outer loop sets the comparison value, and the inner loop cycles through each card in the hand.
-                if (card.getValue().equals(value)) {
-                    // The card's value matches the values array.
-                    sortedHand.add(card); // The card is added to the buffer list.
-                    cardsSorted++;
-                }
-            }
-            if (cardsSorted == this.handSize) {
-                break;
-            }
-        }
-        this.playerHand = sortedHand;
-    }
-    private void checkForWheel(ArrayList<PlayingCard> hand) {
-        if (hand.get(0).getValue().equals("2") &&
-                hand.get(1).getValue().equals("3") &&
-                hand.get(2).getValue().equals("4") &&
-                hand.get(3).getValue().equals("5") &&
-                hand.get(4).getValue().equals("Ace")) {
+    private void checkForWheel() {
+        if (this.hand.getCards().get(0).getValue().equals("2") &&
+            this.hand.getCards().get(1).getValue().equals("3") &&
+            this.hand.getCards().get(2).getValue().equals("4") &&
+            this.hand.getCards().get(3).getValue().equals("5") &&
+            this.hand.getCards().get(4).getValue().equals("Ace")) {
             adjustForWheel();
         }
     }
     private void adjustForWheel() {
-        boolean isWheel = true;
-        String[] values = {"2", "3", "4", "5", "Ace"};
-
-        for (int i = 0; i < this.handSize; i++) {
-            if (!this.playerHand.get(i).getValue().equals(values[i])) {
-                isWheel = false;
-                break;
-            }
-        }
-
-        if (isWheel) {
-            PlayingCard tempCard = this.playerHand.get(this.handSize - 1);
-            this.playerHand.add(0, tempCard);
-            this.playerHand.remove(playerHand.size() - 1);
-        }
+        PlayingCard tempCard = this.hand.getCards().get(this.hand.getCards().size() - 1);
+        this.hand.removeCard(this.hand.getCards().size() - 1);
+        this.hand.addCard(0, tempCard);
     }
-    public void checkForMultiples() {
-        String[] values = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
-        int[] valueCounts = new int[values.length];
-        int handCount = 0;
 
-        for (int i = 0; i < values.length; i++) {
-            for (PlayingCard playingCard : this.playerHand) {
-                if (playingCard.getValue().equals(values[i])) {
-                    valueCounts[i] += 1;
-                }
-            }
-        }
-        for (int i = 0; i < values.length; i++) {
-            if (handCount >= this.playerHand.size()) {
-                break;
-            }
-            if (valueCounts[i] == 2) {
-                this.pairsList.add(values[i]);
-                handCount += 2;
-            }
-            if (valueCounts[i] == 3) {
-                this.tripsList.add(values[i]);
-                handCount += 3;
-            }
-            if (valueCounts[i] == 4) {
-                this.quadsValue = values[i];
-                break;
-            }
-        }
-        if (!(this.quadsValue == null)) {
-
-        }
-        else if (this.tripsList.size() == 1 && this.pairsList.size() == 1) {
-
-        }
-        else if (this.tripsList.size() == 1) {
-
-        }
-        else if (this.pairsList.size() == 2) {
-
-        }
-        else if (this.pairsList.size() == 1) {
-
-        }
-        else {
-
-        }
-    }
     public Boolean isAFlush() {
         if (this.pairsList.size() > 0 || this.tripsList.size() > 0 || !(this.quadsValue == null)) {
             return false;
         }
 
-        String[] suits = {"Spades", "Hearts", "Clubs", "Diamonds"};
-        int spadesCounter = 0, heartsCounter = 0, clubsCounter = 0, diamondsCounter = 0;
-        for (PlayingCard card: this.playerHand) {
-            switch (card.getSuit()) {
-                case "Spades":
-                    spadesCounter++;
-                    break;
-                case "Hearts":
-                    heartsCounter++;
-                    break;
-                case "Clubs":
-                    clubsCounter++;
-                case "Diamonds":
-                    diamondsCounter++;
-            }
-        }
-        int[] suitCounters =  {spadesCounter, heartsCounter, clubsCounter, diamondsCounter};
-        for (int counter: suitCounters) {
-            if (counter >= 5) {
+        System.out.println(Arrays.toString(this.hand.getSuitData()));
+        for (int i = 0; i < this.hand.getSuitData().length - 1; i++) {
+            if (this.hand.getSuitData()[i] >= straightFlushSize) {
                 this.handRank = rankState.Flush;
+                this.RANKDATA[5] = true;
                 return true;
             }
         }
+        //for (int counter: this.hand.getSuitData()) {
+        //    if (counter >= 5) {
+        //        this.handRank = rankState.Flush;
+        //        this.RANKDATA[5] = true;
+        //        return true;
+        //    }
+        //}
         return false;
     }
     public Boolean isAStraight() {
         // This flow of logic is for game modes where a straight requires 5 consecutive values.
-        if (this.straightSize == 5) {
+        if (this.straightFlushSize == 5) {
             boolean handContainsFiveOrTen = false; // All 5 card straights contain either a "5" or "10". Otherwise, it's ruled out.
-            if (gameMode.equals("5 Card Poker") && this.pairsList.size() > 0 || this.tripsList.size() > 0 || !(this.quadsValue == null)) {
+            if (this.pairsList.size() > 0 || this.tripsList.size() > 0 || !(this.quadsValue == null)) {
                 return false;
             }
-            for (PlayingCard card: this.playerHand) {
+            for (PlayingCard card: this.hand.getCards()) {
                 if (card.getValue().equals("5") || card.getValue().equals("10")) {
                     handContainsFiveOrTen = true; // The hand contains "5" or "10". Evaluation of a straight can proceed.
                     break;
@@ -215,7 +114,7 @@ public class HandEvaluator {
                 // When the match occurs, the values index is stored in indexPoint, which will be used to establish where
                 // counting begins in the next step of the process.
                 for (int i = 0; i < values.length; i++) {
-                    if (this.playerHand.get(0).getValue().equals(values[i])) {
+                    if (this.hand.getCards().get(0).getValue().equals(values[i])) {
                         // If the first card in the hand has a value that matches the values array at index i, indexPoint
                         // will record the value of i.
                         indexPoint = i;
@@ -227,9 +126,9 @@ public class HandEvaluator {
                 int handIndex = 0; // Counter used to access the playerHand index.
                 // This loop starts where the first card in the hand matches with the corresponding value index in the values array.
                 // The loop spans up to (exclusively) the indexPoint value + the integer defining the size of a straight.
-                for (int i = indexPoint; i < (indexPoint + this.straightSize); i++) {
+                for (int i = indexPoint; i < (indexPoint + this.straightFlushSize); i++) {
                     // This if-statement will compare the string value at current playerHand index to the values array at index i.
-                    if (this.playerHand.get(handIndex).getValue().equals(values[i])) {
+                    if (this.hand.getCards().get(handIndex).getValue().equals(values[i])) {
                         // The string value at this playerHand index matches the string value at the values array index i.
                         straightCount++;
                         handIndex++;
@@ -238,8 +137,9 @@ public class HandEvaluator {
                         straightCount = 0;
                         handIndex++;
                     }
-                    if (straightCount == this.straightSize) {
+                    if (straightCount == this.straightFlushSize) {
                         this.handRank = rankState.Straight;
+                        this.RANKDATA[4] = true;
                         return true;
                     }
                 }
@@ -248,26 +148,35 @@ public class HandEvaluator {
         return false;
     }
     public Boolean isAStraightFlush() {
-        if (isAStraight() && isAFlush()) {
+        if (this.straightFlushSize == 5 && this.isAStraight() && this.isAFlush()) {
             this.handRank = rankState.StraightFlush;
+            this.RANKDATA[8] = true;
             return true;
         }
         return false;
     }
     public Boolean isARoyalFlush() {
-        if (isAStraightFlush()) {
-            if (this.playerHand.get(0).getValue().equals("10") &&
-                this.playerHand.get(1).getValue().equals("Jack") &&
-                this.playerHand.get(2).getValue().equals("Queen") &&
-                this.playerHand.get(3).getValue().equals("King") &&
-                this.playerHand.get(4).getValue().equals("Ace")) {
+        if (this.isAStraightFlush()) {
+            if (this.hand.getCards().get(this.hand.getCards().size() - 1).getValue().equals("Ace")) {
                 this.handRank = rankState.RoyalFlush;
+                this.RANKDATA[9] = true;
                 return true;
             }
         }
         return false;
     }
+    public void hasMultiples() {
+        for (int i = this.hand.getValueData().length - 1; i >= 0; i--) {
+            System.out.println(this.hand.getValueData()[i]);
+            switch (this.hand.getValueData()[i]) {
+                case 2 -> pairsList.add(Hand.VALUES[i]);
+                case 3 -> tripsList.add(Hand.SUITS[i]);
+                case 4 -> quadsValue = Hand.VALUES[i];
+            }
+        }
+    }
 }
+
 enum rankState {
     None, HighCard, Pair, TwoPair, Trips, Straight, Flush, FullHouse, Quads, StraightFlush, RoyalFlush
 }

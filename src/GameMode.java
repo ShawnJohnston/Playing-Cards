@@ -46,7 +46,7 @@ public class GameMode {
                 computer.addToHand(drawnCards.get(i + 1));
                 i += 2;
             }
-            for (PlayingCard card: user.getHand()) {
+            for (PlayingCard card: user.getHand().getCards()) {
                 System.out.println(card.getValue() + " " + card.getSuit());
             }
 
