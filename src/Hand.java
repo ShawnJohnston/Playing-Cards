@@ -4,19 +4,22 @@ import java.util.Arrays;
 public class Hand {
     private ArrayList<PlayingCard> cards = new ArrayList<>();
     private int capacity;
-    public static final String[] VALUES = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace", "Joker"};
-    public static final String[] SUITS = {"Spades", "Hearts", "Clubs", "Diamonds", "Joker"};
-    private final int[] VALUEDATA = new int[VALUES.length];
-    private final int[] SUITDATA = new int[SUITS.length];
+    private int size;
+    private final int[] VALUEDATA = new int[Global.VALUES.length];
+    private final int[] SUITDATA = new int[Global.SUITS.length];
 
     public Hand() {
     }
     public Hand(ArrayList<PlayingCard> cards) {
         this.cards = cards;
+        this.size = cards.size();
         countValues();
         countSuits();
     }
 
+    public int getSize() {
+        return this.size;
+    }
     public ArrayList<PlayingCard> getCards() {
         return this.cards;
     }
@@ -46,6 +49,7 @@ public class Hand {
     }
 
     private void updateHand() {
+        this.size = this.getCards().size();
         countValues();
         countSuits();
     }
@@ -93,23 +97,25 @@ public class Hand {
                 break;
             }
         }
-        System.out.println(sortedHand);
+        for (PlayingCard card: sortedHand) {
+            System.out.print(card.getName() + " ");
+        }
+        System.out.println();
     }
     private void countValues() {
         Arrays.fill(VALUEDATA, 0);
 
         ArrayList<PlayingCard> tempCards = this.cards;
-        readSortedHand(tempCards);
 
         int counter = 0;
-        for (int i = 0; i < VALUES.length; i++) {
+        for (int i = 0; i < Global.VALUES.length; i++) {
             for (PlayingCard card : tempCards) {
-                if (card.getValue().equals(VALUES[i])) {
-                    VALUEDATA[i]++;
+                if (card.getValue().equals(Global.VALUES[i])) {
+                    this.VALUEDATA[i]++;
                     counter++;
                 }
             }
-            if (counter == tempCards.size()) {
+            if (counter >= tempCards.size()) {
                 break;
             }
         }
