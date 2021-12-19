@@ -717,29 +717,6 @@ public class UnitTesting {
 
     // Hand comparisons
     @Test
-    public void royalTiesRoyal() {
-        Player player1 = new Player();
-        Hand hand1 = new Hand();
-        hand1.setHand(handBuilder(
-                "Ace", "King", "Queen", "Jack", "10",
-                "Spades", "Spades", "Spades", "Spades", "Spades"));
-        HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
-        System.out.println(evaluator1.getHandRank());
-
-        Player player2 = new Player();
-        Hand hand2 = new Hand();
-        hand2.setHand(handBuilder(
-                "Ace", "King", "Queen", "Jack", "10",
-                "Hearts", "Hearts", "Hearts", "Hearts", "Hearts"));
-        HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
-        System.out.println(evaluator2.getHandRank());
-
-        GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
-        System.out.println(outcome.getWinner());
-
-        Assertions.assertEquals("Tie", outcome.getWinner());
-    }
-    @Test
     public void royalFlushVersusOtherHands() {
         Player player1 = new Player();
         Hand hand1 = new Hand();
@@ -749,16 +726,16 @@ public class UnitTesting {
         HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
         System.out.println("Player 1: " + evaluator1.getHandRank());
 
-        handTiesRoyalFlush(evaluator1);
-        handBeatsStraightFlush(evaluator1);
-        handBeatsQuads(evaluator1);
-        handBeatsFullHouse(evaluator1);
-        handBeatsFlush(evaluator1);
-        handBeatsStraight(evaluator1);
-        handBeatsTrips(evaluator1);
-        handBeatsTwoPair(evaluator1);
-        handBeatsPair(evaluator1);
-        handBeatsHighCard(evaluator1);
+        handVersusRoyalFlush(evaluator1, "Tie");
+        handVersusStraightFlush(evaluator1, "Player 1");
+        handVersusQuads(evaluator1, "Player 1");
+        handVersusFullHouse(evaluator1, "Player 1");
+        handVersusFlush(evaluator1, "Player 1");
+        handVersusStraight(evaluator1, "Player 1");
+        handVersusTrips(evaluator1, "Player 1");
+        handVersusTwoPair(evaluator1, "Player 1");
+        handVersusPair(evaluator1, "Player 1");
+        handVersusHighCard(evaluator1, "Player 1");
     }
     @Test
     public void straightFlushVersusOtherHands() {
@@ -780,14 +757,15 @@ public class UnitTesting {
                 printHandRanking(evaluator1);
                 System.out.println("Player 1: " + Arrays.toString(hand1.getValueData()));
 
-                handBeatsQuads(evaluator1);
-                handBeatsFullHouse(evaluator1);
-                handBeatsFlush(evaluator1);
-                handBeatsStraight(evaluator1);
-                handBeatsTrips(evaluator1);
-                handBeatsTwoPair(evaluator1);
-                handBeatsPair(evaluator1);
-                handBeatsHighCard(evaluator1);
+                handVersusRoyalFlush(evaluator1, "Player 2");
+                handVersusQuads(evaluator1, "Player 1");
+                handVersusFullHouse(evaluator1, "Player 1");
+                handVersusFlush(evaluator1, "Player 1");
+                handVersusStraight(evaluator1, "Player 1");
+                handVersusTrips(evaluator1, "Player 1");
+                handVersusTwoPair(evaluator1, "Player 1");
+                handVersusPair(evaluator1, "Player 1");
+                handVersusHighCard(evaluator1, "Player 1");
             }
         }
     }
@@ -808,13 +786,13 @@ public class UnitTesting {
             System.out.println("Player 1: " + Arrays.toString(hand1.getValueData()));
             HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
             
-            handBeatsFullHouse(evaluator1);
-            handBeatsFlush(evaluator1);
-            handBeatsStraight(evaluator1);
-            handBeatsTrips(evaluator1);
-            handBeatsTwoPair(evaluator1);
-            handBeatsPair(evaluator1);
-            handBeatsHighCard(evaluator1);
+            handVersusFullHouse(evaluator1, "Player 1");
+            handVersusFlush(evaluator1, "Player 1");
+            handVersusStraight(evaluator1, "Player 1");
+            handVersusTrips(evaluator1, "Player 1");
+            handVersusTwoPair(evaluator1, "Player 1");
+            handVersusPair(evaluator1, "Player 1");
+            handVersusHighCard(evaluator1, "Player 1");
         }
     }
     @Test
@@ -835,12 +813,12 @@ public class UnitTesting {
             HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
             System.out.println("Player 1: " + evaluator1.getFullHouse());
             
-            handBeatsFlush(evaluator1);
-            handBeatsStraight(evaluator1);
-            handBeatsTrips(evaluator1);
-            handBeatsTwoPair(evaluator1);
-            handBeatsPair(evaluator1);
-            handBeatsHighCard(evaluator1);
+            handVersusFlush(evaluator1, "Player 1");
+            handVersusStraight(evaluator1, "Player 1");
+            handVersusTrips(evaluator1, "Player 1");
+            handVersusTwoPair(evaluator1, "Player 1");
+            handVersusPair(evaluator1, "Player 1");
+            handVersusHighCard(evaluator1, "Player 1");
         }
     }
     @Test
@@ -855,11 +833,11 @@ public class UnitTesting {
             HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
             System.out.println("Player 1: " + evaluator1.getHandRank());
 
-            handBeatsStraight(evaluator1);
-            handBeatsTrips(evaluator1);
-            handBeatsTwoPair(evaluator1);
-            handBeatsPair(evaluator1);
-            handBeatsHighCard(evaluator1);
+            handVersusStraight(evaluator1, "Player 1");
+            handVersusTrips(evaluator1, "Player 1");
+            handVersusTwoPair(evaluator1, "Player 1");
+            handVersusPair(evaluator1, "Player 1");
+            handVersusHighCard(evaluator1, "Player 1");
         }
     }
     @Test
@@ -879,10 +857,10 @@ public class UnitTesting {
             printHand(hand1);
             HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
 
-            handBeatsTrips(evaluator1);
-            handBeatsTwoPair(evaluator1);
-            handBeatsPair(evaluator1);
-            handBeatsHighCard(evaluator1);
+            handVersusTrips(evaluator1, "Player 1");
+            handVersusTwoPair(evaluator1, "Player 1");
+            handVersusPair(evaluator1, "Player 1");
+            handVersusHighCard(evaluator1, "Player 1");
         }
     }
     @Test
@@ -904,9 +882,9 @@ public class UnitTesting {
             System.out.println("Player 1: " + evaluator1.getTrips());
 
 
-            handBeatsTwoPair(evaluator1);
-            handBeatsPair(evaluator1);
-            handBeatsHighCard(evaluator1);
+            handVersusTwoPair(evaluator1, "Player 1");
+            handVersusPair(evaluator1, "Player 1");
+            handVersusHighCard(evaluator1, "Player 1");
         }
     }
     @Test
@@ -927,8 +905,8 @@ public class UnitTesting {
             HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
             System.out.println("Player 2: " + evaluator1.getPairs());
 
-            handBeatsPair(evaluator1);
-            handBeatsHighCard(evaluator1);
+            handVersusPair(evaluator1, "Player 1");
+            handVersusHighCard(evaluator1, "Player 1");
         }
     }
     @Test
@@ -949,7 +927,7 @@ public class UnitTesting {
             HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
             System.out.println("Player 2: " + evaluator1.getPairs());
 
-            handBeatsHighCard(evaluator1);
+            handVersusHighCard(evaluator1, "Player 1");
         }
     }
     @Test
@@ -962,7 +940,7 @@ public class UnitTesting {
         HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
         System.out.println("Player 1: " + evaluator1.getHandRank());
 
-        handBeatsHighCard(evaluator1);
+        handVersusHighCard(evaluator1, "Player 1");
     }
     // Methods
     public ArrayList<PlayingCard> handBuilder(String value1, String value2, String value3, String value4, String value5,
@@ -1085,7 +1063,19 @@ public class UnitTesting {
     }
 
 
-    public void handBeatsStraightFlush(HandEvaluator evaluator1) {
+    public void handVersusRoyalFlush(HandEvaluator evaluator1, String winner) {
+        Player player2 = new Player();
+        Hand hand2 = new Hand();
+        hand2.setHand(handBuilder(
+                "Ace", "King", "Queen", "Jack", "10",
+                "Spades", "Spades", "Spades", "Spades", "Spades"));
+        HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+        System.out.println("Player 1: " + evaluator1.getHandRank());
+
+        GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
+        Assertions.assertEquals(winner, outcome.getWinner());
+    }
+    public void handVersusStraightFlush(HandEvaluator evaluator1, String winner) {
 
         Player player2 = new Player();
         Hand hand2 = new Hand();
@@ -1107,11 +1097,11 @@ public class UnitTesting {
                 HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
                 System.out.println(evaluator2.getHandRank());
                 GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
-                Assertions.assertEquals("Player 1", outcome.getWinner());
+                Assertions.assertEquals(winner, outcome.getWinner());
             }
         }
     }
-    public void handBeatsQuads(HandEvaluator evaluator1) {
+    public void handVersusQuads(HandEvaluator evaluator1, String winner) {
         for (int i = 0; i < Global.VALUES.length - 1; i++) {
             Player player2 = new Player();
             Hand hand2 = new Hand();
@@ -1128,10 +1118,10 @@ public class UnitTesting {
             HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
             System.out.println("Player 2: " + evaluator2.getHandRank());
             GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
-            Assertions.assertEquals("Player 1", outcome.getWinner());
+            Assertions.assertEquals(winner, outcome.getWinner());
         }
     }
-    public void handBeatsFullHouse(HandEvaluator evaluator1) {
+    public void handVersusFullHouse(HandEvaluator evaluator1, String winner) {
         for (int i = 0; i < Global.VALUES.length - 1; i++) {
             Hand hand2 = new Hand();
             Player player2 = new Player();
@@ -1149,10 +1139,10 @@ public class UnitTesting {
             System.out.println("Player 2: " + evaluator2.getFullHouse());
 
             GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
-            Assertions.assertEquals("Player 1", outcome.getWinner());
+            Assertions.assertEquals(winner, outcome.getWinner());
         }
     }
-    public void handBeatsFlush(HandEvaluator evaluator1) {
+    public void handVersusFlush(HandEvaluator evaluator1, String winner) {
         for (int i = 0; i < Global.SUITS.length - 1; i++) {
             Player player2 = new Player();
             Hand hand2 = new Hand();
@@ -1164,10 +1154,10 @@ public class UnitTesting {
             System.out.println("Player 2: " + evaluator2.getHandRank());
 
             GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
-            Assertions.assertEquals("Player 1", outcome.getWinner());
+            Assertions.assertEquals(winner, outcome.getWinner());
         }
     }
-    public void handBeatsStraight(HandEvaluator evaluator1) {
+    public void handVersusStraight(HandEvaluator evaluator1, String winner) {
         Player player2 = new Player();
         Hand hand2 = new Hand();
 
@@ -1185,10 +1175,10 @@ public class UnitTesting {
             HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
 
             GameOutcome outcome = new GameOutcome(evaluator1,evaluator2);
-            Assertions.assertEquals("Player 1", outcome.getWinner());
+            Assertions.assertEquals(winner, outcome.getWinner());
         }
     }
-    public void handBeatsTrips(HandEvaluator evaluator1) {
+    public void handVersusTrips(HandEvaluator evaluator1, String winner) {
         for (int i = 2; i < Global.VALUES.length - 1; i++) {
             Hand hand2 = new Hand();
             Player player2 = new Player();
@@ -1206,10 +1196,10 @@ public class UnitTesting {
             System.out.println("Player 2: " + evaluator2.getTrips());
 
             GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
-            Assertions.assertEquals("Player 1", outcome.getWinner());
+            Assertions.assertEquals(winner, outcome.getWinner());
         }
     }
-    public void handBeatsTwoPair(HandEvaluator evaluator1) {
+    public void handVersusTwoPair(HandEvaluator evaluator1, String winner) {
         for (int i = 0; i < Global.VALUES.length - 2; i++) {
             Player player2 = new Player();
             Hand hand2 = new Hand();
@@ -1227,10 +1217,10 @@ public class UnitTesting {
             System.out.println("Player 2: " + evaluator2.getPairs());
 
             GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
-            Assertions.assertEquals("Player 1", outcome.getWinner());
+            Assertions.assertEquals(winner, outcome.getWinner());
         }
     }
-    public void handBeatsPair(HandEvaluator evaluator1) {
+    public void handVersusPair(HandEvaluator evaluator1, String winner) {
         for (int i = 3; i < Global.VALUES.length - 1; i++) {
             Player player2 = new Player();
             Hand hand2 = new Hand();
@@ -1249,10 +1239,10 @@ public class UnitTesting {
 
 
             GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
-            Assertions.assertEquals("Player 1", outcome.getWinner());
+            Assertions.assertEquals(winner, outcome.getWinner());
         }
     }
-    public void handBeatsHighCard(HandEvaluator evaluator1) {
+    public void handVersusHighCard(HandEvaluator evaluator1, String winner) {
         Player player2 = new Player();
         Hand hand2 = new Hand();
         hand2.setHand(handBuilder(
@@ -1262,21 +1252,6 @@ public class UnitTesting {
         System.out.println("Player 2: " + evaluator2.getHandRank());
 
         GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
-        Assertions.assertEquals("Player 1", outcome.getWinner());
-    }
-    public void handTiesRoyalFlush(HandEvaluator evaluator1) {
-        for (int i = 0; i < Global.SUITS.length - 1; i++) {
-            Player player2 = new Player();
-            Hand hand2 = new Hand();
-            hand2.setHand(handBuilder(
-                    "King", "7", "Jack", "5", "2",
-                    Global.SUITS[i], Global.SUITS[i], Global.SUITS[i], Global.SUITS[i], Global.SUITS[i]));
-
-            HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
-            System.out.println(evaluator2.getHandRank());
-
-            GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
-            Assertions.assertEquals("Player 1", outcome.getWinner());
-        }
+        Assertions.assertEquals(winner, outcome.getWinner());
     }
 }
