@@ -9,10 +9,11 @@ public class GameOutcome {
     }
 
     public Player getWinner() {
+        compareRanks();
         return winner;
     }
 
-    public void compareRanks() {
+    private void compareRanks() {
         for (int i = 0; i < Global.STANDARDPOKERRANKS.length - 1; i++) {
             if (PLAYER1.getHandRank().toString().equals(Global.STANDARDPOKERRANKS[i]) && PLAYER1.getHandRank().toString().equals(Global.STANDARDPOKERRANKS[i])) {
                 switch (Global.STANDARDPOKERRANKS[i]) {
@@ -32,21 +33,21 @@ public class GameOutcome {
             }
         }
     }
-    public void compareCards() {
+    private void compareCards() {
 
     }
-    public void compareQuads() {
+    private void compareQuads() {
     }
-    public void compareFullHouse() {
+    private void compareFullHouse() {
 
     }
-    public void compareTrips() {
+    private void compareTrips() {
 
     }
-    public void compareTwoPair() {
+    private void compareTwoPair() {
 
     }
-    public void comparePair() {
+    private void comparePair() {
 
     }
 
