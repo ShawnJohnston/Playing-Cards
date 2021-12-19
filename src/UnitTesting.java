@@ -489,26 +489,6 @@ public class UnitTesting {
     }
     // Determine Winner
     @Test
-    public void canDetermineWinner() {
-        //Player player = new Player("Player");
-        //Player dealer = new Player(("Dealer"));
-
-        //player.setHand(handBuilder("Ace", "Queen", "Jack", "10", "9",
-        //        "Diamond", "Diamond", "Diamond", "Diamond", "Diamond"));
-        //dealer.setHand(handBuilder("Ace", "Queen", "Jack", "10", "9",
-        //        "Hearts", "Hearts", "Hearts", "Hearts", "Hearts"));
-
-        //HandEvaluator playerEvaluator = new HandEvaluator(player);
-        //HandEvaluator dealerEvaluator = new HandEvaluator(dealer);
-
-        //GameOutcome gameOutcome = new GameOutcome(playerEvaluator, dealerEvaluator);
-        //gameOutcome.compareRanks();
-
-        //printHandRanking(playerEvaluator);
-        //printHandRanking(dealerEvaluator);
-        //Assertions.assertNull(gameOutcome.getWinner());
-    }
-    @Test
     public void canReadHandOfCards() {
         Hand hand = new Hand();
         ArrayList<PlayingCard> cards = handBuilder("Ace", "Queen", "Jack", "10", "9",
@@ -733,6 +713,288 @@ public class UnitTesting {
         System.out.println(Arrays.toString(hand.getValueData()));
 
 
+    }
+
+    // Hand comparisons
+    @Test
+    public void royalTiesRoyal() {
+        Player player1 = new Player();
+        Hand hand1 = new Hand();
+        hand1.setHand(handBuilder(
+                "Ace", "King", "Queen", "Jack", "10",
+                "Spades", "Spades", "Spades", "Spades", "Spades"));
+        HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
+        System.out.println(evaluator1.getHandRank());
+
+        Player player2 = new Player();
+        Hand hand2 = new Hand();
+        hand2.setHand(handBuilder(
+                "Ace", "King", "Queen", "Jack", "10",
+                "Hearts", "Hearts", "Hearts", "Hearts", "Hearts"));
+        HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+        System.out.println(evaluator2.getHandRank());
+
+        GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
+        System.out.println(outcome.getWinner());
+
+        Assertions.assertEquals("Tie", outcome.getWinner());
+    }
+    @Test
+    public void royalFlushBeatsStraightFlush() {
+        Player player1 = new Player();
+        Hand hand1 = new Hand();
+        hand1.setHand(handBuilder(
+                "Ace", "King", "Queen", "Jack", "10",
+                "Spades", "Spades", "Spades", "Spades", "Spades"));
+        HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
+        System.out.println(evaluator1.getHandRank());
+
+        Player player2 = new Player();
+        Hand hand2 = new Hand();
+
+        PlayingCard[] cardsInHand;
+        int iterationCount = 1;
+        for (int i = 0; i < Global.SUITS.length - 1; i++) {
+            for (int j = 0; j < 8; j++) {
+                hand2.getCards().clear();
+                cardsInHand = new PlayingCard[5];
+                for (int k = 0; k < 5; k++) {
+                    cardsInHand[k] = new PlayingCard(Global.VALUES[k + j], Global.SUITS[i]);
+                    hand2.addCard(cardsInHand[k]);
+                }
+                iterationCount++;
+                HandEvaluator evaluator = new HandEvaluator(player2, hand2);
+                Assertions.assertTrue(evaluator.isAStraightFlush());
+                printHandRanking(evaluator);
+                HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+                System.out.println(evaluator2.getHandRank());
+                GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
+                Assertions.assertEquals("Player 1", outcome.getWinner());
+            }
+        }
+    }
+    @Test
+    public void royalFlushBeatsQuads() {
+        Player player1 = new Player();
+        Hand hand1 = new Hand();
+        hand1.setHand(handBuilder(
+                "Ace", "King", "Queen", "Jack", "10",
+                "Spades", "Spades", "Spades", "Spades", "Spades"));
+        HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
+        System.out.println(evaluator1.getHandRank());
+
+        for (int i = 0; i < Global.VALUES.length - 1; i++) {
+            Player player2 = new Player();
+            Hand hand2 = new Hand();
+            ArrayList<PlayingCard> cards = new ArrayList<>(handBuilder(
+                    Global.VALUES[i],
+                    Global.VALUES[i],
+                    Global.VALUES[i],
+                    Global.VALUES[i],
+                    Global.VALUES[13],
+                    "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
+            hand2.setHand(cards);
+
+            System.out.println(Arrays.toString(hand2.getValueData()));
+            HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+            System.out.println(evaluator2.getHandRank());
+            GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
+            Assertions.assertEquals("Player 1", outcome.getWinner());
+        }
+    }
+    @Test
+    public void royalFlushBeatsFullHouse() {
+        Player player1 = new Player();
+        Hand hand1 = new Hand();
+        hand1.setHand(handBuilder(
+                "Ace", "King", "Queen", "Jack", "10",
+                "Spades", "Spades", "Spades", "Spades", "Spades"));
+        HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
+        System.out.println(evaluator1.getHandRank());
+
+        for (int i = 0; i < Global.VALUES.length - 1; i++) {
+            Hand hand2 = new Hand();
+            Player player2 = new Player();
+            ArrayList<PlayingCard> cards = new ArrayList<>(handBuilder(
+                    Global.VALUES[i],
+                    Global.VALUES[i],
+                    Global.VALUES[i],
+                    Global.VALUES[i + 1],
+                    Global.VALUES[i + 1],
+                    "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
+            hand2.setHand(cards);
+
+            System.out.println(Arrays.toString(hand2.getValueData()));
+            HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+            System.out.println(evaluator2.getFullHouse());
+
+            GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
+            Assertions.assertEquals("Player 1", outcome.getWinner());
+        }
+    }
+    @Test
+    public void royalFlushBeatsFlush() {
+        Player player1 = new Player();
+        Hand hand1 = new Hand();
+        hand1.setHand(handBuilder(
+                "Ace", "King", "Queen", "Jack", "10",
+                "Spades", "Spades", "Spades", "Spades", "Spades"));
+        HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
+        System.out.println(evaluator1.getHandRank());
+
+        for (int i = 0; i < Global.SUITS.length - 1; i++) {
+            Player player2 = new Player();
+            Hand hand2 = new Hand();
+            hand2.setHand(handBuilder(
+                    "King", "7", "Jack", "5", "2",
+                    Global.SUITS[i], Global.SUITS[i], Global.SUITS[i], Global.SUITS[i], Global.SUITS[i]));
+
+            HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+            System.out.println(evaluator2.getHandRank());
+
+            GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
+            Assertions.assertEquals("Player 1", outcome.getWinner());
+        }
+    }
+    @Test
+    public void royalFlushBeatsStraight() {
+        Player player1 = new Player();
+        Hand hand1 = new Hand();
+        hand1.setHand(handBuilder(
+                "Ace", "King", "Queen", "Jack", "10",
+                "Spades", "Spades", "Spades", "Spades", "Spades"));
+        HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
+        System.out.println(evaluator1.getHandRank());
+
+        Player player2 = new Player();
+        Hand hand2 = new Hand();
+
+        String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
+        PlayingCard[] cardsInHand;
+        for (int i = 0; i < 10; i++) {
+            hand2.getCards().clear();
+            cardsInHand = new PlayingCard[5];
+            for (int j = 0; j < 5; j++) {
+                cardsInHand[j] = new PlayingCard(values[j + i], Global.SUITS[j]);
+                hand2.addCard(cardsInHand[j]);
+            }
+            printHand(hand2);
+            HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+
+            GameOutcome outcome = new GameOutcome(evaluator1,evaluator2);
+            Assertions.assertEquals("Player 1", outcome.getWinner());
+        }
+    }
+    @Test
+    public void royalFlushBeatsTrips() {
+        Player player1 = new Player();
+        Hand hand1 = new Hand();
+        hand1.setHand(handBuilder(
+                "Ace", "King", "Queen", "Jack", "10",
+                "Spades", "Spades", "Spades", "Spades", "Spades"));
+        HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
+        System.out.println(evaluator1.getHandRank());
+
+        for (int i = 0; i < Global.VALUES.length - 1; i++) {
+            Player player2 = new Player();
+            Hand hand2 = new Hand();
+            ArrayList<PlayingCard> cards = new ArrayList<>(handBuilder(
+                    Global.VALUES[i],
+                    Global.VALUES[i],
+                    Global.VALUES[i],
+                    Global.VALUES[13],
+                    Global.VALUES[13],
+                    "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
+            hand2.setHand(cards);
+
+            System.out.println(Arrays.toString(hand2.getValueData()));
+            HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+            System.out.println(evaluator2.getTrips());
+
+            GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
+            Assertions.assertEquals("Player 1", outcome.getWinner());
+        }
+    }
+    public void royalFlushBeatsTwoPair() {
+        Player player1 = new Player();
+        Hand hand1 = new Hand();
+        hand1.setHand(handBuilder(
+                "Ace", "King", "Queen", "Jack", "10",
+                "Spades", "Spades", "Spades", "Spades", "Spades"));
+        HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
+        System.out.println(evaluator1.getHandRank());
+
+        for (int i = 0; i < Global.VALUES.length - 2; i++) {
+            Player player2 = new Player();
+            Hand hand2 = new Hand();
+            ArrayList<PlayingCard> cards = new ArrayList<>(handBuilder(
+                    Global.VALUES[i],
+                    Global.VALUES[i],
+                    Global.VALUES[i + 1],
+                    Global.VALUES[i + 1],
+                    Global.VALUES[13],
+                    "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
+            hand2.setHand(cards);
+
+            System.out.println(Arrays.toString(hand2.getValueData()));
+            HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+            System.out.println(evaluator2.getPairs());
+
+            GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
+            Assertions.assertEquals("Player 1", outcome.getWinner());
+        }
+    }
+    @Test
+    public void royalFlushBeatsPair() {
+        Player player1 = new Player();
+        Hand hand1 = new Hand();
+        hand1.setHand(handBuilder(
+                "Ace", "King", "Queen", "Jack", "10",
+                "Spades", "Spades", "Spades", "Spades", "Spades"));
+        HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
+        System.out.println(evaluator1.getHandRank());
+
+        for (int i = 0; i < Global.VALUES.length - 1; i++) {
+            Player player2 = new Player();
+            Hand hand2 = new Hand();
+            ArrayList<PlayingCard> cards = new ArrayList<>(handBuilder(
+                    Global.VALUES[i],
+                    Global.VALUES[i],
+                    Global.VALUES[13],
+                    Global.VALUES[13],
+                    Global.VALUES[13],
+                    "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
+            hand2.setHand(cards);
+
+            System.out.println(Arrays.toString(hand2.getValueData()));
+            HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+            System.out.println(evaluator2.getPairs());
+
+
+            GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
+            Assertions.assertEquals("Player 1", outcome.getWinner());
+        }
+    }
+    @Test
+    public void royalFlushBeatsHighCard() {
+        Player player1 = new Player();
+        Hand hand1 = new Hand();
+        hand1.setHand(handBuilder(
+                "Ace", "King", "Queen", "Jack", "10",
+                "Spades", "Spades", "Spades", "Spades", "Spades"));
+        HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
+        System.out.println(evaluator1.getHandRank());
+
+        Player player2 = new Player();
+        Hand hand2 = new Hand();
+        hand2.setHand(handBuilder(
+                "Ace", "King", "Queen", "Jack", "9",
+                "Spades", "Hearts", "Hearts", "Clubs", "Diamonds"));
+        HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+        System.out.println(evaluator2.getHandRank());
+
+        GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
+        Assertions.assertEquals("Player 1", outcome.getWinner());
     }
     // Methods
     public ArrayList<PlayingCard> handBuilder(String value1, String value2, String value3, String value4, String value5,

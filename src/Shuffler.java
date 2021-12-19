@@ -145,10 +145,6 @@ public class Shuffler {
         deckBox = boxTail(cards, stack, boxCount); // Recursive method to perform the box procedure.
 
         deck.setCards(deckBox);
-        for (int i = 0; i < deck.getSize(); i++) {
-
-            //deck.getCards().set(i, deckBox.get(i)); // Each card index in the deck is reassigned a corresponding card from deckBox.
-        }
         return deck.getCards(); // To deck in handShuffle method.
     }
     private ArrayList<PlayingCard> boxTail(ArrayList<PlayingCard> cards, ArrayList<PlayingCard> stack, int boxCount) {
@@ -156,7 +152,7 @@ public class Shuffler {
 
         // Recursion base case.
         if (boxCount == 1) {
-            stack.addAll(cards); // All of the remaining cards from the deck array are added to the current stack list.
+            stack.addAll(cards); // All remaining cards from the deck array are added to the current stack list.
             cards.clear(); // The cards list is emptied.
             return stack; // The stack returns recursively to box method.
         }

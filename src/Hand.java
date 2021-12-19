@@ -12,44 +12,44 @@ public class Hand {
     }
     public Hand(ArrayList<PlayingCard> cards) {
         this.cards = cards;
-        this.size = cards.size();
+        size = cards.size();
         countValues();
         countSuits();
     }
 
     public int getSize() {
-        return this.size;
+        return size;
     }
     public ArrayList<PlayingCard> getCards() {
-        return this.cards;
+        return cards;
     }
     public int[] getValueData() {
-        return this.VALUEDATA;
+        return VALUEDATA;
     }
     public int[] getSuitData() {
-        return this.SUITDATA;
+        return SUITDATA;
     }
 
     public void setHand(ArrayList<PlayingCard> newCards) {
-        this.cards = new ArrayList<>(newCards);
+        cards = new ArrayList<>(newCards);
         countValues();
         countSuits();
     }
 
     public void addCard(PlayingCard newCard) {
-        this.cards.add(newCard);
+        cards.add(newCard);
         updateHand();
     }
     public void addCard(int index, PlayingCard newCard) {
-        this.cards.add(index, newCard);
+        cards.add(index, newCard);
         updateHand();
     }
     public void removeCard(int index) {
-        this.cards.remove(index);
+        cards.remove(index);
     }
 
     private void updateHand() {
-        this.size = this.getCards().size();
+        size = getCards().size();
         countValues();
         countSuits();
     }
@@ -62,7 +62,7 @@ public class Hand {
         // to the buffer array and the counter will increment.
         // The counter will break the loop when it increments to the value equal to the number of cards in the hand.
         for (String value : values) {
-            for (PlayingCard card : this.cards) {
+            for (PlayingCard card : cards) {
                 // The outer loop sets the comparison value, and the inner loop cycles through each card in the hand.
                 if (card.getValue().equals(value)) {
                     // The card's value matches the values array.
@@ -74,7 +74,7 @@ public class Hand {
                 break;
             }
         }
-        this.cards = sortedHand;
+        cards = sortedHand;
     }
     public void readSortedHand(ArrayList<PlayingCard> hand) {
         ArrayList<PlayingCard> sortedHand = new ArrayList<>(); // Buffer hand to overwrite playerHand.
@@ -105,13 +105,13 @@ public class Hand {
     private void countValues() {
         Arrays.fill(VALUEDATA, 0);
 
-        ArrayList<PlayingCard> tempCards = this.cards;
+        ArrayList<PlayingCard> tempCards = cards;
 
         int counter = 0;
         for (int i = 0; i < Global.VALUES.length; i++) {
             for (PlayingCard card : tempCards) {
                 if (card.getValue().equals(Global.VALUES[i])) {
-                    this.VALUEDATA[i]++;
+                    VALUEDATA[i]++;
                     counter++;
                 }
             }
@@ -122,7 +122,7 @@ public class Hand {
     }
     private void countSuits() {
         Arrays.fill(SUITDATA, 0);
-        for (PlayingCard card : this.cards) {
+        for (PlayingCard card : cards) {
             switch (card.getSuit()) {
                 case "Spades" -> SUITDATA[0]++;
                 case "Hearts" -> SUITDATA[1]++;

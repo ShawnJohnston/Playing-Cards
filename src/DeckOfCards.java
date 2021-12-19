@@ -14,16 +14,16 @@ public class DeckOfCards {
         buildDeck();
     }
     public DeckOfCards(int jokers) {
-        this.size += jokers;
+        size += jokers;
         buildDeck();
     }
 
     // Getters
     public ArrayList<PlayingCard> getCards() {
-        return this.cards;
+        return cards;
     }
     public int getSize() {
-        return this.size;
+        return size;
     }
 
     // Setters
@@ -69,7 +69,7 @@ public class DeckOfCards {
             } else if (card.getSuit().equals("Clubs") || card.getSuit().equals("Spades")) {
                 card.setColor();
             }
-            this.cards.add(card); // Card assigned to 'cards' array at index 'i'.
+            cards.add(card); // Card assigned to 'cards' array at index 'i'.
             valueCounter++;
 
             if (valueCounter == VALUES.length) {
@@ -82,6 +82,6 @@ public class DeckOfCards {
     }
     // This method will return true if there are no more cards in the deck object.
     public boolean isEmpty() {
-        return this.getSize() == 0;
+        return getSize() == 0;
     }
 }

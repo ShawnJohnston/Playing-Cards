@@ -13,23 +13,23 @@ public class PlayingCard {
     public PlayingCard() {
     }
     public PlayingCard(String value, String suit) {
-        this.setValue(value);
-        this.setSuit(suit);
-        this.setName();
+        setValue(value);
+        setSuit(suit);
+        setName();
     }
 
     // Getters
     public String getValue() {
-        return this.value;
+        return value;
     }
     public String getSuit() {
-        return this.suit;
+        return suit;
     }
     public String getName() {
-        return this.name;
+        return name;
     }
     public String getColor() {
-        return this.color;
+        return color;
     }
     
     // Setters
@@ -41,14 +41,14 @@ public class PlayingCard {
         setColor();
     }
     protected void setName() {
-        this.name = this.value + " of " + this.suit;
+        name = value + " of " + suit;
     }
     protected void setColor() {
-        if (this.suit.equals("Diamonds") || this.suit.equals("Hearts")) {
-            this.color = "Red";
+        if (suit.equals("Diamonds") || suit.equals("Hearts")) {
+            color = "Red";
         }
-        if (this.suit.equals("Spades") || this.suit.equals("Clubs")) {
-            this.color = "Black";
+        if (suit.equals("Spades") || suit.equals("Clubs")) {
+            color = "Black";
         }
     }
 }
@@ -56,7 +56,7 @@ public class PlayingCard {
 class JokerCard extends PlayingCard {
     // Constructors
     public JokerCard() {
-        this.name = "Joker";
+        name = "Joker";
     }
     @Override
     public String getValue() {

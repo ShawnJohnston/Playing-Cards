@@ -12,7 +12,7 @@ public class Player {
     public Player() {
     }
     public Player(String playerName) {
-        this.setName(playerName);
+        setName(playerName);
     }
 
     // Getters
@@ -20,10 +20,10 @@ public class Player {
         return maxNumCardsInHand;
     }
     public Hand getHand() {
-        return this.hand;
+        return hand;
     }
     public int getChipTotal() {
-        return this.chipTotal;
+        return chipTotal;
     }
 
     // Setters
@@ -37,11 +37,11 @@ public class Player {
         this.startingChips = startingChips;
     }
     public void setHand(ArrayList<PlayingCard> cards) {
-        this.hand.setHand(cards);
+        hand.setHand(cards);
     }
 
     // Methods
     public void addToHand(PlayingCard card) {
-        this.hand.addCard(card);
+        hand.addCard(card);
     }
 }
