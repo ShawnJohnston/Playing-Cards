@@ -5,7 +5,7 @@ public class HandEvaluator {
     private final boolean[] RANKDATA = new boolean[Global.STANDARDPOKERRANKS.length];
     private Player player;
     private Hand hand;
-    private rankState handRank = rankState.HighCard;
+    private rankState handRank = rankState.None;
 
     private ArrayList<String> pairsList;
     private ArrayList<String> tripsList;
