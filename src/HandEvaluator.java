@@ -5,10 +5,11 @@ public class HandEvaluator {
     private final boolean[] RANKDATA = new boolean[Global.STANDARDPOKERRANKS.length];
     private Player player;
     private Hand hand;
-    private rankState handRank = rankState.None;
+    private rankState handRank = rankState.HighCard;
 
-    private ArrayList<String> pairsList = new ArrayList<>();
-    private ArrayList<String> tripsList = new ArrayList<>();
+    private ArrayList<String> pairsList;
+    private ArrayList<String> tripsList;
+    private ArrayList<String> fullHouseList;
     private String quadsValue = null;
 
     public HandEvaluator() {
@@ -20,7 +21,13 @@ public class HandEvaluator {
         this.RANKDATA[0] = true;
         this.hand.sortHand();
         checkForWheel();
+
+        this.pairsList = new ArrayList<>();
+        this.tripsList = new ArrayList<>();
+        this.fullHouseList = new ArrayList<>();
         hasMultiples();
+        determineRank();
+        System.out.println("Rank Data: " + Arrays.toString(this.RANKDATA));
     }
 
     public Player getPlayer() {
@@ -40,6 +47,9 @@ public class HandEvaluator {
     }
     public String getQuadsValue() {
         return this.quadsValue;
+    }
+    public ArrayList<String> getFullHouse() {
+        return this.fullHouseList;
     }
 
     public void setHand(Hand hand) {
@@ -72,19 +82,14 @@ public class HandEvaluator {
         this.hand.addCard(0, tempCard);
     }
 
-    public Boolean isAFlush() {
-        if (!this.pairsList.isEmpty() || !this.tripsList.isEmpty() || !(this.quadsValue == null)) {
-            return false;
-        }
-
-        for (int i = 0; i < this.hand.getSuitData().length - 1; i++) {
-            if (this.hand.getSuitData()[i] >= Global.straightFlushSize) {
-                this.handRank = rankState.Flush;
-                this.RANKDATA[5] = true;
-                return true;
-            }
-        }
-        return false;
+    public Boolean isAPair() {
+        return this.pairsList.size() == 1;
+    }
+    public Boolean isATwoPair() {
+        return this.pairsList.size() == 2;
+    }
+    public Boolean isATrips() {
+        return !tripsList.isEmpty();
     }
     public Boolean isAStraight() {
         // This flow of logic is for game modes where a straight requires 5 consecutive values.
@@ -137,7 +142,6 @@ public class HandEvaluator {
                         handIndex++;
                     }
                     if (straightCount == Global.straightFlushSize) {
-                        this.handRank = rankState.Straight;
                         this.RANKDATA[4] = true;
                         return true;
                     }
@@ -146,9 +150,27 @@ public class HandEvaluator {
         }
         return false;
     }
+    public Boolean isAFlush() {
+        if (!this.pairsList.isEmpty() || !this.tripsList.isEmpty() || !(this.quadsValue == null)) {
+            return false;
+        }
+
+        for (int i = 0; i < this.hand.getSuitData().length - 1; i++) {
+            if (this.hand.getSuitData()[i] >= Global.straightFlushSize) {
+                this.RANKDATA[5] = true;
+                return true;
+            }
+        }
+        return false;
+    }
+    public Boolean isAFullHouse() {
+        return this.fullHouseList.size() >= 2;
+    }
+    public Boolean isAQuads() {
+        return this.quadsValue != null;
+    }
     public Boolean isAStraightFlush() {
         if (Global.straightFlushSize == 5 && this.isAStraight() && this.isAFlush()) {
-            this.handRank = rankState.StraightFlush;
             this.RANKDATA[8] = true;
             return true;
         }
@@ -156,21 +178,73 @@ public class HandEvaluator {
     }
     public Boolean isARoyalFlush() {
         if (this.isAStraightFlush()) {
-            if (this.hand.getCards().get(this.hand.getCards().size() - 1).getValue().equals("Ace")) {
-                this.handRank = rankState.RoyalFlush;
+            if (this.hand.getCards().get(this.hand.getCards().size() - 1).getValue().equals("Ace") &&
+                    this.hand.getCards().get(0).getValue().equals("10")) {
                 this.RANKDATA[9] = true;
                 return true;
             }
         }
         return false;
     }
-    public void hasMultiples() {
+
+    private void hasMultiples() {
         for (int i = this.hand.getValueData().length - 1; i >= 0; i--) {
             switch (this.hand.getValueData()[i]) {
-                case 2 -> pairsList.add(Global.VALUES[i]);
-                case 3 -> tripsList.add(Global.VALUES[i]);
-                case 4 -> quadsValue = Global.VALUES[i];
+                case 2:
+                    if (this.pairsList.size() == 1) {
+                        RANKDATA[1] = true;
+                    }
+                    else if (this.pairsList.size() == 2) {
+                        RANKDATA[2] = true;
+                    }
+                    pairsList.add(Global.VALUES[i]);
+                    break;
+                case 3:
+                    tripsList.add(Global.VALUES[i]);
+                    RANKDATA[3] = true;
+                    break;
+                case 4:
+                    quadsValue = Global.VALUES[i];
+                    this.RANKDATA[7] = true;
+                    break;
             }
+        }
+        if (this.tripsList.size() >= 1 && this.pairsList.size() >= 1) {
+            this.fullHouseList.add(this.tripsList.get(0));
+            this.fullHouseList.add(this.pairsList.get(0));
+            this.RANKDATA[6] = true;
+        }
+    }
+    private void determineRank() {
+        if (this.isARoyalFlush()) {
+            this.handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[9]);
+        }
+        else if (this.isAStraightFlush()){
+            this.handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[8]);
+        }
+        else if (this.isAQuads()){
+            this.handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[7]);
+        }
+        else if (this.isAFullHouse()){
+            this.handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[6]);
+        }
+        else if (this.isAFlush()){
+            this.handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[5]);
+        }
+        else if (this.isAStraight()){
+            this.handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[4]);
+        }
+        else if (this.isATrips()){
+            this.handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[3]);
+        }
+        else if (this.isATwoPair()){
+            this.handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[2]);
+        }
+        else if (this.isAPair()){
+            this.handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[1]);
+        }
+        else {
+            this.handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[0]);
         }
     }
 }

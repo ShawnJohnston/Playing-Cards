@@ -2,7 +2,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 public class UnitTesting {
     // Initialization of test variables;
@@ -11,8 +10,6 @@ public class UnitTesting {
     int expectedDeckSize = 52;
     int expectedDeckSizeOneJoker = 53;
     int expectedDeckSizeTwoJokers = 54;
-
-    // Arrays representing card attributes.
 
     // Objects of Deck variations.
     DeckOfCards standardDeck = new DeckOfCards();
@@ -187,26 +184,26 @@ public class UnitTesting {
             iterationNumber++;
         }
 
-        // Random value cases.
-        System.out.println("Iteration 1");
+        // Iterative value cases.
         for (int i = 0; i < Global.SUITS.length - 1; i++) {
-            player.setHand(handBuilder(Global.VALUES[Global.VALUES.length - 1],
-                    Global.VALUES[0],
+            player.setHand(handBuilder(Global.VALUES[0],
                     Global.VALUES[1],
                     Global.VALUES[2],
                     Global.VALUES[3],
+                    Global.VALUES[5],
                     Global.SUITS[i], Global.SUITS[i], Global.SUITS[i], Global.SUITS[i], Global.SUITS[i]));
-            fiveCardHand_fiveCardFlush_True(player, 1);
+            fiveCardHand_fiveCardFlush_True(player, i);
         }
 
 
-        for (int i = 0; i < Global.VALUES.length - Global.straightFlushSize; i++) {
+        for (int i = 0; i < Global.VALUES.length - Global.straightFlushSize - 1; i++) {
             for (int j = 0; j < Global.SUITS.length - 1; j++) {
-                player.setHand(handBuilder(Global.VALUES[i],
+                player.setHand(handBuilder(
+                        Global.VALUES[i],
                         Global.VALUES[i + 1],
                         Global.VALUES[i + 2],
                         Global.VALUES[i + 3],
-                        Global.VALUES[i + 4],
+                        Global.VALUES[i + 5],
                         Global.SUITS[j], Global.SUITS[j], Global.SUITS[j], Global.SUITS[j], Global.SUITS[j]));
                 fiveCardHand_fiveCardFlush_True(player, i + 2);
             }
@@ -284,7 +281,7 @@ public class UnitTesting {
             hand.getCards().clear();
             cardsInHand = new PlayingCard[5];
             for (int j = 0; j < 5; j++) {
-                cardsInHand[j] = new PlayingCard(values[j + i], "Spades");
+                cardsInHand[j] = new PlayingCard(values[j + i], Global.SUITS[j]);
                 hand.addCard(cardsInHand[j]);
             }
             printHand(hand);
@@ -433,18 +430,16 @@ public class UnitTesting {
 
         // These values compose every value in a standard deck of playing cards.
         // A "low-Ace" and "high-Ace" are necessary for determining the existence of a 5-high Straight (aka "wheel").
-        String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
-        String[] suits = {"Spades", "Hearts", "Clubs", "Diamonds"};
         PlayingCard[] cardsInHand;
         int iterationCount = 1;
 
-        for (String suit : suits) {
+        for (int i = 0; i < Global.SUITS.length - 1; i++) {
             for (int j = 0; j < 9; j++) {
                 hand.getCards().clear();
                 cardsInHand = new PlayingCard[5];
-                System.out.println("Iteration " + iterationCount + ": " + suit);
+                System.out.println("Iteration " + iterationCount + ": " + Global.SUITS[i]);
                 for (int k = 0; k < 5; k++) {
-                    cardsInHand[k] = new PlayingCard(values[k + j], suit);
+                    cardsInHand[k] = new PlayingCard(Global.VALUES[k + j], Global.SUITS[i]);
                     hand.addCard(cardsInHand[k]);
                 }
                 iterationCount++;
@@ -452,6 +447,12 @@ public class UnitTesting {
                 HandEvaluator evaluator = new HandEvaluator(player, hand);
                 Assertions.assertTrue(evaluator.isAStraightFlush());
                 printHandRanking(evaluator);
+                if (hand.getCards().get(hand.getCards().size() - 1).getValue().equals("Ace")) {
+                    Assertions.assertEquals("RoyalFlush", evaluator.getHandRank().toString());
+                }
+                else {
+                    Assertions.assertEquals("StraightFlush", evaluator.getHandRank().toString());
+                }
             }
         }
 
@@ -486,20 +487,6 @@ public class UnitTesting {
             fiveCardHand_fiveCardRoyalFlush_True(Global.SUITS[i], (i + 1));
         }
     }
-    //@Test
-    //public void canEvaluatePairs() {
-    //    for (int i = 0; i < Global.VALUES.length; i++) {
-    //        Player player = new Player();
-    //        Hand hand = new Hand(handBuilder(
-    //                Global.VALUES[i], Global.VALUES[i],
-    //                Global.VALUES[Global.VALUES.length - 1],
-    //                Global.VALUES[Global.VALUES.length - 1],
-    //                Global.VALUES[Global.VALUES.length - 1],
-    //                Global.SUITS[0], Global.SUITS[1], Global.SUITS[0], Global.SUITS[0], Global.SUITS[0]));
-    //        HandEvaluator evaluator = new HandEvaluator(player, hand);
-    //        Assertions.assertEquals(evaluator.getPairs().get(i),Global.VALUES[i]);
-    //    }
-    //}
     // Determine Winner
     @Test
     public void canDetermineWinner() {
@@ -598,6 +585,7 @@ public class UnitTesting {
             Assertions.assertEquals(2, evaluator.getPairs().size());
             Assertions.assertEquals(Global.VALUES[i], evaluator.getPairs().get(1));
             Assertions.assertEquals(Global.VALUES[i + 1], evaluator.getPairs().get(0));
+            Assertions.assertEquals("TwoPair", evaluator.getHandRank().toString());
         }
     }
     @Test
@@ -640,6 +628,30 @@ public class UnitTesting {
             System.out.println(evaluator.getQuadsValue());
 
             Assertions.assertEquals(4, hand.getValueData()[i]);
+            Assertions.assertEquals("Quads", evaluator.getHandRank().toString());
+        }
+    }
+    @Test
+    public void theHandContainsFullHouse() {
+        for (int i = 0; i < Global.VALUES.length - 1; i++) {
+            Hand hand = new Hand();
+            Player  player = new Player();
+            ArrayList<PlayingCard> cards = new ArrayList<>(handBuilder(
+                    Global.VALUES[i],
+                    Global.VALUES[i],
+                    Global.VALUES[i],
+                    Global.VALUES[i + 1],
+                    Global.VALUES[i + 1],
+                    "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
+            hand.setHand(cards);
+
+            System.out.println(Arrays.toString(hand.getValueData()));
+            HandEvaluator evaluator = new HandEvaluator(player, hand);
+            System.out.println(evaluator.getFullHouse());
+
+            Assertions.assertEquals(Global.VALUES[i], evaluator.getFullHouse().get(0));
+            Assertions.assertEquals(Global.VALUES[i + 1], evaluator.getFullHouse().get(1));
+            Assertions.assertEquals("FullHouse", evaluator.getHandRank().toString());
         }
     }
     @Test
@@ -839,5 +851,6 @@ public class UnitTesting {
         HandEvaluator evaluator = new HandEvaluator(player, hand);
         Assertions.assertTrue(evaluator.isARoyalFlush());
         printHandRanking(evaluator);
+        Assertions.assertEquals("RoyalFlush", evaluator.getHandRank().toString());
     }
 }
