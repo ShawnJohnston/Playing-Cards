@@ -12,10 +12,17 @@ public class Player {
     public Player() {
     }
     public Player(String playerName) {
-        setName(playerName);
+        this.name = playerName;
+    }
+    public Player(String playerName, int startingChips) {
+        this.name = playerName;
+        this.startingChips = startingChips;
     }
 
     // Getters
+    public String getName() {
+        return name;
+    }
     public int getMaxNumCardsInHand() {
         return maxNumCardsInHand;
     }
@@ -43,5 +50,11 @@ public class Player {
     // Methods
     public void addToHand(PlayingCard card) {
         hand.addCard(card);
+    }
+    public void addChips(int chips) {
+        chipTotal += chips;
+    }
+    public void subtractChips(int chips) {
+        chipTotal -= chips;
     }
 }
