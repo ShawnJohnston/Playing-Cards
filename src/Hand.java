@@ -46,6 +46,7 @@ public class Hand {
     }
     public void removeCard(int index) {
         cards.remove(index);
+        size = cards.size();
     }
 
     private void updateHand() {

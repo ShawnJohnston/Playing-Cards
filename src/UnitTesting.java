@@ -22,20 +22,20 @@ public class UnitTesting {
         // This test compares the expected size of a standard deck (52) to the size resulting from class methods.
         System.out.println("Standard deck size: \n" +
                             "Expected: " + expectedDeckSize + "\n" +
-                            "Actual: " + standardDeck.getSize());
-        Assertions.assertEquals(expectedDeckSize, standardDeck.getSize());
+                            "Actual: " + standardDeck.getMaxSize());
+        Assertions.assertEquals(expectedDeckSize, standardDeck.getMaxSize());
     }
     @Test
     public void variantDeckSizeIsCorrectGivenJokerCount() {
         // This test tests the expected sizes for variant decks (53 or 54) to the resulting value from class methods.
         System.out.println("Standard deck size w/ one Joker: \n" +
                 "Expected: " + expectedDeckSizeOneJoker + "\n" +
-                "Actual: " + deckWithOneJokers.getSize());
+                "Actual: " + deckWithOneJokers.getMaxSize());
         System.out.println("Standard deck size w/ two Jokers: \n" +
                 "Expected: " + expectedDeckSizeTwoJokers + "\n" +
-                "Actual: " + deckWithTwoJokers.getSize());
-        Assertions.assertEquals(expectedDeckSizeOneJoker, deckWithOneJokers.getSize());
-        Assertions.assertEquals(expectedDeckSizeTwoJokers, deckWithTwoJokers.getSize());
+                "Actual: " + deckWithTwoJokers.getMaxSize());
+        Assertions.assertEquals(expectedDeckSizeOneJoker, deckWithOneJokers.getMaxSize());
+        Assertions.assertEquals(expectedDeckSizeTwoJokers, deckWithTwoJokers.getMaxSize());
     }
     @Test
     public void thereAreFourOfEachCardValueInTheDeck() {
@@ -47,7 +47,7 @@ public class UnitTesting {
         // Outer loop runs through each index of the 'values' array.
         // Inner loop runs through each index of 'cards' array that composes the deck object.
         for (int i = 0; i < Global.VALUES.length; i++) {
-            for (int j = 0; j < standardDeck.getSize(); j++) {
+            for (int j = 0; j < standardDeck.getMaxSize(); j++) {
                 if (Global.VALUES[i].equals(standardDeck.getCards().get(j).getValue())) {
                     // If the current 'i' index of 'values' matches the current 'j' index of cards in the deck.
                     valueCounter[i]++; // Increments the count for that value.
@@ -85,7 +85,7 @@ public class UnitTesting {
                 }
             }
 
-            for (int i = 0; i < deckBeingTested.getSize(); i++) {
+            for (int i = 0; i < deckBeingTested.getMaxSize(); i++) {
                 // This loop will run through the entire deck. The suit of the card at the current index will increment
                 // it's corresponding suit counter.
 
@@ -121,7 +121,7 @@ public class UnitTesting {
         int step = 0;
         System.out.println("Pre-Shuffle:");
         System.out.println("Not Shuffled          Shuffled");
-        for (int i = 0; i < shuffledDeck.getSize(); i++) {
+        for (int i = 0; i < shuffledDeck.getMaxSize(); i++) {
             // This loop will run through the entire deck. The suit of the card at the current index will increment
             // it's corresponding suit counter.
             System.out.print(i + ". " + standardDeck.getCards().get(i).getName() + "      ");
@@ -141,15 +141,15 @@ public class UnitTesting {
                 shuffledDeck = shuffler.handShuffle(shuffledDeck);
             }
 
-            String[] standardCards = new String[standardDeck.getSize()];
-            String[] shuffledCards = new String[shuffledDeck.getSize()];
+            String[] standardCards = new String[standardDeck.getMaxSize()];
+            String[] shuffledCards = new String[shuffledDeck.getMaxSize()];
 
-            for (int i = 0; i < shuffledDeck.getSize(); i++) {
+            for (int i = 0; i < shuffledDeck.getMaxSize(); i++) {
                 standardCards[i] = standardDeck.getCards().get(i).getName();
                 shuffledCards[i] = shuffledDeck.getCards().get(i).getName();
             }
             System.out.println("Not Shuffled          Shuffled");
-            for (int i = 0; i < shuffledDeck.getSize(); i++) {
+            for (int i = 0; i < shuffledDeck.getMaxSize(); i++) {
                 System.out.print(i + ". " + standardDeck.getCards().get(i).getName() + "      ");
                 System.out.print(shuffledDeck.getCards().get(i).getName() + "    ");
                 System.out.println();
@@ -1200,7 +1200,92 @@ public class UnitTesting {
         GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
         Assertions.assertEquals("Tie", outcome.getWinner());
     }
-    
+
+    // Drawing cards from deck
+    @Test
+    public void forEachDeckVariant() {
+        canDrawFromDeckToPlayerHandAndDiscardFromHand(standardDeck, 0);
+        canDrawFromDeckToPlayerHandAndDiscardFromHand(deckWithOneJokers, 1);
+        canDrawFromDeckToPlayerHandAndDiscardFromHand(deckWithTwoJokers, 2);
+
+        standardDeck = new DeckOfCards();
+        deckWithOneJokers = new DeckOfCards(1);
+        deckWithTwoJokers = new DeckOfCards(2);
+
+        canDrawAllCardsFromDeck(standardDeck, 0);
+        canDrawAllCardsFromDeck(deckWithOneJokers, 1);
+        canDrawAllCardsFromDeck(deckWithTwoJokers, 2);
+    }
+    public void canDrawFromDeckToPlayerHandAndDiscardFromHand(DeckOfCards deck, int jokerCount) {
+        Hand hand = new Hand();
+
+        // Draw cards from deck.
+
+        Assertions.assertEquals((52 + jokerCount), deck.getCurrentSize());
+
+        System.out.println("Drawing cards from deck to hand \n");
+        System.out.println("Deck size: " + deck.getCurrentSize());
+        System.out.println("Top 5 cards: ");
+        for (int i = 0; i < 5; i++) {
+            System.out.println(deck.getCards().get(i).getName());
+        }
+        System.out.println();
+
+        int counter = 0;
+        while (counter < 5) {
+            System.out.println("~~~~~~~~~~~~~");
+            System.out.println("Top card of the deck: " + deck.getCards().get(0).getName());
+
+            System.out.println("Drawing top card" + "\n");
+            hand.addCard(deck.draw());
+
+            Assertions.assertEquals(counter + 1, hand.getSize());
+            Assertions.assertEquals(deck.getMaxSize() - (counter + 1), deck.getCurrentSize());
+
+            System.out.println("Deck size: " + deck.getCurrentSize() + "\n");
+
+            System.out.println("New top card: " + deck.getCards().get(0).getName());
+            System.out.println("Cards in hand: ");
+            for (PlayingCard card: hand.getCards()) {
+                System.out.println(card.getName());
+            }
+            System.out.println();
+            counter++;
+        }
+
+        // Discard from hand to deck.
+        Discard discard = new Discard();
+        System.out.println("Discarding cards from hand \n");
+        while (hand.getSize() > 0) {
+            System.out.println("~~~~~~~~~~~~~");
+
+
+            System.out.println("Discard size: " + discard.getCurrentSize());
+            System.out.println("Discarding: " + hand.getCards().get(0).getName());
+            discard.addCard(hand.getCards().get(0));
+
+            hand.removeCard(0);
+            System.out.println("Hand size: " + hand.getSize() + "\n");
+        }
+        System.out.println("Cards in discard pile: ");
+        for (PlayingCard card: discard.getCards()) {
+            System.out.println(card.getName());
+        }
+    }
+    public void canDrawAllCardsFromDeck(DeckOfCards deck, int jokers) {
+        Hand hand = new Hand();
+
+        Assertions.assertEquals(52 + jokers, deck.getCurrentSize());
+        Assertions.assertEquals(0,hand.getSize());
+
+        while (deck.getCurrentSize() > 0) {
+            hand.addCard(deck.draw());
+        }
+
+        Assertions.assertEquals(0, deck.getCurrentSize());
+        Assertions.assertEquals(52 + jokers, hand.getSize());
+    }
+
     // Methods
     public ArrayList<PlayingCard> handBuilder(String value1, String value2, String value3, String value4, String value5,
                             String suit1, String suit2, String suit3, String suit4, String suit5) {
