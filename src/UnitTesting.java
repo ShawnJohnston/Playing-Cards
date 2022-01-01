@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class UnitTesting {
-    // Initialization of test variables;
+    // Initialization of test variables.
 
     // Integers of deck sizes.
     int expectedDeckSize = 52;
