@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="pane" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group.playingcardsdemo.TestController">
+   <children>
+      <Button fx:id="resetButton" layoutX="60.0" layoutY="800.0" mnemonicParsing="false" onAction="#toReset" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Reset" />
+      <Button fx:id="computerShuffleButton" layoutX="60.0" layoutY="740.0" mnemonicParsing="false" onAction="#toComputerShuffle" stylesheets="@style.css" text="Computer Shuffle" />
+      <Button fx:id="handShuffleButton" layoutX="60.0" layoutY="680.0" mnemonicParsing="false" onAction="#toHandShuffle" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Hand Shuffle" />
+      <Button fx:id="mainMenuButton" layoutX="1240.0" layoutY="800.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Main Menu" />
+      <Button layoutX="1240.0" layoutY="740.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Hand Comparison" />
+      <Group layoutX="60.0" layoutY="60.0">
+         <children>
+            <ImageView fx:id="cardImageView1" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView2" fitHeight="150.0" fitWidth="200.0" layoutX="106.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView3" fitHeight="150.0" fitWidth="200.0" layoutX="212.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView4" fitHeight="150.0" fitWidth="200.0" layoutX="318.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView5" fitHeight="150.0" fitWidth="200.0" layoutX="424.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView6" fitHeight="150.0" fitWidth="200.0" layoutX="530.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView7" fitHeight="150.0" fitWidth="200.0" layoutX="636.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView8" fitHeight="150.0" fitWidth="200.0" layoutX="742.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView9" fitHeight="150.0" fitWidth="200.0" layoutX="848.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView10" fitHeight="150.0" fitWidth="200.0" layoutX="954.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView11" fitHeight="150.0" fitWidth="200.0" layoutX="1060.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView12" fitHeight="150.0" fitWidth="200.0" layoutX="1166.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView13" fitHeight="150.0" fitWidth="200.0" layoutX="1272.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Group>
+      <Group layoutX="60.0" layoutY="210.0">
+         <children>
+            <ImageView fx:id="cardImageView14" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView15" fitHeight="150.0" fitWidth="200.0" layoutX="106.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView16" fitHeight="150.0" fitWidth="200.0" layoutX="212.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView17" fitHeight="150.0" fitWidth="242.0" layoutX="318.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView18" fitHeight="150.0" fitWidth="200.0" layoutX="424.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView19" fitHeight="150.0" fitWidth="200.0" layoutX="530.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView20" fitHeight="150.0" fitWidth="200.0" layoutX="636.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView21" fitHeight="150.0" fitWidth="200.0" layoutX="742.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView22" fitHeight="150.0" fitWidth="200.0" layoutX="848.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView23" fitHeight="150.0" fitWidth="200.0" layoutX="954.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="cardImageView24" fitHeight="150.0" fitWidth="200.0" layoutX="1060.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView25" fitHeight="150.0" fitWidth="200.0" layoutX="1166.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView26" fitHeight="150.0" fitWidth="200.0" layoutX="1272.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+         </children>
+      </Group>
+      <Group layoutX="60.0" layoutY="360.0">
+         <children>
+            <ImageView fx:id="cardImageView27" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView28" fitHeight="150.0" fitWidth="200.0" layoutX="106.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView29" fitHeight="150.0" fitWidth="200.0" layoutX="212.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView30" fitHeight="150.0" fitWidth="242.0" layoutX="318.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView31" fitHeight="150.0" fitWidth="200.0" layoutX="424.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView32" fitHeight="150.0" fitWidth="200.0" layoutX="530.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView33" fitHeight="150.0" fitWidth="200.0" layoutX="636.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView34" fitHeight="150.0" fitWidth="200.0" layoutX="742.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView35" fitHeight="150.0" fitWidth="200.0" layoutX="848.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView36" fitHeight="150.0" fitWidth="200.0" layoutX="954.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView37" fitHeight="150.0" fitWidth="200.0" layoutX="1060.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView38" fitHeight="150.0" fitWidth="200.0" layoutX="1166.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView39" fitHeight="150.0" fitWidth="200.0" layoutX="1272.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+         </children>
+      </Group>
+      <Group layoutX="60.0" layoutY="510.0">
+         <children>
+            <ImageView fx:id="cardImageView40" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView41" fitHeight="150.0" fitWidth="200.0" layoutX="106.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView42" fitHeight="150.0" fitWidth="200.0" layoutX="212.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView43" fitHeight="150.0" fitWidth="242.0" layoutX="318.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView44" fitHeight="150.0" fitWidth="200.0" layoutX="424.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView45" fitHeight="150.0" fitWidth="200.0" layoutX="530.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView46" fitHeight="150.0" fitWidth="200.0" layoutX="636.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView47" fitHeight="150.0" fitWidth="200.0" layoutX="742.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView48" fitHeight="150.0" fitWidth="200.0" layoutX="848.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView49" fitHeight="150.0" fitWidth="200.0" layoutX="954.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView50" fitHeight="150.0" fitWidth="200.0" layoutX="1060.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView51" fitHeight="150.0" fitWidth="200.0" layoutX="1166.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <ImageView fx:id="cardImageView52" fitHeight="150.0" fitWidth="200.0" layoutX="1272.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+         </children>
+      </Group>
+   </children>
+</AnchorPane>
