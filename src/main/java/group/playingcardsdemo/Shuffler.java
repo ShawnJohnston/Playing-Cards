@@ -35,13 +35,13 @@ public class Shuffler {
                 case 4 -> deck.setCards(cutTheDeck(deck)); // Cut.
             }
             proceduralCount++;
-            }
+        }
         return deck; // To deck object in main.
     }
     private int setSplitPoint(DeckOfCards deck) {
         // This method defines the location in a deck of cards in which a top stack will separate from the rest of the deck.
         // This default version of the method is intended to separate a full deck of cards into two half stacks.
-        Random randomizer = new Random();
+
         int deckMidPoint = deck.getMaxSize() / 2;
         int variability = randomValueFromNormalDistribution(5);
         return deckMidPoint + variability;
@@ -69,29 +69,30 @@ public class Shuffler {
         // To select any random card from a deck of cards, however, all possibilities are equally likely. This results in a flat distribution.
         // This method is NOT to be used for any scenario of a flat distribution.
         Random randomizer = new Random();
-        int absoluteBounds = (bounds / 2); // Absolute value for creating a +/- effect.
         ArrayList<Integer> numberSpread = new ArrayList<>(); // The absoluteBounds range of numbers are added here.
-                                                             // Numbers are included here (absoluteBounds) times - their distance from 0.
+        // Numbers are included here (absoluteBounds) times - their distance from 0.
         // This 2D for-loop will add to numberSpread as to create a normal distribution of values, with 0 as the median.
         // Outer loop: (-absoluteBounds <= i <= absoluteBounds).
         // Inner loop: The current i value is added to numberSpread i times.
-        for (int i = -absoluteBounds; i <= absoluteBounds; i++) {
-            int constantMultiplier = absoluteBounds - Math.abs(i); // This is used to control the number of times i is added to numberSpread.
+        for (int i = -bounds; i <= bounds; i++) {
+            int constantMultiplier = bounds - Math.abs(i); // This is used to control the number of times i is added to numberSpread.
             for (int j = 0; j < constantMultiplier + 1; j++) {
                 numberSpread.add(i);
             }
         }
-        return numberSpread.get(randomizer.nextInt(numberSpread.size())); // A random value from the numberSpread returns.
+        int randomIndex = randomizer.nextInt(numberSpread.size());
+        return numberSpread.get(randomIndex); // A random value from the numberSpread returns.
     }
     private ArrayList<PlayingCard> riffle(DeckOfCards deck) {
         // This method will split the deck into two stacks, then be riffled back together to make a new full stack.
         ArrayList<PlayingCard> topStack = new ArrayList<>(); // Top half of the deck.
-        ArrayList<PlayingCard> bottomStack = new ArrayList<PlayingCard>(); // Bottom half of the deck.
+        ArrayList<PlayingCard> bottomStack = new ArrayList<>(); // Bottom half of the deck.
 
         // For every card in the deck up to and including the split point (the deck's midpoint with +/- 5 variance),
         // the current card index will be added to the top stack. The rest will be added to the bottom stack.
-        for (int i = deck.getMaxSize() - 1; i >= 0; i--) {
-            if (i < setSplitPoint(deck)) {
+        int splitPoint = setSplitPoint(deck);
+        for (int i = 0; i < deck.getMaxSize(); i++) {
+            if (i < splitPoint) {
                 topStack.add(deck.getCards().get(i));
             }
             else {
@@ -105,8 +106,7 @@ public class Shuffler {
         while (riffledDeck.size() < deck.getMaxSize()) {
             // It is unlikely that cards will riffle exactly one at a time from each stack when shuffling by hand.
             // Variability is used here to create bunching together of the cards randomly.
-            rifflingAction(riffledDeck, topStack);
-            rifflingAction(riffledDeck, bottomStack);
+            rifflingAction(riffledDeck, topStack, bottomStack);
         }
         // This loop incrementally assigns each card in the riffledDeck list to the deck's corresponding card index.
         for (int i = 0; i < deck.getMaxSize(); i++) {
@@ -114,28 +114,42 @@ public class Shuffler {
         }
         return deck.getCards(); // The riffle is complete. The result returns to main to overwrite the deck's card array.
     }
-    private void rifflingAction(ArrayList<PlayingCard> riffledDeck, ArrayList<PlayingCard> stack) {
+    private void rifflingAction(ArrayList<PlayingCard> riffledDeck, ArrayList<PlayingCard> topStack, ArrayList<PlayingCard> bottomStack) {
         // The actual riffling occurs here. Java's Random class is used to make the procedures of the shuffle inexact.
         Random randomizer = new Random();
-        int variability = 1 + randomizer.nextInt(2); // Bunching of cards only happens with up to 3 cards at a time.
-        if (!stack.isEmpty()) {
-            // Nested if-else only executes as long as the stack is not empty.
-            if (variability > stack.size()) {
-                // If variability is greater than the remaining size of the stack, it could result in an index bounds error.
-                // To prevent this, the entire stack is added to the deck,
-                riffledDeck.addAll(stack);
+
+        boolean stackSelector = randomizer.nextBoolean();
+        while (!topStack.isEmpty() || !bottomStack.isEmpty()) {
+            if (topStack.isEmpty()) {
+                stackSelector = false;
             }
-            else {
-                // A random number of cards from this stack (from 1 - 3), will riffle into the riffledDeck list.
-                for (int i = 0; i < variability; i++) {
-                    riffledDeck.add(stack.get(stack.size() - 1)); // The current card is added to the riffleDeck list.
-                    stack.remove(stack.size() - 1); // The added card is removed from the stack list.
-                    if (stack.isEmpty()) {
-                        // The stack no longer contains any cards. THe loop will break.
+            else if (bottomStack.isEmpty()) {
+                stackSelector = true;
+            }
+            int variability = 1 + randomizer.nextInt(2); // Bunching of cards only happens with up to 3 cards at a time.
+            if (stackSelector) {
+                int counter = 0;
+                while (!topStack.isEmpty()) {
+                    if (counter == variability) {
                         break;
                     }
+                    riffledDeck.add(topStack.get(topStack.size() - 1));
+                    topStack.remove(topStack.size() - 1);
+                    counter++;
                 }
             }
+            else {
+                int counter = 0;
+                while (!bottomStack.isEmpty()) {
+                    if (counter == variability) {
+                        break;
+                    }
+                    riffledDeck.add(bottomStack.get(bottomStack.size() - 1));
+                    bottomStack.remove(bottomStack.size() - 1);
+                    counter++;
+                }
+            }
+            stackSelector = !stackSelector;
         }
     }
     private ArrayList<PlayingCard> box(DeckOfCards deck, int boxCount) {
