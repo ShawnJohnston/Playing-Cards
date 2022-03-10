@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="pane" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group.playingcardsdemo.RecognitionTestController">
+   <children>
+      <Group layoutX="60.0" layoutY="60.0">
+         <children>
+            <Button fx:id="highCardButton" mnemonicParsing="false" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="High Card" />
+            <Button fx:id="pairButton" layoutY="60.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Pair" />
+            <Button fx:id="twoPairButton" layoutY="120.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Two Pair" />
+            <Button fx:id="tripsButton" layoutY="180.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Trips" />
+            <Button fx:id="straightButton" layoutY="240.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Straight" />
+            <Button fx:id="flushButton" layoutY="300.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Flush" />
+            <Button fx:id="fullHouseButton" layoutY="360.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Full House" />
+            <Button fx:id="quadsButton" layoutY="420.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Quads" />
+            <Button fx:id="straightFlushButton" layoutY="480.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Straight Flush" />
+            <Button fx:id="royalFlushButton" layoutY="540.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Royal Flush" />
+            <Button fx:id="randomRankButton" layoutY="600.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Random" />
+            <Button fx:id="fromDeckButton" layoutY="660.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="From Deck" />
+         </children>
+      </Group>
+      <Group layoutX="320.0" layoutY="60.0">
+         <children>
+            <Button fx:id="proceduralCycleButton" mnemonicParsing="false" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Procedural Cycle" />
+            <Button fx:id="randomGeneratorButton" layoutY="60.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Random" />
+            <Button fx:id="sortButton" layoutY="120.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Sorted" />
+         </children>
+      </Group>
+      <Group layoutX="660.0" layoutY="120.0">
+         <children>
+            <Button fx:id="startButton" layoutX="60.0" layoutY="180.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Start" />
+            <ImageView fx:id="cardImageView1" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@none.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardImageView2" fitHeight="150.0" fitWidth="200.0" layoutX="105.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@none.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardImageView3" fitHeight="150.0" fitWidth="126.0" layoutX="210.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@none.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardImageView4" fitHeight="150.0" fitWidth="200.0" layoutX="315.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@none.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardImageView5" fitHeight="150.0" fitWidth="200.0" layoutX="420.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@none.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="400.0" layoutY="180.0" stylesheets="@style.css" text="Hand Rank" />
+            <Label layoutX="400.0" layoutY="220.0" stylesheets="@style.css" text="Card 1" />
+            <Label layoutX="400.0" layoutY="260.0" stylesheets="@style.css" text="Card 2" />
+            <Label layoutX="400.0" layoutY="300.0" stylesheets="@style.css" text="Card 3" />
+            <Label layoutX="400.0" layoutY="340.0" stylesheets="@style.css" text="Card 4" />
+            <Label layoutX="400.0" layoutY="380.0" stylesheets="@style.css" text="Card 5" />
+            <ImageView fx:id="cardImageView6" fitHeight="150.0" fitWidth="200.0" layoutX="525.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@none.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardImageView51" fitHeight="150.0" fitWidth="200.0" layoutX="630.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@none.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Group>
+      <Button fx:id="mainMenuButton" layoutX="1240.0" layoutY="800.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Main Menu" />
+      <Button fx:id="shufflingButton" layoutX="1240.0" layoutY="740.0" mnemonicParsing="false" onAction="#switchToShufflingTest" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Shuffling" />
+      <Button fx:id="resetButton" layoutX="60.0" layoutY="800.0" mnemonicParsing="false" onAction="#toReset" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Reset" />
+   </children>
+</AnchorPane>

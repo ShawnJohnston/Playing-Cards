@@ -14,10 +14,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -54,7 +52,7 @@ public class StartingMenuController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ShufflingTest.fxml"));
         root = loader.load();
 
-        TestController controller = loader.getController();
+        ShufflingTestController controller = loader.getController();
         controller.initializeController(event);
     }
     public void startGame(ActionEvent event) throws IOException {

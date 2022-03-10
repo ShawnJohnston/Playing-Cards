@@ -15,15 +15,12 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class TestController {
+public class ShufflingTestController {
     private Parent root;
     private final String css = this.getClass().getResource("style.css").toExternalForm();
 
     DeckOfCards deck = new DeckOfCards();
-    Discard discard = new Discard();
     Shuffler shuffler = new Shuffler();
-    Hand handA = new Hand();
-    Hand handB = new Hand();
 
     @FXML
     Button handShuffleButton;
@@ -33,6 +30,8 @@ public class TestController {
     Button resetButton;
     @FXML
     Button mainMenuButton;
+    @FXML
+    Button handRecognitionButton;
     @FXML
     AnchorPane pane;
 
@@ -148,7 +147,7 @@ public class TestController {
     Image[] cardFronts;
     ImageView[] cards;
 
-    public TestController() throws IOException {
+    public ShufflingTestController() throws IOException {
     }
 
     public void initializeController(ActionEvent event) throws IOException {
@@ -260,9 +259,8 @@ public class TestController {
     public void toReset(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ShufflingTest.fxml"));
         root = loader.load();
-        TestController controller = loader.getController();
+        ShufflingTestController controller = loader.getController();
         controller.initializeController(event);
-        //sceneBuilder(event);
     }
     public void toHandShuffle(ActionEvent event) throws IOException {
         shuffler.handShuffle(deck);
@@ -276,6 +274,10 @@ public class TestController {
         root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
         sceneBuilder(event);
     }
+    public void switchToHandRecognition(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("HandRecognitionTest.fxml"));
+        sceneBuilder(event);
+    }
     public void updateScene(ActionEvent event) throws IOException  {
         Global.initializeCardImages(deck);
 
@@ -287,7 +289,7 @@ public class TestController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ShufflingTest.fxml"));
         root = loader.load();
 
-        TestController controller = loader.getController();
+        ShufflingTestController controller = loader.getController();
         controller.updateController(event, cardFronts);
     }
     private void testSceneBuilder(ActionEvent event) throws IOException {

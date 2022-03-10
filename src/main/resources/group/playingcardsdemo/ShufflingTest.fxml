@@ -2,11 +2,10 @@
 
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="pane" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group.playingcardsdemo.TestController">
+<AnchorPane fx:id="pane" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group.playingcardsdemo.ShufflingTestController">
    <children>
       <Button fx:id="resetButton" layoutX="60.0" layoutY="800.0" mnemonicParsing="false" onAction="#toReset" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Reset" />
       <Button fx:id="computerShuffleButton" layoutX="60.0" layoutY="740.0" mnemonicParsing="false" onAction="#toComputerShuffle" stylesheets="@style.css" text="Computer Shuffle" />
@@ -110,5 +109,6 @@
             </ImageView>
          </children>
       </Group>
+      <Button fx:id="handRecognitionButton" layoutX="1240.0" layoutY="680.0" mnemonicParsing="false" onAction="#switchToHandRecognition" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Hand Recognition" />
    </children>
 </AnchorPane>
