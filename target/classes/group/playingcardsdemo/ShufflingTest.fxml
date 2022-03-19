@@ -7,11 +7,17 @@
 
 <AnchorPane fx:id="pane" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group.playingcardsdemo.ShufflingTestController">
    <children>
-      <Button fx:id="resetButton" layoutX="60.0" layoutY="800.0" mnemonicParsing="false" onAction="#toReset" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Reset" />
-      <Button fx:id="computerShuffleButton" layoutX="60.0" layoutY="740.0" mnemonicParsing="false" onAction="#toComputerShuffle" stylesheets="@style.css" text="Computer Shuffle" />
-      <Button fx:id="handShuffleButton" layoutX="60.0" layoutY="680.0" mnemonicParsing="false" onAction="#toHandShuffle" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Hand Shuffle" />
-      <Button fx:id="mainMenuButton" layoutX="1240.0" layoutY="800.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Main Menu" />
-      <Button layoutX="1240.0" layoutY="740.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Hand Comparison" />
+      <Group layoutX="60.0" layoutY="680.0">
+         <children>
+            <Button fx:id="resetButton" layoutY="120.0" mnemonicParsing="false" onAction="#toReset" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Reset" />
+            <Button fx:id="computerShuffleButton" layoutY="60.0" mnemonicParsing="false" onAction="#toComputerShuffle" stylesheets="@style.css" text="Computer Shuffle" />
+            <Button fx:id="handShuffleButton" mnemonicParsing="false" onAction="#toHandShuffle" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Hand Shuffle" />
+            <Button fx:id="mainMenuButton" layoutX="1180.0" layoutY="120.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Main Menu" />
+            <Button layoutX="1180.0" layoutY="60.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Hand Comparison" />
+            <Button fx:id="handRecognitionButton" layoutX="1180.0" mnemonicParsing="false" onAction="#switchToHandRecognition" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Hand Recognition" />
+            <Button fx:id="DrawingCardsButton" layoutX="920.0" mnemonicParsing="false" onAction="#switchToDrawCardsTest" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Drawing Cards" />
+         </children>
+      </Group>
       <Group layoutX="60.0" layoutY="60.0">
          <children>
             <ImageView fx:id="cardImageView1" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
@@ -109,6 +115,5 @@
             </ImageView>
          </children>
       </Group>
-      <Button fx:id="handRecognitionButton" layoutX="1240.0" layoutY="680.0" mnemonicParsing="false" onAction="#switchToHandRecognition" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Hand Recognition" />
    </children>
 </AnchorPane>
