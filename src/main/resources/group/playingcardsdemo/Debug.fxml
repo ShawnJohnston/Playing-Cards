@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Group?>
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-
 
 <AnchorPane fx:id="pane" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group.playingcardsdemo.DebugController">
    <children>
-      <Group layoutX="70.0" layoutY="690.0">
+      <Group layoutX="300.0" layoutY="60.0">
          <children>
-            <Button fx:id="resetButton" layoutY="120.0" mnemonicParsing="false" onAction="#toReset" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Reset" />
-            <Button fx:id="computerShuffleButton" layoutY="60.0" mnemonicParsing="false" onAction="#toComputerShuffle" stylesheets="@style.css" text="Computer Shuffle" />
-            <Button fx:id="handShuffleButton" mnemonicParsing="false" onAction="#toHandShuffle" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Hand Shuffle" />
-            <Button fx:id="mainMenuButton" layoutX="1180.0" layoutY="120.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Main Menu" />
-            <Button layoutX="1180.0" layoutY="60.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Hand Comparison" />
-            <Button fx:id="handRecognitionButton" layoutX="1180.0" mnemonicParsing="false" onAction="#switchToHandRecognition" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Hand Recognition" />
-            <Button fx:id="DrawingCardsButton" layoutX="920.0" mnemonicParsing="false" onAction="#switchToDrawCardsTest" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Drawing Cards" />
+            <ImageView fx:id="cardImageView1" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@none.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardImageView2" fitHeight="150.0" fitWidth="200.0" layoutX="105.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@none.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="cardImageView3" fitHeight="150.0" fitWidth="200.0" layoutX="210.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@none.png" />
+               </image>
+            </ImageView>
          </children>
       </Group>
    </children>

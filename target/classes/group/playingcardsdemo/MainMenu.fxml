@@ -20,6 +20,7 @@
             <Button fx:id="testButton" layoutY="50.0" mnemonicParsing="false" onAction="#switchToShufflingTest" prefWidth="150.0" text="Shuffling" />
             <Button fx:id="drawCardsButton" layoutY="100.0" mnemonicParsing="false" onAction="#switchToDrawCardsTest" prefWidth="150.0" text="Draw Cards" />
             <Label id="textLabelOnBlack" layoutX="10.0" stylesheets="@style.css" text="Debug Tests" />
+            <Button fx:id="drawCardsButton1" layoutY="150.0" mnemonicParsing="false" onAction="#switchToDrawCardsTest" prefWidth="150.0" text="Debug" />
          </children>
       </Group>
     </children>
