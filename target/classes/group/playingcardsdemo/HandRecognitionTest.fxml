@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="pane" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group.playingcardsdemo.RecognitionTestController">
+   <children>
+      <Group id="textLabelOnBlack" layoutX="365.0" layoutY="59.0">
+         <children>
+            <Group>
+               <children>
+                  <ImageView fx:id="cardImageView1" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="cardImageView2" fitHeight="150.0" fitWidth="200.0" layoutX="106.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="cardImageView3" fitHeight="150.0" fitWidth="126.0" layoutX="212.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="cardImageView4" fitHeight="150.0" fitWidth="200.0" layoutX="318.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="cardImageView5" fitHeight="150.0" fitWidth="200.0" layoutX="424.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="cardImageView6" fitHeight="150.0" fitWidth="200.0" layoutX="530.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="cardImageView7" fitHeight="150.0" fitWidth="200.0" layoutX="636.0" pickOnBounds="true" preserveRatio="true" />
+                  <Group layoutX="50.0" layoutY="180.0">
+                     <children>
+                        <Label id="textLabelOnBlack" fx:id="cardLabel1" stylesheets="@style.css" text="-" />
+                        <Label id="textLabelOnBlack" fx:id="cardLabel2" layoutX="106.0" stylesheets="@style.css" text="-" />
+                        <Label id="textLabelOnBlack" fx:id="cardLabel3" layoutX="212.0" stylesheets="@style.css" text="-" />
+                        <Label id="textLabelOnBlack" fx:id="cardLabel4" layoutX="318.0" stylesheets="@style.css" text="-" />
+                        <Label id="textLabelOnBlack" fx:id="cardLabel5" layoutX="424.0" stylesheets="@style.css" text="-" />
+                        <Label id="textLabelOnBlack" fx:id="cardLabel6" layoutX="530.0" stylesheets="@style.css" text="-" />
+                        <Label id="textLabelOnBlack" fx:id="cardLabel7" layoutX="636.0" stylesheets="@style.css" text="-" />
+                     </children>
+                  </Group>
+               </children>
+            </Group>
+            <Group layoutY="240.0">
+               <children>
+                  <Label id="textLabelOnBlack" fx:id="handCapacityLabel1" stylesheets="@style.css" text="Test State" />
+                  <Label id="textLabelOnBlack" fx:id="handCapacityLabel11" layoutX="30.0" layoutY="60.0" stylesheets="@style.css" text="Setting 1" />
+                  <Label id="textLabelOnBlack" fx:id="handCapacityLabel111" layoutX="30.0" layoutY="120.0" stylesheets="@style.css" text="Setting 2" />
+                  <ChoiceBox fx:id="rankChoiceBox" layoutX="180.0" prefWidth="221.0" stylesheets="@style.css" />
+                  <Slider fx:id="stateSliderPrimary" blockIncrement="1.0" layoutX="180.0" layoutY="60.0" majorTickUnit="1.0" max="13.0" min="1.0" minorTickCount="13" prefWidth="221.0" showTickMarks="true" snapToTicks="true" value="1.0" />
+                  <Slider fx:id="stateSliderSecondary" blockIncrement="1.0" layoutX="180.0" layoutY="120.0" majorTickUnit="1.0" max="13.0" min="1.0" minorTickCount="13" prefWidth="221.0" showTickMarks="true" snapToTicks="true" value="1.0" />
+                  <Button fx:id="startButton" layoutX="180.0" layoutY="180.0" mnemonicParsing="false" onAction="#onClickStartButton" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Start" />
+                  <Label id="textLabelOnBlack" fx:id="statePrimaryLabel" layoutX="420.0" layoutY="60.0" stylesheets="@style.css" text="-" />
+                  <Label id="textLabelOnBlack" fx:id="stateSecondaryLabel" layoutX="420.0" layoutY="120.0" stylesheets="@style.css" text="-" />
+                  <CheckBox fx:id="sortHandCheckBox" layoutX="180.0" layoutY="240.0" mnemonicParsing="false" onAction="#changeSortHandCheckBox" text="Sorted" textFill="WHITE" />
+               </children>
+            </Group>
+            <Group layoutX="480.0" layoutY="240.0">
+               <children>
+                  <Label id="textLabelOnBlack" stylesheets="@style.css" text="Hand Rank" />
+                  <Label id="textLabelOnBlack" layoutY="60.0" stylesheets="@style.css" text="Card 1" />
+                  <Label id="textLabelOnBlack" layoutY="90.0" stylesheets="@style.css" text="Card 2" />
+                  <Label id="textLabelOnBlack" layoutY="120.0" stylesheets="@style.css" text="Card 3" />
+                  <Label id="textLabelOnBlack" layoutY="150.0" stylesheets="@style.css" text="Card 4" />
+                  <Label id="textLabelOnBlack" layoutY="180.0" stylesheets="@style.css" text="Card 5" />
+                  <Label id="textLabelOnBlack" layoutY="210.0" stylesheets="@style.css" text="Card 6" />
+                  <Label id="textLabelOnBlack" layoutY="240.0" stylesheets="@style.css" text="Card 7" />
+               </children>
+            </Group>
+         </children>
+      </Group>
+      <Button fx:id="mainMenuButton" layoutX="1240.0" layoutY="800.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Main Menu" />
+      <Button fx:id="shufflingButton" layoutX="1240.0" layoutY="740.0" mnemonicParsing="false" onAction="#switchToShufflingTest" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Shuffling" />
+      <Button fx:id="resetButton" layoutX="60.0" layoutY="800.0" mnemonicParsing="false" onAction="#toReset" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Reset" />
+      <Group layoutX="125.0" layoutY="68.0">
+         <children>
+            <Label id="textLabelOnBlack" fx:id="handCapacityLabel" stylesheets="@style.css" text="Hand Capacity" />
+            <Button fx:id="capacityIncrementButton" layoutX="117.0" layoutY="47.0" mnemonicParsing="false" stylesheets="@style.css" text="&gt;" />
+            <Button fx:id="capacityDecrementButton" layoutY="47.0" mnemonicParsing="false" stylesheets="@style.css" text="&lt;" />
+            <Label id="textLabelOnBlack" fx:id="handCapacityActualLabel" layoutX="72.0" layoutY="53.0" stylesheets="@style.css" text="5" />
+         </children>
+      </Group>
+   </children>
+</AnchorPane>
