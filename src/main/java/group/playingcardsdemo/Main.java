@@ -1,19 +1,22 @@
 package group.playingcardsdemo;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("TitleScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("TitleScreen.fxml"));
+        //StartingMenuController controller = loader.getController();
+
+        Parent root = loader.load();
         Scene scene = new Scene(root);
         String css = this.getClass().getResource("style.css").toExternalForm();
         scene.getStylesheets().add(css);
@@ -23,9 +26,15 @@ public class Main extends Application {
         stage.setResizable(false);
         stage.setMaximized(true);
         stage.setFullScreenExitHint("");
+        scene.setOnKeyPressed(event -> {
+                switch (event.getCode()) {
+                    case ESCAPE -> {
+                        Platform.exit();
+                    }
+                }
+        });
         stage.show();
     }
-
     public static void main(String[] args) {
         launch();
     }

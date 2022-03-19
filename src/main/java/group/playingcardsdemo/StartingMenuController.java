@@ -4,6 +4,8 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,6 +16,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -37,6 +41,8 @@ public class StartingMenuController implements Initializable {
 
     int chipCount;
 
+
+
     public void exitApplication(ActionEvent event) {
         Platform.exit();
     }
@@ -54,6 +60,12 @@ public class StartingMenuController implements Initializable {
 
         ShufflingTestController controller = loader.getController();
         controller.initializeController(event);
+    }
+
+    public void switchToDrawCardsTest(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DrawCardsTest.fxml"));
+        root = loader.load();
+        sceneBuilder(event);
     }
     public void startGame(ActionEvent event) throws IOException {
         String name = nameTextField.getText();
@@ -77,6 +89,13 @@ public class StartingMenuController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         scene.getStylesheets().add(css);
+        scene.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case ESCAPE -> {
+                    Platform.exit();
+                }
+            }
+        });
         stage.show();
     }
 
@@ -90,6 +109,11 @@ public class StartingMenuController implements Initializable {
             }
         });
         gameModeChoiceBox.getItems().addAll(Global.GAMES);
-        //gameModeChoiceBox.setOnAction(this::setGameLabel);
+        gameModeChoiceBox.setOnAction(this::setGameLabel);
+    }
+
+    public void setGameLabel(ActionEvent event) {
+        String text = gameModeChoiceBox.getValue();
+        gameLabel.setText(text);
     }
 }

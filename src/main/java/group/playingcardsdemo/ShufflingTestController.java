@@ -1,5 +1,6 @@
 package group.playingcardsdemo;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -278,12 +279,15 @@ public class ShufflingTestController {
         root = FXMLLoader.load(getClass().getResource("HandRecognitionTest.fxml"));
         sceneBuilder(event);
     }
+    public void switchToDrawCardsTest(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("DrawCardsTest.fxml"));
+        sceneBuilder(event);
+    }
     public void updateScene(ActionEvent event) throws IOException  {
         Global.initializeCardImages(deck);
 
         for (int i = 0; i < deck.getMaxSize(); i++) {
             cardFronts[i] = new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Fronts/" + deck.getCards().get(i).getFront()));
-            System.out.println(deck.getCards().get(i).getName());
         }
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ShufflingTest.fxml"));
@@ -300,6 +304,13 @@ public class ShufflingTestController {
         Scene scene = new Scene(pane);
         stage.setScene(scene);
         scene.getStylesheets().add(css);
+        scene.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case ESCAPE -> {
+                    Platform.exit();
+                }
+            }
+        });
         stage.show();
     }
     private void sceneBuilder(ActionEvent event) throws IOException {
@@ -307,6 +318,13 @@ public class ShufflingTestController {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         scene.getStylesheets().add(css);
+        scene.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case ESCAPE -> {
+                    Platform.exit();
+                }
+            }
+        });
         stage.show();
     }
 }

@@ -5,10 +5,13 @@
     -fx-text-fill: "white";
     -fx-alignment: center;
 }
-.label{
+.choice-box{
+    -fx-text-fill: "black";
+}
+#textLabelOnBlack{
     -fx-text-fill: "white";
 }
-
 #titleLabel{
+    -fx-text-fill: "white";
     -fx-font-size: 72;
 }

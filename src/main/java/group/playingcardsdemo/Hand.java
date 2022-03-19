@@ -7,8 +7,8 @@ public class Hand {
     private ArrayList<PlayingCard> cards = new ArrayList<>();
     private int capacity;
     private int size;
-    private final int[] VALUEDATA = new int[Global.VALUES.length];
-    private final int[] SUITDATA = new int[Global.SUITS.length];
+    private int[] valueData = new int[Global.VALUES.length];
+    private int[] suitData = new int[Global.SUITS.length];
 
     public Hand() {
     }
@@ -22,20 +22,26 @@ public class Hand {
     public int getSize() {
         return size;
     }
+    public int getCapacity() {
+        return capacity;
+    }
     public ArrayList<PlayingCard> getCards() {
         return cards;
     }
     public int[] getValueData() {
-        return VALUEDATA;
+        return valueData;
     }
     public int[] getSuitData() {
-        return SUITDATA;
+        return suitData;
     }
 
     public void setHand(ArrayList<PlayingCard> newCards) {
         cards = new ArrayList<>(newCards);
         countValues();
         countSuits();
+    }
+    public void setCapacity(int num) {
+        capacity = num;
     }
 
     public void addCard(PlayingCard newCard) {
@@ -49,6 +55,12 @@ public class Hand {
     public void removeCard(int index) {
         cards.remove(index);
         size = cards.size();
+    }
+    public void clear() {
+        cards.clear();
+        size = 0;
+        valueData = new int[Global.VALUES.length];
+        suitData = new int[Global.SUITS.length];
     }
 
     private void updateHand() {
@@ -106,7 +118,7 @@ public class Hand {
         System.out.println();
     }
     private void countValues() {
-        Arrays.fill(VALUEDATA, 0);
+        Arrays.fill(valueData, 0);
 
         ArrayList<PlayingCard> tempCards = cards;
 
@@ -114,7 +126,7 @@ public class Hand {
         for (int i = 0; i < Global.VALUES.length; i++) {
             for (PlayingCard card : tempCards) {
                 if (card.getValue().equals(Global.VALUES[i])) {
-                    VALUEDATA[i]++;
+                    valueData[i]++;
                     counter++;
                 }
             }
@@ -124,14 +136,14 @@ public class Hand {
         }
     }
     private void countSuits() {
-        Arrays.fill(SUITDATA, 0);
+        Arrays.fill(suitData, 0);
         for (PlayingCard card : cards) {
             switch (card.getSuit()) {
-                case "Spades" -> SUITDATA[0]++;
-                case "Hearts" -> SUITDATA[1]++;
-                case "Clubs" -> SUITDATA[2]++;
-                case "Diamonds" -> SUITDATA[3]++;
-                case "Joker" -> SUITDATA[4]++;
+                case "Spades" -> suitData[0]++;
+                case "Hearts" -> suitData[1]++;
+                case "Clubs" -> suitData[2]++;
+                case "Diamonds" -> suitData[3]++;
+                case "Joker" -> suitData[4]++;
             }
         }
     }

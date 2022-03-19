@@ -110,14 +110,19 @@ public class DeckOfCards {
     }
     // This method will return true if there are no more cards in the deck object.
     public boolean isEmpty() {
-        return getMaxSize() == 0;
+        return getCurrentSize() == 0;
     }
     public PlayingCard draw() {
         PlayingCard drawnCard = cards.get(0);
         cards.remove(0);
         currentSize = cards.size();
         return drawnCard;
-
+    }
+    public void compileFromDiscard(Discard discard) {
+        for (int i = 0; i < discard.getCurrentSize(); i++) {
+            this.cards.add(discard.cards.get(i));
+        }
+        currentSize = cards.size();
     }
 }
 class Discard extends DeckOfCards {
