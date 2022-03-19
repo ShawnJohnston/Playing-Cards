@@ -66,6 +66,22 @@ public class DrawCardsController extends Node {
         });
         stage.show();
     }
+    public void toReset(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("DrawCardsTest.fxml"));
+        sceneBuilder(event);
+    }
+    public void switchToMainMenu(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+        sceneBuilder(event);
+    }
+    public void switchToHandRecognition(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("HandRecognitionTest.fxml"));
+        sceneBuilder(event);
+    }
+    public void switchToDrawCardsTest(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("DrawCardsTest.fxml"));
+        sceneBuilder(event);
+    }
     private void sceneBuilder(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
