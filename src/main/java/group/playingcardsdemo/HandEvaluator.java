@@ -29,7 +29,6 @@ public class HandEvaluator {
         fullHouseList = new ArrayList<>();
         hasMultiples();
         determineRank();
-        System.out.println("Rank Data: " + Arrays.toString(RANKDATA));
     }
 
     public Player getPlayer() {

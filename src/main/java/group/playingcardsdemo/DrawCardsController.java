@@ -8,7 +8,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -118,7 +117,6 @@ public class DrawCardsController extends Node {
     private void adjustForJoker() throws FileNotFoundException {
         jokerCountLabel.setText(String.valueOf(jokerCount));
         deck = new DeckOfCards(jokerCount);
-        discard = new Discard();
         deckSizeLabel.setText(String.valueOf(deck.getCurrentSize()));
         discardSizeLabel.setText(String.valueOf(discard.getCurrentSize()));
         deckTopImageView.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Backs/red.png")));
@@ -136,7 +134,7 @@ public class DrawCardsController extends Node {
 
             discardTopImageView.setImage(discardFront);
             discardTopImageView.setY(discardTopImageView.getY() - .5);
-            discardSizeLabel.setText(String.valueOf(discard.currentSize));
+            discardSizeLabel.setText(String.valueOf(discard.getCurrentSize()));
         }
 
         if (deck.isEmpty()) {
@@ -152,7 +150,7 @@ public class DrawCardsController extends Node {
 
             discardTopImageView.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Fronts/none.png")));
             discardTopImageView.setY(discardTopImageView.getY() + (float) deck.getMaxSize()/2);
-            discardSizeLabel.setText(String.valueOf(discard.currentSize));
+            discardSizeLabel.setText(String.valueOf(discard.getCurrentSize()));
         }
 
         hand.clear();

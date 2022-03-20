@@ -27,6 +27,7 @@ import java.util.ResourceBundle;
 public class StartingMenuController implements Initializable {
     private Parent root;
     private final String css = this.getClass().getResource("style.css").toExternalForm();
+    int chipCount;
 
     @FXML
     TextField nameTextField;
@@ -38,10 +39,6 @@ public class StartingMenuController implements Initializable {
     ChoiceBox<String> gameModeChoiceBox = new ChoiceBox<>();
     @FXML
     Label gameLabel;
-
-    int chipCount;
-
-
 
     public void exitApplication(ActionEvent event) {
         Platform.exit();
@@ -64,6 +61,11 @@ public class StartingMenuController implements Initializable {
 
     public void switchToDrawCardsTest(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DrawCardsTest.fxml"));
+        root = loader.load();
+        sceneBuilder(event);
+    }
+    public void switchToDebugMode(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Debug.fxml"));
         root = loader.load();
         sceneBuilder(event);
     }
