@@ -11,7 +11,7 @@
       <Group layoutX="550.0" layoutY="350.0">
          <children>
             <Button fx:id="playButton" mnemonicParsing="false" onAction="#switchToGameSetup" prefWidth="130.0" scaleX="2.0" scaleY="2.0" text="Play" />
-            <Button fx:id="settingsButton" layoutY="200.0" mnemonicParsing="false" prefWidth="130.0" scaleX="2.0" scaleY="2.0" text="Settings" />
+            <Button fx:id="settingsButton" layoutY="200.0" mnemonicParsing="false" onAction="#switchToSettings" prefWidth="130.0" scaleX="2.0" scaleY="2.0" text="Settings" />
             <Button fx:id="exitButton" layoutY="300.0" mnemonicParsing="false" onAction="#exitApplication" prefWidth="130.0" scaleX="2.0" scaleY="2.0" text="Exit" />
          </children>
       </Group>
@@ -20,7 +20,8 @@
             <Button fx:id="testButton" layoutY="50.0" mnemonicParsing="false" onAction="#switchToShufflingTest" prefWidth="150.0" text="Shuffling" />
             <Button fx:id="drawCardsButton" layoutY="100.0" mnemonicParsing="false" onAction="#switchToDrawCardsTest" prefWidth="150.0" text="Draw Cards" />
             <Label id="textLabelOnBlack" layoutX="10.0" stylesheets="@style.css" text="Debug Tests" />
-            <Button fx:id="drawCardsButton1" layoutY="150.0" mnemonicParsing="false" onAction="#switchToDrawCardsTest" prefWidth="150.0" text="Debug" />
+            <Button fx:id="HandRecognitionTestButton" layoutY="150.0" mnemonicParsing="false" onAction="#switchToHandRecognitionTest" prefWidth="150.0" text="Recognition" />
+            <Button fx:id="HandComparisonTestButton" layoutY="200.0" mnemonicParsing="false" onAction="#switchToHandComparisonTest" prefWidth="150.0" text="Comparison" />
          </children>
       </Group>
     </children>

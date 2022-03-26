@@ -35,18 +35,19 @@ public class GameOutcome {
                     case "Trips" -> compareTrips();
                     case "TwoPair" -> compareTwoPair();
                     case "Pair" -> comparePair();
-                    default -> compareCards();
+                    case "HighCard" -> compareCards();
+                    //default -> compareCards();
                 }
             }
         }
     }
     private void compareCards() {
-        for (int i = PLAYER1.getHand().getValueData().length - 1; i >= 0; i--) {
-            if (PLAYER1.getHand().getValueData()[i] > PLAYER2.getHand().getValueData()[i]) {
+        for (int i = PLAYER1.getRawHand().getValueData().length - 1; i >= 0; i--) {
+            if (PLAYER1.getRawHand().getValueData()[i] > PLAYER2.getRawHand().getValueData()[i]) {
                 winner = "Player 1";
                 break;
             }
-            else if (PLAYER1.getHand().getValueData()[i] < PLAYER2.getHand().getValueData()[i]) {
+            else if (PLAYER1.getRawHand().getValueData()[i] < PLAYER2.getRawHand().getValueData()[i]) {
                 winner = "Player 2";
                 break;
             }
@@ -55,14 +56,14 @@ public class GameOutcome {
     private void compareKickerAt(int k) {
         int handPosition = k;
         for (int i = Global.VALUES.length - 1; i >= 0; i--) {
-            for (int j = handPosition; j < PLAYER1.getHand().getSize(); j++) {
-                if (PLAYER1.getHand().getCards().get(j).getValue().equals(Global.VALUES[i]) && !PLAYER1.getHand().getCards().get(j).getValue().equals(Global.VALUES[i])) {
+            for (int j = handPosition; j >= PLAYER1.getRawHand().getSize() ; j++) {
+                if (PLAYER1.getFiveCardHand().getCards().get(j).getValue().equals(Global.VALUES[i]) && !PLAYER2.getFiveCardHand().getCards().get(j).getValue().equals(Global.VALUES[i])) {
                     winner = "Player 1";
                 }
-                else if (!PLAYER1.getHand().getCards().get(j).getValue().equals(Global.VALUES[i]) && PLAYER1.getHand().getCards().get(j).getValue().equals(Global.VALUES[i])) {
+                else if (!PLAYER1.getFiveCardHand().getCards().get(j).getValue().equals(Global.VALUES[i]) && PLAYER2.getFiveCardHand().getCards().get(j).getValue().equals(Global.VALUES[i])) {
                     winner = "Player 2";
                 }
-                else if (PLAYER1.getHand().getCards().get(j).getValue().equals(Global.VALUES[i]) && PLAYER1.getHand().getCards().get(j).getValue().equals(Global.VALUES[i])) {
+                else if (PLAYER1.getFiveCardHand().getCards().get(j).getValue().equals(Global.VALUES[i]) && PLAYER2.getFiveCardHand().getCards().get(j).getValue().equals(Global.VALUES[i])) {
                     handPosition++;
                     break;
                 }
@@ -70,7 +71,7 @@ public class GameOutcome {
         }
     }
     private void compareQuads() {
-        for (int i = PLAYER1.getHand().getValueData().length - 1; i >= 0; i--) {
+        for (int i = PLAYER1.getRawHand().getValueData().length - 1; i >= 0; i--) {
             if (PLAYER1.getQuadsValue().equals(Global.VALUES[i]) && !PLAYER2.getQuadsValue().equals(Global.VALUES[i])) {
                 winner = "Player 1";
             }
@@ -132,13 +133,18 @@ public class GameOutcome {
         }
     }
     private void comparePair() {
-        for (int i = Global.VALUES.length - 1; i >= 0 ; i--) {
-            if (PLAYER1.getPairs().get(0).equals(Global.VALUES[i]) && !PLAYER2.getPairs().get(0).equals(Global.VALUES[i])) {
-                winner = "Player 1";
-            } else if (!PLAYER1.getPairs().get(0).equals(Global.VALUES[i]) && PLAYER2.getPairs().get(0).equals(Global.VALUES[i])) {
-                winner = "Player 2";
-            } else if (PLAYER1.getPairs().get(0).equals(Global.VALUES[i]) && PLAYER2.getPairs().get(0).equals(Global.VALUES[i])) {
-                compareKickerAt(2);
+        winner = "";
+        if (PLAYER1.getPairs().get(0).equals(PLAYER2.getPairs().get(0))) {
+            compareKickerAt(0);
+        }
+        else {
+            for (int i = Global.VALUES.length - 1; i >= 0 ; i--) {
+                if (PLAYER1.getPairs().get(0).equals(Global.VALUES[i]) && !PLAYER2.getPairs().get(0).equals(Global.VALUES[i])) {
+                    winner = "Player 1";
+                }
+                else if (PLAYER2.getPairs().get(0).equals(Global.VALUES[i]) && !PLAYER1.getPairs().get(0).equals(Global.VALUES[i])) {
+                    winner = "Player 2";
+                }
             }
         }
     }

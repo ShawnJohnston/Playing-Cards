@@ -20,14 +20,17 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class StartingMenuController implements Initializable {
     private Parent root;
     private final String css = this.getClass().getResource("style.css").toExternalForm();
-    int chipCount;
+    public int chipCount;
+    public String room = "Default";
 
     @FXML
     TextField nameTextField;
@@ -38,7 +41,9 @@ public class StartingMenuController implements Initializable {
     @FXML
     ChoiceBox<String> gameModeChoiceBox = new ChoiceBox<>();
     @FXML
-    Label gameLabel;
+    Label gameLabel = new Label();
+    @FXML
+    ChoiceBox<String> roomChoiceBox = new ChoiceBox<>();
 
     public void exitApplication(ActionEvent event) {
         Platform.exit();
@@ -58,18 +63,29 @@ public class StartingMenuController implements Initializable {
         ShufflingTestController controller = loader.getController();
         controller.initializeController(event);
     }
-
+    public void switchToHandRecognitionTest(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("HandRecognitionTest.fxml"));
+        root = loader.load();
+        sceneBuilder(event);
+    }
+    public void switchToHandComparisonTest(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("HandComparisonTest.fxml"));
+        root = loader.load();
+        sceneBuilder(event);
+    }
     public void switchToDrawCardsTest(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DrawCardsTest.fxml"));
         root = loader.load();
         sceneBuilder(event);
     }
-    public void switchToDebugMode(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Debug.fxml"));
+    public void switchToSettings(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Settings.fxml"));
         root = loader.load();
         sceneBuilder(event);
     }
     public void startGame(ActionEvent event) throws IOException {
+        assignPayoutSheet();
+
         String name = nameTextField.getText();
         Global.playerName = name;
 
@@ -82,8 +98,21 @@ public class StartingMenuController implements Initializable {
         GameController gameController = loader.getController();
         gameController.displayName(name);
         gameController.displayChipCount(chipCountLabel.getText());
+        gameController.displayPayouts();
 
         sceneBuilder(event);
+    }
+
+    public void assignPayoutSheet() {
+        FileManager fileManager = new FileManager();
+
+        switch (gameLabel.getText()) {
+            case "UTH":
+                fileManager.inputPayoutSheet_UTH(room);
+                break;
+            default:
+                break;
+        }
     }
 
     private void sceneBuilder(ActionEvent event) throws IOException {
@@ -112,10 +141,21 @@ public class StartingMenuController implements Initializable {
         });
         gameModeChoiceBox.getItems().addAll(Global.GAMES);
         gameModeChoiceBox.setOnAction(this::setGameLabel);
+
+        ArrayList<String> roomOptions = new ArrayList<>();
+        roomOptions.add("Default");
+        roomOptions.add("Derby");
+        roomOptions.add("Wherever");
+
+        roomChoiceBox.getItems().addAll(roomOptions);
+        roomChoiceBox.setOnAction(this::setRoom);
     }
 
     public void setGameLabel(ActionEvent event) {
         String text = gameModeChoiceBox.getValue();
         gameLabel.setText(text);
+    }
+    public void setRoom(ActionEvent event) {
+        room = roomChoiceBox.getValue();
     }
 }

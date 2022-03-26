@@ -10,41 +10,48 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class RecognitionTestController implements Initializable {
-    private Parent root;
+public class HandRecognitionTest implements Initializable {
+    Parent root;
     private final String css = this.getClass().getResource("style.css").toExternalForm();
 
+    Shuffler shuffler = new Shuffler();
     DeckOfCards deck = new DeckOfCards();
     Discard discard = new Discard();
-    Shuffler shuffler = new Shuffler();
+    Player player = new Player();
     Hand hand = new Hand();
     int handCapacity = 7;
     TestState testState = TestState.None;
     SliderState sliderPrimaryState = SliderState.Ace;
     SliderState sliderSecondaryState = SliderState.Ace;
-    Boolean toSort = false;
 
     @FXML
     AnchorPane pane;
     @FXML
-    Button resetButton;
+    Label handRankLabel = new Label();
     @FXML
-    Button mainMenuButton;
+    Label deckSizeLabel = new Label();
     @FXML
-    CheckBox sortHandCheckBox;
+    Label discardSizeLabel = new Label();
     @FXML
-    ChoiceBox<String> rankChoiceBox = new ChoiceBox<>();
+    Button sortButton = new Button();
+    @FXML
+    ChoiceBox<String> testStateChoiceBox = new ChoiceBox<>();
     @FXML
     Slider stateSliderPrimary;
     @FXML
@@ -54,11 +61,13 @@ public class RecognitionTestController implements Initializable {
     @FXML
     Label stateSecondaryLabel;
     @FXML
-    Label handCapacityActualLabel;
+    ImageView deckTopImageView = new ImageView();
     @FXML
-    Button capacityDecrementButton;
+    ImageView deckBottomImageView = new ImageView();
     @FXML
-    Button capacityIncrementButton;
+    ImageView discardTopImageView = new ImageView();
+    @FXML
+    ImageView discardBottomImageView = new ImageView();
 
     @FXML
     ImageView cardImageView1 = new ImageView();
@@ -75,54 +84,112 @@ public class RecognitionTestController implements Initializable {
     @FXML
     ImageView cardImageView7 = new ImageView();
 
-    Image[] cardFronts = new Image[handCapacity];
-    ImageView[] cards = new ImageView[handCapacity];
 
-    public RecognitionTestController() throws IOException {
+    @FXML
+    Label card1Label = new Label();
+    @FXML
+    Label card2Label = new Label();
+    @FXML
+    Label card3Label = new Label();
+    @FXML
+    Label card4Label = new Label();
+    @FXML
+    Label card5Label = new Label();
+
+    Image[] cardFronts;
+    float initialDeckTopY = (float) deckTopImageView.getY();
+
+    public HandRecognitionTest() {
+        hand.setCapacity(handCapacity);
+        cardFronts = new Image[handCapacity];
+        Shuffler shuffler = new Shuffler();
+        shuffler.random(deck);
     }
 
-    private void initializeImageViews() {
-        cards[0] = cardImageView1;
-        cards[1] = cardImageView2;
-        cards[2] = cardImageView3;
-        cards[3] = cardImageView4;
-        cards[4] = cardImageView5;
-        cards[5] = cardImageView6;
-        cards[6] = cardImageView7;
-    }
-    public void initializeController(ActionEvent event) throws IOException {
-        rankChoiceBox.setValue("");
-        initializeImageViews();
-        testSceneBuilder(event);
-    }
+    public void drawFromDeck() throws FileNotFoundException {
 
-    public void toReset(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("HandRecognitionTest.fxml"));
-        root = loader.load();
-        RecognitionTestController controller = loader.getController();
-        controller.initializeController(event);
-    }
-    public void changeSortHandCheckBox(ActionEvent event) {
-        toSort = sortHandCheckBox.isSelected();
-        if (toSort) {
-            hand.sortHand();
+        for (int i = 0; i < hand.getSize(); i++) {
+            discard.addCard(hand.getCards().get(i));
+            adjustDiscardGraphics();
+        }
+        hand = new Hand();
+
+        if (deck.getCurrentSize() < handCapacity || deck.isEmpty()) {
+            deck = new DeckOfCards();
+            discard = new Discard();
+
+            shuffler.random(deck);
+            resetDeckDiscardGraphics();
+        }
+        for (int i = 0; i < handCapacity; i++) {
+            hand.addCard(deck.draw());
+            cardFronts[i] = new Image(new FileInputStream(
+                    "src/main/resources/group/playingcardsdemo/Card_Fronts/" + hand.getCards().get(i).getFront()));
+        }
+        cardImageView1.setImage(cardFronts[0]);
+        cardImageView2.setImage(cardFronts[1]);
+        cardImageView3.setImage(cardFronts[2]);
+        cardImageView4.setImage(cardFronts[3]);
+        cardImageView5.setImage(cardFronts[4]);
+        cardImageView6.setImage(cardFronts[5]);
+        cardImageView7.setImage(cardFronts[6]);
+
+        adjustDeckGraphics();
+        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        handRankLabel.setText(String.valueOf(evaluator.getHandRank()));
+
+        if (evaluator.getFiveCardHand().getSize() == 5) {
+            card1Label.setText(evaluator.getFiveCardHand().getCards().get(0).getName());
+            card2Label.setText(evaluator.getFiveCardHand().getCards().get(1).getName());
+            card3Label.setText(evaluator.getFiveCardHand().getCards().get(2).getName());
+            card4Label.setText(evaluator.getFiveCardHand().getCards().get(3).getName());
+            card5Label.setText(evaluator.getFiveCardHand().getCards().get(4).getName());
         }
     }
-    public void toSortHand() {
-        if (toSort) {
-            hand.sortHand();
-        }
+    private void adjustDeckGraphics() {
+        deckTopImageView.setY(deckTopImageView.getY() + (float) handCapacity / 2);
+        deckSizeLabel.setText(String.valueOf(deck.currentSize));
     }
-    public void switchToMainMenu(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-        sceneBuilder(event);
+    private void adjustDiscardGraphics() throws FileNotFoundException {
+        discardTopImageView.setY(discardTopImageView.getY() - .5);
+        Image discardImage = new Image((new FileInputStream(
+                "src/main/resources/group/playingcardsdemo/Card_Fronts/" + discard.getCards().get(discard.getCurrentSize() - 1).getFront())));
+        discardTopImageView.setImage(discardImage);
+        discardSizeLabel.setText(String.valueOf(discard.currentSize));
     }
-    public void switchToShufflingTest(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ShufflingTest.fxml"));
-        root = loader.load();
+    private void updateCardImageViews() {
+        cardImageView1.setImage(cardFronts[0]);
+        cardImageView2.setImage(cardFronts[1]);
+        cardImageView3.setImage(cardFronts[2]);
+        cardImageView4.setImage(cardFronts[3]);
+        cardImageView5.setImage(cardFronts[4]);
+        cardImageView6.setImage(cardFronts[5]);
+        cardImageView7.setImage(cardFronts[6]);
+    }
+    private void resetDeckDiscardGraphics() throws FileNotFoundException {
+        deckTopImageView.setImage(new Image(new FileInputStream
+                ("src/main/resources/group/playingcardsdemo/Card_Backs/red.png")));
+        deckTopImageView.setY(initialDeckTopY);
 
-        ShufflingTestController controller = loader.getController();
-        controller.initializeController(event);
+        discardTopImageView.setImage(new Image(new FileInputStream(
+                "src/main/resources/group/playingcardsdemo/Card_Fronts/none.png")));
+        discardTopImageView.setY(discardBottomImageView.getY());
+        discardSizeLabel.setText(String.valueOf(discard.getCurrentSize()));
+    }
+    public void toSort(ActionEvent event) throws FileNotFoundException {
+        //hand.sortHand();
+//
+        //for (int i = 0; i < handCapacity; i++) {
+        //    cardFronts[i] = new Image(new FileInputStream(
+        //            "src/main/resources/group/playingcardsdemo/Card_Fronts/" + hand.getCards().get(i).getFront()));
+        //}
+        //cardImageView1.setImage(cardFronts[0]);
+        //cardImageView2.setImage(cardFronts[1]);
+        //cardImageView3.setImage(cardFronts[2]);
+        //cardImageView4.setImage(cardFronts[3]);
+        //cardImageView5.setImage(cardFronts[4]);
+        //cardImageView6.setImage(cardFronts[5]);
+        //cardImageView7.setImage(cardFronts[6]);
     }
 
     @Override
@@ -153,7 +220,7 @@ public class RecognitionTestController implements Initializable {
                 }
             }
         });
-        rankChoiceBox.getItems().addAll(
+        testStateChoiceBox.getItems().addAll(
                 TestState.None.toString(),
                 TestState.HighCard.toString(),
                 TestState.Pair.toString(),
@@ -168,12 +235,12 @@ public class RecognitionTestController implements Initializable {
                 TestState.FromDeck.toString(),
                 TestState.Random.toString()
         );
-        rankChoiceBox.setOnAction(this::setTestState);
+        testStateChoiceBox.setOnAction(this::setTestState);
     }
     private void setTestState(ActionEvent event) {
         resetSliders();
 
-        testState = TestState.valueOf(rankChoiceBox.getValue());
+        testState = TestState.valueOf(testStateChoiceBox.getValue());
     }
     public void setSliderState(Slider slider, SliderState sliderState, Label label) {
         switch ((int) slider.getValue()) {
@@ -242,105 +309,25 @@ public class RecognitionTestController implements Initializable {
         sliderSecondaryState = SliderState.None;
         stateSecondaryLabel.setText("-");
     }
-    public void setHandCapacity(int num) {
-        handCapacity = num;
+
+    public void switchToMainMenu(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+        sceneBuilder(event);
     }
-    public void onClickStartButton(ActionEvent event) throws IOException {
-        switch (testState.toString()) {
-            case "None" -> {
-
-            }
-            case "HighCard" -> {
-
-            }
-            case "Pair" -> {
-
-            }
-            case "TwoPair" -> {
-
-            }
-            case "Trips" -> {
-
-            }
-            case "Straight" -> {
-
-            }
-            case "Flush" -> {
-
-            }
-            case "FullHouse" -> {
-
-            }
-            case "Quads" -> {
-
-            }
-            case "StraightFlush" -> {
-
-            }
-            case "RoyalFlush" -> {
-
-            }
-            case "Random" -> {
-
-            }
-            case "FromDeck" -> {
-                shuffler.random(deck);
-
-                //hand.discardAll(discard);
-                hand.setCapacity(handCapacity);
-                cards = new ImageView[handCapacity];
-                for (int i = 0; i < handCapacity; i++) {
-                    cardFronts[i] = new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Fronts/" + deck.getCards().get(i).getFront()));
-                    cards[i].setImage(cardFronts[i]);
-                    System.out.println("asdf - " + deck.getCards().get(i).getFront());
-                    PlayingCard topCard = deck.draw();
-                    hand.addCard(topCard);
-                }
-            }
-        }
-        updateScene(event);
-    }
-    //public void incrementHandCapacity(ActionEvent event) {
-    //    if (handCapacity < handCapacityUpperBound) {
-    //        handCapacity++;
-    //        hand.setCapacity(handCapacity);
-    //        handCapacityActualLabel.setText(String.valueOf(handCapacity));
-    //    }
-    //}
-    //public void decrementHandCapacity(ActionEvent event) {
-    //
-    //    if (handCapacity > handCapacityLowerBound) {
-    //        handCapacity--;
-    //        hand.setCapacity(handCapacity);
-    //        handCapacityActualLabel.setText(String.valueOf(handCapacity));
-    //    }
-    //}
-
-    public void updateController(ActionEvent event, Image[] cardFronts) throws IOException {
-        this.cardFronts = cardFronts;
-        this.cards = Global.cardImageViews;
-
-        for (int i = 0; i < handCapacity; i++) {
-            cards[i].setImage(cardFronts[i]);
-            this.pane.getChildren().add(this.cards[i]);
-        }
-
-        testSceneBuilder(event);
-    }
-    public void updateScene(ActionEvent event) throws IOException  {
-        Global.initializeCardImages(deck);
-
-        for (int i = 0; i < deck.getMaxSize(); i++) {
-            cardFronts[i] = new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Fronts/" + deck.getCards().get(i).getFront()));
-            System.out.println(deck.getCards().get(i).getName());
-        }
-
-
+    public void switchToHandRecognitionTest(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("HandRecognitionTest.fxml"));
         root = loader.load();
+        sceneBuilder(event);
 
-        RecognitionTestController controller = loader.getController();
-        controller.updateController(event, cardFronts);
+    }
+    public void switchToHandComparisonTest(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("HandComparisonTest.fxml"));
+        sceneBuilder(event);
+    }
+    public void switchToDrawCardsTest(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DrawCardsTest.fxml"));
+        root = loader.load();
+        sceneBuilder(event);
     }
     private void testSceneBuilder(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("HandRecognitionTest.fxml"));
@@ -358,6 +345,10 @@ public class RecognitionTestController implements Initializable {
             }
         });
         stage.show();
+    }
+    public void toReset(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("HandRecognitionTest.fxml"));
+        sceneBuilder(event);
     }
     private void sceneBuilder(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -380,4 +371,4 @@ enum TestState {
 }
 enum SliderState {
     None, Ace, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King
-} 
+}

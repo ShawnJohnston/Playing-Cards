@@ -7,7 +7,7 @@ public class Hand {
     private ArrayList<PlayingCard> cards = new ArrayList<>();
     private int capacity;
     private int size;
-    private int[] valueData = new int[Global.VALUES.length];
+    private int[] valueData = new int[Global.VALUESHIERARCHY.length];
     private int[] suitData = new int[Global.SUITS.length];
 
     public Hand() {
@@ -40,6 +40,9 @@ public class Hand {
         countValues();
         countSuits();
     }
+    public void setValueData(int[] data) {
+        valueData = data;
+    }
     public void setCapacity(int num) {
         capacity = num;
     }
@@ -70,16 +73,15 @@ public class Hand {
     }
     public void sortHand() {
         ArrayList<PlayingCard> sortedHand = new ArrayList<>(); // Buffer hand to overwrite playerHand.
-        String[] values = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"}; // Value order, excluding 'low Ace'.
         int cardsSorted = 0; // Counter used to break out of the following loop when the hand has been sorted.
 
         // This 2D loop will compare each card to each index in the values array. If they match, the card will be added
         // to the buffer array and the counter will increment.
         // The counter will break the loop when it increments to the value equal to the number of cards in the hand.
-        for (String value : values) {
+        for (int i = 0; i < Global.VALUES.length; i++) {
             for (PlayingCard card : cards) {
                 // The outer loop sets the comparison value, and the inner loop cycles through each card in the hand.
-                if (card.getValue().equals(value)) {
+                if (card.getValue().equals(Global.VALUES[i])) {
                     // The card's value matches the values array.
                     sortedHand.add(card); // The card is added to the buffer list.
                     cardsSorted++;

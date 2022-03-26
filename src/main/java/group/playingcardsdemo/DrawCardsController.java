@@ -88,6 +88,10 @@ public class DrawCardsController extends Node {
         root = FXMLLoader.load(getClass().getResource("HandRecognitionTest.fxml"));
         sceneBuilder(event);
     }
+    public void switchToHandComparisonTest(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("HandComparisonTest.fxml"));
+        sceneBuilder(event);
+    }
     private void sceneBuilder(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -117,6 +121,7 @@ public class DrawCardsController extends Node {
     private void adjustForJoker() throws FileNotFoundException {
         jokerCountLabel.setText(String.valueOf(jokerCount));
         deck = new DeckOfCards(jokerCount);
+        discard = new Discard();
         deckSizeLabel.setText(String.valueOf(deck.getCurrentSize()));
         discardSizeLabel.setText(String.valueOf(discard.getCurrentSize()));
         deckTopImageView.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Backs/red.png")));
@@ -140,6 +145,9 @@ public class DrawCardsController extends Node {
         if (deck.isEmpty()) {
             deck.compileFromDiscard(discard);
             discard = new Discard();
+
+            discardSizeLabel.setText(String.valueOf(discard.currentSize));
+            deckSizeLabel.setText(String.valueOf(deck.currentSize));
 
             Shuffler shuffler = new Shuffler();
             shuffler.random(deck);

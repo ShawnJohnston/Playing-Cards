@@ -279,6 +279,10 @@ public class ShufflingTestController {
         root = FXMLLoader.load(getClass().getResource("HandRecognitionTest.fxml"));
         sceneBuilder(event);
     }
+    public void switchToHandComparisonTest(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("HandComparisonTest.fxml"));
+        sceneBuilder(event);
+    }
     public void switchToDrawCardsTest(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("DrawCardsTest.fxml"));
         sceneBuilder(event);
