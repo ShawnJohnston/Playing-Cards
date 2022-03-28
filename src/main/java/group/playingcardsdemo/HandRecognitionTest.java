@@ -23,7 +23,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class HandRecognitionTest implements Initializable {
@@ -106,8 +105,8 @@ public class HandRecognitionTest implements Initializable {
         shuffler.random(deck);
     }
 
-    public void drawFromDeck() throws FileNotFoundException {
 
+    public void drawFromDeck() throws FileNotFoundException {
         for (int i = 0; i < hand.getSize(); i++) {
             discard.addCard(hand.getCards().get(i));
             adjustDiscardGraphics();
@@ -138,13 +137,11 @@ public class HandRecognitionTest implements Initializable {
         HandEvaluator evaluator = new HandEvaluator(player, hand);
         handRankLabel.setText(String.valueOf(evaluator.getHandRank()));
 
-        if (evaluator.getFiveCardHand().getSize() == 5) {
-            card1Label.setText(evaluator.getFiveCardHand().getCards().get(0).getName());
-            card2Label.setText(evaluator.getFiveCardHand().getCards().get(1).getName());
-            card3Label.setText(evaluator.getFiveCardHand().getCards().get(2).getName());
-            card4Label.setText(evaluator.getFiveCardHand().getCards().get(3).getName());
-            card5Label.setText(evaluator.getFiveCardHand().getCards().get(4).getName());
-        }
+        card1Label.setText(evaluator.getFiveCardHand().getCards().get(0).getName());
+        card2Label.setText(evaluator.getFiveCardHand().getCards().get(1).getName());
+        card3Label.setText(evaluator.getFiveCardHand().getCards().get(2).getName());
+        card4Label.setText(evaluator.getFiveCardHand().getCards().get(3).getName());
+        card5Label.setText(evaluator.getFiveCardHand().getCards().get(4).getName());
     }
     private void adjustDeckGraphics() {
         deckTopImageView.setY(deckTopImageView.getY() + (float) handCapacity / 2);
@@ -222,7 +219,6 @@ public class HandRecognitionTest implements Initializable {
         });
         testStateChoiceBox.getItems().addAll(
                 TestState.None.toString(),
-                TestState.HighCard.toString(),
                 TestState.Pair.toString(),
                 TestState.TwoPair.toString(),
                 TestState.Trips.toString(),
@@ -239,8 +235,16 @@ public class HandRecognitionTest implements Initializable {
     }
     private void setTestState(ActionEvent event) {
         resetSliders();
-
         testState = TestState.valueOf(testStateChoiceBox.getValue());
+
+        switch (testState.toString()) {
+            case "Pair" -> {
+            }
+            case "TwoPair" -> {
+            }
+            case "Trips" -> {
+            }
+        }
     }
     public void setSliderState(Slider slider, SliderState sliderState, Label label) {
         switch ((int) slider.getValue()) {

@@ -109,16 +109,14 @@ public class HandComparisonTest {
         p2HandRankLabel.setText("");
         for (int i = 0; i < hand1.getSize(); i++) {
             discard.addCard(hand1.getCards().get(i));
+        }
+        for (int i = 0; i < hand2.getSize(); i++) {
             discard.addCard(hand2.getCards().get(i));
-
         }
         hand1.clear();
         hand2.clear();
 
         if (deck.getCurrentSize() < (handCapacity * 2) || deck.isEmpty()) {
-            hand1.clear();
-            hand2.clear();
-
             deck.compileFromDiscard(discard);
             discard = new Discard();
 
@@ -133,8 +131,7 @@ public class HandComparisonTest {
             hand1.addCard(deck.draw());
             cardFrontsHand1[i] = new Image(new FileInputStream(
                     "src/main/resources/group/playingcardsdemo/Card_Fronts/" + hand1.getCards().get(i).getFront()));
-        }
-        for (int i = 0; i < handCapacity; i++) {
+
             hand2.addCard(deck.draw());
             cardFrontsHand2[i] = new Image(new FileInputStream(
                     "src/main/resources/group/playingcardsdemo/Card_Fronts/" + hand2.getCards().get(i).getFront()));
@@ -157,20 +154,17 @@ public class HandComparisonTest {
         p1HandRankLabel.setText(String.valueOf(p1Evaluator.getHandRank()));
         p2HandRankLabel.setText(String.valueOf(p2Evaluator.getHandRank()));
 
-        if (p1Evaluator.getFiveCardHand().getSize() == 5) {
-            p1Card1Label.setText(p1Evaluator.getFiveCardHand().getCards().get(0).getName());
-            p1Card2Label.setText(p1Evaluator.getFiveCardHand().getCards().get(1).getName());
-            p1Card3Label.setText(p1Evaluator.getFiveCardHand().getCards().get(2).getName());
-            p1Card4Label.setText(p1Evaluator.getFiveCardHand().getCards().get(3).getName());
-            p1Card5Label.setText(p1Evaluator.getFiveCardHand().getCards().get(4).getName());
-        }
-        if (p2Evaluator.getFiveCardHand().getSize() == 5) {
-            p2Card1Label.setText(p2Evaluator.getFiveCardHand().getCards().get(0).getName());
-            p2Card2Label.setText(p2Evaluator.getFiveCardHand().getCards().get(1).getName());
-            p2Card3Label.setText(p2Evaluator.getFiveCardHand().getCards().get(2).getName());
-            p2Card4Label.setText(p2Evaluator.getFiveCardHand().getCards().get(3).getName());
-            p2Card5Label.setText(p2Evaluator.getFiveCardHand().getCards().get(4).getName());
-        }
+        p1Card1Label.setText(p1Evaluator.getFiveCardHand().getCards().get(0).getName());
+        p1Card2Label.setText(p1Evaluator.getFiveCardHand().getCards().get(1).getName());
+        p1Card3Label.setText(p1Evaluator.getFiveCardHand().getCards().get(2).getName());
+        p1Card4Label.setText(p1Evaluator.getFiveCardHand().getCards().get(3).getName());
+        p1Card5Label.setText(p1Evaluator.getFiveCardHand().getCards().get(4).getName());
+
+        p2Card1Label.setText(p2Evaluator.getFiveCardHand().getCards().get(0).getName());
+        p2Card2Label.setText(p2Evaluator.getFiveCardHand().getCards().get(1).getName());
+        p2Card3Label.setText(p2Evaluator.getFiveCardHand().getCards().get(2).getName());
+        p2Card4Label.setText(p2Evaluator.getFiveCardHand().getCards().get(3).getName());
+        p2Card5Label.setText(p2Evaluator.getFiveCardHand().getCards().get(4).getName());
 
         GameOutcome outcome = new GameOutcome(p1Evaluator, p2Evaluator);
         outcomeLabel.setText(outcome.getWinner());

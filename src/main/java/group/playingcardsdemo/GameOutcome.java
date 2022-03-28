@@ -71,15 +71,17 @@ public class GameOutcome {
         }
     }
     private void compareQuads() {
-        for (int i = PLAYER1.getRawHand().getValueData().length - 1; i >= 0; i--) {
-            if (PLAYER1.getQuadsValue().equals(Global.VALUES[i]) && !PLAYER2.getQuadsValue().equals(Global.VALUES[i])) {
-                winner = "Player 1";
-            }
-            else if (!PLAYER1.getQuadsValue().equals(Global.VALUES[i]) && PLAYER2.getQuadsValue().equals(Global.VALUES[i])) {
-                winner = "Player 2";
-            }
-            else if (PLAYER1.getQuadsValue().equals(Global.VALUES[i]) && PLAYER2.getQuadsValue().equals(Global.VALUES[i])) {
-                compareKickerAt(4);
+        if (!(PLAYER1.getQuadsValue() == null) && !(PLAYER1.getQuadsValue() == null)) {
+            for (int i = PLAYER1.getRawHand().getValueData().length - 1; i >= 0; i--) {
+                if (PLAYER1.getQuadsValue().equals(Global.VALUES[i]) && !PLAYER2.getQuadsValue().equals(Global.VALUES[i])) {
+                    winner = "Player 1";
+                }
+                else if (!PLAYER1.getQuadsValue().equals(Global.VALUES[i]) && PLAYER2.getQuadsValue().equals(Global.VALUES[i])) {
+                    winner = "Player 2";
+                }
+                else if (PLAYER1.getQuadsValue().equals(Global.VALUES[i]) && PLAYER2.getQuadsValue().equals(Global.VALUES[i])) {
+                    compareKickerAt(4);
+                }
             }
         }
     }
@@ -105,45 +107,51 @@ public class GameOutcome {
         }
     }
     private void compareTrips() {
-        for (int i = Global.VALUES.length - 1; i >= 0 ; i--) {
-            if (PLAYER1.getTrips().get(0).equals(Global.VALUES[i]) && !PLAYER2.getTrips().get(0).equals(Global.VALUES[i])) {
-                winner = "Player 1";
-            } else if (!PLAYER1.getTrips().get(0).equals(Global.VALUES[i]) && PLAYER2.getTrips().get(0).equals(Global.VALUES[i])) {
-                winner = "Player 2";
-            } else if (PLAYER1.getTrips().get(0).equals(Global.VALUES[i]) && PLAYER2.getTrips().get(0).equals(Global.VALUES[i])) {
-                compareKickerAt(3);
+        if ((PLAYER1.getTrips().size() > 0) && (PLAYER2.getTrips().size() > 0)) {
+            for (int i = Global.VALUES.length - 1; i >= 0 ; i--) {
+                if (PLAYER1.getTrips().get(0).equals(Global.VALUES[i]) && !PLAYER2.getTrips().get(0).equals(Global.VALUES[i])) {
+                    winner = "Player 1";
+                } else if (!PLAYER1.getTrips().get(0).equals(Global.VALUES[i]) && PLAYER2.getTrips().get(0).equals(Global.VALUES[i])) {
+                    winner = "Player 2";
+                } else if (PLAYER1.getTrips().get(0).equals(Global.VALUES[i]) && PLAYER2.getTrips().get(0).equals(Global.VALUES[i])) {
+                    compareKickerAt(3);
+                }
             }
         }
     }
     private void compareTwoPair() {
-        for (int i = Global.VALUES.length - 1; i >= 0 ; i--) {
-            if (PLAYER1.getPairs().get(0).equals(Global.VALUES[i]) && !PLAYER2.getPairs().get(0).equals(Global.VALUES[i])) {
-                winner = "Player 1";
-            } else if (!PLAYER1.getPairs().get(0).equals(Global.VALUES[i]) && PLAYER2.getPairs().get(0).equals(Global.VALUES[i])) {
-                winner = "Player 2";
-            } else if (PLAYER1.getPairs().get(0).equals(Global.VALUES[i]) && PLAYER2.getPairs().get(0).equals(Global.VALUES[i])) {
-                if (PLAYER1.getPairs().get(1).equals(Global.VALUES[i]) && !PLAYER2.getPairs().get(1).equals(Global.VALUES[i])) {
+        if (PLAYER1.getPairs().size() > 0 && PLAYER2.getPairs().size() > 0) {
+            for (int i = Global.VALUES.length - 1; i >= 0 ; i--) {
+                if (PLAYER1.getPairs().get(0).equals(Global.VALUES[i]) && !PLAYER2.getPairs().get(0).equals(Global.VALUES[i])) {
                     winner = "Player 1";
-                } else if (!PLAYER1.getPairs().get(1).equals(Global.VALUES[i]) && PLAYER2.getPairs().get(1).equals(Global.VALUES[i])) {
+                } else if (!PLAYER1.getPairs().get(0).equals(Global.VALUES[i]) && PLAYER2.getPairs().get(0).equals(Global.VALUES[i])) {
                     winner = "Player 2";
-                } else if (PLAYER1.getPairs().get(1).equals(Global.VALUES[i]) && PLAYER2.getPairs().get(1).equals(Global.VALUES[i])) {
-                    compareKickerAt(4);
+                } else if (PLAYER1.getPairs().get(0).equals(Global.VALUES[i]) && PLAYER2.getPairs().get(0).equals(Global.VALUES[i])) {
+                    if (PLAYER1.getPairs().get(1).equals(Global.VALUES[i]) && !PLAYER2.getPairs().get(1).equals(Global.VALUES[i])) {
+                        winner = "Player 1";
+                    } else if (!PLAYER1.getPairs().get(1).equals(Global.VALUES[i]) && PLAYER2.getPairs().get(1).equals(Global.VALUES[i])) {
+                        winner = "Player 2";
+                    } else if (PLAYER1.getPairs().get(1).equals(Global.VALUES[i]) && PLAYER2.getPairs().get(1).equals(Global.VALUES[i])) {
+                        compareKickerAt(4);
+                    }
                 }
             }
         }
     }
     private void comparePair() {
         winner = "";
-        if (PLAYER1.getPairs().get(0).equals(PLAYER2.getPairs().get(0))) {
-            compareKickerAt(0);
-        }
-        else {
-            for (int i = Global.VALUES.length - 1; i >= 0 ; i--) {
-                if (PLAYER1.getPairs().get(0).equals(Global.VALUES[i]) && !PLAYER2.getPairs().get(0).equals(Global.VALUES[i])) {
-                    winner = "Player 1";
-                }
-                else if (PLAYER2.getPairs().get(0).equals(Global.VALUES[i]) && !PLAYER1.getPairs().get(0).equals(Global.VALUES[i])) {
-                    winner = "Player 2";
+        if (PLAYER1.getPairs().size() > 0 && PLAYER2.getPairs().size() > 0) {
+            if (PLAYER1.getPairs().get(0).equals(PLAYER2.getPairs().get(0))) {
+                compareKickerAt(0);
+            }
+            else {
+                for (int i = Global.VALUES.length - 1; i >= 0 ; i--) {
+                    if (PLAYER1.getPairs().get(0).equals(Global.VALUES[i]) && !PLAYER2.getPairs().get(0).equals(Global.VALUES[i])) {
+                        winner = "Player 1";
+                    }
+                    else if (PLAYER2.getPairs().get(0).equals(Global.VALUES[i]) && !PLAYER1.getPairs().get(0).equals(Global.VALUES[i])) {
+                        winner = "Player 2";
+                    }
                 }
             }
         }
