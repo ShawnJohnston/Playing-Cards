@@ -10,9 +10,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Main extends Application {
-
     @Override
     public void start(Stage stage) throws IOException {
+        Global.initializeCardValueMap();
+        Global.initializePokerRanks();
+        //Global.initializeChipMaps();
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("TitleScreen.fxml"));
         //StartingMenuController controller = loader.getController();
 

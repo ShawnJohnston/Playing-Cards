@@ -1,5 +1,7 @@
 package group.playingcardsdemo;
 
+import java.util.Objects;
+
 public class GameOutcome {
     private final HandEvaluator PLAYER1;
     private final HandEvaluator PLAYER2;
@@ -19,25 +21,21 @@ public class GameOutcome {
     }
 
     private void compareRanks() {
-        for (int i = Global.STANDARDPOKERRANKS.length - 1; i >= 0; i--) {
-            if (PLAYER1.getRankData()[i] && !PLAYER2.getRankData()[i]) {
-                winner = "Player 1";
-                break;
-            }
-            else if (!PLAYER1.getRankData()[i] && PLAYER2.getRankData()[i]) {
-                winner = "Player 2";
-                break;
-            }
-            else if (PLAYER1.getRankData()[i] && PLAYER2.getRankData()[i]) {
-                switch (Global.STANDARDPOKERRANKS[i]) {
-                    case "Quads" -> compareQuads();
-                    case "FullHouse" -> compareFullHouse();
-                    case "Trips" -> compareTrips();
-                    case "TwoPair" -> compareTwoPair();
-                    case "Pair" -> comparePair();
-                    case "HighCard" -> compareCards();
-                    //default -> compareCards();
-                }
+        if (HandEvaluator.pokerRanks.get(PLAYER1.getHandRank().toString()) > HandEvaluator.pokerRanks.get(PLAYER2.getHandRank().toString())) {
+            winner = "Player 1";
+        }
+        else if (HandEvaluator.pokerRanks.get(PLAYER1.getHandRank().toString()) < HandEvaluator.pokerRanks.get(PLAYER2.getHandRank().toString())) {
+            winner = "Player 2";
+        }
+        else if (Objects.equals(HandEvaluator.pokerRanks.get(PLAYER1.getHandRank().toString()), HandEvaluator.pokerRanks.get(PLAYER2.getHandRank().toString()))) {
+            switch (PLAYER1.getHandRank().toString()) {
+                case "RoyalFlush", "Flush", "HighCard" -> compareCards();
+                case "StraightFlush", "Straight" -> compareStraight();
+                case "Quads" -> compareQuads();
+                case "FullHouse" -> compareFullHouse();
+                case "Trips" -> compareTrips();
+                case "TwoPair" -> compareTwoPair();
+                case "Pair" -> comparePair();
             }
         }
     }
@@ -51,16 +49,19 @@ public class GameOutcome {
                 winner = "Player 2";
                 break;
             }
+            if (i == 0 && (PLAYER1.getRawHand().getValueData()[i] == PLAYER2.getRawHand().getValueData()[i])) {
+                winner = "Tie";
+            }
         }
     }
     private void compareKickerAt(int k) {
         int handPosition = k;
         for (int i = Global.VALUES.length - 1; i >= 0; i--) {
-            for (int j = handPosition; j >= PLAYER1.getRawHand().getSize() ; j++) {
-                if (PLAYER1.getFiveCardHand().getCards().get(j).getValue().equals(Global.VALUES[i]) && !PLAYER2.getFiveCardHand().getCards().get(j).getValue().equals(Global.VALUES[i])) {
+            for (int j = handPosition - 1; j >= PLAYER1.getRawHand().getSize() ; j++) {
+                if (HandEvaluator.pokerRanks.get(PLAYER1.getHandRank().toString()) > HandEvaluator.pokerRanks.get(PLAYER2.getHandRank().toString())) {
                     winner = "Player 1";
                 }
-                else if (!PLAYER1.getFiveCardHand().getCards().get(j).getValue().equals(Global.VALUES[i]) && PLAYER2.getFiveCardHand().getCards().get(j).getValue().equals(Global.VALUES[i])) {
+                else if (HandEvaluator.pokerRanks.get(PLAYER1.getHandRank().toString()) < HandEvaluator.pokerRanks.get(PLAYER2.getHandRank().toString())) {
                     winner = "Player 2";
                 }
                 else if (PLAYER1.getFiveCardHand().getCards().get(j).getValue().equals(Global.VALUES[i]) && PLAYER2.getFiveCardHand().getCards().get(j).getValue().equals(Global.VALUES[i])) {
@@ -71,89 +72,91 @@ public class GameOutcome {
         }
     }
     private void compareQuads() {
-        if (!(PLAYER1.getQuadsValue() == null) && !(PLAYER1.getQuadsValue() == null)) {
-            for (int i = PLAYER1.getRawHand().getValueData().length - 1; i >= 0; i--) {
-                if (PLAYER1.getQuadsValue().equals(Global.VALUES[i]) && !PLAYER2.getQuadsValue().equals(Global.VALUES[i])) {
-                    winner = "Player 1";
-                }
-                else if (!PLAYER1.getQuadsValue().equals(Global.VALUES[i]) && PLAYER2.getQuadsValue().equals(Global.VALUES[i])) {
-                    winner = "Player 2";
-                }
-                else if (PLAYER1.getQuadsValue().equals(Global.VALUES[i]) && PLAYER2.getQuadsValue().equals(Global.VALUES[i])) {
-                    compareKickerAt(4);
-                }
-            }
+        winner = "";
+        if (PlayingCard.valueMap.get(PLAYER1.getQuadsValue()) > PlayingCard.valueMap.get(PLAYER2.getQuadsValue())) {
+            winner = "Player 1";
+        }
+        else if (PlayingCard.valueMap.get(PLAYER1.getQuadsValue()) < PlayingCard.valueMap.get(PLAYER2.getQuadsValue())) {
+            winner = "Player 2";
+        }
+        else {
+            compareCards();
         }
     }
     private void compareFullHouse() {
-        for (int i = Global.VALUES.length - 1; i >= 0 ; i--) {
-            if (PLAYER1.getFullHouse().get(0).equals(Global.VALUES[i]) && !PLAYER2.getFullHouse().get(0).equals(Global.VALUES[i])) {
+        winner = "";
+        if (PlayingCard.valueMap.get(PLAYER1.getFullHouse().get(0)) > PlayingCard.valueMap.get(PLAYER2.getFullHouse().get(0))) {
+            winner = "Player 1";
+        }
+        else if (PlayingCard.valueMap.get(PLAYER1.getFullHouse().get(0)) < PlayingCard.valueMap.get(PLAYER2.getFullHouse().get(0))) {
+            winner = "Player 2";
+        }
+        else {
+            if (PlayingCard.valueMap.get(PLAYER1.getFullHouse().get(1)) > PlayingCard.valueMap.get(PLAYER2.getFullHouse().get(1))) {
                 winner = "Player 1";
             }
-            else if (!PLAYER1.getFullHouse().get(0).equals(Global.VALUES[i]) && PLAYER2.getFullHouse().get(0).equals(Global.VALUES[i])) {
+            else if (PlayingCard.valueMap.get(PLAYER1.getFullHouse().get(1)) < PlayingCard.valueMap.get(PLAYER2.getFullHouse().get(1))) {
                 winner = "Player 2";
             }
-            else if (PLAYER1.getFullHouse().get(0).equals(Global.VALUES[i]) && PLAYER2.getFullHouse().get(0).equals(Global.VALUES[i])) {
-                if (PLAYER1.getFullHouse().get(1).equals(Global.VALUES[i]) && !PLAYER2.getFullHouse().get(1).equals(Global.VALUES[i])) {
-                    winner = "Player 1";
-                }
-                else if (!PLAYER1.getFullHouse().get(1).equals(Global.VALUES[i]) && PLAYER2.getFullHouse().get(1).equals(Global.VALUES[i])) {
-                    winner = "Player 2";
-                }
-                else if (PLAYER1.getFullHouse().get(1).equals(Global.VALUES[i]) && PLAYER2.getFullHouse().get(1).equals(Global.VALUES[i])) {
-                    break;
-                }
+            else {
+                winner = "Tie";
             }
+        }
+    }
+    private void compareStraight() {
+        winner = "";
+        if (PlayingCard.valueMap.get(PLAYER1.getStraightValue()) > PlayingCard.valueMap.get(PLAYER2.getStraightValue())) {
+            winner = "Player 1";
+        }
+        else if (PlayingCard.valueMap.get(PLAYER1.getStraightValue()) < PlayingCard.valueMap.get(PLAYER2.getStraightValue())) {
+            winner = "Player 2";
+        }
+        else {
+            winner = "Tie";
         }
     }
     private void compareTrips() {
-        if ((PLAYER1.getTrips().size() > 0) && (PLAYER2.getTrips().size() > 0)) {
-            for (int i = Global.VALUES.length - 1; i >= 0 ; i--) {
-                if (PLAYER1.getTrips().get(0).equals(Global.VALUES[i]) && !PLAYER2.getTrips().get(0).equals(Global.VALUES[i])) {
-                    winner = "Player 1";
-                } else if (!PLAYER1.getTrips().get(0).equals(Global.VALUES[i]) && PLAYER2.getTrips().get(0).equals(Global.VALUES[i])) {
-                    winner = "Player 2";
-                } else if (PLAYER1.getTrips().get(0).equals(Global.VALUES[i]) && PLAYER2.getTrips().get(0).equals(Global.VALUES[i])) {
-                    compareKickerAt(3);
-                }
-            }
+        winner = "";
+        if (PlayingCard.valueMap.get(PLAYER1.getTrips().get(0)) > PlayingCard.valueMap.get(PLAYER2.getTrips().get(0))) {
+            winner = "Player 1";
+        }
+        else if (PlayingCard.valueMap.get(PLAYER1.getTrips().get(0)) < PlayingCard.valueMap.get(PLAYER2.getTrips().get(0))) {
+            winner = "Player 2";
+        }
+        else {
+            compareKickerAt(0);
         }
     }
     private void compareTwoPair() {
-        if (PLAYER1.getPairs().size() > 0 && PLAYER2.getPairs().size() > 0) {
-            for (int i = Global.VALUES.length - 1; i >= 0 ; i--) {
-                if (PLAYER1.getPairs().get(0).equals(Global.VALUES[i]) && !PLAYER2.getPairs().get(0).equals(Global.VALUES[i])) {
-                    winner = "Player 1";
-                } else if (!PLAYER1.getPairs().get(0).equals(Global.VALUES[i]) && PLAYER2.getPairs().get(0).equals(Global.VALUES[i])) {
-                    winner = "Player 2";
-                } else if (PLAYER1.getPairs().get(0).equals(Global.VALUES[i]) && PLAYER2.getPairs().get(0).equals(Global.VALUES[i])) {
-                    if (PLAYER1.getPairs().get(1).equals(Global.VALUES[i]) && !PLAYER2.getPairs().get(1).equals(Global.VALUES[i])) {
-                        winner = "Player 1";
-                    } else if (!PLAYER1.getPairs().get(1).equals(Global.VALUES[i]) && PLAYER2.getPairs().get(1).equals(Global.VALUES[i])) {
-                        winner = "Player 2";
-                    } else if (PLAYER1.getPairs().get(1).equals(Global.VALUES[i]) && PLAYER2.getPairs().get(1).equals(Global.VALUES[i])) {
-                        compareKickerAt(4);
-                    }
-                }
+        winner = "";
+        if (PlayingCard.valueMap.get(PLAYER1.getPairs().get(0)) > PlayingCard.valueMap.get(PLAYER2.getPairs().get(0))) {
+            winner = "Player 1";
+        }
+        else if (PlayingCard.valueMap.get(PLAYER1.getPairs().get(0)) < PlayingCard.valueMap.get(PLAYER2.getPairs().get(0))) {
+            winner = "Player 2";
+        }
+        else {
+            if (PlayingCard.valueMap.get(PLAYER1.getPairs().get(1)) > PlayingCard.valueMap.get(PLAYER2.getPairs().get(1))) {
+                winner = "Player 1";
+            }
+            else if (PlayingCard.valueMap.get(PLAYER1.getPairs().get(1)) < PlayingCard.valueMap.get(PLAYER2.getPairs().get(1))) {
+                winner = "Player 2";
+            }
+            else {
+                compareCards();
             }
         }
     }
     private void comparePair() {
         winner = "";
-        if (PLAYER1.getPairs().size() > 0 && PLAYER2.getPairs().size() > 0) {
-            if (PLAYER1.getPairs().get(0).equals(PLAYER2.getPairs().get(0))) {
-                compareKickerAt(0);
-            }
-            else {
-                for (int i = Global.VALUES.length - 1; i >= 0 ; i--) {
-                    if (PLAYER1.getPairs().get(0).equals(Global.VALUES[i]) && !PLAYER2.getPairs().get(0).equals(Global.VALUES[i])) {
-                        winner = "Player 1";
-                    }
-                    else if (PLAYER2.getPairs().get(0).equals(Global.VALUES[i]) && !PLAYER1.getPairs().get(0).equals(Global.VALUES[i])) {
-                        winner = "Player 2";
-                    }
-                }
-            }
+        if (PlayingCard.valueMap.get(PLAYER1.getPairs().get(0)) > PlayingCard.valueMap.get(PLAYER2.getPairs().get(0))) {
+            winner = "Player 1";
+        }
+        else if (PlayingCard.valueMap.get(PLAYER1.getPairs().get(0)) < PlayingCard.valueMap.get(PLAYER2.getPairs().get(0))) {
+            winner = "Player 2";
+        }
+        else {
+            compareKickerAt(0);
         }
     }
 }

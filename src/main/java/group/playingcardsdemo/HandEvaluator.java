@@ -1,7 +1,9 @@
 package group.playingcardsdemo;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class HandEvaluator {
     private final boolean[] RANKDATA = new boolean[Global.STANDARDPOKERRANKS.length];
@@ -9,6 +11,7 @@ public class HandEvaluator {
     private Hand rawHand;
     private Hand fiveCardHand = new Hand();
     private rankState handRank = rankState.None;
+    protected static HashMap<String, Integer> pokerRanks = new HashMap<>();
 
     private ArrayList<String> pairsList = new ArrayList<>();
     private ArrayList<String> tripsList = new ArrayList<>();
@@ -78,7 +81,7 @@ public class HandEvaluator {
 
     private void checkForWheel() {
         int counter = 1;
-        if (rawHand.getCards().get(rawHand.getCards().size() - 1).getValue().equals("Ace")) {
+        if (rawHand.getSize() >= 5 && rawHand.getCards().get(rawHand.getCards().size() - 1).getValue().equals("Ace")) {
             for (int i = 0; i < Global.straightFlushSize - 1; i++) {
                 if (rawHand.getCards().get(i).getValue().equals(Global.VALUES[i])) {
                     counter++;
@@ -197,9 +200,10 @@ public class HandEvaluator {
                 }
             }
             RANKDATA[4] = true;
+            straightValue = fiveCardHand.getCards().get(0).getValue();
             return true;
         }
-        else if (rawHand.getCards().get(0).getValue().equals("Ace") &&
+        else if (rawHand.getSize() >= 5 && rawHand.getCards().get(0).getValue().equals("Ace") &&
                 rawHand.getCards().get(1).getValue().equals("2") &&
                 rawHand.getCards().get(2).getValue().equals("3") &&
                 rawHand.getCards().get(3).getValue().equals("4") &&
@@ -247,7 +251,7 @@ public class HandEvaluator {
             int counter = 1;
             int straightFlushTop = 0;
             for (int i = fiveCardHand.getValueData().length - 1; i > 0 ; i--) {
-                if (fiveCardHand.getValueData()[i] >= 1 &&fiveCardHand.getValueData()[i - 1] >= 1) {
+                if (fiveCardHand.getValueData()[i] == 1 &&fiveCardHand.getValueData()[i - 1] == 1) {
                     straightFlushTop = i;
                     counter++;
                 }
@@ -260,15 +264,17 @@ public class HandEvaluator {
                     Hand tempHand = new Hand();
                     for (int j = fiveCardHand.getSize() - 1; j >= 0 ; j--) {
                         if (fiveCardHand.getCards().get(j).getValue().equals(Global.VALUESHIERARCHY[straightFlushTop - counter])) {
-                            tempHand.addCard(0,fiveCardHand.getCards().get(j));
+                            tempHand.addCard(fiveCardHand.getCards().get(j));
                         }
                         if (tempHand.getSize() >= 5) {
+                            fiveCardHand = new Hand();
                             for (int k = 0; k < 5; k++) {
                                 fiveCardHand.addCard(tempHand.getCards().get(k));
                             }
                             break;
                         }
                     }
+                    System.out.println(Arrays.toString(fiveCardHand.getValueData()));
                     return true;
                 }
             }
@@ -406,7 +412,7 @@ public class HandEvaluator {
                 moveCardFromRawHandToFiveCardHand(pairsList.get(0));
                 moveCardFromRawHandToFiveCardHand(pairsList.get(1));
 
-                fiveCardHand.addCard(rawHand.getCards().get(rawHand.getSize() - 1));
+                moveKickersFromRawHandToFiveCardHand();
             }
 
             handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[2]);
@@ -416,10 +422,6 @@ public class HandEvaluator {
             while (fiveCardHand.getSize() < 5) {
                 moveKickersFromRawHandToFiveCardHand();
             }
-
-            
-            
-
             handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[1]);
         }
         else {

@@ -2,6 +2,8 @@ package group.playingcardsdemo;
 
 import javafx.scene.Node;
 
+import java.util.HashMap;
+
 // This class is used to represent a playing card object.
 public class PlayingCard extends Node {
     // Fields
@@ -11,7 +13,8 @@ public class PlayingCard extends Node {
     protected String color;
     protected String front;
     protected String back;
-    protected static facing currentFacing = facing.faceDown;
+    protected static HashMap<String, Integer> valueMap = new HashMap<>();
+    protected facing currentFacing = facing.faceDown;
 
     // Constructors
     public PlayingCard() {
@@ -20,6 +23,9 @@ public class PlayingCard extends Node {
         setValue(value);
         setSuit(suit);
         setName();
+
+        String filename = suit.toLowerCase() + "_" + value.toLowerCase() + ".png";
+        setFront(filename);
     }
 
     // Getters
@@ -73,6 +79,13 @@ class JokerCard extends PlayingCard {
     // Constructors
     public JokerCard() {
         name = "Joker";
+    }
+
+    public JokerCard(String color) {
+        name = "Joker";
+
+        this.color = color;
+        setFront("joker_black.png");
     }
     @Override
     public String getValue() {

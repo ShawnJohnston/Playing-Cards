@@ -12,7 +12,6 @@ public class DeckOfCards {
     public static final String[] VALUES = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
     public static final String[] SUITS = {"Spades", "Hearts", "Clubs", "Diamonds", "Jokers"};
 
-
     // Constructors
     public DeckOfCards() {
         jokerCount = 0;
@@ -63,16 +62,12 @@ public class DeckOfCards {
                 // The loop has iterated past the cards in a standard 52-card deck of playing cards.
                 // The remaining cards are expected to be Jokers.
                 for (int j = 0; j < jokerCount; j++) {
-                    JokerCard joker = new JokerCard();
                     if (j == 0) {
-                        joker.setColor("Black");
-                        joker.setFront("joker_black.png");
+                        cards.add(new JokerCard("Black"));
                     }
                     else if (j == 1) {
-                        joker.setColor("Red");
-                        joker.setFront("joker_red.png");
+                        cards.add(new JokerCard("Red"));
                     }
-                    cards.add(joker);
                 }
                 // The for loop should break when 'i' exceeds 52.
                 // A standard deck of playing cards contains 52 cards, all regular cards should be assigned at this point.
@@ -84,20 +79,8 @@ public class DeckOfCards {
                 // A standard deck of playing cards has 4 different suits. If 'suitGroup' exceeds 3, then break the loop.
                 break;
             }
-            PlayingCard card = new PlayingCard(); // Card object.
-            card.setValue(VALUES[valueCounter]); // value is set.
-            card.setSuit(SUITS[suitGroup]); // Suit is set.
-            card.setName();
-            if (card.getSuit().equals("Hearts") || card.getSuit().equals("Diamonds")) {
-                card.setColor();
-            }
-            else if (card.getSuit().equals("Clubs") || card.getSuit().equals("Spades")) {
-                card.setColor();
-            }
-            String filename = card.getSuit().toLowerCase() + "_" + card.getValue().toLowerCase() + ".png";
-            card.setFront(filename);
 
-            cards.add(card); // Card assigned to 'cards' array at index 'i'.
+            cards.add(new PlayingCard(VALUES[valueCounter], SUITS[suitGroup])); // Card assigned to 'cards' array at index 'i'.
             valueCounter++;
 
             if (valueCounter == VALUES.length) {
