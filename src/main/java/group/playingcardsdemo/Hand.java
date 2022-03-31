@@ -1,7 +1,13 @@
 package group.playingcardsdemo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+
+@Getter
+@Setter
 
 public class Hand {
     private ArrayList<PlayingCard> cards = new ArrayList<>();

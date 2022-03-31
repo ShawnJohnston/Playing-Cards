@@ -1,9 +1,16 @@
 package group.playingcardsdemo;
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+
+
+@Getter
+@Setter
 
 public class HandEvaluator {
     private final boolean[] RANKDATA = new boolean[Global.STANDARDPOKERRANKS.length];
@@ -38,43 +45,43 @@ public class HandEvaluator {
         determineRank();
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-    public Hand getRawHand() {
-        return rawHand;
-    }
-    public rankState getHandRank() {
-        return handRank;
-    }
-    public boolean[] getRankData() {
-        return RANKDATA;
-    }
-    public Hand getFiveCardHand() {
-        return fiveCardHand;
-    }
-    public ArrayList<String> getPairs() {
-        return pairsList;
-    }
-    public ArrayList<String> getTrips() {
-        return tripsList;
-    }
-    public String getQuadsValue() {
-        return quadsValue;
-    }
-    public String getStraightValue() {
-        return straightValue;
-    }
-    public ArrayList<String> getFullHouse() {
-        return fullHouseList;
-    }
-
-    public void setRawHand(Hand rawHand) {
-        this.rawHand = rawHand;
-    }
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
+    //public Player getPlayer() {
+    //    return player;
+    //}
+    //public Hand getRawHand() {
+    //    return rawHand;
+    //}
+    //public rankState getHandRank() {
+    //    return handRank;
+    //}
+    //public boolean[] getRankData() {
+    //    return RANKDATA;
+    //}
+    //public Hand getFiveCardHand() {
+    //    return fiveCardHand;
+    //}
+    //public ArrayList<String> getPairs() {
+    //    return pairsList;
+    //}
+    //public ArrayList<String> getTrips() {
+    //    return tripsList;
+    //}
+    //public String getQuadsValue() {
+    //    return quadsValue;
+    //}
+    //public String getStraightValue() {
+    //    return straightValue;
+    //}
+    //public ArrayList<String> getFullHouse() {
+    //    return fullHouseList;
+    //}
+//
+    //public void setRawHand(Hand rawHand) {
+    //    this.rawHand = rawHand;
+    //}
+    //public void setPlayer(Player player) {
+    //    this.player = player;
+    //}
     public void setStraightFlushSize(int size) {
         Global.straightFlushSize = size;
     }

@@ -1,6 +1,12 @@
 package group.playingcardsdemo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
+
+@Getter
+@Setter
 
 // This class is used to represent a playing card deck object.
 // It uses the PlayingCard class.
@@ -27,22 +33,6 @@ public class DeckOfCards {
         cards = new ArrayList<>();
         buildDeck();
     }
-
-    // Getters
-    public ArrayList<PlayingCard> getCards() {
-        return cards;
-    }
-    public int getMaxSize() {
-        return maxSize;
-    }
-    public int getCurrentSize() {
-        currentSize = cards.size();
-        return currentSize;
-    }
-
-    // Setters
-    public void setCards(ArrayList<PlayingCard> cards) {
-        this.cards = cards; }
 
     // This method will create the card objects and assign them into the 'cards' array.
     private void buildDeck() {

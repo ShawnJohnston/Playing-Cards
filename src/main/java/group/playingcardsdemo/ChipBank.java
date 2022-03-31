@@ -1,6 +1,12 @@
 package group.playingcardsdemo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
+
+@Getter
+@Setter
 
 public class ChipBank {
     private int total;
@@ -15,13 +21,6 @@ public class ChipBank {
     }
 
     ChipBank() {
-    }
-    public void setChipTotal(int total) {
-        this.total = total;
-    }
-
-    public int getChipTotal() {
-        return total;
     }
 
     public void addToTotal(int amount) {

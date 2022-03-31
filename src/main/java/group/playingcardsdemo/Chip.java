@@ -1,6 +1,10 @@
 package group.playingcardsdemo;
 
+import lombok.Getter;
+
 import java.util.HashMap;
+
+@Getter
 
 public class Chip {
     private final String COLOR;
@@ -16,12 +20,4 @@ public class Chip {
         this.VALUE = value;
         this.COLOR = chipValues.get(value);
     }
-
-    public String getColor() {
-        return COLOR;
-    }
-    public int getValue() {
-        return VALUE;
-    }
-
 }

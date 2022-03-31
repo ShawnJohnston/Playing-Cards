@@ -2,57 +2,139 @@ package group.playingcardsdemo;
 
 import java.util.ArrayList;
 
-public class GameMode {
-    private static String gameMode;
-    private static int maximumHandSizeToSet;
+public abstract class GameMode {
+    protected Games gameMode;
+    protected Player dealer;
+    protected ArrayList<Player> playersList = new ArrayList<>();
+    protected DeckOfCards deck;
+    protected Discard discard = new Discard();
+    protected boolean usesCommunityCards;
+    protected CommunityCards board;
+    protected int communityCardsSize;
+    protected int pocketSize;
+    protected int handSize;
+    protected int totalSize;
+    protected int straightFlushSize;
+    protected int jokersInDeck = 0;
 
-    public GameMode() {
-        setGameMode("");
-    }
+    public class CommunityCards {
+        protected int size;
+        protected int nextCardToRevealIndex;
+        protected ArrayList<PlayingCard> board = new ArrayList<>();
 
-    public static String getGameMode() {
-        return gameMode;
-    }
-    public static void setGameMode(String gameToStart) {
-        gameMode = gameToStart;
-        if (gameMode.equals("5 Card Poker")) {
-            maximumHandSizeToSet = 5;
+        CommunityCards(int size) {
+            this.size = size;
+            if (size < 0) {
+                size = 0;
+            }
+            usesCommunityCards = (size == 0);
+            this.nextCardToRevealIndex = 0;
+        }
+        public void initialize() {
+            for (int i = 0; i < this.size; i++) {
+                board.add(deck.draw());
+            }
+        }
+        public void flipNextCard() {
+            if (!(this.nextCardToRevealIndex >= this.size - 1)) {
+                board.get(nextCardToRevealIndex).setCurrentFacing(Facing.faceUp);
+                for (Player player: playersList) {
+                    player.getHand().addCard(board.get(nextCardToRevealIndex));
+                }
+                dealer.getHand().addCard(board.get(nextCardToRevealIndex));
+                this.nextCardToRevealIndex++;
+            }
         }
     }
 
-    public void initializeGame(Player user, Player dealer) {
-        user.setMaxNumCardsInHand(maximumHandSizeToSet);
-        user.setStartingChips(1000);
-        dealer.setMaxNumCardsInHand(maximumHandSizeToSet);
+    GameMode(String game, Player player) {
+        gameMode = Games.valueOf(game);
+        playersList.add(player);
+        configureHandScalingByGame();
+        sessionStart();
     }
-
-    public void play5CardPoker(Player user, Player computer) {
-        boolean playing = true;
-
-        while (playing) {
-            DeckOfCards deck = new DeckOfCards(); // Initializes the deck of cards.
-            Shuffler shuffler = new Shuffler();
-            deck = shuffler.random(deck);
-            deck = shuffler.handShuffle(deck);
-
-            ArrayList<PlayingCard> drawnCards = new ArrayList<>();
-
-            for (int i = 0; i < 10; i++) {
-                System.out.println(deck.getCards().get(i).getValue() + " " + deck.getCards().get(i).getSuit());
+    protected void configureHandScalingByGame() {
+        switch (gameMode.toString()) {
+            case "FiveCardStud" -> {
+                this.communityCardsSize = 5;
+                this.pocketSize = 5;
+                this.handSize = 5;
+                this.totalSize = 5;
+                this.straightFlushSize = 5;
             }
-            for (int i = 0; i < 10; i++) {
-                drawnCards.add(deck.getCards().get(i));
+            case "UTH" -> {
+                this.communityCardsSize = 5;
+                this.pocketSize = 2;
+                this.handSize = 5;
+                this.totalSize = 7;
+                this.straightFlushSize = 5;
             }
-            for (int i = 0; i < drawnCards.size();) {
-                user.addToHand(drawnCards.get(i));
-                computer.addToHand(drawnCards.get(i + 1));
-                i += 2;
-            }
-            for (PlayingCard card: user.getHand().getCards()) {
-                System.out.println(card.getValue() + " " + card.getSuit());
-            }
-
-            playing = false;
         }
     }
+    protected void sessionStart() {
+        deck = new DeckOfCards(jokersInDeck);
+        Shuffler shuffler = new Shuffler();
+        shuffler.random(deck);
+
+        initialBets();
+        session();
+    }
+    protected void session() {}
+    protected void initialBets() {
+
+    }
+    protected void dealingPhase() {
+        if (this.board.size > 0) {
+            board.initialize();
+        }
+
+        for (int i = 0; i < pocketSize; i++) {
+            for (Player player : playersList) {
+                player.addToPocket(deck.draw());
+            }
+            dealer.getPocket().addCard(deck.draw());
+        }
+    }
+}
+class UTH extends GameMode {
+    UTH(String game, Player player) {
+        super(game, player);
+    }
+
+
+    protected void configureHandScalingByGame() {
+        super.configureHandScalingByGame();
+    }
+    @Override
+    protected void session() {
+        dealingPhase();
+        preFlopPhase();
+        postFlopPhase();
+        turnPhase();
+        riverPhase();
+        showdownPhase();
+    }
+    @Override
+    protected void initialBets() {
+    }
+    private void preFlopPhase() {
+    }
+    private void postFlopPhase() {
+        for (int i = 0; i < 3; i++) {
+            this.board.flipNextCard();
+        }
+    }
+    private void turnPhase() {
+        this.board.flipNextCard();
+    }
+    private void riverPhase() {
+        this.board.flipNextCard();
+    }
+    private void showdownPhase() {
+
+    }
+}
+
+enum Games {
+    FiveCardStud, UTH
 }

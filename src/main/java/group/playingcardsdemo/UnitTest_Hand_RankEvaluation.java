@@ -150,10 +150,10 @@ public void theHandContainsOnePair() {
 
         System.out.println(Arrays.toString(hand.getValueData()));
         HandEvaluator evaluator = new HandEvaluator(player, hand);
-        System.out.println(evaluator.getPairs());
+        System.out.println(evaluator.getPairsList());
 
-        Assertions.assertEquals(1, evaluator.getPairs().size());
-        Assertions.assertEquals(Global.VALUES[i], evaluator.getPairs().get(0));
+        Assertions.assertEquals(1, evaluator.getPairsList().size());
+        Assertions.assertEquals(Global.VALUES[i], evaluator.getPairsList().get(0));
     }
 }
 @Test
@@ -172,11 +172,11 @@ public void theHandContainsTwoPair() {
 
         System.out.println(Arrays.toString(hand.getValueData()));
         HandEvaluator evaluator = new HandEvaluator(player, hand);
-        System.out.println(evaluator.getPairs());
+        System.out.println(evaluator.getPairsList());
 
-        Assertions.assertEquals(2, evaluator.getPairs().size());
-        Assertions.assertEquals(Global.VALUES[i], evaluator.getPairs().get(1));
-        Assertions.assertEquals(Global.VALUES[i + 1], evaluator.getPairs().get(0));
+        Assertions.assertEquals(2, evaluator.getPairsList().size());
+        Assertions.assertEquals(Global.VALUES[i], evaluator.getPairsList().get(1));
+        Assertions.assertEquals(Global.VALUES[i + 1], evaluator.getPairsList().get(0));
         Assertions.assertEquals("TwoPair", evaluator.getHandRank().toString());
     }
 }
@@ -196,9 +196,9 @@ public void theHandContainsTrips() {
 
         System.out.println(Arrays.toString(hand.getValueData()));
         HandEvaluator evaluator = new HandEvaluator(player, hand);
-        System.out.println(evaluator.getTrips());
+        System.out.println(evaluator.getTripsList());
 
-        Assertions.assertEquals(Global.VALUES[i], evaluator.getTrips().get(0));
+        Assertions.assertEquals(Global.VALUES[i], evaluator.getTripsList().get(0));
     }
 }
 @Test
@@ -239,10 +239,10 @@ public void theHandContainsQuads() {
 
             System.out.println(Arrays.toString(hand.getValueData()));
             HandEvaluator evaluator = new HandEvaluator(player, hand);
-            System.out.println(evaluator.getFullHouse());
+            System.out.println(evaluator.getFullHouseList());
 
-            Assertions.assertEquals(Global.VALUES[i], evaluator.getFullHouse().get(0));
-            Assertions.assertEquals(Global.VALUES[i + 1], evaluator.getFullHouse().get(1));
+            Assertions.assertEquals(Global.VALUES[i], evaluator.getFullHouseList().get(0));
+            Assertions.assertEquals(Global.VALUES[i + 1], evaluator.getFullHouseList().get(1));
             Assertions.assertEquals("FullHouse", evaluator.getHandRank().toString());
         }
     }
@@ -275,9 +275,9 @@ public void theHandContainsQuads() {
 //
     //        System.out.println(Arrays.toString(hand.getValueData()));
     //        HandEvaluator evaluator = new HandEvaluator(player, hand);
-    //        System.out.println(evaluator.getTrips());
+    //        System.out.println(evaluator.getTripsList());
 //
-    //        Assertions.assertEquals(0, evaluator.getTrips().size());
+    //        Assertions.assertEquals(0, evaluator.getTripsList().size());
     //    }
 //
     //    Hand hand = new Hand();
@@ -291,9 +291,9 @@ public void theHandContainsQuads() {
 //
     //    System.out.println(Arrays.toString(hand.getValueData()));
     //    HandEvaluator evaluator = new HandEvaluator(player, hand);
-    //    System.out.println(evaluator.getTrips());
+    //    System.out.println(evaluator.getTripsList());
 //
-    //    Assertions.assertEquals(0, evaluator.getTrips().size());
+    //    Assertions.assertEquals(0, evaluator.getTripsList().size());
     //}
     //@Test
     //public void theHandContainsNoQuads() {
