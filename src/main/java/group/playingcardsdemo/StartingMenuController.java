@@ -4,8 +4,6 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,17 +13,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class StartingMenuController implements Initializable {
@@ -37,6 +31,7 @@ public class StartingMenuController implements Initializable {
     private final String[] cardbacks = {"red", "red2", "blue", "blue2", "abstract", "abstract_clouds",
             "abstract_scene", "astronaut", "cars", "castle", "fish", "frog"};
     public String currentCardBack = "red";
+    public Image cardBackImage;
 
     @FXML
     TextField nameTextField;
@@ -113,7 +108,8 @@ public class StartingMenuController implements Initializable {
         currentCardBack = newCardBack;
 
         String path = "src/main/resources/group/playingcardsdemo/Card_Backs/";
-        cardBackImageView.setImage(new Image(new FileInputStream(path + currentCardBack + ".png")));
+        cardBackImage = new Image(new FileInputStream(path + currentCardBack + ".png"));
+        cardBackImageView.setImage(cardBackImage);
     }
     public void toggleCardBackRight(ActionEvent event) throws FileNotFoundException {
         String newCardBack = null;
@@ -129,8 +125,10 @@ public class StartingMenuController implements Initializable {
             }
         }
         currentCardBack = newCardBack;
+
         String path = "src/main/resources/group/playingcardsdemo/Card_Backs/";
-        cardBackImageView.setImage(new Image(new FileInputStream(path + currentCardBack + ".png")));
+        cardBackImage = new Image(new FileInputStream(path + currentCardBack + ".png"));
+        cardBackImageView.setImage(cardBackImage);
     }
 
     public void switchToMainMenu(ActionEvent event) throws IOException {
@@ -184,7 +182,7 @@ public class StartingMenuController implements Initializable {
         gameController.displayName(name);
         gameController.displayChipCount(chipCountLabel.getText());
         gameController.displayPayouts();
-        gameController.setCardBack(cardBackImageView);
+        gameController.setCardBack(cardBackImage);
 
         sceneBuilder(event);
     }

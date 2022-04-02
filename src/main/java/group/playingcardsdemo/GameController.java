@@ -29,10 +29,10 @@ public class GameController {
     @FXML
     Label chipCountLabel;
     @FXML
-    ImageView cardBackImageView;
-    @FXML
     ImageView backgroundImageView;
     Image backgroundImage;
+    @FXML
+    ImageView deckTopImageView = new ImageView();
 
     @FXML
     Label payout00Label = new Label();
@@ -86,8 +86,8 @@ public class GameController {
     public GameController() throws FileNotFoundException {
     }
 
-    public void setCardBack(ImageView cardBackImageView) throws FileNotFoundException {
-        this.cardBackImageView = cardBackImageView;
+    public void setCardBack(Image image) throws FileNotFoundException {
+        this.deckTopImageView.setImage(image);
 
     }
     public void displayPayouts() {

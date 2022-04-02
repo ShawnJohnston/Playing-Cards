@@ -67,7 +67,7 @@
                   </ImageView>
                   <ImageView fx:id="deckTopImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@Card_Backs/red.png" />
+                        <Image url="@none.png" />
                      </image>
                   </ImageView>
                   <Label id="textLabelOnBlack" layoutX="25.0" layoutY="190.0" stylesheets="@style.css" text="Deck" />
