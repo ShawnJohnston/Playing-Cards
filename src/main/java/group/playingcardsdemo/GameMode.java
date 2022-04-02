@@ -9,7 +9,7 @@ public abstract class GameMode {
     protected DeckOfCards deck;
     protected Discard discard = new Discard();
     protected boolean usesCommunityCards;
-    protected CommunityCards board;
+    protected CommunityCards community;
     protected int communityCardsSize;
     protected int pocketSize;
     protected int handSize;
@@ -84,8 +84,8 @@ public abstract class GameMode {
 
     }
     protected void dealingPhase() {
-        if (this.board.size > 0) {
-            board.initialize();
+        if (this.community.size > 0) {
+            community.initialize();
         }
 
         for (int i = 0; i < pocketSize; i++) {
@@ -121,14 +121,14 @@ class UTH extends GameMode {
     }
     private void postFlopPhase() {
         for (int i = 0; i < 3; i++) {
-            this.board.flipNextCard();
+            this.community.flipNextCard();
         }
     }
     private void turnPhase() {
-        this.board.flipNextCard();
+        this.community.flipNextCard();
     }
     private void riverPhase() {
-        this.board.flipNextCard();
+        this.community.flipNextCard();
     }
     private void showdownPhase() {
 

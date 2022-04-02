@@ -12,18 +12,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class StartingMenuController implements Initializable {
@@ -31,6 +33,7 @@ public class StartingMenuController implements Initializable {
     private final String css = this.getClass().getResource("style.css").toExternalForm();
     public int chipCount;
     public String room = "Default";
+    public String currentFeltColor = "Red";
 
     @FXML
     TextField nameTextField;
@@ -44,10 +47,54 @@ public class StartingMenuController implements Initializable {
     Label gameLabel = new Label();
     @FXML
     ChoiceBox<String> roomChoiceBox = new ChoiceBox<>();
+    @FXML
+    ImageView avatar = new ImageView();
+    @FXML
+    Button leftAvatarButton = new Button();
+    @FXML
+    Button rightAvatarButton = new Button();
+    @FXML
+    Button leftFeltButton = new Button();
+    @FXML
+    Button rightFeltButton = new Button();
+    @FXML
+    ImageView avatarImageView = new ImageView();
+    @FXML
+    ImageView feltImageView = new ImageView();
+
 
     public void exitApplication(ActionEvent event) {
         Platform.exit();
     }
+    public void toggleAvatarLeft(ActionEvent event) {
+
+    }
+    public void toggleAvatarRight(ActionEvent event) {
+
+    }
+
+    public void toggleFeltLeft(ActionEvent event) throws FileNotFoundException {
+        String path = "src/main/resources/group/playingcardsdemo/";
+        if (currentFeltColor.equals("Red")) {
+            currentFeltColor = "Green";
+        }
+        else if (currentFeltColor.equals("Green")) {
+            currentFeltColor = "Red";
+        }
+        feltImageView.setImage(new Image(new FileInputStream(path + currentFeltColor.toLowerCase() + "felt.jpg")));
+    }
+    public void toggleFeltRight(ActionEvent event) throws FileNotFoundException {
+        String path = "src/main/resources/group/playingcardsdemo/";
+        if (currentFeltColor.equals("Red")) {
+            currentFeltColor = "Green";
+        }
+        else if (currentFeltColor.equals("Green")) {
+            currentFeltColor = "Red";
+        }
+        feltImageView.setImage(new Image(new FileInputStream(path + currentFeltColor.toLowerCase() + "felt.jpg")));
+    }
+
+
     public void switchToMainMenu(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
         sceneBuilder(event);

@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class GameController {
     private Parent root;
@@ -75,7 +77,6 @@ public class GameController {
     Label payout71Label = new Label();
     @FXML
     Label payout72Label = new Label();
-    
     
     public void displayPayouts() {
         for (int i = 0; i < Global.payoutSheetUTH.length; i++) {

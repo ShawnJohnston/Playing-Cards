@@ -9,14 +9,14 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group.playingcardsdemo.GameController">
    <children>
-      <ImageView fx:id="backgroundImageView" fitHeight="1280.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="backgroundImageView" fitHeight="1280.0" fitWidth="1280.0" layoutX="-6.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@redfelt-2x.jpg" />
          </image>
       </ImageView>
-      <Label id="textLabelOnBlack" fx:id="nameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="560.0" layoutY="900.0" text="Player Name" textAlignment="CENTER" />
-      <Label id="textLabelOnBlack" fx:id="chipCountLabel" layoutX="80.0" layoutY="900.0" prefHeight="22.0" prefWidth="191.0" text="\$ 0" />
-      <Group layoutX="100.0" layoutY="100.0">
+      <Label id="textLabelOnBlack" fx:id="nameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="791.0" text="Player Name" textAlignment="CENTER" />
+      <Label id="textLabelOnBlack" fx:id="chipCountLabel" layoutX="45.0" layoutY="744.0" prefHeight="22.0" prefWidth="191.0" text="\$ 0" />
+      <Group layoutX="19.0" layoutY="295.0">
          <children>
             <Group>
                <children>
@@ -56,7 +56,7 @@
             </Group>
          </children>
       </Group>
-      <Group layoutX="800.0" layoutY="60.0">
+      <Group layoutX="17.0" layoutY="14.0">
          <children>
             <Group>
                <children>
@@ -93,5 +93,62 @@
          </children>
       </Group>
       <Button fx:id="mainMenuButton" layoutX="1180.0" layoutY="800.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Main Menu" />
+      <Group layoutX="502.0" layoutY="320.0">
+         <children>
+            <ImageView fx:id="communityCardImageView5" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@none.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="communityCardImageView4" fitHeight="150.0" fitWidth="200.0" layoutX="105.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@none.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="communityCardImageView3" fitHeight="150.0" fitWidth="200.0" layoutX="210.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@none.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="communityCardImageView2" fitHeight="150.0" fitWidth="200.0" layoutX="315.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@none.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="communityCardImageView1" fitHeight="150.0" fitWidth="200.0" layoutX="420.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@none.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Group>
+      <Group layoutX="647.0" layoutY="94.0">
+         <children>
+            <ImageView fx:id="dealerPocketImageView1" fitHeight="150.0" fitWidth="200.0" layoutX="106.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@none.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="dealerPocketImageView2" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@none.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Group>
+      <Group layoutX="634.0" layoutY="662.0">
+         <children>
+            <ImageView fx:id="playerPocketImageView1" fitHeight="150.0" fitWidth="200.0" layoutX="106.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@none.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="playerPocketImageView1" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@none.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Group>
    </children>
 </AnchorPane>
