@@ -67,5 +67,16 @@
             <Button fx:id="LeftAvatarButton" layoutY="35.0" mnemonicParsing="false" onAction="#toggleAvatarLeft" scaleX="0.8" scaleY="0.8" text="&lt;" />
          </children>
       </Group>
+      <Group layoutX="30.0" layoutY="520.0">
+         <children>
+            <ImageView fx:id="cardBackImageView" fitHeight="150.0" fitWidth="200.0" layoutX="55.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Card_Backs/red.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="rightCardButton" layoutX="180.0" layoutY="60.0" mnemonicParsing="false" onAction="#toggleCardBackRight" scaleX="0.8" scaleY="0.8" text="&gt;" />
+            <Button fx:id="leftCardButton" layoutY="60.0" mnemonicParsing="false" onAction="#toggleCardBackLeft" scaleX="0.8" scaleY="0.8" text="&lt;" />
+         </children>
+      </Group>
    </children>
 </AnchorPane>

@@ -13,7 +13,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -25,6 +28,8 @@ public class GameController {
     Label nameLabel;
     @FXML
     Label chipCountLabel;
+    @FXML
+    ImageView cardBackImageView;
     @FXML
     ImageView backgroundImageView;
     Image backgroundImage;
@@ -77,7 +82,14 @@ public class GameController {
     Label payout71Label = new Label();
     @FXML
     Label payout72Label = new Label();
-    
+
+    public GameController() throws FileNotFoundException {
+    }
+
+    public void setCardBack(ImageView cardBackImageView) throws FileNotFoundException {
+        this.cardBackImageView = cardBackImageView;
+
+    }
     public void displayPayouts() {
         for (int i = 0; i < Global.payoutSheetUTH.length; i++) {
             System.out.println(Arrays.toString(Global.payoutSheetUTH[i]));

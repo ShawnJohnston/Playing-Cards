@@ -34,6 +34,9 @@ public class StartingMenuController implements Initializable {
     public int chipCount;
     public String room = "Default";
     public String currentFeltColor = "Red";
+    private final String[] cardbacks = {"red", "red2", "blue", "blue2", "abstract", "abstract_clouds",
+            "abstract_scene", "astronaut", "cars", "castle", "fish", "frog"};
+    public String currentCardBack = "red";
 
     @FXML
     TextField nameTextField;
@@ -61,6 +64,8 @@ public class StartingMenuController implements Initializable {
     ImageView avatarImageView = new ImageView();
     @FXML
     ImageView feltImageView = new ImageView();
+    @FXML
+    ImageView cardBackImageView = new ImageView();
 
 
     public void exitApplication(ActionEvent event) {
@@ -72,7 +77,6 @@ public class StartingMenuController implements Initializable {
     public void toggleAvatarRight(ActionEvent event) {
 
     }
-
     public void toggleFeltLeft(ActionEvent event) throws FileNotFoundException {
         String path = "src/main/resources/group/playingcardsdemo/";
         if (currentFeltColor.equals("Red")) {
@@ -93,7 +97,41 @@ public class StartingMenuController implements Initializable {
         }
         feltImageView.setImage(new Image(new FileInputStream(path + currentFeltColor.toLowerCase() + "felt.jpg")));
     }
+    public void toggleCardBackLeft(ActionEvent event) throws FileNotFoundException {
+        String newCardBack = null;
+        if (currentCardBack.equals(cardbacks[0])) {
+            newCardBack = cardbacks[cardbacks.length - 1];
+        }
+        else {
+            for (int i = 0; i < cardbacks.length; i++) {
+                if (currentCardBack.equals(cardbacks[i])) {
+                    newCardBack = cardbacks[i - 1];
+                    break;
+                }
+            }
+        }
+        currentCardBack = newCardBack;
 
+        String path = "src/main/resources/group/playingcardsdemo/Card_Backs/";
+        cardBackImageView.setImage(new Image(new FileInputStream(path + currentCardBack + ".png")));
+    }
+    public void toggleCardBackRight(ActionEvent event) throws FileNotFoundException {
+        String newCardBack = null;
+        if (currentCardBack.equals(cardbacks[cardbacks.length - 1])) {
+            newCardBack = cardbacks[0];
+        }
+        else {
+            for (int i = 0; i < cardbacks.length; i++) {
+                if (currentCardBack.equals(cardbacks[i])) {
+                    newCardBack = cardbacks[i + 1];
+                    break;
+                }
+            }
+        }
+        currentCardBack = newCardBack;
+        String path = "src/main/resources/group/playingcardsdemo/Card_Backs/";
+        cardBackImageView.setImage(new Image(new FileInputStream(path + currentCardBack + ".png")));
+    }
 
     public void switchToMainMenu(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
@@ -146,6 +184,7 @@ public class StartingMenuController implements Initializable {
         gameController.displayName(name);
         gameController.displayChipCount(chipCountLabel.getText());
         gameController.displayPayouts();
+        gameController.setCardBack(cardBackImageView);
 
         sceneBuilder(event);
     }
