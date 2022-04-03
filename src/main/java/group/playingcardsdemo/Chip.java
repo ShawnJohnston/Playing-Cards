@@ -20,4 +20,17 @@ public class Chip {
         this.VALUE = value;
         this.COLOR = chipValues.get(value);
     }
+    //public static void initializeChipMaps() {
+    //    Chip.chipColors.put("White", 1);
+    //    Chip.chipColors.put("Yellow", 2);
+    //    Chip.chipColors.put("Red", 5);
+    //    Chip.chipColors.put("Green", 25);
+    //    Chip.chipColors.put("Black", 100);
+//
+    //    Chip.chipValues.put(1, "White");
+    //    Chip.chipValues.put(2, "Yellow");
+    //    Chip.chipValues.put(5, "Red");
+    //    Chip.chipValues.put(25, "Green");
+    //    Chip.chipValues.put(100, "Black");
+    //}
 }

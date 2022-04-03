@@ -13,7 +13,10 @@ import java.util.HashMap;
 @Setter
 
 public class HandEvaluator {
-    private final boolean[] RANKDATA = new boolean[Global.STANDARDPOKERRANKS.length];
+    public static final String[] STANDARDPOKERRANKS = {"HighCard", "Pair", "TwoPair", "Trips", "Straight", "Flush",
+            "FullHouse", "Quads", "StraightFlush", "RoyalFlush"};
+    public static int straightFlushSize = 5;
+    private final boolean[] RANKDATA = new boolean[STANDARDPOKERRANKS.length];
     private Player player;
     private Hand rawHand;
     private Hand fiveCardHand = new Hand();
@@ -83,20 +86,20 @@ public class HandEvaluator {
     //    this.player = player;
     //}
     public void setStraightFlushSize(int size) {
-        Global.straightFlushSize = size;
+        straightFlushSize = size;
     }
 
     private void checkForWheel() {
         int counter = 1;
         if (rawHand.getSize() >= 5 && rawHand.getCards().get(rawHand.getCards().size() - 1).getValue().equals("Ace")) {
-            for (int i = 0; i < Global.straightFlushSize - 1; i++) {
-                if (rawHand.getCards().get(i).getValue().equals(Global.VALUES[i])) {
+            for (int i = 0; i < straightFlushSize - 1; i++) {
+                if (rawHand.getCards().get(i).getValue().equals(PlayingCard.VALUES[i])) {
                     counter++;
                 }
                 else break;
             }
         }
-        if (counter == Global.straightFlushSize) {
+        if (counter == straightFlushSize) {
             adjustForWheel();
         }
     }
@@ -122,7 +125,7 @@ public class HandEvaluator {
     }
     //public Boolean isAStraight() {
     //    // This flow of logic is for game modes where a straight requires 5 consecutive values.
-    //    if (Global.straightFlushSize == 5) {
+    //    if (straightFlushSize == 5) {
     //        boolean handContainsFiveOrTen = false; // All 5 card straights contain either a "5" or "10". Otherwise, it's ruled out.
     //        if (pairsList.size() > 0 || tripsList.size() > 0 || !(quadsValue == null)) {
     //            return false;
@@ -159,7 +162,7 @@ public class HandEvaluator {
     //            int handIndex = 0; // Counter used to access the playerHand index.
     //            // This loop starts where the first card in the hand matches with the corresponding value index in the values array.
     //            // The loop spans up to (exclusively) the indexPoint value + the integer defining the size of a straight.
-    //            for (int i = indexPoint; i < (indexPoint + Global.straightFlushSize); i++) {
+    //            for (int i = indexPoint; i < (indexPoint + straightFlushSize); i++) {
     //                // This if-statement will compare the string value at current playerHand index to the values array at index i.
     //                if (hand.getCards().get(handIndex).getValue().equals(values[i])) {
     //                    // The string value at this playerHand index matches the string value at the values array index i.
@@ -169,7 +172,7 @@ public class HandEvaluator {
     //                    straightCount = 0;
     //                }
     //                handIndex++;
-    //                if (straightCount == Global.straightFlushSize) {
+    //                if (straightCount == straightFlushSize) {
     //                    RANKDATA[4] = true;
     //                    return true;
     //                }
@@ -182,7 +185,7 @@ public class HandEvaluator {
         int counter = 0;
         
         ArrayList<Integer> indices = new ArrayList<>();
-        for (int i = Global.VALUESHIERARCHY.length - 2; i > 0 ; i--) {
+        for (int i = PlayingCard.VALUESHIERARCHY.length - 2; i > 0 ; i--) {
             if (counter >= 5) {
                 break;
             }
@@ -200,7 +203,7 @@ public class HandEvaluator {
         if (indices.size() == 5) {
             for (Integer index: indices) {
                 for (int i = rawHand.getSize() - 1; i >= 0 ; i--) {
-                    if (rawHand.getCards().get(i).getValue().equals(Global.VALUESHIERARCHY[index])) {
+                    if (rawHand.getCards().get(i).getValue().equals(PlayingCard.VALUESHIERARCHY[index])) {
                         fiveCardHand.addCard(rawHand.getCards().get(i));
                         break;
                     }
@@ -231,7 +234,7 @@ public class HandEvaluator {
         for (int i = 0; i < rawHand.getSuitData().length - 1; i++) {
             if (rawHand.getSuitData()[i] >= 5) {
                 RANKDATA[5] = true;
-                flushValue = Global.SUITS[i];
+                flushValue = PlayingCard.SUITS[i];
 
                 return true;
             }
@@ -270,7 +273,7 @@ public class HandEvaluator {
                     counter = 0;
                     Hand tempHand = new Hand();
                     for (int j = fiveCardHand.getSize() - 1; j >= 0 ; j--) {
-                        if (fiveCardHand.getCards().get(j).getValue().equals(Global.VALUESHIERARCHY[straightFlushTop - counter])) {
+                        if (fiveCardHand.getCards().get(j).getValue().equals(PlayingCard.VALUESHIERARCHY[straightFlushTop - counter])) {
                             tempHand.addCard(fiveCardHand.getCards().get(j));
                         }
                         if (tempHand.getSize() >= 5) {
@@ -286,7 +289,7 @@ public class HandEvaluator {
                 }
             }
         }
-        //if (Global.straightFlushSize == 5 && isAFlush()) {
+        //if (straightFlushSize == 5 && isAFlush()) {
         //    for (int i = rawHand.getSize() - 1; i >= 0 ; i--) {
         //        if (rawHand.getCards().get(i).getSuit().equals(flushValue)) {
         //            fiveCardHand.addCard(rawHand.getCards().get(i));
@@ -344,14 +347,14 @@ public class HandEvaluator {
                     } else if (pairsList.size() >= 2) {
                         RANKDATA[2] = true;
                     }
-                    pairsList.add(Global.VALUES[i]);
+                    pairsList.add(PlayingCard.VALUES[i]);
                 }
                 case 3 -> {
-                    tripsList.add(Global.VALUES[i]);
+                    tripsList.add(PlayingCard.VALUES[i]);
                     RANKDATA[3] = true;
                 }
                 case 4 -> {
-                    quadsValue = Global.VALUES[i];
+                    quadsValue = PlayingCard.VALUES[i];
                     RANKDATA[7] = true;
                 }
             }
@@ -364,25 +367,25 @@ public class HandEvaluator {
     }
     private void determineRank() {
         if (isARoyalFlush()) {
-            handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[9]);
+            handRank = rankState.valueOf(STANDARDPOKERRANKS[9]);
         }
         else if (isAStraightFlush()){
-            handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[8]);
+            handRank = rankState.valueOf(STANDARDPOKERRANKS[8]);
         }
         else if (isAQuads()){
             moveCardFromRawHandToFiveCardHand(quadsValue);
             moveKickersFromRawHandToFiveCardHand();
 
-            handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[7]);
+            handRank = rankState.valueOf(STANDARDPOKERRANKS[7]);
         }
         else if (isAFullHouse()){
             moveCardFromRawHandToFiveCardHand(fullHouseList.get(0));
             moveCardFromRawHandToFiveCardHand(fullHouseList.get(1));
 
-            handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[6]);
+            handRank = rankState.valueOf(STANDARDPOKERRANKS[6]);
         }
         else if (isAFlush()){
-            for (int i = Global.VALUESHIERARCHY.length - 1; i >= 0 ; i--) {
+            for (int i = PlayingCard.VALUESHIERARCHY.length - 1; i >= 0 ; i--) {
                 for (int j = rawHand.getSize() - 1; j >= 0; j--) {
                     if (rawHand.getCards().get(j).getSuit().equals(flushValue)) {
                         fiveCardHand.addCard(rawHand.getCards().get(j));
@@ -396,11 +399,11 @@ public class HandEvaluator {
                 }
             }
 
-            handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[5]);
+            handRank = rankState.valueOf(STANDARDPOKERRANKS[5]);
         }
         else if (isAStraight_ByValueData()){
 
-            handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[4]);
+            handRank = rankState.valueOf(STANDARDPOKERRANKS[4]);
         }
         else if (isATrips()){
             if (tripsList.size() >= 1) {
@@ -412,7 +415,7 @@ public class HandEvaluator {
             
             
 
-            handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[3]);
+            handRank = rankState.valueOf(STANDARDPOKERRANKS[3]);
         }
         else if (isATwoPair()){
             if (pairsList.size() >= 2) {
@@ -422,19 +425,19 @@ public class HandEvaluator {
                 moveKickersFromRawHandToFiveCardHand();
             }
 
-            handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[2]);
+            handRank = rankState.valueOf(STANDARDPOKERRANKS[2]);
         }
         else if (isAPair()){
             moveCardFromRawHandToFiveCardHand(pairsList.get(0));
             while (fiveCardHand.getSize() < 5) {
                 moveKickersFromRawHandToFiveCardHand();
             }
-            handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[1]);
+            handRank = rankState.valueOf(STANDARDPOKERRANKS[1]);
         }
         else {
             moveKickersFromRawHandToFiveCardHand();
 
-            handRank = rankState.valueOf(Global.STANDARDPOKERRANKS[0]);
+            handRank = rankState.valueOf(STANDARDPOKERRANKS[0]);
 
         }
         deleteExcessCards();
@@ -445,6 +448,18 @@ public class HandEvaluator {
                 fiveCardHand.removeCard(i);
             }
         }
+    }
+    public static void initializePokerRanks() {
+        HandEvaluator.pokerRanks.put("HighCard", 0);
+        HandEvaluator.pokerRanks.put("Pair", 1);
+        HandEvaluator.pokerRanks.put("TwoPair", 2);
+        HandEvaluator.pokerRanks.put("Trips", 3);
+        HandEvaluator.pokerRanks.put("Straight", 4);
+        HandEvaluator.pokerRanks.put("Flush", 5);
+        HandEvaluator.pokerRanks.put("FullHouse", 6);
+        HandEvaluator.pokerRanks.put("Quads", 8);
+        HandEvaluator.pokerRanks.put("StraightFlush", 9);
+        HandEvaluator.pokerRanks.put("RoyalFlush", 10);
     }
 }
 

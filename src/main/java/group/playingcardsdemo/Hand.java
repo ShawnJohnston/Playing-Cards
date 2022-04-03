@@ -13,8 +13,8 @@ public class Hand {
     private ArrayList<PlayingCard> cards = new ArrayList<>();
     private int capacity;
     private int size;
-    private int[] valueData = new int[Global.VALUESHIERARCHY.length];
-    private int[] suitData = new int[Global.SUITS.length];
+    private int[] valueData = new int[PlayingCard.VALUESHIERARCHY.length];
+    private int[] suitData = new int[PlayingCard.SUITS.length];
 
     public Hand() {
     }
@@ -68,8 +68,8 @@ public class Hand {
     public void clear() {
         cards.clear();
         size = 0;
-        valueData = new int[Global.VALUES.length];
-        suitData = new int[Global.SUITS.length];
+        valueData = new int[PlayingCard.VALUES.length];
+        suitData = new int[PlayingCard.SUITS.length];
     }
 
     private void updateHand() {
@@ -84,10 +84,10 @@ public class Hand {
         // This 2D loop will compare each card to each index in the values array. If they match, the card will be added
         // to the buffer array and the counter will increment.
         // The counter will break the loop when it increments to the value equal to the number of cards in the hand.
-        for (int i = 0; i < Global.VALUES.length; i++) {
+        for (int i = 0; i < PlayingCard.VALUES.length; i++) {
             for (PlayingCard card : cards) {
                 // The outer loop sets the comparison value, and the inner loop cycles through each card in the hand.
-                if (card.getValue().equals(Global.VALUES[i])) {
+                if (card.getValue().equals(PlayingCard.VALUES[i])) {
                     // The card's value matches the values array.
                     sortedHand.add(card); // The card is added to the buffer list.
                     cardsSorted++;
@@ -131,9 +131,9 @@ public class Hand {
         ArrayList<PlayingCard> tempCards = cards;
 
         int counter = 0;
-        for (int i = 0; i < Global.VALUES.length; i++) {
+        for (int i = 0; i < PlayingCard.VALUES.length; i++) {
             for (PlayingCard card : tempCards) {
-                if (card.getValue().equals(Global.VALUES[i])) {
+                if (card.getValue().equals(PlayingCard.VALUES[i])) {
                     valueData[i]++;
                     counter++;
                 }

@@ -3,7 +3,7 @@ package group.playingcardsdemo;
 import java.util.ArrayList;
 
 public abstract class Rank {
-    protected int straightFlushSize = Global.straightFlushSize;
+    protected int straightFlushSize = HandEvaluator.straightFlushSize;
     protected Hand hand;
     protected String rank;
     protected ArrayList<String> kickers = new ArrayList<>();

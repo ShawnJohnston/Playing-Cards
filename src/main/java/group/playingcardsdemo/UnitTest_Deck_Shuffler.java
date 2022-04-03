@@ -29,23 +29,23 @@ public class UnitTest_Deck_Shuffler {
     public void thereAreFourOfEachCardValueInTheDeck() {
         DeckOfCards deck = new DeckOfCards();
         // This test checks that each face value appears in the deck exactly 4 times.
-        int[] valueCounter = new int[Global.VALUES.length]; // This array is used to run parallel to 'values' array to count each value.
+        int[] valueCounter = new int[PlayingCard.VALUES.length]; // This array is used to run parallel to 'values' array to count each value.
         int expectedValueCount = 4;
 
         // 2D for loop.
         // Outer loop runs through each index of the 'values' array.
         // Inner loop runs through each index of 'cards' array that composes the deck object.
-        for (int i = 0; i < Global.VALUES.length; i++) {
+        for (int i = 0; i < PlayingCard.VALUES.length; i++) {
             for (int j = 0; j < deck.getMaxSize(); j++) {
-                if (Global.VALUES[i].equals(deck.getCards().get(j).getValue())) {
+                if (PlayingCard.VALUES[i].equals(deck.getCards().get(j).getValue())) {
                     // If the current 'i' index of 'values' matches the current 'j' index of cards in the deck.
                     valueCounter[i]++; // Increments the count for that value.
                 }
             }
             // At this point, the value at the current index  of 'values' has run through each card in the deck.
-            // The next index will run through the entire deck for matching Global.VALUES.
+            // The next index will run through the entire deck for matching PlayingCard.VALUES.
         }
-        for (int i = 0; i < Global.VALUES.length - 1; i++) {
+        for (int i = 0; i < PlayingCard.VALUES.length - 1; i++) {
             System.out.println("Card value: " + deck.getCards().get(i).getValue() + " x " + valueCounter[i]);
             Assertions.assertEquals(expectedValueCount, valueCounter[i]);
         }
@@ -90,7 +90,7 @@ public class UnitTest_Deck_Shuffler {
             int[] counters = { spadeCounter, heartCounter, clubCounter, diamondCounter, jokerCounter};
             System.out.println("\nSuit count with deck containing " + step + " Jokers" + "\n");
             for (int i = 0; i < counters.length; i++) {
-                System.out.println(Global.SUITS[i] + ": " + counters[i]);
+                System.out.println(PlayingCard.SUITS[i] + ": " + counters[i]);
                 // Comparing expected counts to actual counts.
                 if (i < counters.length - 1) {
                     Assertions.assertEquals(expectedSuitCount, counters[i]);

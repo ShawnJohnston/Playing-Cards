@@ -11,8 +11,8 @@ public class UnitTest_HandComparison {
     // Hand comparisons
     @Test
     public void royalFlushVersusOtherHands() {
-        Global.initializePokerRanks();
-        Global.initializeCardValueMap();
+        HandEvaluator.initializePokerRanks();
+        PlayingCard.initializeCardValueMap();
 
         Hand hand1 = new Hand(UnitTesting.handBuilder(
                 "Ace", "King", "Queen", "Jack", "10",
@@ -42,19 +42,19 @@ public class UnitTest_HandComparison {
     }
     //@Test
     //public void straightFlushVersusOtherHands() {
-    //    Global.initializePokerRanks();
-    //    Global.initializeCardValueMap();
+    //    HandEvaluator.initializePokerRanks();
+    //    PlayingCard.initializeCardValueMap();
 //
     //    Player player1 = new Player();
     //    Hand hand1 = new Hand();
     //    PlayingCard[] cardsInHand;
     //    int iterationCount = 1;
-    //    for (int i = 0; i < Global.SUITS.length - 1; i++) {
+    //    for (int i = 0; i < PlayingCard.SUITS.length - 1; i++) {
     //        for (int j = 0; j < 8; j++) {
     //            hand1.getCards().clear();
     //            cardsInHand = new PlayingCard[5];
     //            for (int k = 0; k < 5; k++) {
-    //                cardsInHand[k] = new PlayingCard(Global.VALUES[k + j], Global.SUITS[i]);
+    //                cardsInHand[k] = new PlayingCard(PlayingCard.VALUES[k + j], PlayingCard.SUITS[i]);
     //                hand1.addCard(cardsInHand[k]);
     //            }
     //            iterationCount++;
@@ -77,17 +77,17 @@ public class UnitTest_HandComparison {
     //}
     //@Test
     //public void quadsVersusOtherHands() {
-    //    Global.initializePokerRanks(); Global.initializeCardValueMap();
+    //    HandEvaluator.initializePokerRanks(); PlayingCard.initializeCardValueMap();
 //
-    //    for (int i = 0; i < Global.VALUES.length - 1; i++) {
+    //    for (int i = 0; i < PlayingCard.VALUES.length - 1; i++) {
     //        Player player1 = new Player();
     //        Hand hand1 = new Hand();
     //        ArrayList<PlayingCard> cards = new ArrayList<>(UnitTesting.handBuilder(
-    //                Global.VALUES[i],
-    //                Global.VALUES[i],
-    //                Global.VALUES[i],
-    //                Global.VALUES[i],
-    //                Global.VALUES[13],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[13],
     //                "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
     //        hand1.setHand(cards);
 //
@@ -105,17 +105,17 @@ public class UnitTest_HandComparison {
     //}
     //@Test
     //public void fullHouseVersusOtherHands() {
-    //    Global.initializePokerRanks(); Global.initializeCardValueMap();
+    //    HandEvaluator.initializePokerRanks(); PlayingCard.initializeCardValueMap();
 //
-    //    for (int i = Global.VALUES.length - 1; i >=2; i--) {
+    //    for (int i = PlayingCard.VALUES.length - 1; i >=2; i--) {
     //        Hand hand1 = new Hand();
     //        Player player1 = new Player();
     //        ArrayList<PlayingCard> cards = new ArrayList<>(UnitTesting.handBuilder(
-    //                Global.VALUES[i],
-    //                Global.VALUES[i],
-    //                Global.VALUES[i],
-    //                Global.VALUES[i - 1],
-    //                Global.VALUES[i - 1],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[i - 1],
+    //                PlayingCard.VALUES[i - 1],
     //                "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
     //        hand1.setHand(cards);
 //
@@ -133,14 +133,14 @@ public class UnitTest_HandComparison {
     //}
     //@Test
     //public void flushVersusOtherHands() {
-    //Global.initializePokerRanks(); Global.initializeCardValueMap();
+    //HandEvaluator.initializePokerRanks(); PlayingCard.initializeCardValueMap();
 //
-    //    for (int i = 0; i < Global.SUITS.length - 1; i++) {
+    //    for (int i = 0; i < PlayingCard.SUITS.length - 1; i++) {
     //        Player player1 = new Player();
     //        Hand hand1 = new Hand();
     //        hand1.setHand(UnitTesting.handBuilder(
     //                "King", "7", "Jack", "5", "2",
-    //                Global.SUITS[i], Global.SUITS[i], Global.SUITS[i], Global.SUITS[i], Global.SUITS[i]));
+    //                PlayingCard.SUITS[i], PlayingCard.SUITS[i], PlayingCard.SUITS[i], PlayingCard.SUITS[i], PlayingCard.SUITS[i]));
 //
     //        HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
     //        System.out.println("Player 1: " + evaluator1.getHandRank());
@@ -154,7 +154,7 @@ public class UnitTest_HandComparison {
     //}
     //@Test
     //public void straightVersusOtherHands() {
-    //    Global.initializePokerRanks(); Global.initializeCardValueMap();
+    //    HandEvaluator.initializePokerRanks(); PlayingCard.initializeCardValueMap();
 //
     //    Player player1 = new Player();
     //    Hand hand1;
@@ -164,7 +164,7 @@ public class UnitTest_HandComparison {
     //        hand1 = new Hand();
     //        cardsInHand = new PlayingCard[5];
     //        for (int j = 0; j < 5; j++) {
-    //            cardsInHand[j] = new PlayingCard(Global.VALUESHIERARCHY[j + i], Global.SUITS[j]);
+    //            cardsInHand[j] = new PlayingCard(PlayingCard.VALUESHIERARCHY[j + i], PlayingCard.SUITS[j]);
     //            hand1.addCard(cardsInHand[j]);
     //        }
     //        UnitTesting.printHand(hand1);
@@ -179,17 +179,17 @@ public class UnitTest_HandComparison {
     //}
     //@Test
     //public void tripsVersusOtherHands() {
-    //    Global.initializePokerRanks(); Global.initializeCardValueMap();
+    //    HandEvaluator.initializePokerRanks(); PlayingCard.initializeCardValueMap();
 //
-    //    for (int i = 0; i < Global.VALUES.length - 1; i++) {
+    //    for (int i = 0; i < PlayingCard.VALUES.length - 1; i++) {
     //        Player player1 = new Player();
     //        Hand hand1 = new Hand();
     //        ArrayList<PlayingCard> cards = new ArrayList<>(UnitTesting.handBuilder(
-    //                Global.VALUES[i],
-    //                Global.VALUES[i],
-    //                Global.VALUES[i],
-    //                Global.VALUES[13],
-    //                Global.VALUES[13],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[13],
+    //                PlayingCard.VALUES[13],
     //                "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
     //        hand1.setHand(cards);
 //
@@ -205,17 +205,17 @@ public class UnitTest_HandComparison {
     //}
     //@Test
     //public void twoPairVersusOtherHands() {
-    //    Global.initializePokerRanks(); Global.initializeCardValueMap();
+    //    HandEvaluator.initializePokerRanks(); PlayingCard.initializeCardValueMap();
 
-    //    for (int i = 0; i < Global.VALUES.length - 2; i++) {
+    //    for (int i = 0; i < PlayingCard.VALUES.length - 2; i++) {
     //        Player player1 = new Player();
     //        Hand hand1 = new Hand();
     //        ArrayList<PlayingCard> cards = new ArrayList<>(UnitTesting.handBuilder(
-    //                Global.VALUES[i],
-    //                Global.VALUES[i],
-    //                Global.VALUES[i + 1],
-    //                Global.VALUES[i + 1],
-    //                Global.VALUES[13],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[i + 1],
+    //                PlayingCard.VALUES[i + 1],
+    //                PlayingCard.VALUES[13],
     //                "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
     //        hand1.setHand(cards);
 
@@ -229,17 +229,17 @@ public class UnitTest_HandComparison {
     //}
     //@Test
     //public void pairVersusOtherHands() {
-    //    Global.initializePokerRanks(); Global.initializeCardValueMap();
+    //    HandEvaluator.initializePokerRanks(); PlayingCard.initializeCardValueMap();
 
-    //    for (int i = 0; i < Global.VALUES.length - 1; i++) {
+    //    for (int i = 0; i < PlayingCard.VALUES.length - 1; i++) {
     //        Player player1 = new Player();
     //        Hand hand1 = new Hand();
     //        ArrayList<PlayingCard> cards = new ArrayList<>(UnitTesting.handBuilder(
-    //                Global.VALUES[i],
-    //                Global.VALUES[i],
-    //                Global.VALUES[13],
-    //                Global.VALUES[13],
-    //                Global.VALUES[13],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[13],
+    //                PlayingCard.VALUES[13],
+    //                PlayingCard.VALUES[13],
     //                "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
     //        hand1.setHand(cards);
 
@@ -252,7 +252,7 @@ public class UnitTest_HandComparison {
     //}
     //@Test
     //public void highCardVersusOtherHands() {
-    //    Global.initializePokerRanks(); Global.initializeCardValueMap();
+    //    HandEvaluator.initializePokerRanks(); PlayingCard.initializeCardValueMap();
 
     //    Player player1 = new Player();
     //    Hand hand1 = new Hand();
@@ -267,11 +267,11 @@ public class UnitTest_HandComparison {
 
     @Test
     public void straightFlushVersusStraightFlushTie() {
-        Global.initializePokerRanks(); Global.initializeCardValueMap();
+        HandEvaluator.initializePokerRanks(); PlayingCard.initializeCardValueMap();
 
         PlayingCard[] cardsInHand;
         int iterationCount = 1;
-        for (int i = 0; i < Global.SUITS.length - 1; i++) {
+        for (int i = 0; i < PlayingCard.SUITS.length - 1; i++) {
             Player player1 = new Player();
             Player player2 = new Player();
             Hand hand1 = new Hand();
@@ -282,7 +282,7 @@ public class UnitTest_HandComparison {
                 hand2.getCards().clear();
                 cardsInHand = new PlayingCard[5];
                 for (int k = 0; k < 5; k++) {
-                    cardsInHand[k] = new PlayingCard(Global.VALUES[k + j], Global.SUITS[i]);
+                    cardsInHand[k] = new PlayingCard(PlayingCard.VALUES[k + j], PlayingCard.SUITS[i]);
                     hand1.addCard(cardsInHand[k]);
                     hand2.addCard(cardsInHand[k]);
                 }
@@ -299,17 +299,17 @@ public class UnitTest_HandComparison {
     }
     @Test
     public void quadsVersusQuadsTie() {
-        Global.initializePokerRanks();
-        Global.initializeCardValueMap();
+        HandEvaluator.initializePokerRanks();
+        PlayingCard.initializeCardValueMap();
 
-        for (int i = 0; i < Global.VALUES.length - 2; i++) {
+        for (int i = 0; i < PlayingCard.VALUES.length - 2; i++) {
             Player player1 = new Player();
             player1.setHand(UnitTesting.handBuilder(
-                    Global.VALUES[i],
-                    Global.VALUES[i],
-                    Global.VALUES[i],
-                    Global.VALUES[i],
-                    Global.VALUES[Global.VALUES.length - 1],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[PlayingCard.VALUES.length - 1],
                     "Spades", "Hearts", "Clubs", "Diamonds", "Diamonds"));
 
             System.out.print("Player 1: " + Arrays.toString(player1.getHand().getValueData()));
@@ -329,20 +329,20 @@ public class UnitTest_HandComparison {
     }
     @Test
     public void fullHouseVersusFullHouseTie() {
-        Global.initializePokerRanks(); Global.initializeCardValueMap();
+        HandEvaluator.initializePokerRanks(); PlayingCard.initializeCardValueMap();
 
-        for (int i = 0; i < Global.VALUES.length - 1; i++) {
+        for (int i = 0; i < PlayingCard.VALUES.length - 1; i++) {
             Hand hand1 = new Hand();
             Player player1 = new Player();
 
             Hand hand2 = new Hand();
             Player player2 = new Player();
             ArrayList<PlayingCard> cards = new ArrayList<>(UnitTesting.handBuilder(
-                    Global.VALUES[i],
-                    Global.VALUES[i],
-                    Global.VALUES[i],
-                    Global.VALUES[i + 1],
-                    Global.VALUES[i + 1],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i + 1],
+                    PlayingCard.VALUES[i + 1],
                     "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
             hand2.setHand(cards);
             hand1.setHand(cards);
@@ -362,9 +362,9 @@ public class UnitTest_HandComparison {
     }
     @Test
     public void flushVersusFlushTie() {
-        Global.initializePokerRanks(); Global.initializeCardValueMap();
+        HandEvaluator.initializePokerRanks(); PlayingCard.initializeCardValueMap();
 
-        for (int i = 0; i < Global.SUITS.length - 1; i++) {
+        for (int i = 0; i < PlayingCard.SUITS.length - 1; i++) {
             Player player1 = new Player();
             Hand hand1 = new Hand();
 
@@ -372,7 +372,7 @@ public class UnitTest_HandComparison {
             Hand hand2 = new Hand();
             ArrayList<PlayingCard> cards =  UnitTesting.handBuilder(
                     "King", "7", "Jack", "5", "2",
-                    Global.SUITS[i], Global.SUITS[i], Global.SUITS[i], Global.SUITS[i], Global.SUITS[i]);
+                    PlayingCard.SUITS[i], PlayingCard.SUITS[i], PlayingCard.SUITS[i], PlayingCard.SUITS[i], PlayingCard.SUITS[i]);
             hand1.setHand(cards);
             hand2.setHand(cards);
 
@@ -388,7 +388,7 @@ public class UnitTest_HandComparison {
     }
     @Test
     public void straightVersusStraightTie() {
-        Global.initializePokerRanks(); Global.initializeCardValueMap();
+        HandEvaluator.initializePokerRanks(); PlayingCard.initializeCardValueMap();
 
         Player player1 = new Player();
         Hand hand1 = new Hand();
@@ -403,7 +403,7 @@ public class UnitTest_HandComparison {
             hand2.getCards().clear();
             cardsInHand = new PlayingCard[5];
             for (int j = 0; j < 5; j++) {
-                cardsInHand[j] = new PlayingCard(values[j + i], Global.SUITS[j]);
+                cardsInHand[j] = new PlayingCard(values[j + i], PlayingCard.SUITS[j]);
                 hand1.addCard(cardsInHand[j]);
                 hand2.addCard(cardsInHand[j]);
             }
@@ -421,20 +421,20 @@ public class UnitTest_HandComparison {
     }
     //@Test
     //public void tripsVersusTripsTie() {
-    //    Global.initializePokerRanks(); Global.initializeCardValueMap();
+    //    HandEvaluator.initializePokerRanks(); PlayingCard.initializeCardValueMap();
 //
-    //    for (int i = 2; i < Global.VALUES.length - 1; i++) {
+    //    for (int i = 2; i < PlayingCard.VALUES.length - 1; i++) {
     //        Hand hand1 = new Hand();
     //        Player player1 = new Player();
 //
     //        Hand hand2 = new Hand();
     //        Player player2 = new Player();
     //        ArrayList<PlayingCard> cards = new ArrayList<>(UnitTesting.handBuilder(
-    //                Global.VALUES[i],
-    //                Global.VALUES[i],
-    //                Global.VALUES[i],
-    //                Global.VALUES[1],
-    //                Global.VALUES[0],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[1],
+    //                PlayingCard.VALUES[0],
     //                "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
     //        hand1.setHand(cards);
     //        hand2.setHand(cards);
@@ -453,16 +453,16 @@ public class UnitTest_HandComparison {
     //}
     @Test
     public void twoPairVersusTwoPairTie() {
-        Global.initializePokerRanks();
-        Global.initializeCardValueMap();
+        HandEvaluator.initializePokerRanks();
+        PlayingCard.initializeCardValueMap();
 
-        for (int i = 0; i < Global.VALUES.length - 2; i++) {
+        for (int i = 0; i < PlayingCard.VALUES.length - 2; i++) {
             Hand hand1 = new Hand(UnitTesting.handBuilder(
-                    Global.VALUES[i],
-                    Global.VALUES[i],
-                    Global.VALUES[i + 1],
-                    Global.VALUES[i + 1],
-                    Global.VALUES[13],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i + 1],
+                    PlayingCard.VALUES[i + 1],
+                    PlayingCard.VALUES[13],
                     "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
             Hand hand2 = new Hand(hand1.getCards());
 
@@ -481,20 +481,20 @@ public class UnitTest_HandComparison {
     }
     //@Test
     //public void pairVersusPairTie() {
-    //    Global.initializePokerRanks(); Global.initializeCardValueMap();
+    //    HandEvaluator.initializePokerRanks(); PlayingCard.initializeCardValueMap();
 //
-    //    for (int i = 3; i < Global.VALUES.length - 1; i++) {
+    //    for (int i = 3; i < PlayingCard.VALUES.length - 1; i++) {
     //        Player player1 = new Player();
     //        Hand hand1 = new Hand();
 //
     //        Player player2 = new Player();
     //        Hand hand2 = new Hand();
     //        ArrayList<PlayingCard> cards = new ArrayList<>(UnitTesting.handBuilder(
-    //                Global.VALUES[i],
-    //                Global.VALUES[i],
-    //                Global.VALUES[2],
-    //                Global.VALUES[1],
-    //                Global.VALUES[0],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[2],
+    //                PlayingCard.VALUES[1],
+    //                PlayingCard.VALUES[0],
     //                "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
     //        hand1.setHand(cards);
     //        hand2.setHand(cards);
@@ -514,7 +514,7 @@ public class UnitTest_HandComparison {
     //}
     @Test
     public void highCardVersusHighCardTie() {
-        Global.initializePokerRanks(); Global.initializeCardValueMap();
+        HandEvaluator.initializePokerRanks(); PlayingCard.initializeCardValueMap();
 
         Player player1 = new Player();
         Hand hand1 = new Hand();
@@ -543,8 +543,8 @@ public class UnitTest_HandComparison {
 
 
     public void handVersusRoyalFlush(HandEvaluator evaluator1, String winner) {
-        Global.initializePokerRanks();
-        Global.initializeCardValueMap();
+        HandEvaluator.initializePokerRanks();
+        PlayingCard.initializeCardValueMap();
 
         Player player2 = new Player();
         Hand hand2 = new Hand(UnitTesting.handBuilder(
@@ -561,12 +561,12 @@ public class UnitTest_HandComparison {
         Assertions.assertEquals(winner, outcome.getWinner());
     }
     public void handVersusStraightFlush(HandEvaluator evaluator1, String winner) {
-        Global.initializePokerRanks();
-        Global.initializeCardValueMap();
+        HandEvaluator.initializePokerRanks();
+        PlayingCard.initializeCardValueMap();
 
 
-        for (int i = 0; i < Global.VALUES.length - 6; i++) {
-            Hand hand2 = new Hand(UnitTesting.handBuilder(Global.VALUES[i], Global.VALUES[i + 1], Global.VALUES[i + 2], Global.VALUES[i + 3], Global.VALUES[i + 4],
+        for (int i = 0; i < PlayingCard.VALUES.length - 6; i++) {
+            Hand hand2 = new Hand(UnitTesting.handBuilder(PlayingCard.VALUES[i], PlayingCard.VALUES[i + 1], PlayingCard.VALUES[i + 2], PlayingCard.VALUES[i + 3], PlayingCard.VALUES[i + 4],
                     "Clubs","Clubs","Clubs","Clubs","Clubs"));
             HandEvaluator evaluator2 = new HandEvaluator(new Player(), hand2);
 
@@ -581,17 +581,17 @@ public class UnitTest_HandComparison {
         System.out.println();
     }
     public void handVersusQuads(HandEvaluator evaluator1, String winner) {
-        Global.initializePokerRanks();
-        Global.initializeCardValueMap();
+        HandEvaluator.initializePokerRanks();
+        PlayingCard.initializeCardValueMap();
 
-        for (int i = 0; i < Global.VALUES.length - 1; i++) {
+        for (int i = 0; i < PlayingCard.VALUES.length - 1; i++) {
             Player player2 = new Player();
             Hand hand2 = new Hand(UnitTesting.handBuilder(
-                    Global.VALUES[i],
-                    Global.VALUES[i],
-                    Global.VALUES[i],
-                    Global.VALUES[i],
-                    Global.VALUES[13],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[13],
                     "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
 
             HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
@@ -606,17 +606,17 @@ public class UnitTest_HandComparison {
         }
     }
     public void handVersusFullHouse(HandEvaluator evaluator1, String winner) {
-        Global.initializePokerRanks(); Global.initializeCardValueMap();
+        HandEvaluator.initializePokerRanks(); PlayingCard.initializeCardValueMap();
 
-        for (int i = 0; i < Global.VALUES.length - 1; i++) {
+        for (int i = 0; i < PlayingCard.VALUES.length - 1; i++) {
             Hand hand2 = new Hand();
             Player player2 = new Player();
             ArrayList<PlayingCard> cards = new ArrayList<>(UnitTesting.handBuilder(
-                    Global.VALUES[i],
-                    Global.VALUES[i],
-                    Global.VALUES[i],
-                    Global.VALUES[i + 1],
-                    Global.VALUES[i + 1],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i + 1],
+                    PlayingCard.VALUES[i + 1],
                     "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
             hand2.setHand(cards);
 
@@ -629,14 +629,14 @@ public class UnitTest_HandComparison {
         }
     }
     public void handVersusFlush(HandEvaluator evaluator1, String winner) {
-        Global.initializePokerRanks(); Global.initializeCardValueMap();
+        HandEvaluator.initializePokerRanks(); PlayingCard.initializeCardValueMap();
 
-        for (int i = 0; i < Global.SUITS.length - 1; i++) {
+        for (int i = 0; i < PlayingCard.SUITS.length - 1; i++) {
             Player player2 = new Player();
             Hand hand2 = new Hand();
             hand2.setHand(UnitTesting.handBuilder(
                     "King", "7", "Jack", "5", "2",
-                    Global.SUITS[i], Global.SUITS[i], Global.SUITS[i], Global.SUITS[i], Global.SUITS[i]));
+                    PlayingCard.SUITS[i], PlayingCard.SUITS[i], PlayingCard.SUITS[i], PlayingCard.SUITS[i], PlayingCard.SUITS[i]));
 
             HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
             System.out.println("Player 2: " + evaluator2.getHandRank());
@@ -646,8 +646,8 @@ public class UnitTest_HandComparison {
         }
     }
     public void handVersusStraight(HandEvaluator evaluator1, String winner) {
-        Global.initializePokerRanks();
-        Global.initializeCardValueMap();
+        HandEvaluator.initializePokerRanks();
+        PlayingCard.initializeCardValueMap();
 
         Hand hand2 = new Hand();
 
@@ -657,7 +657,7 @@ public class UnitTest_HandComparison {
             hand2.getCards().clear();
             cardsInHand = new PlayingCard[5];
             for (int j = 0; j < 5; j++) {
-                cardsInHand[j] = new PlayingCard(values[j + i], Global.SUITS[j]);
+                cardsInHand[j] = new PlayingCard(values[j + i], PlayingCard.SUITS[j]);
                 hand2.addCard(cardsInHand[j]);
             }
             HandEvaluator evaluator2 = new HandEvaluator(new Player(), hand2);
@@ -672,15 +672,15 @@ public class UnitTest_HandComparison {
         }
     }
     public void handVersusTrips(HandEvaluator evaluator1, String winner) {
-        Global.initializePokerRanks(); Global.initializeCardValueMap();
+        HandEvaluator.initializePokerRanks(); PlayingCard.initializeCardValueMap();
 
-        for (int i = 2; i < Global.VALUES.length - 2; i++) {
+        for (int i = 2; i < PlayingCard.VALUES.length - 2; i++) {
             Hand hand2 = new Hand(UnitTesting.handBuilder(
-                    Global.VALUES[i],
-                    Global.VALUES[i],
-                    Global.VALUES[i],
-                    Global.VALUES[1],
-                    Global.VALUES[0],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[1],
+                    PlayingCard.VALUES[0],
                     "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
 
             HandEvaluator evaluator2 = new HandEvaluator(new Player(), hand2);
@@ -699,17 +699,17 @@ public class UnitTest_HandComparison {
         }
     }
     public void handVersusTwoPair(HandEvaluator evaluator1, String winner) {
-        Global.initializePokerRanks(); Global.initializeCardValueMap();
+        HandEvaluator.initializePokerRanks(); PlayingCard.initializeCardValueMap();
 
-        for (int i = 0; i < Global.VALUES.length - 2; i++) {
+        for (int i = 0; i < PlayingCard.VALUES.length - 2; i++) {
             Player player2 = new Player();
             Hand hand2 = new Hand();
             ArrayList<PlayingCard> cards = new ArrayList<>(UnitTesting.handBuilder(
-                    Global.VALUES[i],
-                    Global.VALUES[i],
-                    Global.VALUES[i + 1],
-                    Global.VALUES[i + 1],
-                    Global.VALUES[13],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i + 1],
+                    PlayingCard.VALUES[i + 1],
+                    PlayingCard.VALUES[13],
                     "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
             hand2.setHand(cards);
 
@@ -722,16 +722,16 @@ public class UnitTest_HandComparison {
         }
     }
     public void handVersusPair(HandEvaluator evaluator1, String winner) {
-        Global.initializePokerRanks();
-        Global.initializeCardValueMap();
+        HandEvaluator.initializePokerRanks();
+        PlayingCard.initializeCardValueMap();
 
-        for (int i = 3; i < Global.VALUES.length - 1; i++) {
+        for (int i = 3; i < PlayingCard.VALUES.length - 1; i++) {
             Hand hand2 = new Hand(UnitTesting.handBuilder(
-                    Global.VALUES[i],
-                    Global.VALUES[i],
-                    Global.VALUES[2],
-                    Global.VALUES[1],
-                    Global.VALUES[0],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[2],
+                    PlayingCard.VALUES[1],
+                    PlayingCard.VALUES[0],
                     "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
 
             HandEvaluator evaluator2 = new HandEvaluator(new Player(), hand2);
@@ -748,7 +748,7 @@ public class UnitTest_HandComparison {
         }
     }
     public void handVersusHighCard(HandEvaluator evaluator1, String winner) {
-        Global.initializePokerRanks(); Global.initializeCardValueMap();
+        HandEvaluator.initializePokerRanks(); PlayingCard.initializeCardValueMap();
 
         Player player2 = new Player();
         Hand hand2 = new Hand();

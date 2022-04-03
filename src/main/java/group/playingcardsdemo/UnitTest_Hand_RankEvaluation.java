@@ -9,44 +9,44 @@ import java.util.Arrays;
 public class UnitTest_Hand_RankEvaluation {
     @Test
     public void canCompareValuesOfCards() {
-        Global.initializeCardValueMap();
+        PlayingCard.initializeCardValueMap();
 
-        for (int i = Global.VALUES.length - 1; i > 0; i--) {
-            PlayingCard card1 = new PlayingCard(Global.VALUES[i], "Spades");
-            PlayingCard card2 = new PlayingCard(Global.VALUES[i - 1], "Spades");
+        for (int i = PlayingCard.VALUES.length - 1; i > 0; i--) {
+            PlayingCard card1 = new PlayingCard(PlayingCard.VALUES[i], "Spades");
+            PlayingCard card2 = new PlayingCard(PlayingCard.VALUES[i - 1], "Spades");
 
             System.out.printf(PlayingCard.valueMap.get(card1.getValue()) + " (%s)  > " + PlayingCard.valueMap.get(card2.getValue()) + " (%s)\n",
-                    Global.VALUES[i], Global.VALUES[i - 1]);
+                    PlayingCard.VALUES[i], PlayingCard.VALUES[i - 1]);
             Assertions.assertTrue(PlayingCard.valueMap.get(card1.getValue()) > PlayingCard.valueMap.get(card2.getValue()));
             Assertions.assertFalse(PlayingCard.valueMap.get(card1.getValue()) < PlayingCard.valueMap.get(card2.getValue()));
         }
-        for (int i = Global.VALUES.length - 1; i > 0; i--) {
-            PlayingCard card1 = new PlayingCard(Global.VALUES[i - 1], "Spades");
-            PlayingCard card2 = new PlayingCard(Global.VALUES[i], "Spades");
+        for (int i = PlayingCard.VALUES.length - 1; i > 0; i--) {
+            PlayingCard card1 = new PlayingCard(PlayingCard.VALUES[i - 1], "Spades");
+            PlayingCard card2 = new PlayingCard(PlayingCard.VALUES[i], "Spades");
 
             System.out.printf(PlayingCard.valueMap.get(card2.getValue()) + " (%s) > " + PlayingCard.valueMap.get(card1.getValue()) + " (%s)\n",
-                    Global.VALUES[i], Global.VALUES[i - 1]);
+                    PlayingCard.VALUES[i], PlayingCard.VALUES[i - 1]);
             Assertions.assertTrue(PlayingCard.valueMap.get(card2.getValue()) > PlayingCard.valueMap.get(card1.getValue()));
             Assertions.assertFalse(PlayingCard.valueMap.get(card2.getValue()) < PlayingCard.valueMap.get(card1.getValue()));
         }
     }
     @Test
     public void canCompareRanks_ByHashMap() {
-        Global.initializePokerRanks();
+        HandEvaluator.initializePokerRanks();
 
-        for (int i = Global.STANDARDPOKERRANKS.length - 1; i > 0; i--) {
-            String rankTier1 = Global.STANDARDPOKERRANKS[i];
-            String rankTier2 = Global.STANDARDPOKERRANKS[i - 1];
+        for (int i = HandEvaluator.STANDARDPOKERRANKS.length - 1; i > 0; i--) {
+            String rankTier1 = HandEvaluator.STANDARDPOKERRANKS[i];
+            String rankTier2 = HandEvaluator.STANDARDPOKERRANKS[i - 1];
 
             System.out.printf(HandEvaluator.pokerRanks.get(rankTier1) + " (%s)  > " + HandEvaluator.pokerRanks.get(rankTier2) + " (%s)\n",
-                    Global.STANDARDPOKERRANKS[i], Global.STANDARDPOKERRANKS[i - 1]);
+                    HandEvaluator.STANDARDPOKERRANKS[i], HandEvaluator.STANDARDPOKERRANKS[i - 1]);
             Assertions.assertTrue(HandEvaluator.pokerRanks.get(rankTier1) > HandEvaluator.pokerRanks.get(rankTier2));
             Assertions.assertFalse(HandEvaluator.pokerRanks.get(rankTier1) < HandEvaluator.pokerRanks.get(rankTier2));
         }
     }
     @Test
     public void canCompareRanks_ByHashMap_UsingHandEvaluator() {
-        Global.initializePokerRanks();
+        HandEvaluator.initializePokerRanks();
 
         Hand hand1 = new Hand(new ArrayList<>(UnitTesting.handBuilder("Ace", "King", "Queen", "Jack", "10",
                 "Diamonds", "Diamonds", "Diamonds", "Diamonds", "Diamonds")));
@@ -108,7 +108,7 @@ public class UnitTest_Hand_RankEvaluation {
         hand.setHand(cards);
         System.out.println(Arrays.toString(hand.getValueData()));
         int[] comparisonData = {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0 };
-        for (int i = 0; i < Global.VALUES.length - 1; i++) {
+        for (int i = 0; i < PlayingCard.VALUES.length - 1; i++) {
             Assertions.assertEquals(hand.getValueData()[i], comparisonData[i]);
         }
     }
@@ -120,7 +120,7 @@ public class UnitTest_Hand_RankEvaluation {
         hand.setHand(cards);
         System.out.println(Arrays.toString(hand.getSuitData()));
         int[] comparisonData = {1, 1, 2, 1, 0};
-        for (int i = 0; i < Global.SUITS.length - 1; i++) {
+        for (int i = 0; i < PlayingCard.SUITS.length - 1; i++) {
             Assertions.assertEquals(hand.getSuitData()[i], comparisonData[i]);
         }
     }
@@ -136,15 +136,15 @@ public class UnitTest_Hand_RankEvaluation {
     }
 @Test
 public void theHandContainsOnePair() {
-    for (int i = 0; i < Global.VALUES.length - 1; i++) {
+    for (int i = 0; i < PlayingCard.VALUES.length - 1; i++) {
         Hand hand = new Hand();
         Player player = new Player();
         ArrayList<PlayingCard> cards = new ArrayList<>(UnitTesting.handBuilder(
-                Global.VALUES[i],
-                Global.VALUES[i],
-                Global.VALUES[13],
-                Global.VALUES[13],
-                Global.VALUES[13],
+                PlayingCard.VALUES[i],
+                PlayingCard.VALUES[i],
+                PlayingCard.VALUES[13],
+                PlayingCard.VALUES[13],
+                PlayingCard.VALUES[13],
                 "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
         hand.setHand(cards);
 
@@ -153,20 +153,20 @@ public void theHandContainsOnePair() {
         System.out.println(evaluator.getPairsList());
 
         Assertions.assertEquals(1, evaluator.getPairsList().size());
-        Assertions.assertEquals(Global.VALUES[i], evaluator.getPairsList().get(0));
+        Assertions.assertEquals(PlayingCard.VALUES[i], evaluator.getPairsList().get(0));
     }
 }
 @Test
 public void theHandContainsTwoPair() {
-    for (int i = 0; i < Global.VALUES.length - 2; i++) {
+    for (int i = 0; i < PlayingCard.VALUES.length - 2; i++) {
         Hand hand = new Hand();
         Player player = new Player();
         ArrayList<PlayingCard> cards = new ArrayList<>(UnitTesting.handBuilder(
-                Global.VALUES[i],
-                Global.VALUES[i],
-                Global.VALUES[i + 1],
-                Global.VALUES[i + 1],
-                Global.VALUES[13],
+                PlayingCard.VALUES[i],
+                PlayingCard.VALUES[i],
+                PlayingCard.VALUES[i + 1],
+                PlayingCard.VALUES[i + 1],
+                PlayingCard.VALUES[13],
                 "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
         hand.setHand(cards);
 
@@ -175,22 +175,22 @@ public void theHandContainsTwoPair() {
         System.out.println(evaluator.getPairsList());
 
         Assertions.assertEquals(2, evaluator.getPairsList().size());
-        Assertions.assertEquals(Global.VALUES[i], evaluator.getPairsList().get(1));
-        Assertions.assertEquals(Global.VALUES[i + 1], evaluator.getPairsList().get(0));
+        Assertions.assertEquals(PlayingCard.VALUES[i], evaluator.getPairsList().get(1));
+        Assertions.assertEquals(PlayingCard.VALUES[i + 1], evaluator.getPairsList().get(0));
         Assertions.assertEquals("TwoPair", evaluator.getHandRank().toString());
     }
 }
 @Test
 public void theHandContainsTrips() {
-    for (int i = 0; i < Global.VALUES.length - 1; i++) {
+    for (int i = 0; i < PlayingCard.VALUES.length - 1; i++) {
         Hand hand = new Hand();
         Player player = new Player();
         ArrayList<PlayingCard> cards = new ArrayList<>(UnitTesting.handBuilder(
-                Global.VALUES[i],
-                Global.VALUES[i],
-                Global.VALUES[i],
-                Global.VALUES[13],
-                Global.VALUES[13],
+                PlayingCard.VALUES[i],
+                PlayingCard.VALUES[i],
+                PlayingCard.VALUES[i],
+                PlayingCard.VALUES[13],
+                PlayingCard.VALUES[13],
                 "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
         hand.setHand(cards);
 
@@ -198,20 +198,20 @@ public void theHandContainsTrips() {
         HandEvaluator evaluator = new HandEvaluator(player, hand);
         System.out.println(evaluator.getTripsList());
 
-        Assertions.assertEquals(Global.VALUES[i], evaluator.getTripsList().get(0));
+        Assertions.assertEquals(PlayingCard.VALUES[i], evaluator.getTripsList().get(0));
     }
 }
 @Test
 public void theHandContainsQuads() {
-    for (int i = 0; i < Global.VALUES.length - 1; i++) {
+    for (int i = 0; i < PlayingCard.VALUES.length - 1; i++) {
         Hand hand = new Hand();
         Player player = new Player();
         ArrayList<PlayingCard> cards = new ArrayList<>(UnitTesting.handBuilder(
-                Global.VALUES[i],
-                Global.VALUES[i],
-                Global.VALUES[i],
-                Global.VALUES[i],
-                Global.VALUES[13],
+                PlayingCard.VALUES[i],
+                PlayingCard.VALUES[i],
+                PlayingCard.VALUES[i],
+                PlayingCard.VALUES[i],
+                PlayingCard.VALUES[13],
                 "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
         hand.setHand(cards);
 
@@ -225,15 +225,15 @@ public void theHandContainsQuads() {
 }
     @Test
     public void theHandContainsFullHouse() {
-        for (int i = 0; i < Global.VALUES.length - 1; i++) {
+        for (int i = 0; i < PlayingCard.VALUES.length - 1; i++) {
             Hand hand = new Hand();
             Player player = new Player();
             ArrayList<PlayingCard> cards = new ArrayList<>(UnitTesting.handBuilder(
-                    Global.VALUES[i],
-                    Global.VALUES[i],
-                    Global.VALUES[i],
-                    Global.VALUES[i + 1],
-                    Global.VALUES[i + 1],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i],
+                    PlayingCard.VALUES[i + 1],
+                    PlayingCard.VALUES[i + 1],
                     "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
             hand.setHand(cards);
 
@@ -241,8 +241,8 @@ public void theHandContainsQuads() {
             HandEvaluator evaluator = new HandEvaluator(player, hand);
             System.out.println(evaluator.getFullHouseList());
 
-            Assertions.assertEquals(Global.VALUES[i], evaluator.getFullHouseList().get(0));
-            Assertions.assertEquals(Global.VALUES[i + 1], evaluator.getFullHouseList().get(1));
+            Assertions.assertEquals(PlayingCard.VALUES[i], evaluator.getFullHouseList().get(0));
+            Assertions.assertEquals(PlayingCard.VALUES[i + 1], evaluator.getFullHouseList().get(1));
             Assertions.assertEquals("FullHouse", evaluator.getHandRank().toString());
         }
     }
@@ -261,15 +261,15 @@ public void theHandContainsQuads() {
     //}
     //@Test
     //public void theHandContainsNoTrips() {
-    //    for (int i = 0; i < Global.VALUES.length - 2; i++) {
+    //    for (int i = 0; i < PlayingCard.VALUES.length - 2; i++) {
     //        Hand hand = new Hand();
     //        Player player = new Player();
     //        ArrayList<PlayingCard> cards = new ArrayList<>(UnitTesting.handBuilder(
-    //                Global.VALUES[i],
-    //                Global.VALUES[i],
-    //                Global.VALUES[i + 1],
-    //                Global.VALUES[13],
-    //                Global.VALUES[13],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[i + 1],
+    //                PlayingCard.VALUES[13],
+    //                PlayingCard.VALUES[13],
     //                "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
     //        hand.setHand(cards);
 //
@@ -284,8 +284,8 @@ public void theHandContainsQuads() {
     //    Player player = new Player();
     //    ArrayList<PlayingCard> cards = new ArrayList<>(UnitTesting.handBuilder(
     //            "Ace", "Ace", "2",
-    //            Global.VALUES[13],
-    //            Global.VALUES[13],
+    //            PlayingCard.VALUES[13],
+    //            PlayingCard.VALUES[13],
     //            "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
     //    hand.setHand(cards);
 //
@@ -297,15 +297,15 @@ public void theHandContainsQuads() {
     //}
     //@Test
     //public void theHandContainsNoQuads() {
-    //    for (int i = 0; i < Global.VALUES.length - 1; i++) {
+    //    for (int i = 0; i < PlayingCard.VALUES.length - 1; i++) {
     //        Hand hand = new Hand();
     //        Player player = new Player();
     //        ArrayList<PlayingCard> cards = new ArrayList<>(UnitTesting.handBuilder(
-    //                Global.VALUES[i],
-    //                Global.VALUES[i],
-    //                Global.VALUES[i],
-    //                Global.VALUES[13],
-    //                Global.VALUES[13],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[i],
+    //                PlayingCard.VALUES[13],
+    //                PlayingCard.VALUES[13],
     //                "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
     //        hand.setHand(cards);
 //
@@ -352,24 +352,24 @@ public void theHandContainsQuads() {
 //
     //    // Iterative value cases.
     //    for (int i = 0; i < Global.SUITS.length - 1; i++) {
-    //        player.setHand(UnitTesting.handBuilder(Global.VALUES[0],
-    //                Global.VALUES[1],
-    //                Global.VALUES[2],
-    //                Global.VALUES[3],
-    //                Global.VALUES[5],
+    //        player.setHand(UnitTesting.handBuilder(PlayingCard.VALUES[0],
+    //                PlayingCard.VALUES[1],
+    //                PlayingCard.VALUES[2],
+    //                PlayingCard.VALUES[3],
+    //                PlayingCard.VALUES[5],
     //                Global.SUITS[i], Global.SUITS[i], Global.SUITS[i], Global.SUITS[i], Global.SUITS[i]));
     //        fiveCardHand_fiveCardFlush_True(player, i);
     //    }
 //
 //
-    //    for (int i = 0; i < Global.VALUES.length - Global.straightFlushSize - 1; i++) {
+    //    for (int i = 0; i < PlayingCard.VALUES.length - Global.straightFlushSize - 1; i++) {
     //        for (int j = 0; j < Global.SUITS.length - 1; j++) {
     //            player.setHand(UnitTesting.handBuilder(
-    //                    Global.VALUES[i],
-    //                    Global.VALUES[i + 1],
-    //                    Global.VALUES[i + 2],
-    //                    Global.VALUES[i + 3],
-    //                    Global.VALUES[i + 5],
+    //                    PlayingCard.VALUES[i],
+    //                    PlayingCard.VALUES[i + 1],
+    //                    PlayingCard.VALUES[i + 2],
+    //                    PlayingCard.VALUES[i + 3],
+    //                    PlayingCard.VALUES[i + 5],
     //                    Global.SUITS[j], Global.SUITS[j], Global.SUITS[j], Global.SUITS[j], Global.SUITS[j]));
     //            fiveCardHand_fiveCardFlush_True(player, i + 2);
     //        }
@@ -501,7 +501,7 @@ public void theHandContainsQuads() {
     //        hand = new Hand();
     //        cardsInHand = new PlayingCard[5];
     //        for (int j = 0; j < 5; j++) {
-    //            cardsInHand[j] = new PlayingCard(Global.VALUESHIERARCHY[j + i], Global.SUITS[j]);
+    //            cardsInHand[j] = new PlayingCard(PlayingCard.VALUESHIERARCHY[j + i], Global.SUITS[j]);
     //            hand.addCard(cardsInHand[j]);
     //        }
     //        UnitTesting.printHand(hand);
@@ -736,7 +736,7 @@ public void theHandContainsQuads() {
     //            cardsInHand = new PlayingCard[5];
     //            System.out.println("Iteration " + iterationCount + ": " + Global.SUITS[i]);
     //            for (int k = 0; k < 5; k++) {
-    //                cardsInHand[k] = new PlayingCard(Global.VALUES[k + j], Global.SUITS[i]);
+    //                cardsInHand[k] = new PlayingCard(PlayingCard.VALUES[k + j], Global.SUITS[i]);
     //                hand.addCard(cardsInHand[k]);
     //            }
     //            iterationCount++;
@@ -867,7 +867,7 @@ public void theHandContainsQuads() {
     //public void straight_ByValue_True(Player player, Hand hand) {
     //    int counter = 1;
     //    UnitTesting.printHand(hand);
-    //    for (int i = 0; i < Global.VALUES.length; i++) {
+    //    for (int i = 0; i < PlayingCard.VALUES.length; i++) {
     //        if (counter == 5) {
     //            if (hand.getValueData()[i] > 0 && hand.getValueData()[i+1] > 0) {
     //                counter++;
@@ -891,7 +891,7 @@ public void theHandContainsQuads() {
     //    int counter = 1;
     //    UnitTesting.printHand(hand);
     //    System.out.println(Arrays.toString(hand.getValueData()));
-    //    for (int i = 1; i < Global.VALUES.length; i++) {
+    //    for (int i = 1; i < PlayingCard.VALUES.length; i++) {
     //        if (hand.getValueData()[i] > 1 && hand.getValueData()[i+1] > 0) {
     //            counter++;
     //        }

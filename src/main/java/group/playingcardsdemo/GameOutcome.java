@@ -56,7 +56,7 @@ public class GameOutcome {
     }
     private void compareKickerAt(int k) {
         int handPosition = k;
-        for (int i = Global.VALUES.length - 1; i >= 0; i--) {
+        for (int i = PlayingCard.VALUES.length - 1; i >= 0; i--) {
             for (int j = handPosition - 1; j >= PLAYER1.getRawHand().getSize() ; j++) {
                 if (HandEvaluator.pokerRanks.get(PLAYER1.getHandRank().toString()) > HandEvaluator.pokerRanks.get(PLAYER2.getHandRank().toString())) {
                     winner = "Player 1";
@@ -64,7 +64,7 @@ public class GameOutcome {
                 else if (HandEvaluator.pokerRanks.get(PLAYER1.getHandRank().toString()) < HandEvaluator.pokerRanks.get(PLAYER2.getHandRank().toString())) {
                     winner = "Player 2";
                 }
-                else if (PLAYER1.getFiveCardHand().getCards().get(j).getValue().equals(Global.VALUES[i]) && PLAYER2.getFiveCardHand().getCards().get(j).getValue().equals(Global.VALUES[i])) {
+                else if (PLAYER1.getFiveCardHand().getCards().get(j).getValue().equals(PlayingCard.VALUES[i]) && PLAYER2.getFiveCardHand().getCards().get(j).getValue().equals(PlayingCard.VALUES[i])) {
                     handPosition++;
                     break;
                 }

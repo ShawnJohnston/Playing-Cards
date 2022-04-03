@@ -31,7 +31,7 @@ public class StartingMenuController implements Initializable {
     private final String[] cardbacks = {"red", "red2", "blue", "blue2", "abstract", "abstract_clouds",
             "abstract_scene", "astronaut", "cars", "castle", "fish", "frog"};
     public String currentCardBack = "red";
-    public Image cardBackImage;
+    public Image cardBackImage = new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Backs/" + cardbacks[0] + ".png"));
 
     @FXML
     TextField nameTextField;
@@ -61,6 +61,9 @@ public class StartingMenuController implements Initializable {
     ImageView feltImageView = new ImageView();
     @FXML
     ImageView cardBackImageView = new ImageView();
+
+    public StartingMenuController() throws FileNotFoundException {
+    }
 
 
     public void exitApplication(ActionEvent event) {
@@ -169,17 +172,17 @@ public class StartingMenuController implements Initializable {
     public void startGame(ActionEvent event) throws IOException {
         assignPayoutSheet();
 
-        String name = nameTextField.getText();
-        Global.playerName = name;
 
-        Global.startingChips = (int) slider.getValue();
-        Global.chipCount = (int) slider.getValue();
+        Player player = new Player(nameTextField.getText());
+        player.setStartingChips((int) slider.getValue());
+        player.setChipTotal((int) slider.getValue());
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Game.fxml"));
         root = loader.load();
 
         GameController gameController = loader.getController();
-        gameController.displayName(name);
+        GameController.setPlayer(player);
+        gameController.displayName(player.getName());
         gameController.displayChipCount(chipCountLabel.getText());
         gameController.displayPayouts();
         gameController.setCardBack(cardBackImage);

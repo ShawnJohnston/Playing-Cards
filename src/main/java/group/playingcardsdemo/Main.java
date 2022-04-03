@@ -12,8 +12,8 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        Global.initializeCardValueMap();
-        Global.initializePokerRanks();
+        PlayingCard.initializeCardValueMap();
+        HandEvaluator.initializePokerRanks();
         //Global.initializeChipMaps();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("TitleScreen.fxml"));

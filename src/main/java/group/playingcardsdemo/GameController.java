@@ -23,6 +23,7 @@ import java.util.HashMap;
 public class GameController {
     private Parent root;
     private final String css = this.getClass().getResource("style.css").toExternalForm();
+    private static Player player;
 
     @FXML
     Label nameLabel;
@@ -84,6 +85,10 @@ public class GameController {
     Label payout72Label = new Label();
 
     public GameController() throws FileNotFoundException {
+    }
+
+    public static void setPlayer(Player _player) {
+        player = _player;
     }
 
     public void setCardBack(Image image) throws FileNotFoundException {

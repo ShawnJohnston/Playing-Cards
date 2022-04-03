@@ -152,10 +152,10 @@ public class ShufflingTestController {
     }
 
     public void initializeController(ActionEvent event) throws IOException {
-        cardFronts = Global.cardImages;
-        cards = Global.cardImageViews;
+        cardFronts = PlayingCard.cardImages;
+        cards = PlayingCard.cardImageViews;
 
-        Global.initializeCardImages();
+        PlayingCard.initializeCardImages();
         initializeImageViews();
 
         for (int i = 0; i < 4; i++) {
@@ -179,7 +179,7 @@ public class ShufflingTestController {
     }
     public void updateController(ActionEvent event, Image[] shuffledCardFronts) throws IOException {
         this.cardFronts = shuffledCardFronts;
-        this.cards = Global.cardImageViews;
+        this.cards = PlayingCard.cardImageViews;
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 13; j++) {
@@ -288,7 +288,7 @@ public class ShufflingTestController {
         sceneBuilder(event);
     }
     public void updateScene(ActionEvent event) throws IOException  {
-        Global.initializeCardImages(deck);
+        PlayingCard.initializeCardImages(deck);
 
         for (int i = 0; i < deck.getMaxSize(); i++) {
             cardFronts[i] = new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Fronts/" + deck.getCards().get(i).getFront()));
