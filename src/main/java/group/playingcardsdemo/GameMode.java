@@ -3,6 +3,7 @@ package group.playingcardsdemo;
 import java.util.ArrayList;
 
 public abstract class GameMode {
+    public static final String[] GAMES = {"", "5 Card Stud", "UTH"};
     protected Games gameMode;
     protected Player dealer;
     protected ArrayList<Player> playersList = new ArrayList<>();

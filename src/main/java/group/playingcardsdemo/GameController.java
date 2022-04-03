@@ -34,6 +34,8 @@ public class GameController {
     Image backgroundImage;
     @FXML
     ImageView deckTopImageView = new ImageView();
+    @FXML
+    ImageView avatarImageView = new ImageView();
 
     @FXML
     Label payout00Label = new Label();
@@ -93,7 +95,9 @@ public class GameController {
 
     public void setCardBack(Image image) throws FileNotFoundException {
         this.deckTopImageView.setImage(image);
-
+    }
+    public void setAvatar(Image image) throws FileNotFoundException {
+        this.avatarImageView.setImage(image);
     }
     public void displayPayouts() {
         for (int i = 0; i < Global.payoutSheetUTH.length; i++) {

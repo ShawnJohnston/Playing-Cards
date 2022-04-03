@@ -30,8 +30,11 @@ public class StartingMenuController implements Initializable {
     public String currentFeltColor = "Red";
     private final String[] cardbacks = {"red", "red2", "blue", "blue2", "abstract", "abstract_clouds",
             "abstract_scene", "astronaut", "cars", "castle", "fish", "frog"};
+    private final String[] avatars = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
     public String currentCardBack = "red";
+    public String currentAvatar = avatars[0];
     public Image cardBackImage = new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Backs/" + cardbacks[0] + ".png"));
+    public Image avatarImage = new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Avatars/" + avatars[0] + ".png"));
 
     @FXML
     TextField nameTextField;
@@ -45,8 +48,6 @@ public class StartingMenuController implements Initializable {
     Label gameLabel = new Label();
     @FXML
     ChoiceBox<String> roomChoiceBox = new ChoiceBox<>();
-    @FXML
-    ImageView avatar = new ImageView();
     @FXML
     Button leftAvatarButton = new Button();
     @FXML
@@ -69,11 +70,43 @@ public class StartingMenuController implements Initializable {
     public void exitApplication(ActionEvent event) {
         Platform.exit();
     }
-    public void toggleAvatarLeft(ActionEvent event) {
+    public void toggleAvatarLeft(ActionEvent event) throws FileNotFoundException {
+        String newAvatar = null;
+        if (currentAvatar.equals(avatars[0])) {
+            newAvatar = avatars[avatars.length - 1];
+        }
+        else {
+            for (int i = 0; i < avatars.length; i++) {
+                if (currentAvatar.equals(avatars[i])) {
+                    newAvatar = avatars[i - 1];
+                    break;
+                }
+            }
+        }
+        currentAvatar = newAvatar;
 
+        String path = "src/main/resources/group/playingcardsdemo/Avatars/";
+        avatarImage = new Image(new FileInputStream(path + currentAvatar + ".png"));
+        avatarImageView.setImage(avatarImage);
     }
-    public void toggleAvatarRight(ActionEvent event) {
+    public void toggleAvatarRight(ActionEvent event) throws FileNotFoundException {
+        String newAvatar = null;
+        if (currentAvatar.equals(avatars[avatars.length - 1])) {
+            newAvatar = avatars[0];
+        }
+        else {
+            for (int i = 0; i < avatars.length; i++) {
+                if (currentAvatar.equals(avatars[i])) {
+                    newAvatar = avatars[i + 1];
+                    break;
+                }
+            }
+        }
+        currentAvatar = newAvatar;
 
+        String path = "src/main/resources/group/playingcardsdemo/Avatars/";
+        avatarImage = new Image(new FileInputStream(path + currentAvatar + ".png"));
+        avatarImageView.setImage(avatarImage);
     }
     public void toggleFeltLeft(ActionEvent event) throws FileNotFoundException {
         String path = "src/main/resources/group/playingcardsdemo/";
@@ -182,6 +215,7 @@ public class StartingMenuController implements Initializable {
 
         GameController gameController = loader.getController();
         GameController.setPlayer(player);
+        gameController.setAvatar(avatarImage);
         gameController.displayName(player.getName());
         gameController.displayChipCount(chipCountLabel.getText());
         gameController.displayPayouts();
@@ -226,7 +260,7 @@ public class StartingMenuController implements Initializable {
                 chipCountLabel.setText("$ " + chipCount);
             }
         });
-        gameModeChoiceBox.getItems().addAll(Global.GAMES);
+        gameModeChoiceBox.getItems().addAll(GameMode.GAMES);
         gameModeChoiceBox.setOnAction(this::setGameLabel);
 
         ArrayList<String> roomOptions = new ArrayList<>();

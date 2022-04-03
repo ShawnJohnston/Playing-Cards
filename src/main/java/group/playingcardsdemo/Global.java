@@ -8,6 +8,5 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 public class Global {
-    public static final String[] GAMES = {"", "5 Card Stud", "UTH"};
     public static String[][] payoutSheetUTH = new String[8][3];
 }
