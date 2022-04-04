@@ -284,7 +284,6 @@ public class HandEvaluator {
                             break;
                         }
                     }
-                    System.out.println(Arrays.toString(fiveCardHand.getValueData()));
                     return true;
                 }
             }

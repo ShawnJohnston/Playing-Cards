@@ -24,13 +24,6 @@ public class Hand {
         countValues();
         countSuits();
     }
-
-    public int getSize() {
-        return size;
-    }
-    public int getCapacity() {
-        return capacity;
-    }
     public ArrayList<PlayingCard> getCards() {
         return cards;
     }

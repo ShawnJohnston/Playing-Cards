@@ -13,8 +13,8 @@ public class Shuffler {
         Random randomizer = new Random(); // 'Random' object.
 
 
-        for (int i = 0; i < deck.getMaxSize(); i++) {
-            int randomPosition = randomizer.nextInt(deck.getMaxSize()); // Random integer from 0 to the value of the deck size.
+        for (int i = 0; i < deck.getCurrentSize(); i++) {
+            int randomPosition = randomizer.nextInt(deck.currentSize); // Random integer from 0 to the value of the deck size.
             PlayingCard temp = deck.getCards().get(i); // stores the current card in a temporary variable.
             deck.getCards().set(i, deck.getCards().get(randomPosition)); // The random index's card is assigned to the current index.
             deck.getCards().set(randomPosition, temp); // The temporary variable is assigned to the random index.
@@ -42,13 +42,13 @@ public class Shuffler {
         // This method defines the location in a deck of cards in which a top stack will separate from the rest of the deck.
         // This default version of the method is intended to separate a full deck of cards into two half stacks.
 
-        int deckMidPoint = deck.getMaxSize() / 2;
+        int deckMidPoint = deck.getCurrentSize() / 2;
         int variability = randomValueFromNormalDistribution(5);
         return deckMidPoint + variability;
     }
     private int setSplitPoint(DeckOfCards deck, int bounds) {
         // This overloaded method is used in the "Cut" step of the hand shuffle.
-        int deckMidPoint = deck.getMaxSize() / 2; // The index position representing the halfway point into the deck.
+        int deckMidPoint = deck.getCurrentSize() / 2; // The index position representing the halfway point into the deck.
         int variability = randomValueFromNormalDistribution(bounds);
         return deckMidPoint + variability;
     }
@@ -91,7 +91,7 @@ public class Shuffler {
         // For every card in the deck up to and including the split point (the deck's midpoint with +/- 5 variance),
         // the current card index will be added to the top stack. The rest will be added to the bottom stack.
         int splitPoint = setSplitPoint(deck);
-        for (int i = 0; i < deck.getMaxSize(); i++) {
+        for (int i = 0; i < deck.getCurrentSize(); i++) {
             if (i < splitPoint) {
                 topStack.add(deck.getCards().get(i));
             }
@@ -103,13 +103,13 @@ public class Shuffler {
         ArrayList<PlayingCard> riffledDeck = new ArrayList<>(); // New arrangement of cards post-riffle.
 
         // This while-loop controls the riffling of the two stacks together.
-        while (riffledDeck.size() < deck.getMaxSize()) {
+        while (riffledDeck.size() < deck.getCurrentSize()) {
             // It is unlikely that cards will riffle exactly one at a time from each stack when shuffling by hand.
             // Variability is used here to create bunching together of the cards randomly.
             rifflingAction(riffledDeck, topStack, bottomStack);
         }
         // This loop incrementally assigns each card in the riffledDeck list to the deck's corresponding card index.
-        for (int i = 0; i < deck.getMaxSize(); i++) {
+        for (int i = 0; i < deck.getCurrentSize(); i++) {
             deck.getCards().set(i, riffledDeck.get(i));
         }
         return deck.getCards(); // The riffle is complete. The result returns to main to overwrite the deck's card array.
@@ -199,7 +199,7 @@ public class Shuffler {
         // This method will split the deck into two stacks, then swap the position of the top and bottom stacks.
 
         int topStackSize = setSplitPoint(deck, 20); // Top stack will split at the deck midpoint (+/-) 10.
-        int bottomStackSize = deck.getMaxSize() - topStackSize; // The remaining cards make up the bottom stack.
+        int bottomStackSize = deck.getCurrentSize() - topStackSize; // The remaining cards make up the bottom stack.
 
 
         ArrayList<PlayingCard> topStack = new ArrayList<>();
@@ -207,7 +207,7 @@ public class Shuffler {
 
         int j = 0; // Secondary incrementer.
         // This for loop will assign each index of cards in the deck to the corresponding topStack index.
-        for (int i = 0; i < deck.getMaxSize(); i++) {
+        for (int i = 0; i < deck.getCurrentSize(); i++) {
             if (i < topStackSize) {
                 topStack.add(deck.getCards().get(i));
             }
@@ -221,7 +221,7 @@ public class Shuffler {
         ArrayList<PlayingCard> cutDeck = new ArrayList<>(); // For containing the resulting card array.
         // This for loop will assign each card in bottomStack to the new deck array, then cards from topStack when it
         // increments beyond the length of bottomStack.
-        for (int i = 0; i < deck.getMaxSize(); i++) {
+        for (int i = 0; i < deck.getCurrentSize(); i++) {
             if (i < bottomStackSize) {
                 cutDeck.add(bottomStack.get(i));
             }

@@ -60,7 +60,7 @@
          <children>
             <ImageView fx:id="avatarImageView" fitHeight="113.0" fitWidth="104.0" layoutX="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../../Downloads/Assets/Playing%20Card%20Assets/istockphoto-638988916-612x612.jpg" />
+                  <Image url="@Avatars/1.png" />
                </image>
             </ImageView>
             <Button fx:id="rightAvatarButton" layoutX="180.0" layoutY="35.0" mnemonicParsing="false" onAction="#toggleAvatarRight" scaleX="0.8" scaleY="0.8" text="&gt;" />

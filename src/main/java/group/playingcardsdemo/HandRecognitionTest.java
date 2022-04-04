@@ -18,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lombok.SneakyThrows;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -29,15 +30,16 @@ public class HandRecognitionTest implements Initializable {
     Parent root;
     private final String css = this.getClass().getResource("style.css").toExternalForm();
 
-    Shuffler shuffler = new Shuffler();
-    DeckOfCards deck = new DeckOfCards();
-    Discard discard = new Discard();
-    Player player = new Player();
-    Hand hand = new Hand();
-    int handCapacity = 7;
-    TestState testState = TestState.None;
-    SliderState sliderPrimaryState = SliderState.Ace;
-    SliderState sliderSecondaryState = SliderState.Ace;
+    private Shuffler shuffler = new Shuffler();
+    private DeckOfCards deck = new DeckOfCards();
+    private Discard discard = new Discard();
+    private Player player = new Player();
+    private Hand hand = new Hand();
+    private final int boardSize = 7;
+    private TestState testState = TestState.Random;
+    private final String[] sliderStates = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
+    private String sliderPrimaryState = sliderStates[0];
+    private String sliderSecondaryState = sliderStates[0];
 
     @FXML
     AnchorPane pane;
@@ -95,83 +97,47 @@ public class HandRecognitionTest implements Initializable {
     @FXML
     Label card5Label = new Label();
 
+    @FXML
+    Button randomDrawButton = new Button();
+    @FXML
+    Button controlledDrawButton = new Button();
+
     Image[] cardFronts;
+    ImageView[] imageViews = new ImageView[] {cardImageView1, cardImageView2, cardImageView3, cardImageView4, cardImageView5, cardImageView6, cardImageView7};
     float initialDeckTopY = (float) deckTopImageView.getY();
 
     public HandRecognitionTest() {
-        hand.setCapacity(handCapacity);
-        cardFronts = new Image[handCapacity];
-        Shuffler shuffler = new Shuffler();
-        shuffler.random(deck);
+        hand.setCapacity(boardSize);
+        cardFronts = new Image[boardSize];
     }
 
-
-    public void drawFromDeck() throws FileNotFoundException {
-        for (int i = 0; i < hand.getSize(); i++) {
-            discard.addCard(hand.getCards().get(i));
-            adjustDiscardGraphics();
+    private void updateCardImageViews() throws FileNotFoundException {
+        if (hand.getSize() == 0) {
+            cardImageView1.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/none.png")));
+            cardImageView2.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/none.png")));
+            cardImageView3.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/none.png")));
+            cardImageView4.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/none.png")));
+            cardImageView5.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/none.png")));
+            cardImageView6.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/none.png")));
+            cardImageView7.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/none.png")));
         }
-        hand = new Hand();
-
-        if (deck.getCurrentSize() < handCapacity || deck.isEmpty()) {
-            deck = new DeckOfCards();
-            discard = new Discard();
-
-            shuffler.random(deck);
-            resetDeckDiscardGraphics();
+        else {
+            cardImageView1.setImage(cardFronts[0]);
+            cardImageView2.setImage(cardFronts[1]);
+            cardImageView3.setImage(cardFronts[2]);
+            cardImageView4.setImage(cardFronts[3]);
+            cardImageView5.setImage(cardFronts[4]);
+            cardImageView6.setImage(cardFronts[5]);
+            cardImageView7.setImage(cardFronts[6]);
         }
-        for (int i = 0; i < handCapacity; i++) {
-            hand.addCard(deck.draw());
-            cardFronts[i] = new Image(new FileInputStream(
-                    "src/main/resources/group/playingcardsdemo/Card_Fronts/" + hand.getCards().get(i).getFront()));
-        }
-        cardImageView1.setImage(cardFronts[0]);
-        cardImageView2.setImage(cardFronts[1]);
-        cardImageView3.setImage(cardFronts[2]);
-        cardImageView4.setImage(cardFronts[3]);
-        cardImageView5.setImage(cardFronts[4]);
-        cardImageView6.setImage(cardFronts[5]);
-        cardImageView7.setImage(cardFronts[6]);
-
-        adjustDeckGraphics();
-        HandEvaluator evaluator = new HandEvaluator(player, hand);
-        handRankLabel.setText(String.valueOf(evaluator.getHandRank()));
-
+    }
+    private void updateFiveCardHandLabels(HandEvaluator evaluator) {
+        handRankLabel.setText(String.valueOf (evaluator.getHandRank()));
         card1Label.setText(evaluator.getFiveCardHand().getCards().get(0).getName());
         card2Label.setText(evaluator.getFiveCardHand().getCards().get(1).getName());
         card3Label.setText(evaluator.getFiveCardHand().getCards().get(2).getName());
         card4Label.setText(evaluator.getFiveCardHand().getCards().get(3).getName());
         card5Label.setText(evaluator.getFiveCardHand().getCards().get(4).getName());
-    }
-    private void adjustDeckGraphics() {
-        deckTopImageView.setY(deckTopImageView.getY() + (float) handCapacity / 2);
-        deckSizeLabel.setText(String.valueOf(deck.currentSize));
-    }
-    private void adjustDiscardGraphics() throws FileNotFoundException {
-        discardTopImageView.setY(discardTopImageView.getY() - .5);
-        Image discardImage = new Image((new FileInputStream(
-                "src/main/resources/group/playingcardsdemo/Card_Fronts/" + discard.getCards().get(discard.getCurrentSize() - 1).getFront())));
-        discardTopImageView.setImage(discardImage);
-        discardSizeLabel.setText(String.valueOf(discard.currentSize));
-    }
-    private void updateCardImageViews() {
-        cardImageView1.setImage(cardFronts[0]);
-        cardImageView2.setImage(cardFronts[1]);
-        cardImageView3.setImage(cardFronts[2]);
-        cardImageView4.setImage(cardFronts[3]);
-        cardImageView5.setImage(cardFronts[4]);
-        cardImageView6.setImage(cardFronts[5]);
-        cardImageView7.setImage(cardFronts[6]);
-    }
-    private void resetDeckDiscardGraphics() throws FileNotFoundException {
-        deckTopImageView.setImage(new Image(new FileInputStream
-                ("src/main/resources/group/playingcardsdemo/Card_Backs/red.png")));
-        deckTopImageView.setY(initialDeckTopY);
-
-        discardTopImageView.setImage(new Image(new FileInputStream(
-                "src/main/resources/group/playingcardsdemo/Card_Fronts/none.png")));
-        discardTopImageView.setY(discardBottomImageView.getY());
-        discardSizeLabel.setText(String.valueOf(discard.getCurrentSize()));
     }
     public void toSort(ActionEvent event) throws FileNotFoundException {
         //hand.sortHand();
@@ -185,7 +151,7 @@ public class HandRecognitionTest implements Initializable {
         //cardImageView3.setImage(cardFronts[2]);
         //cardImageView4.setImage(cardFronts[3]);
         //cardImageView5.setImage(cardFronts[4]);
-        //cardImageView6.setImage(cardFronts[5]);
+        //cardImageView6.setImage(cardFronts[ 5]);
         //cardImageView7.setImage(cardFronts[6]);
     }
 
@@ -194,13 +160,14 @@ public class HandRecognitionTest implements Initializable {
         stateSliderPrimary.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                if (testState.equals(TestState.None) || testState.equals(TestState.FromDeck) || testState.equals(TestState.Random)) {
+                if (testState.equals(TestState.Random)) {
                     stateSliderPrimary.setValue(1);
-                    sliderPrimaryState = SliderState.Ace;
+                    sliderPrimaryState = "None";
                     statePrimaryLabel.setText("-");
                 }
                 else {
-                    setSliderState(stateSliderPrimary, sliderPrimaryState, statePrimaryLabel);
+                    sliderPrimaryState = setSliderState(stateSliderPrimary, statePrimaryLabel);
+                    statePrimaryLabel.setText(sliderPrimaryState);
                 }
             }
         });
@@ -208,17 +175,17 @@ public class HandRecognitionTest implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
                 if (testState.equals(TestState.TwoPair) || testState.equals(TestState.FullHouse) ) {
-                    setSliderState(stateSliderSecondary, sliderSecondaryState, stateSecondaryLabel);
+                    sliderSecondaryState = setSliderState(stateSliderSecondary, stateSecondaryLabel);
                 }
                 else {
                     stateSliderSecondary.setValue(1);
-                    sliderSecondaryState = SliderState.Ace;
+                    sliderSecondaryState = "None";
                     stateSecondaryLabel.setText("-");
                 }
             }
         });
         testStateChoiceBox.getItems().addAll(
-                TestState.None.toString(),
+                TestState.Random.toString(),
                 TestState.Pair.toString(),
                 TestState.TwoPair.toString(),
                 TestState.Trips.toString(),
@@ -227,91 +194,281 @@ public class HandRecognitionTest implements Initializable {
                 TestState.FullHouse.toString(),
                 TestState.Quads.toString(),
                 TestState.StraightFlush.toString(),
-                TestState.RoyalFlush.toString(),
-                TestState.FromDeck.toString(),
-                TestState.Random.toString()
+                TestState.RoyalFlush.toString()
         );
         testStateChoiceBox.setOnAction(this::setTestState);
     }
+    @SneakyThrows
     private void setTestState(ActionEvent event) {
         resetSliders();
         testState = TestState.valueOf(testStateChoiceBox.getValue());
+        if (!testState.equals(TestState.Random)) {
+            randomDrawButton.setDisable(true);
+            randomDrawButton.setVisible(false);
 
-        switch (testState.toString()) {
-            case "Pair" -> {
-            }
-            case "TwoPair" -> {
-            }
-            case "Trips" -> {
-            }
+            controlledDrawButton.setDisable(false);
+            controlledDrawButton.setVisible(true);
         }
-    }
-    public void setSliderState(Slider slider, SliderState sliderState, Label label) {
-        switch ((int) slider.getValue()) {
-            case 1 -> {
-                sliderState = SliderState.Ace;
-                label.setText("Ace");
-            }
-            case 2 -> {
-                sliderState = SliderState.Two;
-                label.setText("2");
-            }
-            case 3 -> {
-                sliderState = SliderState.Three;
-                label.setText("3");
-            }
-            case 4 -> {
-                sliderState = SliderState.Four;
-                label.setText("4");
-            }
-            case 5 -> {
-                sliderState = SliderState.Five;
-                label.setText("5");
-            }
-            case 6 -> {
-                sliderState = SliderState.Six;
-                label.setText("6");
-            }
-            case 7 -> {
-                sliderState = SliderState.Seven;
-                label.setText("7");
-            }
-            case 8 -> {
-                sliderState = SliderState.Eight;
-                label.setText("8");
-            }
-            case 9 -> {
-                sliderState = SliderState.Nine;
-                label.setText("9");
-            }
-            case 10 -> {
-                sliderState = SliderState.Ten;
-                label.setText("Ten");
-            }
-            case 11 -> {
-                sliderState = SliderState.Jack;
-                label.setText("Jack");
-            }
-            case 12 -> {
-                sliderState = SliderState.Queen;
-                label.setText("Queen");
-            }
-            case 13 -> {
-                sliderState = SliderState.King;
-                label.setText("King");
+        else {
+            randomDrawButton.setDisable(false);
+            randomDrawButton.setVisible(true);
+
+            controlledDrawButton.setDisable(true);
+            controlledDrawButton.setVisible(false);
+        }
+
+        switch (testState) {
+            case Random, RoyalFlush -> {
+                statePrimaryLabel.setText("-");
             }
             default -> {
+                statePrimaryLabel.setText("2");
             }
         }
+        switch (testState) {
+            case TwoPair, FullHouse -> {
+                stateSecondaryLabel.setText("2");
+            }
+        }
+        updateCardImageViews();
+        setTestState();
+    }
+    public String setSliderState(Slider slider, Label label) {
+        label.setText(sliderStates[(int) slider.getValue() - 1]);
+        return sliderStates[(int) slider.getValue() - 1];
     }
     public void resetSliders() {
         stateSliderPrimary.setValue(1);
-        sliderPrimaryState = SliderState.None;
+        sliderPrimaryState = "None";
         statePrimaryLabel.setText("-");
 
         stateSliderSecondary.setValue(1);
-        sliderSecondaryState = SliderState.None;
+        sliderSecondaryState = "None";
         stateSecondaryLabel.setText("-");
+    }
+
+    public void setTestState() throws FileNotFoundException {
+        deck = new DeckOfCards();
+        discard = new Discard();
+        hand = new Hand();
+
+        resetDeckDiscardGraphics();
+        updateCardImageViews();
+
+        switch (testState) {
+            case Random:
+                shuffler.random(deck);
+                break;
+            case Pair:
+                testPair();
+                break;
+            case TwoPair:
+                testTwoPair();
+                break;
+            case Trips:
+                testTrips();
+                break;
+            case Straight:
+                testStraight();
+                break;
+            case Flush:
+                testFlush();
+                break;
+            case FullHouse:
+                testFullHouse();
+                break;
+            case Quads:
+                testQuads();
+                break;
+            case StraightFlush:
+                testStraightFlush();
+                break;
+            case RoyalFlush:
+                testRoyalFlush();
+        }
+    }
+    public void testPair() {}
+    public void testTwoPair() {}
+    public void testTrips() {}
+    public void testStraight() {}
+    public void testFlush() {}
+    public void testFullHouse() {}
+    public void testQuads() {}
+    public void testStraightFlush() {
+
+    }
+    public void testRoyalFlush() throws FileNotFoundException {
+        deck = new DeckOfCards();
+        hand = new Hand();
+        hand.addCard(deck.draw(12));
+        hand.addCard(deck.draw(11));
+        hand.addCard(deck.draw(10));
+        hand.addCard(deck.draw(9));
+        hand.addCard(deck.draw(0));
+        shuffler.random(deck);
+        deckSizeLabel.setText(String.valueOf(deck.currentSize));
+
+        HandEvaluator evaluator = new HandEvaluator(new Player(), hand);
+        setCardFronts();
+        updateCardImageViews();
+        cardImageView6.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/none.png")));
+        cardImageView7.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/none.png")));
+        updateFiveCardHandLabels(evaluator);
+    }
+    public void drawRandomHandFromDeck() throws FileNotFoundException {
+        if (deck.currentSize == deck.maxSize) {
+            shuffler.random(deck);
+        }
+        else {
+            discardHand();
+        }
+        hand = new Hand();
+
+        if (deck.getCurrentSize() < boardSize || deck.isEmpty()) {
+            resetDeck();
+        }
+        drawCards(7);
+        updateCardImageViews();
+
+        decrementFromDeckGraphics_RandomTest();
+        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        hand = evaluator.getFiveCardHand();
+        hand.addCard(evaluator.getRawHand().getCards().get(0));
+        hand.addCard(evaluator.getRawHand().getCards().get(1));
+
+        updateFiveCardHandLabels(evaluator);
+    }
+    public void DrawUnderControl() throws FileNotFoundException {
+        int toDraw = numberOfCardsToDrawByRank();
+        if (hand.getSize() > boardSize - toDraw) {
+            discardCards(toDraw);
+        }
+
+        if (deck.getCurrentSize() < toDraw || deck.isEmpty()) {
+            resetDeck();
+            testRoyalFlush();
+            resetDeckDiscardGraphics();
+        }
+        else {
+            drawCards(toDraw);
+            for (int i = 0; i < toDraw; i++) {
+                decrementFromDeckGraphics();
+            }
+            HandEvaluator evaluator = new HandEvaluator(player, hand);
+            hand = evaluator.getFiveCardHand();
+            updateCardImageViews();
+            updateFiveCardHandLabels(evaluator);
+        }
+    }
+    private void setCardFronts() throws FileNotFoundException {
+        for (int i = 0; i < hand.getSize(); i++) {
+            cardFronts[i] = new Image(new FileInputStream(
+                    "src/main/resources/group/playingcardsdemo/Card_Fronts/" + hand.getCards().get(i).getFront()));
+        }
+    }
+    private int numberOfCardsToDrawByRank() {
+        switch (testState) {
+            case Pair -> {
+                return 5;
+            }
+            case TwoPair, Quads -> {
+                return 1;
+            }
+            case FullHouse, Straight, Flush, StraightFlush, RoyalFlush -> {
+                return 2;
+            }
+            case Trips -> {
+                return 3;
+            }
+        }
+        return 0;
+    }
+    private void discardCards(int toDiscard) throws FileNotFoundException {
+        int counter = toDiscard;
+        for (int i = 0; i < toDiscard; i++) {
+            decrementFromDeckGraphics();
+        }
+        while (counter > 0) {
+            discard.addCard(hand.getCards().get(hand.getSize() - 1));
+            counter--;
+        }
+
+        if (toDiscard > 0) {
+            cardImageView7.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/none.png")));
+            toDiscard--;
+        }
+        if (toDiscard > 0) {
+            cardImageView6.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/none.png")));
+            toDiscard--;
+        }
+        if (toDiscard > 0) {
+            cardImageView5.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/none.png")));
+            toDiscard--;
+        }
+        if (toDiscard > 0) {
+            cardImageView4.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/none.png")));
+            toDiscard--;
+        }
+        if (toDiscard > 0) {
+            cardImageView3.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/none.png")));
+            toDiscard--;
+        }
+        if (toDiscard > 0) {
+            cardImageView2.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/none.png")));
+            toDiscard--;
+        }
+        if (toDiscard > 0) {
+            cardImageView1.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/none.png")));
+        }
+    }
+    private void discardHand() throws FileNotFoundException {
+        for (int i = 0; i < hand.getSize(); i++) {
+            discard.addCard(hand.getCards().get(i));
+            incrementDiscardGraphics();
+        }
+    }
+    private void drawCards(int numberToDraw) throws FileNotFoundException {
+        int boardIndex = hand.getSize();
+        for (int i = 0; i < numberToDraw; i++) {
+            hand.addCard(deck.draw());
+            cardFronts[boardIndex + i] = new Image(new FileInputStream(
+                    "src/main/resources/group/playingcardsdemo/Card_Fronts/" + hand.getCards().get(boardIndex + i).getFront()));
+            if (hand.getSize() >= boardSize) {
+                break;
+            }
+        }
+    }
+    private void resetDeck() throws FileNotFoundException {
+        deck = new DeckOfCards();
+        discard = new Discard();
+
+        shuffler.random(deck);
+        resetDeckDiscardGraphics();
+    }
+    private void decrementFromDeckGraphics() {
+        deckTopImageView.setY(deckTopImageView.getY() + .5);
+        deckSizeLabel.setText(String.valueOf(deck.currentSize));
+    }
+    private void decrementFromDeckGraphics_RandomTest() {
+        deckTopImageView.setY(deckTopImageView.getY() + (float) boardSize / 2);
+        deckSizeLabel.setText(String.valueOf(deck.currentSize));
+    }
+    private void incrementDiscardGraphics() throws FileNotFoundException {
+        discardTopImageView.setY(discardTopImageView.getY() - .5);
+        Image discardImage = new Image((new FileInputStream(
+                "src/main/resources/group/playingcardsdemo/Card_Fronts/" + discard.getCards().get(discard.getCurrentSize() - 1).getFront())));
+        discardTopImageView.setImage(discardImage);
+        discardSizeLabel.setText(String.valueOf(discard.currentSize));
+    }
+    private void resetDeckDiscardGraphics() throws FileNotFoundException {
+        deckTopImageView.setImage(new Image(new FileInputStream
+                ("src/main/resources/group/playingcardsdemo/Card_Backs/red.png")));
+        deckTopImageView.setY(initialDeckTopY);
+
+        discardTopImageView.setImage(new Image(new FileInputStream(
+                "src/main/resources/group/playingcardsdemo/Card_Fronts/none.png")));
+        discardTopImageView.setY(discardBottomImageView.getY());
+        discardSizeLabel.setText(String.valueOf(discard.getCurrentSize()));
     }
 
     public void switchToMainMenu(ActionEvent event) throws IOException {
@@ -332,23 +489,6 @@ public class HandRecognitionTest implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DrawCardsTest.fxml"));
         root = loader.load();
         sceneBuilder(event);
-    }
-    private void testSceneBuilder(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("HandRecognitionTest.fxml"));
-        root = loader.load();
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(pane);
-        stage.setScene(scene);
-        scene.getStylesheets().add(css);
-        scene.setOnKeyPressed(e -> {
-            switch (e.getCode()) {
-                case ESCAPE -> {
-                    Platform.exit();
-                }
-            }
-        });
-        stage.show();
     }
     public void toReset(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("HandRecognitionTest.fxml"));
@@ -371,8 +511,5 @@ public class HandRecognitionTest implements Initializable {
 }
 
 enum TestState {
-    None, HighCard, Pair, TwoPair, Trips, Straight, Flush, FullHouse, Quads, StraightFlush, RoyalFlush, Random, FromDeck
-}
-enum SliderState {
-    None, Ace, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King
+    Random, Pair, TwoPair, Trips, Straight, Flush, FullHouse, Quads, StraightFlush, RoyalFlush
 }

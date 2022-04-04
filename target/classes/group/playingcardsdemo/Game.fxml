@@ -16,7 +16,7 @@
       </ImageView>
       <Label id="textLabelOnBlack" fx:id="nameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="791.0" text="Player Name" textAlignment="CENTER" />
       <Label id="textLabelOnBlack" fx:id="chipCountLabel" layoutX="45.0" layoutY="744.0" prefHeight="22.0" prefWidth="191.0" text="\$ 0" />
-      <Group layoutX="19.0" layoutY="295.0">
+      <Group layoutX="19.0" layoutY="295.0" visible="false">
          <children>
             <Group>
                <children>
@@ -74,7 +74,7 @@
                   <Label id="textLabelOnBlack" fx:id="deckSizeLabel" layoutX="36.0" layoutY="220.0" stylesheets="@style.css" text="52" />
                </children>
             </Group>
-            <Group layoutX="240.0">
+            <Group layoutX="160.0">
                <children>
                   <ImageView id="Deckstack" fx:id="discardBottomImageView" fitHeight="150.0" fitWidth="200.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -150,5 +150,6 @@
             </ImageView>
          </children>
       </Group>
+      <ImageView fx:id="avatarImageView" fitHeight="150.0" fitWidth="200.0" layoutX="19.0" layoutY="556.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

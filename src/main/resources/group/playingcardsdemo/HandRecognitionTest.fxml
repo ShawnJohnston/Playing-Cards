@@ -40,7 +40,7 @@
                         <Image url="@none.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="drawButton" layoutX="200.0" layoutY="230.0" mnemonicParsing="false" onAction="#drawFromDeck" text="Draw" />
+                  <Button fx:id="randomDrawButton" layoutX="120.0" layoutY="230.0" mnemonicParsing="false" onAction="#drawRandomHandFromDeck" text="Draw Random" />
                   <ImageView fx:id="cardImageView6" fitHeight="150.0" fitWidth="200.0" layoutX="525.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@none.png" />
@@ -63,6 +63,7 @@
                         <Label id="textLabelOnBlack" fx:id="card5Label" layoutX="140.0" layoutY="130.0" text="Card 5" />
                      </children>
                   </Group>
+                  <Button fx:id="controlledDrawButton" disable="true" layoutX="120.0" layoutY="230.0" mnemonicParsing="false" onAction="#DrawUnderControl" text="Draw Kickers" visible="false" />
                </children>
             </Group>
             <Group layoutX="300.0" layoutY="60.0">

@@ -91,6 +91,12 @@ public class DeckOfCards {
         currentSize = cards.size();
         return drawnCard;
     }
+    public PlayingCard draw(int index) {
+        PlayingCard drawnCard = cards.get(index);
+        cards.remove(index);
+        currentSize = cards.size();
+        return drawnCard;
+    }
     public void compileFromDiscard(Discard discard) {
         for (int i = 0; i < discard.getCurrentSize(); i++) {
             this.cards.add(discard.cards.get(i));
