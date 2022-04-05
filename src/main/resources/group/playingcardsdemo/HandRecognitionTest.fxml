@@ -63,7 +63,6 @@
                         <Label id="textLabelOnBlack" fx:id="card5Label" layoutX="140.0" layoutY="130.0" text="Card 5" />
                      </children>
                   </Group>
-                  <Button fx:id="controlledDrawButton" disable="true" layoutX="120.0" layoutY="230.0" mnemonicParsing="false" onAction="#DrawUnderControl" text="Draw Kickers" visible="false" />
                </children>
             </Group>
             <Group layoutX="300.0" layoutY="60.0">
