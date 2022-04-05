@@ -107,7 +107,17 @@ public class HandRecognitionTest implements Initializable {
         hand.setCapacity(boardSize);
         cardFronts = new Image[boardSize];
     }
-
+    private void setCardFronts() throws FileNotFoundException {
+        if (!(hand.getSize() >= boardSize)) {
+            for (int i = 0; i < hand.getSize(); i++) {
+                cardFronts[i] = new Image(new FileInputStream(
+                        "src/main/resources/group/playingcardsdemo/Card_Fronts/" + hand.getCards().get(i).getFront()));
+                if (i >= boardSize) {
+                    break;
+                }
+            }
+        }
+    }
     private void updateCardImageViews() throws FileNotFoundException {
         if (hand.getSize() == 0) {
             cardImageView1.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/none.png")));
@@ -124,8 +134,18 @@ public class HandRecognitionTest implements Initializable {
             cardImageView3.setImage(cardFronts[2]);
             cardImageView4.setImage(cardFronts[3]);
             cardImageView5.setImage(cardFronts[4]);
-            cardImageView6.setImage(cardFronts[5]);
-            cardImageView7.setImage(cardFronts[6]);
+            if (hand.getSize() >= 6) {
+                cardImageView6.setImage(cardFronts[5]);
+            }
+            else {
+                cardImageView6.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/none.png")));
+            }
+            if (hand.getSize() >= 7) {
+                cardImageView7.setImage(cardFronts[6]);
+            }
+            else {
+                cardImageView7.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/none.png")));
+            }
         }
     }
     private void updateFiveCardHandLabels(HandEvaluator evaluator) {
@@ -255,6 +275,9 @@ public class HandRecognitionTest implements Initializable {
                 testPair();
                 break;
             case TwoPair:
+                if (stateSliderPrimary.getValue() < 2) {
+                    stateSliderPrimary.setValue(2);
+                }
                 testTwoPair();
                 break;
             case Trips:
@@ -290,12 +313,12 @@ public class HandRecognitionTest implements Initializable {
     }
     public void testPair() throws FileNotFoundException {
         for (int i = 0; i < 2; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUES[(int) (stateSliderPrimary.getValue() - 1)], "Spades" );
+            PlayingCard card = new PlayingCard(PlayingCard.VALUES[(int) (stateSliderPrimary.getValue() - 1)], PlayingCard.SUITS[i] );
             hand.addCard(card);
         }
-        PlayingCard card = new PlayingCard("Ace", "Hearts" );
-        PlayingCard card1 = new PlayingCard("King", "Diamonds" );
-        PlayingCard card2 = new PlayingCard("Queen", "Clubs" );
+        PlayingCard card = new PlayingCard("2", "Hearts" );
+        PlayingCard card1 = new PlayingCard("3", "Diamonds" );
+        PlayingCard card2 = new PlayingCard("4", "Clubs" );
         hand.addCard(card);
         hand.addCard(card1);
         hand.addCard(card2);
@@ -303,11 +326,11 @@ public class HandRecognitionTest implements Initializable {
     }
     public void testTwoPair() throws FileNotFoundException {
         for (int i = 0; i < 2; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUES[(int) (stateSliderPrimary.getValue())], "Spades" );
+            PlayingCard card = new PlayingCard(PlayingCard.VALUES[(int) (stateSliderPrimary.getValue() - 1)], PlayingCard.SUITS[i] );
             hand.addCard(card);
         }
         for (int i = 0; i < 2; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUES[(int) (stateSliderSecondary.getValue() - 1)], "Hearts" );
+            PlayingCard card = new PlayingCard(PlayingCard.VALUES[(int) (stateSliderSecondary.getValue() - 1)], PlayingCard.SUITS[i] );
             hand.addCard(card);
         }
         PlayingCard card = new PlayingCard("Ace", "Spades" );
@@ -316,7 +339,7 @@ public class HandRecognitionTest implements Initializable {
     }
     public void testTrips() throws FileNotFoundException {
         for (int i = 0; i < 3; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUES[(int) (stateSliderPrimary.getValue() - 1)], "Spades" );
+            PlayingCard card = new PlayingCard(PlayingCard.VALUES[(int) (stateSliderPrimary.getValue() - 1)], PlayingCard.SUITS[i] );
             hand.addCard(card);
         }
         PlayingCard card = new PlayingCard("Ace", "Hearts" );
@@ -347,12 +370,12 @@ public class HandRecognitionTest implements Initializable {
     public void testFullHouse() throws FileNotFoundException {
         Hand full = new Hand();
         for (int i = 0; i < 3; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUES[(int) (stateSliderPrimary.getValue() - 1)], "Spades" );
+            PlayingCard card = new PlayingCard(PlayingCard.VALUES[(int) (stateSliderPrimary.getValue() - 1)], PlayingCard.SUITS[i] );
             full.addCard(card);
         }
         Hand of = new Hand();
         for (int i = 0; i < 2; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUES[(int) (stateSliderSecondary.getValue() - 1)], "Spades" );
+            PlayingCard card = new PlayingCard(PlayingCard.VALUES[(int) (stateSliderSecondary.getValue() - 1)], PlayingCard.SUITS[i] );
             of.addCard(card);
         }
         for (PlayingCard card: full.getCards()) {
@@ -419,17 +442,7 @@ public class HandRecognitionTest implements Initializable {
 
         updateFiveCardHandLabels(evaluator);
     }
-    private void setCardFronts() throws FileNotFoundException {
-        if (!(hand.getSize() >= boardSize)) {
-            for (int i = 0; i < hand.getSize(); i++) {
-                cardFronts[i] = new Image(new FileInputStream(
-                        "src/main/resources/group/playingcardsdemo/Card_Fronts/" + hand.getCards().get(i).getFront()));
-                if (i >= boardSize) {
-                    break;
-                }
-            }
-        }
-    }
+
     private void discardHand() throws FileNotFoundException {
         for (int i = 0; i < hand.getSize(); i++) {
             discard.addCard(hand.getCards().get(i));
