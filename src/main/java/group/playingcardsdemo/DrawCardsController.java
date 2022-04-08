@@ -1,34 +1,22 @@
 package group.playingcardsdemo;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class DrawCardsController extends Controller {
-
-    DeckOfCards deck = new DeckOfCards();
-    Discard discard = new Discard();
     Hand hand = new Hand();
     int jokerCount = 0;
     int jokerMin = 0;
     int jokerMax = 2;
 
-    @FXML
-    AnchorPane pane;
     @FXML
     ImageView cardImageView1 = new ImageView();
     @FXML

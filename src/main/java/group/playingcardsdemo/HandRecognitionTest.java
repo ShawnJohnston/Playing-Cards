@@ -27,10 +27,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class HandRecognitionTest extends Controller implements Initializable {
-
-    private Shuffler shuffler = new Shuffler();
-    private DeckOfCards deck = new DeckOfCards();
-    private Discard discard = new Discard();
     private Player player = new Player();
     private Hand hand = new Hand();
     private final int boardSize = 7;

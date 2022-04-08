@@ -26,9 +26,6 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class HandComparisonTest extends Controller {
-
-    DeckOfCards deck = new DeckOfCards();
-    Discard discard = new Discard();
     Player player1 = new Player();
     Player player2 = new Player();
     Hand hand1 = new Hand();

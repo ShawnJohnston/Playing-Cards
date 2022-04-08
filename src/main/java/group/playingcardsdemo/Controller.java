@@ -23,6 +23,9 @@ public abstract class Controller {
     protected Parent root;
     protected Pane pane;
     protected String currentScene;
+    protected DeckOfCards deck = new DeckOfCards();
+    protected Discard discard = new Discard();
+    protected Shuffler shuffler = new Shuffler();
 
     protected final String css = this.getClass().getResource("style.css").toExternalForm();
 

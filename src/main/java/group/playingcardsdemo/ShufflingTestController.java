@@ -17,11 +17,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class ShufflingTestController extends Controller {
-    //private final String css = this.getClass().getResource("style.css").toExternalForm();
-
-    DeckOfCards deck = new DeckOfCards();
-    Shuffler shuffler = new Shuffler();
-
     @FXML
     Button handShuffleButton;
     @FXML
