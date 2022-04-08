@@ -16,9 +16,8 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class ShufflingTestController {
-    private Parent root;
-    private final String css = this.getClass().getResource("style.css").toExternalForm();
+public class ShufflingTestController extends Controller {
+    //private final String css = this.getClass().getResource("style.css").toExternalForm();
 
     DeckOfCards deck = new DeckOfCards();
     Shuffler shuffler = new Shuffler();
@@ -175,6 +174,7 @@ public class ShufflingTestController {
                 pane.getChildren().add(cards[index]);
             }
         }
+        super.setPane(pane);
         testSceneBuilder(event);
     }
     public void updateController(ActionEvent event, Image[] shuffledCardFronts) throws IOException {
@@ -198,6 +198,7 @@ public class ShufflingTestController {
                 pane.getChildren().add(cards[index]);
             }
         }
+        super.setPane(pane);
         testSceneBuilder(event);
     }
     private void initializeImageViews() {
@@ -271,22 +272,6 @@ public class ShufflingTestController {
         shuffler.random(deck);
         updateScene(event);
     }
-    public void switchToMainMenu(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-        sceneBuilder(event);
-    }
-    public void switchToHandRecognition(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("HandRecognitionTest.fxml"));
-        sceneBuilder(event);
-    }
-    public void switchToHandComparisonTest(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("HandComparisonTest.fxml"));
-        sceneBuilder(event);
-    }
-    public void switchToDrawCardsTest(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("DrawCardsTest.fxml"));
-        sceneBuilder(event);
-    }
     public void updateScene(ActionEvent event) throws IOException  {
         PlayingCard.initializeCardImages(deck);
 
@@ -306,20 +291,6 @@ public class ShufflingTestController {
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(pane);
-        stage.setScene(scene);
-        scene.getStylesheets().add(css);
-        scene.setOnKeyPressed(e -> {
-            switch (e.getCode()) {
-                case ESCAPE -> {
-                    Platform.exit();
-                }
-            }
-        });
-        stage.show();
-    }
-    private void sceneBuilder(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
         stage.setScene(scene);
         scene.getStylesheets().add(css);
         scene.setOnKeyPressed(e -> {

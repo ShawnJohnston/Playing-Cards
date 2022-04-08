@@ -26,9 +26,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HandRecognitionTest implements Initializable {
-    Parent root;
-    private final String css = this.getClass().getResource("style.css").toExternalForm();
+public class HandRecognitionTest extends Controller implements Initializable {
 
     private Shuffler shuffler = new Shuffler();
     private DeckOfCards deck = new DeckOfCards();
@@ -487,44 +485,6 @@ public class HandRecognitionTest implements Initializable {
                 "src/main/resources/group/playingcardsdemo/Card_Fronts/none.png")));
         discardTopImageView.setY(discardBottomImageView.getY());
         discardSizeLabel.setText(String.valueOf(discard.getCurrentSize()));
-    }
-
-    public void switchToMainMenu(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-        sceneBuilder(event);
-    }
-    public void switchToHandRecognitionTest(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("HandRecognitionTest.fxml"));
-        root = loader.load();
-        sceneBuilder(event);
-
-    }
-    public void switchToHandComparisonTest(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("HandComparisonTest.fxml"));
-        sceneBuilder(event);
-    }
-    public void switchToDrawCardsTest(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("DrawCardsTest.fxml"));
-        root = loader.load();
-        sceneBuilder(event);
-    }
-    public void toReset(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("HandRecognitionTest.fxml"));
-        sceneBuilder(event);
-    }
-    private void sceneBuilder(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        scene.getStylesheets().add(css);
-        scene.setOnKeyPressed(e -> {
-            switch (e.getCode()) {
-                case ESCAPE -> {
-                    Platform.exit();
-                }
-            }
-        });
-        stage.show();
     }
 }
 

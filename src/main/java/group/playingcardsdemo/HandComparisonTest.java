@@ -25,9 +25,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
-public class HandComparisonTest {
-    Parent root;
-    private final String css = this.getClass().getResource("style.css").toExternalForm();
+public class HandComparisonTest extends Controller {
 
     DeckOfCards deck = new DeckOfCards();
     Discard discard = new Discard();
@@ -194,58 +192,6 @@ public class HandComparisonTest {
         p2CardImageView3.setImage(cardFrontsHand2[2]);
         p2CardImageView4.setImage(cardFrontsHand2[3]);
         p2CardImageView5.setImage(cardFrontsHand2[4]);
-    }
-
-
-    public void switchToMainMenu(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-        sceneBuilder(event);
-    }
-    public void switchToHandRecognitionTest(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("HandRecognitionTest.fxml"));
-        root = loader.load();
-        sceneBuilder(event);
-
-    }
-    public void switchToDrawCardsTest(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("DrawCardsTest.fxml"));
-        root = loader.load();
-        sceneBuilder(event);
-    }
-    private void testSceneBuilder(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("HandRecognitionTest.fxml"));
-        root = loader.load();
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(pane);
-        stage.setScene(scene);
-        scene.getStylesheets().add(css);
-        scene.setOnKeyPressed(e -> {
-            switch (e.getCode()) {
-                case ESCAPE -> {
-                    Platform.exit();
-                }
-            }
-        });
-        stage.show();
-    }
-    public void toReset(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("HandRecognitionTest.fxml"));
-        sceneBuilder(event);
-    }
-    private void sceneBuilder(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        scene.getStylesheets().add(css);
-        scene.setOnKeyPressed(e -> {
-            switch (e.getCode()) {
-                case ESCAPE -> {
-                    Platform.exit();
-                }
-            }
-        });
-        stage.show();
     }
 }
 

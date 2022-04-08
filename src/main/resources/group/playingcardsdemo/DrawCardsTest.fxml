@@ -61,11 +61,12 @@
             <Button fx:id="resetButton" layoutY="120.0" mnemonicParsing="false" onAction="#toReset" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Reset" />
             <Button fx:id="mainMenuButton" layoutX="1180.0" layoutY="120.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Main Menu" />
             <Button fx:id="handComparisonTestButton" layoutX="1180.0" layoutY="60.0" mnemonicParsing="false" onAction="#switchToHandComparisonTest" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Hand Comparison" />
-            <Button fx:id="handRecognitionButton" layoutX="1180.0" mnemonicParsing="false" onAction="#switchToHandRecognition" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Hand Recognition" />
+            <Button fx:id="handRecognitionButton" layoutX="1180.0" mnemonicParsing="false" onAction="#switchToHandRecognitionTest" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Hand Recognition" />
          </children>
       </Group>
       <Group layoutX="315.0" layoutY="120.0">
          <children>
+
             <Button fx:id="jokerIncrementButton" layoutX="150.0" mnemonicParsing="false" onAction="#incrementJokerCount" scaleX="0.8" scaleY="0.8" text="&gt;" />
             <Button fx:id="jokerDecrementButton" layoutX="80.0" mnemonicParsing="false" onAction="#decrementJokerCount" scaleX="0.8" scaleY="0.8" text="&lt;" />
             <Label id="textLabelOnBlack" layoutY="5.0" text="Jokers" />

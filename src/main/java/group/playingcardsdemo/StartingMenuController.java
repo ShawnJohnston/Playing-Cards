@@ -1,20 +1,15 @@
 package group.playingcardsdemo;
 
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,9 +17,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class StartingMenuController implements Initializable {
-    private Parent root;
-    private final String css = this.getClass().getResource("style.css").toExternalForm();
+public class StartingMenuController extends Controller implements Initializable {
     public int chipCount;
     public String room = "Default";
     public String currentFeltColor = "Red";
@@ -66,10 +59,6 @@ public class StartingMenuController implements Initializable {
     public StartingMenuController() throws FileNotFoundException {
     }
 
-
-    public void exitApplication(ActionEvent event) {
-        Platform.exit();
-    }
     public void toggleAvatarLeft(ActionEvent event) throws FileNotFoundException {
         String newAvatar = null;
         if (currentAvatar.equals(avatars[0])) {
@@ -167,44 +156,9 @@ public class StartingMenuController implements Initializable {
         cardBackImageView.setImage(cardBackImage);
     }
 
-    public void switchToMainMenu(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-        sceneBuilder(event);
-    }
-    public void switchToGameSetup(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("GameSetup.fxml"));
-        sceneBuilder(event);
-    }
-    public void switchToShufflingTest(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ShufflingTest.fxml"));
-        root = loader.load();
 
-        ShufflingTestController controller = loader.getController();
-        controller.initializeController(event);
-    }
-    public void switchToHandRecognitionTest(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("HandRecognitionTest.fxml"));
-        root = loader.load();
-        sceneBuilder(event);
-    }
-    public void switchToHandComparisonTest(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("HandComparisonTest.fxml"));
-        root = loader.load();
-        sceneBuilder(event);
-    }
-    public void switchToDrawCardsTest(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("DrawCardsTest.fxml"));
-        root = loader.load();
-        sceneBuilder(event);
-    }
-    public void switchToSettings(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Settings.fxml"));
-        root = loader.load();
-        sceneBuilder(event);
-    }
     public void startGame(ActionEvent event) throws IOException {
         assignPayoutSheet();
-
 
         Player player = new Player(nameTextField.getText());
         player.setStartingChips((int) slider.getValue());
@@ -221,6 +175,7 @@ public class StartingMenuController implements Initializable {
         gameController.displayPayouts();
         gameController.setCardBack(cardBackImage);
 
+        super.setRoot(root);
         sceneBuilder(event);
     }
 
@@ -234,21 +189,6 @@ public class StartingMenuController implements Initializable {
             default:
                 break;
         }
-    }
-
-    private void sceneBuilder(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        scene.getStylesheets().add(css);
-        scene.setOnKeyPressed(e -> {
-            switch (e.getCode()) {
-                case ESCAPE -> {
-                    Platform.exit();
-                }
-            }
-        });
-        stage.show();
     }
 
     @Override

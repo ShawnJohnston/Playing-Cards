@@ -18,9 +18,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class DrawCardsController extends Node {
-    Parent root;
-    private final String css = this.getClass().getResource("style.css").toExternalForm();
+public class DrawCardsController extends Controller {
 
     DeckOfCards deck = new DeckOfCards();
     Discard discard = new Discard();
@@ -58,53 +56,7 @@ public class DrawCardsController extends Node {
 
     public DrawCardsController() throws IOException {
         hand.setCapacity(1);
-    }
-    private void testSceneBuilder(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("DrawCardsTest.fxml"));
-        root = loader.load();
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(pane);
-        stage.setScene(scene);
-        scene.getStylesheets().add(css);
-        scene.setOnKeyPressed(e -> {
-            switch (e.getCode()) {
-                case ESCAPE -> {
-                    Platform.exit();
-                }
-            }
-        });
-        stage.show();
-    }
-    public void toReset(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("DrawCardsTest.fxml"));
-        sceneBuilder(event);
-    }
-    public void switchToMainMenu(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-        sceneBuilder(event);
-    }
-    public void switchToHandRecognition(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("HandRecognitionTest.fxml"));
-        sceneBuilder(event);
-    }
-    public void switchToHandComparisonTest(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("HandComparisonTest.fxml"));
-        sceneBuilder(event);
-    }
-    private void sceneBuilder(ActionEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        scene.getStylesheets().add(css);
-        scene.setOnKeyPressed(e -> {
-            switch (e.getCode()) {
-                case ESCAPE -> {
-                    Platform.exit();
-                }
-            }
-        });
-        stage.show();
+        super.setCurrentScene("DrawCardsTest.fxml");
     }
     public void incrementJokerCount() throws FileNotFoundException {
         if (jokerCount < jokerMax) {
