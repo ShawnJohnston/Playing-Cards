@@ -33,7 +33,7 @@ public abstract class GameMode {
         }
         public void initialize() {
             for (int i = 0; i < this.size; i++) {
-                board.add(deck.draw());
+                board.add(deck.drawTopCard());
             }
         }
         public void flipNextCard() {
@@ -91,9 +91,9 @@ public abstract class GameMode {
 
         for (int i = 0; i < pocketSize; i++) {
             for (Player player : playersList) {
-                player.addToPocket(deck.draw());
+                player.addCardToPocket(deck.drawTopCard());
             }
-            dealer.getPocket().addCard(deck.draw());
+            dealer.getPocket().addCard(deck.drawTopCard());
         }
     }
 }

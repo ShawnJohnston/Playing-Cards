@@ -105,7 +105,7 @@ public class UnitTest_Hand_RankEvaluation {
         Hand hand = new Hand();
         ArrayList<PlayingCard> cards = new ArrayList<>(UnitTesting.handBuilder("Ace", "Queen", "Jack", "10", "9",
                 "Diamonds", "Diamonds", "Diamonds", "Diamonds", "Diamonds"));
-        hand.setHand(cards);
+        hand.setCards(cards);
         System.out.println(Arrays.toString(hand.getValueData()));
         int[] comparisonData = {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0 };
         for (int i = 0; i < PlayingCard.VALUES.length - 1; i++) {
@@ -117,7 +117,7 @@ public class UnitTest_Hand_RankEvaluation {
         Hand hand = new Hand();
         ArrayList<PlayingCard> cards = new ArrayList<>(UnitTesting.handBuilder("Ace", "Queen", "Jack", "10", "9",
                 "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
-        hand.setHand(cards);
+        hand.setCards(cards);
         System.out.println(Arrays.toString(hand.getSuitData()));
         int[] comparisonData = {1, 1, 2, 1, 0};
         for (int i = 0; i < PlayingCard.SUITS.length - 1; i++) {
@@ -129,7 +129,7 @@ public class UnitTest_Hand_RankEvaluation {
         Hand hand = new Hand();
         ArrayList<PlayingCard> cards = UnitTesting.handBuilder("Ace", "Queen", "Jack", "10", "9",
                 "Diamond", "Diamond", "Diamond", "Diamond", "Diamond");
-        hand.setHand(cards);
+        hand.setCards(cards);
         for (int i = 0; i < hand.getCards().size(); i++) {
             System.out.println(hand.getCards().get(i).getName());
         }
@@ -146,7 +146,7 @@ public void theHandContainsOnePair() {
                 PlayingCard.VALUES[13],
                 PlayingCard.VALUES[13],
                 "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
-        hand.setHand(cards);
+        hand.setCards(cards);
 
         System.out.println(Arrays.toString(hand.getValueData()));
         HandEvaluator evaluator = new HandEvaluator(player, hand);
@@ -168,7 +168,7 @@ public void theHandContainsTwoPair() {
                 PlayingCard.VALUES[i + 1],
                 PlayingCard.VALUES[13],
                 "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
-        hand.setHand(cards);
+        hand.setCards(cards);
 
         System.out.println(Arrays.toString(hand.getValueData()));
         HandEvaluator evaluator = new HandEvaluator(player, hand);
@@ -192,7 +192,7 @@ public void theHandContainsTrips() {
                 PlayingCard.VALUES[13],
                 PlayingCard.VALUES[13],
                 "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
-        hand.setHand(cards);
+        hand.setCards(cards);
 
         System.out.println(Arrays.toString(hand.getValueData()));
         HandEvaluator evaluator = new HandEvaluator(player, hand);
@@ -213,7 +213,7 @@ public void theHandContainsQuads() {
                 PlayingCard.VALUES[i],
                 PlayingCard.VALUES[13],
                 "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
-        hand.setHand(cards);
+        hand.setCards(cards);
 
         System.out.println(Arrays.toString(hand.getValueData()));
         HandEvaluator evaluator = new HandEvaluator(player, hand);
@@ -235,7 +235,7 @@ public void theHandContainsQuads() {
                     PlayingCard.VALUES[i + 1],
                     PlayingCard.VALUES[i + 1],
                     "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
-            hand.setHand(cards);
+            hand.setCards(cards);
 
             System.out.println(Arrays.toString(hand.getValueData()));
             HandEvaluator evaluator = new HandEvaluator(player, hand);

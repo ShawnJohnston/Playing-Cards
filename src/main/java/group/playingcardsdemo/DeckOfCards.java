@@ -8,96 +8,77 @@ import java.util.ArrayList;
 @Getter
 @Setter
 
-// This class is used to represent a playing card deck object.
-// It uses the PlayingCard class.
 public class DeckOfCards {
-    protected int maxSize; // A standard deck of playing cards contains 52 cards.
-    protected int currentSize; // Number of cards actually in the deck.
-    protected int jokerCount;
-    protected ArrayList<PlayingCard> cards; // A list of each individual card object.
-    public static final String[] VALUES = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
-    public static final String[] SUITS = {"Spades", "Hearts", "Clubs", "Diamonds", "Jokers"};
+    protected int maxSize = 52;
+    protected int currentSize = 52;
+    protected static int jokerCount = 0;
+    protected ArrayList<PlayingCard> cards = new ArrayList<>();
 
     // Constructors
     public DeckOfCards() {
-        jokerCount = 0;
-        maxSize = 52;
-        currentSize = 52;
-        cards = new ArrayList<>();
         buildDeck();
     }
     public DeckOfCards(int jokers) {
         jokerCount = jokers;
         maxSize = 52 + jokers;
         currentSize = 52 + jokers;
-        cards = new ArrayList<>();
         buildDeck();
     }
 
-    // This method will create the card objects and assign them into the 'cards' array.
     private void buildDeck() {
-        // Initialization of variables
-        // These two arrays will contain the features of each card: value and suit. They will be used to build each card object.
+        /*
+            This method will instantiate the cards that make up the deck of cards, using a 2D for loop, followed by a
+            while loop to instantiate any joker cards. The cards are added in descending order to conform to a
+            stack-like data structure.
 
-        // These ints will be used in the following for loop.
-        int valueCounter = 0; // Counts through each index of 'values'.
-        int suitGroup = 0; // increments the index of 'suits' whenever 'valueCounter' reaches it's maximum.
-
-        // This loop will procedurally initialize new card objects, set their value and suit, and assign them to the
-        // 'cards' array that makes up the deck object.
-        // Cards will be added to the deck by matching 'i' to the 'values' array along with a suit. When 'i' reaches the
-        // last index of 'values', it will reset, but the next suit will be assigned.
-        for (int i = 0; i < getMaxSize(); i++) {
-            if (i >= 52) {
-                // The loop has iterated past the cards in a standard 52-card deck of playing cards.
-                // The remaining cards are expected to be Jokers.
-                for (int j = 0; j < jokerCount; j++) {
-                    if (j == 0) {
-                        cards.add(new JokerCard("Black"));
-                    }
-                    else if (j == 1) {
-                        cards.add(new JokerCard("Red"));
-                    }
-                }
-                // The for loop should break when 'i' exceeds 52.
-                // A standard deck of playing cards contains 52 cards, all regular cards should be assigned at this point.
-                // As such, hard-coding '52' here is appropriate due to the
-                // Any further cards are Jokers. They will be added elsewhere.
-                break;
+            1. While loop: The joker count is used to instantiate jokers and determine what each joker's color will be.
+            2. Outer loop: For each suit listed (Spades, Hearts, Clubs, Diamonds), execute the inner loop.
+            3. Inner Loop: For each card value (from Ace to King), instantiate a playing card of value i and the
+               current suit, and add it to the cards list.
+         */
+        int counter = 0;
+        while (counter < jokerCount) {
+            if (counter == 0) {
+                cards.add(new JokerCard("Black"));
             }
-            if (suitGroup >= 4) {
-                // A standard deck of playing cards has 4 different suits. If 'suitGroup' exceeds 3, then break the loop.
-                break;
+            if (counter == 1) {
+                cards.add(new JokerCard("Red"));
             }
-
-            cards.add(new PlayingCard(VALUES[valueCounter], SUITS[suitGroup])); // Card assigned to 'cards' array at index 'i'.
-            valueCounter++;
-
-            if (valueCounter == VALUES.length) {
-                // The counter has reached the end of the 'values' array. It must reset to the start.
-                // The next set of cards will use the next suit in the array.
-                valueCounter = 0;
-                suitGroup++;
+            counter++;
+        }
+        for (int i = PlayingCard.SUITS.length - 2; i >= 0; i--) {
+            for (int j = PlayingCard.VALUES_INDEX.length - 3; j >= 0; j--) {
+                cards.add(new PlayingCard(PlayingCard.VALUES_INDEX[j], PlayingCard.SUITS[i]));
             }
         }
     }
-    // This method will return true if there are no more cards in the deck object.
     public boolean isEmpty() {
         return getCurrentSize() == 0;
     }
-    public PlayingCard draw() {
-        PlayingCard drawnCard = cards.get(0);
-        cards.remove(0);
-        currentSize = cards.size();
-        return drawnCard;
-    }
-    public PlayingCard draw(int index) {
-        PlayingCard drawnCard = cards.get(index);
-        cards.remove(index);
+    public PlayingCard drawTopCard() {
+        /*
+            This method draws a card from the back of the cards list, modeling a stack structure. If index 0 represents
+            the bottom of the deck of cards, then the last index would be the top card.
+
+            1. Storage variable declared for the card at the last index.
+            2. The card at the last index is deleted from the list.
+            3. The card list's size is adjusted for the change.
+            4. The storage variable is returned.
+         */
+
+        PlayingCard drawnCard = cards.get(cards.size() - 1);
+        cards.remove(cards.size() - 1);
         currentSize = cards.size();
         return drawnCard;
     }
     public void compileFromDiscard(Discard discard) {
+        /*
+            This method copies all cards from the incoming discard object to the deck's cards list.
+
+            1. For Loop: A copy of each card in the discard is added to the cards list.
+            2. The deck's size is updated.
+         */
+
         for (int i = 0; i < discard.getCurrentSize(); i++) {
             this.cards.add(discard.cards.get(i));
         }

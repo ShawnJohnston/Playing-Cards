@@ -1,15 +1,10 @@
 package group.playingcardsdemo;
 
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -17,12 +12,10 @@ import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import lombok.SneakyThrows;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -345,19 +338,19 @@ public class HandRecognitionTest extends Controller implements Initializable {
     }
     public void testStraight() throws FileNotFoundException {
         for (int i = 1; i < HandEvaluator.straightFlushSize; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUESHIERARCHY[(int) (stateSliderPrimary.getValue() - i)], "Spades" );
+            PlayingCard card = new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - i)], "Spades" );
             hand.addCard(card);
         }
-        PlayingCard card = new PlayingCard(PlayingCard.VALUESHIERARCHY[(int) (stateSliderPrimary.getValue())], "Hearts");
+        PlayingCard card = new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue())], "Hearts");
         hand.addCard(card);
         testCaseTemplate();
     }
     public void testFlush() throws FileNotFoundException {
         for (int i = 0; i < HandEvaluator.straightFlushSize - 1; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUESHIERARCHY[(int) (stateSliderPrimary.getValue() - i)], "Spades" );
+            PlayingCard card = new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - i)], "Spades" );
             hand.addCard(card);
         }
-        PlayingCard card = new PlayingCard(PlayingCard.VALUESHIERARCHY[(int) (stateSliderPrimary.getValue() - 5)], "Spades");
+        PlayingCard card = new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - 5)], "Spades");
         hand.addCard(card);
         testCaseTemplate();
     }
@@ -382,7 +375,7 @@ public class HandRecognitionTest extends Controller implements Initializable {
     }
     public void testQuads() throws FileNotFoundException {
         for (int i = 0; i < 4; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUESHIERARCHY[(int) (stateSliderPrimary.getValue() - 1)], PlayingCard.SUITS[i] );
+            PlayingCard card = new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - 1)], PlayingCard.SUITS[i] );
             hand.addCard(card);
         }
         PlayingCard card = new PlayingCard("Ace", "Spades");
@@ -391,7 +384,7 @@ public class HandRecognitionTest extends Controller implements Initializable {
     }
     public void testStraightFlush() throws FileNotFoundException {
         for (int i = 0; i < HandEvaluator.straightFlushSize; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUESHIERARCHY[(int) (stateSliderPrimary.getValue() - i)], "Spades" );
+            PlayingCard card = new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - i)], "Spades" );
             hand.addCard(card);
         }
 
@@ -399,7 +392,7 @@ public class HandRecognitionTest extends Controller implements Initializable {
     }
     public void testRoyalFlush() throws FileNotFoundException {
         for (int i = 0; i < HandEvaluator.straightFlushSize; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUESHIERARCHY[PlayingCard.VALUESHIERARCHY.length - 2 - i], "Spades");
+            PlayingCard card = new PlayingCard(PlayingCard.VALUES_INDEX[PlayingCard.VALUES_INDEX.length - 2 - i], "Spades");
             hand.addCard(card);
         }
         testCaseTemplate();
@@ -446,7 +439,7 @@ public class HandRecognitionTest extends Controller implements Initializable {
     private void drawCards(int numberToDraw) throws FileNotFoundException {
         int boardIndex = hand.getSize();
         for (int i = 0; i < numberToDraw; i++) {
-            hand.addCard(deck.draw());
+            hand.addCard(deck.drawTopCard());
             cardFronts[boardIndex + i] = new Image(new FileInputStream(
                     "src/main/resources/group/playingcardsdemo/Card_Fronts/" + hand.getCards().get(boardIndex + i).getFront()));
             if (hand.getSize() >= boardSize) {

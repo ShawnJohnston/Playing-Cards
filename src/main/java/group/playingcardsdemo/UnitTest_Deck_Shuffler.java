@@ -180,7 +180,7 @@ public class UnitTest_Deck_Shuffler {
             System.out.println("Top card of the deck: " + deck.getCards().get(0).getName());
 
             System.out.println("Drawing top card" + "\n");
-            hand.addCard(deck.draw());
+            hand.addCard(deck.drawTopCard());
 
             Assertions.assertEquals(counter + 1, hand.getSize());
             Assertions.assertEquals(deck.getMaxSize() - (counter + 1), deck.getCurrentSize());
@@ -222,7 +222,7 @@ public class UnitTest_Deck_Shuffler {
         Assertions.assertEquals(0,hand.getSize());
 
         while (deck.getCurrentSize() > 0) {
-            hand.addCard(deck.draw());
+            hand.addCard(deck.drawTopCard());
         }
 
         Assertions.assertEquals(0, deck.getCurrentSize());

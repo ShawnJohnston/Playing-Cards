@@ -273,7 +273,6 @@ public class ShufflingTestController extends Controller {
         for (int i = 0; i < deck.getMaxSize(); i++) {
             cardFronts[i] = new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Fronts/" + deck.getCards().get(i).getFront()));
         }
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ShufflingTest.fxml"));
         root = loader.load();
 

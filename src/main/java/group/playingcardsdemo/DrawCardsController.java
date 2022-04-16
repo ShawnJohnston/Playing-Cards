@@ -102,7 +102,7 @@ public class DrawCardsController extends Controller {
         }
 
         hand.clear();
-        hand.addCard(deck.draw());
+        hand.addCard(deck.drawTopCard());
         cardNameLabel.setText(hand.getCards().get(0).getName());
         deckTopImageView.setY(deckTopImageView.getY() + .5);
         deckSizeLabel.setText(String.valueOf(deck.currentSize));

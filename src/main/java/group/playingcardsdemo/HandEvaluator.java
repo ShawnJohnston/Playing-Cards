@@ -38,7 +38,7 @@ public class HandEvaluator {
         this.rawHand = rawHand;
         Arrays.fill(RANKDATA, false);
         RANKDATA[0] = true;
-        rawHand.sortHand();
+        rawHand.sortHandByValue();
         checkForWheel();
 
         pairsList = new ArrayList<>();
@@ -46,47 +46,6 @@ public class HandEvaluator {
         fullHouseList = new ArrayList<>();
         hasMultiples();
         determineRank();
-    }
-
-    //public Player getPlayer() {
-    //    return player;
-    //}
-    //public Hand getRawHand() {
-    //    return rawHand;
-    //}
-    //public rankState getHandRank() {
-    //    return handRank;
-    //}
-    //public boolean[] getRankData() {
-    //    return RANKDATA;
-    //}
-    //public Hand getFiveCardHand() {
-    //    return fiveCardHand;
-    //}
-    //public ArrayList<String> getPairs() {
-    //    return pairsList;
-    //}
-    //public ArrayList<String> getTrips() {
-    //    return tripsList;
-    //}
-    //public String getQuadsValue() {
-    //    return quadsValue;
-    //}
-    //public String getStraightValue() {
-    //    return straightValue;
-    //}
-    //public ArrayList<String> getFullHouse() {
-    //    return fullHouseList;
-    //}
-//
-    //public void setRawHand(Hand rawHand) {
-    //    this.rawHand = rawHand;
-    //}
-    //public void setPlayer(Player player) {
-    //    this.player = player;
-    //}
-    public void setStraightFlushSize(int size) {
-        straightFlushSize = size;
     }
 
     private void checkForWheel() {
@@ -185,7 +144,7 @@ public class HandEvaluator {
         int counter = 0;
         
         ArrayList<Integer> indices = new ArrayList<>();
-        for (int i = PlayingCard.VALUESHIERARCHY.length - 2; i > 0 ; i--) {
+        for (int i = PlayingCard.VALUES_INDEX.length - 2; i > 0 ; i--) {
             if (counter >= 5) {
                 break;
             }
@@ -203,7 +162,7 @@ public class HandEvaluator {
         if (indices.size() == 5) {
             for (Integer index: indices) {
                 for (int i = rawHand.getSize() - 1; i >= 0 ; i--) {
-                    if (rawHand.getCards().get(i).getValue().equals(PlayingCard.VALUESHIERARCHY[index])) {
+                    if (rawHand.getCards().get(i).getValue().equals(PlayingCard.VALUES_INDEX[index])) {
                         fiveCardHand.addCard(rawHand.getCards().get(i));
                         break;
                     }
@@ -273,7 +232,7 @@ public class HandEvaluator {
                     counter = 0;
                     Hand tempHand = new Hand();
                     for (int j = fiveCardHand.getSize() - 1; j >= 0 ; j--) {
-                        if (fiveCardHand.getCards().get(j).getValue().equals(PlayingCard.VALUESHIERARCHY[straightFlushTop - counter])) {
+                        if (fiveCardHand.getCards().get(j).getValue().equals(PlayingCard.VALUES_INDEX[straightFlushTop - counter])) {
                             tempHand.addCard(fiveCardHand.getCards().get(j));
                         }
                         if (tempHand.getSize() >= 5) {
@@ -312,12 +271,6 @@ public class HandEvaluator {
         return false;
     }
 
-    private void printHand(Hand hand) {
-        for (int i = 0; i < hand.getCards().size(); i++) {
-            System.out.println(hand.getCards().get(i).getName());
-        }
-        System.out.println();
-    }
     private void moveCardFromRawHandToFiveCardHand(String value) {
         for (int i = rawHand.getSize() - 1; i  >= 0; i--) {
             if (rawHand.getCards().get(i).getValue().equals(value)) {
@@ -384,7 +337,7 @@ public class HandEvaluator {
             handRank = rankState.valueOf(STANDARDPOKERRANKS[6]);
         }
         else if (isAFlush()){
-            for (int i = PlayingCard.VALUESHIERARCHY.length - 1; i >= 0 ; i--) {
+            for (int i = PlayingCard.VALUES_INDEX.length - 1; i >= 0 ; i--) {
                 for (int j = rawHand.getSize() - 1; j >= 0; j--) {
                     if (rawHand.getCards().get(j).getSuit().equals(flushValue)) {
                         fiveCardHand.addCard(rawHand.getCards().get(j));

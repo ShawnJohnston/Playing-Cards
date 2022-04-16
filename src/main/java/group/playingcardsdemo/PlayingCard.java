@@ -17,7 +17,7 @@ import java.util.HashMap;
 public class PlayingCard extends Node {
     // Fields
     public static final String[] VALUES = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace", "Joker"};
-    public static final String[] VALUESHIERARCHY = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace", "Joker"};
+    public static final String[] VALUES_INDEX = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace", "Joker"};
     public static final String[] SUITS = {"Spades", "Hearts", "Clubs", "Diamonds", "Joker"};
     public static String[] cardFileNames = new String[54];
     public static Image[] cardImages = new Image[54];
@@ -60,10 +60,9 @@ public class PlayingCard extends Node {
         }
     }
     public static void initializeCardImages() throws FileNotFoundException {
-        String[] modifiedValues = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
         for (int i = 0; i < SUITS.length - 1; i++) {
-            for (int j = 0; j < modifiedValues.length; j++) {
-                String fileName = SUITS[i].toLowerCase() + "_" + modifiedValues[j].toLowerCase() + ".png";
+            for (int j = 0; j < VALUES_INDEX.length - 2; j++) {
+                String fileName = SUITS[i].toLowerCase() + "_" + VALUES_INDEX[j].toLowerCase() + ".png";
                 cardFileNames[(13*i) + j] = fileName;
 
                 cardImages[(13*i) + j] = new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Fronts/" + cardFileNames[(13*i) + j]));
@@ -127,9 +126,14 @@ class JokerCard extends PlayingCard {
         name = "Joker";
         value = "Joker";
         suit = "Joker";
-
         this.color = color;
-        setFront("joker_black.png");
+
+        if (color.equals("Black")) {
+            setFront("joker_black.png");
+        }
+        else if (color.equals("Red")) {
+            setFront("joker_red.png");
+        }
     }
 }
 enum Facing {

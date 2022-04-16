@@ -1,29 +1,15 @@
 package group.playingcardsdemo;
 
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.ResourceBundle;
 
 public class HandComparisonTest extends Controller {
     Player player1 = new Player();
@@ -123,11 +109,11 @@ public class HandComparisonTest extends Controller {
         shuffler.handShuffle(deck);
 
         for (int i = 0; i < handCapacity; i++) {
-            hand1.addCard(deck.draw());
+            hand1.addCard(deck.drawTopCard());
             cardFrontsHand1[i] = new Image(new FileInputStream(
                     "src/main/resources/group/playingcardsdemo/Card_Fronts/" + hand1.getCards().get(i).getFront()));
 
-            hand2.addCard(deck.draw());
+            hand2.addCard(deck.drawTopCard());
             cardFrontsHand2[i] = new Image(new FileInputStream(
                     "src/main/resources/group/playingcardsdemo/Card_Fronts/" + hand2.getCards().get(i).getFront()));
         }
@@ -166,7 +152,7 @@ public class HandComparisonTest extends Controller {
     }
 
     public void toSort(ActionEvent event) throws FileNotFoundException {
-        hand1.sortHand();
+        hand1.sortHandByValue();
 
         for (int i = 0; i < handCapacity; i++) {
             cardFrontsHand1[i] = new Image(new FileInputStream(
@@ -178,7 +164,7 @@ public class HandComparisonTest extends Controller {
         p1CardImageView4.setImage(cardFrontsHand1[3]);
         p1CardImageView5.setImage(cardFrontsHand1[4]);
 
-        hand2.sortHand();
+        hand2.sortHandByValue();
 
         for (int i = 0; i < handCapacity; i++) {
             cardFrontsHand2[i] = new Image(new FileInputStream(
