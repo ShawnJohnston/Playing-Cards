@@ -48,6 +48,9 @@ public class Hand {
         cards.remove(index);
         updateHand();
     }
+    public boolean containsCardValue(String value) {
+        return valueData[PlayingCard.valueMap.get(value)] > 0;
+    }
     public void clear() {
         /*
             Resets the hand object.
@@ -73,30 +76,33 @@ public class Hand {
     public void sortHandByValue() {
 
 
-        //ArrayList<PlayingCard> sortedHand = new ArrayList<>();
-        //int cardsSorted = 0;
-//
-        //for (int i = 0; i < PlayingCard.VALUES.length; i++) {
-        //    for (PlayingCard card : cards) {
-        //        if (card.getValue().equals(PlayingCard.VALUES[i])) {
-        //            sortedHand.add(card);
-        //            cardsSorted++;
-        //        }
-        //    }
-        //    if (cardsSorted == cards.size()) {
-        //        break;
-        //    }
-        //}
-        //cards = sortedHand;
+        ArrayList<PlayingCard> sortedHand = new ArrayList<>();
+        int cardsSorted = 0;
+
+        for (int i = 0; i < PlayingCard.VALUES.length; i++) {
+            for (PlayingCard card : cards) {
+                if (card.getValue().equals(PlayingCard.VALUES[i])) {
+                    sortedHand.add(card);
+                    cardsSorted++;
+                }
+            }
+            if (cardsSorted == cards.size()) {
+                break;
+            }
+        }
+        cards = sortedHand;
     }
     private void countValues() {
-        Arrays.fill(valueData, 0);
+        // This method will reset valueData, and then count the numbers of each value that appears in the hand.
 
+        Arrays.fill(valueData, 0);
         for (PlayingCard card : cards) {
             valueData[PlayingCard.valueMap.get(card.getValue())]++;
         }
     }
     private void countSuits() {
+        // This method will reset suitData, and then count the numbers of each value that appears in the hand.
+
         Arrays.fill(suitData, 0);
         for (PlayingCard card : cards) {
             switch (card.getSuit()) {
@@ -108,4 +114,7 @@ public class Hand {
             }
         }
     }
+}
+class Pocket extends Hand {
+
 }

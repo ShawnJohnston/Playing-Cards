@@ -17,6 +17,7 @@ import lombok.SneakyThrows;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class HandRecognitionTest extends Controller implements Initializable {
@@ -24,9 +25,7 @@ public class HandRecognitionTest extends Controller implements Initializable {
     private Hand hand = new Hand();
     private final int boardSize = 7;
     private TestState testState = TestState.Random;
-    private final String[] sliderStates = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
-    private String sliderPrimaryState = sliderStates[0];
-    private String sliderSecondaryState = sliderStates[0];
+    private String sliderPrimaryState = PlayingCard.VALUES[0], sliderSecondaryState = PlayingCard.VALUES[0];
 
     @FXML
     AnchorPane pane;
@@ -93,9 +92,22 @@ public class HandRecognitionTest extends Controller implements Initializable {
     public HandRecognitionTest() {
         hand.setCapacity(boardSize);
         cardFronts = new Image[boardSize];
+
+
     }
     private void setCardFronts() throws FileNotFoundException {
-        if (!(hand.getSize() >= boardSize)) {
+        /*
+            In this method, the links for each image file corresponding to the cards in the hand will be used to
+            assigned to create an image datatype. Each image will be stored in an array that is later used to set
+            ImageView containers, allowing the cards to display in the scene.
+
+             1. If statement: If the hand size is less than the 'boardSize' integer value, run the loop that allow each
+                card's respective image to be stored in the 'cardFronts' array.
+             2. For Loop: Runs until 'i' reaches the value matching the hand size. 'cardFronts' was initialized to be
+                sized by the 'boardSize' variable. Each index of 'cardFronts' will be assigned the url to the card image
+                corresponding to the card at hand index 'i'. Break when i equals or exceeds 'boardSize' value.
+         */
+        if (!(hand.getSize() > boardSize)) {
             for (int i = 0; i < hand.getSize(); i++) {
                 cardFronts[i] = new Image(new FileInputStream(
                         "src/main/resources/group/playingcardsdemo/Card_Fronts/" + hand.getCards().get(i).getFront()));
@@ -106,6 +118,14 @@ public class HandRecognitionTest extends Controller implements Initializable {
         }
     }
     private void updateCardImageViews() throws FileNotFoundException {
+        /*
+            This method will determine what will be displayed in the ImageView containers for the 7-card board.
+
+            1. If the hand is empty, each ImageView will display a vomit green card image.
+            2. else, the first 5 ImageViews will be set to the first 5 cardFronts. If the hand size is 6 or 7, those
+                ImageViews will display the additional cardFronts as well.
+         */
+
         if (hand.getSize() == 0) {
             cardImageView1.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/none.png")));
             cardImageView2.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/none.png")));
@@ -136,6 +156,10 @@ public class HandRecognitionTest extends Controller implements Initializable {
         }
     }
     private void updateFiveCardHandLabels(HandEvaluator evaluator) {
+        /*
+            This method assigns displays the hand's best poker rank, as well as the 5 cards that it consists of.
+         */
+
         handRankLabel.setText(String.valueOf (evaluator.getHandRank()));
         card1Label.setText(evaluator.getFiveCardHand().getCards().get(0).getName());
         card2Label.setText(evaluator.getFiveCardHand().getCards().get(1).getName());
@@ -144,19 +168,14 @@ public class HandRecognitionTest extends Controller implements Initializable {
         card5Label.setText(evaluator.getFiveCardHand().getCards().get(4).getName());
     }
     public void toSort(ActionEvent event) throws FileNotFoundException {
-        //hand.sortHand();
-//
-        //for (int i = 0; i < handCapacity; i++) {
-        //    cardFronts[i] = new Image(new FileInputStream(
-        //            "src/main/resources/group/playingcardsdemo/Card_Fronts/" + hand.getCards().get(i).getFront()));
-        //}
-        //cardImageView1.setImage(cardFronts[0]);
-        //cardImageView2.setImage(cardFronts[1]);
-        //cardImageView3.setImage(cardFronts[2]);
-        //cardImageView4.setImage(cardFronts[3]);
-        //cardImageView5.setImage(cardFronts[4]);
-        //cardImageView6.setImage(cardFronts[ 5]);
-        //cardImageView7.setImage(cardFronts[6]);
+        /*
+            This method will sort the 7-card board.
+         */
+
+        hand.sortHandByValue();
+
+        setCardFronts();
+        updateCardImageViews();
     }
 
     @Override
@@ -233,8 +252,8 @@ public class HandRecognitionTest extends Controller implements Initializable {
         }
     }
     public String setSliderState(Slider slider, Label label) {
-        label.setText(sliderStates[(int) slider.getValue() - 1]);
-        return sliderStates[(int) slider.getValue() - 1];
+        label.setText(PlayingCard.VALUES[(int) slider.getValue() - 1]);
+        return PlayingCard.VALUES[(int) slider.getValue() - 1];
     }
     public void resetSliders() {
         stateSliderPrimary.setValue(1);
@@ -247,11 +266,7 @@ public class HandRecognitionTest extends Controller implements Initializable {
     }
 
     public void runTestState() throws FileNotFoundException {
-        deck = new DeckOfCards();
-        discard = new Discard();
-        hand = new Hand();
-
-        resetDeckDiscardGraphics();
+        resetDeck();
         updateCardImageViews();
 
         switch (testState) {
@@ -401,7 +416,7 @@ public class HandRecognitionTest extends Controller implements Initializable {
         deck = new DeckOfCards();
         deckSizeLabel.setText(String.valueOf(deck.currentSize));
 
-        HandEvaluator evaluator = new HandEvaluator(new Player(), hand);
+        HandEvaluator evaluator = new HandEvaluator(hand);
         setCardFronts();
         updateCardImageViews();
         updateFiveCardHandLabels(evaluator);
@@ -417,63 +432,56 @@ public class HandRecognitionTest extends Controller implements Initializable {
 
         if (deck.getCurrentSize() < boardSize || deck.isEmpty()) {
             resetDeck();
+            shuffler.random(deck);
         }
         drawCards(7);
+        setCardFronts();
         updateCardImageViews();
 
-        decrementFromDeckGraphics_RandomTest();
-        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        decrementFromDeckGraphics_RandomTest(deckTopImageView, deckSizeLabel, boardSize);
+        HandEvaluator evaluator = new HandEvaluator(hand);
         hand = evaluator.getFiveCardHand();
-        hand.addCard(evaluator.getRawHand().getCards().get(0));
-        hand.addCard(evaluator.getRawHand().getCards().get(1));
+        hand.addCard(evaluator.getFullHand().getCards().get(0));
+        hand.addCard(evaluator.getFullHand().getCards().get(1));
 
         updateFiveCardHandLabels(evaluator);
     }
 
     private void discardHand() throws FileNotFoundException {
+        /*
+            In this method, each card in the hand is added to the discard pile.
+         */
+
+        if (hand.getSize() > 7) {
+            System.out.println(Arrays.toString(hand.getValueData()));
+        }
+
         for (int i = 0; i < hand.getSize(); i++) {
             discard.addCard(hand.getCards().get(i));
-            incrementDiscardGraphics();
+            incrementDiscardGraphics(discardTopImageView, discardSizeLabel);
         }
     }
     private void drawCards(int numberToDraw) throws FileNotFoundException {
-        int boardIndex = hand.getSize();
+        /*
+            In this method, the 'numberToDraw' parameter determines how many cards to add to the hand.
+         */
         for (int i = 0; i < numberToDraw; i++) {
             hand.addCard(deck.drawTopCard());
-            cardFronts[boardIndex + i] = new Image(new FileInputStream(
-                    "src/main/resources/group/playingcardsdemo/Card_Fronts/" + hand.getCards().get(boardIndex + i).getFront()));
             if (hand.getSize() >= boardSize) {
                 break;
             }
         }
     }
     private void resetDeck() throws FileNotFoundException {
+        /*
+            In this method, the deck and discard objects are reinitialize, the deck is shuffled, and the visuals for
+            the deck and discard pile are reset.
+         */
+
         deck = new DeckOfCards();
         discard = new Discard();
-
-        shuffler.random(deck);
-        resetDeckDiscardGraphics();
-    }
-    private void decrementFromDeckGraphics_RandomTest() {
-        deckTopImageView.setY(deckTopImageView.getY() + (float) boardSize / 2);
-        deckSizeLabel.setText(String.valueOf(deck.currentSize));
-    }
-    private void incrementDiscardGraphics() throws FileNotFoundException {
-        discardTopImageView.setY(discardTopImageView.getY() - .5);
-        Image discardImage = new Image((new FileInputStream(
-                "src/main/resources/group/playingcardsdemo/Card_Fronts/" + discard.getCards().get(discard.getCurrentSize() - 1).getFront())));
-        discardTopImageView.setImage(discardImage);
-        discardSizeLabel.setText(String.valueOf(discard.currentSize));
-    }
-    private void resetDeckDiscardGraphics() throws FileNotFoundException {
-        deckTopImageView.setImage(new Image(new FileInputStream
-                ("src/main/resources/group/playingcardsdemo/Card_Backs/red.png")));
-        deckTopImageView.setY(initialDeckTopY);
-
-        discardTopImageView.setImage(new Image(new FileInputStream(
-                "src/main/resources/group/playingcardsdemo/Card_Fronts/none.png")));
-        discardTopImageView.setY(discardBottomImageView.getY());
-        discardSizeLabel.setText(String.valueOf(discard.getCurrentSize()));
+        hand = new Hand();
+        resetDeckDiscardGraphics(deckTopImageView, discardTopImageView, discardBottomImageView, discardSizeLabel, initialDeckTopY);
     }
 }
 

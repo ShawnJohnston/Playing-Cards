@@ -91,8 +91,8 @@ public class UnitTest_Hand_RankEvaluation {
         canCompareRanks_ByHashMap_UsingHandEvaluator_Helper(hand1, hand2);
     }
     public void canCompareRanks_ByHashMap_UsingHandEvaluator_Helper(Hand hand1, Hand hand2) {
-        HandEvaluator evaluator1 = new HandEvaluator(new Player(), hand1);
-        HandEvaluator evaluator2 = new HandEvaluator(new Player(), hand2);
+        HandEvaluator evaluator1 = new HandEvaluator(hand1);
+        HandEvaluator evaluator2 = new HandEvaluator(hand2);
         GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
 
         System.out.printf("Player 1: %s     Player 2: %s\n", evaluator1.getHandRank(), evaluator2.getHandRank());
@@ -149,7 +149,7 @@ public void theHandContainsOnePair() {
         hand.setCards(cards);
 
         System.out.println(Arrays.toString(hand.getValueData()));
-        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        HandEvaluator evaluator = new HandEvaluator(hand);
         System.out.println(evaluator.getPairsList());
 
         Assertions.assertEquals(1, evaluator.getPairsList().size());
@@ -171,7 +171,7 @@ public void theHandContainsTwoPair() {
         hand.setCards(cards);
 
         System.out.println(Arrays.toString(hand.getValueData()));
-        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        HandEvaluator evaluator = new HandEvaluator(hand);
         System.out.println(evaluator.getPairsList());
 
         Assertions.assertEquals(2, evaluator.getPairsList().size());
@@ -195,7 +195,7 @@ public void theHandContainsTrips() {
         hand.setCards(cards);
 
         System.out.println(Arrays.toString(hand.getValueData()));
-        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        HandEvaluator evaluator = new HandEvaluator(hand);
         System.out.println(evaluator.getTripsList());
 
         Assertions.assertEquals(PlayingCard.VALUES[i], evaluator.getTripsList().get(0));
@@ -216,7 +216,7 @@ public void theHandContainsQuads() {
         hand.setCards(cards);
 
         System.out.println(Arrays.toString(hand.getValueData()));
-        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        HandEvaluator evaluator = new HandEvaluator(hand);
         System.out.println(evaluator.getQuadsValue());
 
         Assertions.assertEquals(4, hand.getValueData()[i]);
@@ -238,7 +238,7 @@ public void theHandContainsQuads() {
             hand.setCards(cards);
 
             System.out.println(Arrays.toString(hand.getValueData()));
-            HandEvaluator evaluator = new HandEvaluator(player, hand);
+            HandEvaluator evaluator = new HandEvaluator(hand);
             System.out.println(evaluator.getFullHouseList());
 
             Assertions.assertEquals(PlayingCard.VALUES[i], evaluator.getFullHouseList().get(0));

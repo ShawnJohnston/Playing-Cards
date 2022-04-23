@@ -17,7 +17,7 @@ public class UnitTest_HandComparison {
         Hand hand1 = new Hand(UnitTesting.handBuilder(
                 "Ace", "King", "Queen", "Jack", "10",
                 "Clubs", "Clubs", "Clubs", "Clubs", "Clubs"));
-        HandEvaluator evaluator1 = new HandEvaluator(new Player(), hand1);
+        HandEvaluator evaluator1 = new HandEvaluator(hand1);
 
         System.out.println("Royal Flush vs Royal Flush: \n");
         handVersusRoyalFlush(evaluator1, "Tie");
@@ -287,8 +287,8 @@ public class UnitTest_HandComparison {
                     hand2.addCard(cardsInHand[k]);
                 }
                 iterationCount++;
-                HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
-                HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+                HandEvaluator evaluator1 = new HandEvaluator(hand1);
+                HandEvaluator evaluator2 = new HandEvaluator(hand2);
                 //System.out.println("Player 1: " + Arrays.toString(evaluator1.getHand().getValueData()));
                 //System.out.println("Player 2: " + Arrays.toString(evaluator2.getHand().getValueData()));
                 System.out.println(evaluator2.getHandRank());
@@ -314,14 +314,14 @@ public class UnitTest_HandComparison {
 
             System.out.print("Player 1: " + Arrays.toString(player1.getHand().getValueData()));
             System.out.println();
-            HandEvaluator evaluator1 = new HandEvaluator(player1, player1.getHand());
+            HandEvaluator evaluator1 = new HandEvaluator(player1.getHand());
 
             Player player2 = new Player();
             player2.setHand(player1.getHand().getCards());
 
             System.out.print("Player 2: " + Arrays.toString(player2.getHand().getValueData()));
             System.out.println();
-            HandEvaluator evaluator2 = new HandEvaluator(player2, player2.getHand());
+            HandEvaluator evaluator2 = new HandEvaluator(player2.getHand());
 
             GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
             Assertions.assertEquals("Tie", outcome.getWinner());
@@ -348,12 +348,12 @@ public class UnitTest_HandComparison {
             hand1.setCards(cards);
 
             System.out.println("Player 1: " + Arrays.toString(hand1.getValueData()));
-            HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
+            HandEvaluator evaluator1 = new HandEvaluator(hand1);
             System.out.println("Player 1: " + evaluator1.getFullHouseList());
 
 
             System.out.println("Player 2: " + Arrays.toString(hand2.getValueData()));
-            HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+            HandEvaluator evaluator2 = new HandEvaluator(hand2);
             System.out.println("Player 2: " + evaluator2.getFullHouseList());
 
             GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
@@ -376,10 +376,10 @@ public class UnitTest_HandComparison {
             hand1.setCards(cards);
             hand2.setCards(cards);
 
-            HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
+            HandEvaluator evaluator1 = new HandEvaluator(hand1);
             System.out.println("Player 1: " + evaluator1.getHandRank());
 
-            HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+            HandEvaluator evaluator2 = new HandEvaluator(hand2);
             System.out.println("Player 2: " + evaluator2.getHandRank());
 
             GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
@@ -409,11 +409,11 @@ public class UnitTest_HandComparison {
             }
             System.out.print("Player 1: ");
             UnitTesting.printHand(hand1);
-            HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
+            HandEvaluator evaluator1 = new HandEvaluator(hand1);
 
             System.out.print("Player 2: ");
             UnitTesting.printHand(hand2);
-            HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+            HandEvaluator evaluator2 = new HandEvaluator(hand2);
 
             GameOutcome outcome = new GameOutcome(evaluator1,evaluator2);
             Assertions.assertEquals("Tie", outcome.getWinner());
@@ -467,8 +467,8 @@ public class UnitTest_HandComparison {
             Hand hand2 = new Hand(hand1.getCards());
 
 
-            HandEvaluator evaluator1 = new HandEvaluator(new Player(), hand1);
-            HandEvaluator evaluator2 = new HandEvaluator(new Player(), hand2);
+            HandEvaluator evaluator1 = new HandEvaluator(hand1);
+            HandEvaluator evaluator2 = new HandEvaluator(hand2);
 
             System.out.println("Player 1: " + evaluator1.getPairsList());
             System.out.println("Player 1: " + Arrays.toString(hand1.getValueData()));
@@ -527,10 +527,10 @@ public class UnitTest_HandComparison {
         hand1.setCards(cards);
         hand2.setCards(cards);
 
-        HandEvaluator evaluator1 = new HandEvaluator(player1, hand1);
+        HandEvaluator evaluator1 = new HandEvaluator(hand1);
         System.out.println("Player 1: " + evaluator1.getHandRank());
 
-        HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+        HandEvaluator evaluator2 = new HandEvaluator(hand2);
         System.out.println("Player 2: " + evaluator2.getHandRank());
 
         GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
@@ -550,7 +550,7 @@ public class UnitTest_HandComparison {
         Hand hand2 = new Hand(UnitTesting.handBuilder(
                 "Ace", "King", "Queen", "Jack", "10",
                 "Spades", "Spades", "Spades", "Spades", "Spades"));
-        HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+        HandEvaluator evaluator2 = new HandEvaluator(hand2);
         System.out.println("Player 1: " + evaluator1.getHandRank());
         System.out.println("Player 1: " + Arrays.toString(evaluator1.getFiveCardHand().getValueData()));
         System.out.println("Player 2: " + evaluator2.getHandRank());
@@ -568,7 +568,7 @@ public class UnitTest_HandComparison {
         for (int i = 0; i < PlayingCard.VALUES.length - 6; i++) {
             Hand hand2 = new Hand(UnitTesting.handBuilder(PlayingCard.VALUES[i], PlayingCard.VALUES[i + 1], PlayingCard.VALUES[i + 2], PlayingCard.VALUES[i + 3], PlayingCard.VALUES[i + 4],
                     "Clubs","Clubs","Clubs","Clubs","Clubs"));
-            HandEvaluator evaluator2 = new HandEvaluator(new Player(), hand2);
+            HandEvaluator evaluator2 = new HandEvaluator(hand2);
 
 
             System.out.println("Player 1: " + evaluator1.getHandRank());
@@ -594,7 +594,7 @@ public class UnitTest_HandComparison {
                     PlayingCard.VALUES[13],
                     "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
 
-            HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+            HandEvaluator evaluator2 = new HandEvaluator(hand2);
 
 
             System.out.println("Player 1: " + evaluator1.getHandRank());
@@ -621,7 +621,7 @@ public class UnitTest_HandComparison {
             hand2.setCards(cards);
 
             System.out.println("Player 2: " + Arrays.toString(hand2.getValueData()));
-            HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+            HandEvaluator evaluator2 = new HandEvaluator(hand2);
             System.out.println("Player 2: " + evaluator2.getFullHouseList());
 
             GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
@@ -638,7 +638,7 @@ public class UnitTest_HandComparison {
                     "King", "7", "Jack", "5", "2",
                     PlayingCard.SUITS[i], PlayingCard.SUITS[i], PlayingCard.SUITS[i], PlayingCard.SUITS[i], PlayingCard.SUITS[i]));
 
-            HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+            HandEvaluator evaluator2 = new HandEvaluator(hand2);
             System.out.println("Player 2: " + evaluator2.getHandRank());
 
             GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);
@@ -660,7 +660,7 @@ public class UnitTest_HandComparison {
                 cardsInHand[j] = new PlayingCard(values[j + i], PlayingCard.SUITS[j]);
                 hand2.addCard(cardsInHand[j]);
             }
-            HandEvaluator evaluator2 = new HandEvaluator(new Player(), hand2);
+            HandEvaluator evaluator2 = new HandEvaluator(hand2);
 
             System.out.println("Player 1: " + evaluator1.getHandRank());
             System.out.println("Player 1: " + Arrays.toString(evaluator1.getFiveCardHand().getValueData()));
@@ -683,7 +683,7 @@ public class UnitTest_HandComparison {
                     PlayingCard.VALUES[0],
                     "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
 
-            HandEvaluator evaluator2 = new HandEvaluator(new Player(), hand2);
+            HandEvaluator evaluator2 = new HandEvaluator(hand2);
             System.out.println("Player 2: " + Arrays.toString(evaluator2.getFiveCardHand().getValueData()));
             System.out.println("Player 2: " + evaluator2.getTripsList());
             System.out.println("Player 2: " + Arrays.toString(evaluator2.getFiveCardHand().getValueData()));
@@ -713,7 +713,7 @@ public class UnitTest_HandComparison {
                     "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
             hand2.setCards(cards);
 
-            HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+            HandEvaluator evaluator2 = new HandEvaluator(hand2);
             System.out.println("Player 2: " + evaluator2.getPairsList());
             System.out.println("Player 2: " + Arrays.toString(hand2.getValueData()));
 
@@ -734,7 +734,7 @@ public class UnitTest_HandComparison {
                     PlayingCard.VALUES[0],
                     "Spades", "Hearts", "Clubs", "Clubs", "Diamonds"));
 
-            HandEvaluator evaluator2 = new HandEvaluator(new Player(), hand2);
+            HandEvaluator evaluator2 = new HandEvaluator(hand2);
 
             System.out.println("Player 1: " + evaluator1.getPairsList());
             System.out.println("Player 1: " + Arrays.toString(evaluator1.getFiveCardHand().getValueData()));
@@ -755,7 +755,7 @@ public class UnitTest_HandComparison {
         hand2.setCards(UnitTesting.handBuilder(
                 "Ace", "Queen", "Jack", "10", "9",
                 "Spades", "Hearts", "Hearts", "Clubs", "Diamonds"));
-        HandEvaluator evaluator2 = new HandEvaluator(player2, hand2);
+        HandEvaluator evaluator2 = new HandEvaluator(hand2);
         System.out.println("Player 2: " + evaluator2.getHandRank());
 
         GameOutcome outcome = new GameOutcome(evaluator1, evaluator2);

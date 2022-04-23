@@ -1,9 +1,6 @@
 package group.playingcardsdemo;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class UnitTesting {
     public static ArrayList<PlayingCard> handBuilder(String value1, String value2, String value3, String value4, String value5,
@@ -46,7 +43,7 @@ public class UnitTesting {
 
     public static void printHand(Hand hand) {
         Player player = new Player();
-        HandEvaluator evaluator = new HandEvaluator(player, hand);
+        HandEvaluator evaluator = new HandEvaluator(hand);
         System.out.println("Player hand:");
         //for (PlayingCard card : evaluator.getHand().getCards()) {
         //    System.out.printf("%s of %s \n", card.getValue(), card.getSuit());

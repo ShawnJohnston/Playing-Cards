@@ -130,8 +130,8 @@ public class HandComparisonTest extends Controller {
         p2CardImageView4.setImage(cardFrontsHand2[3]);
         p2CardImageView5.setImage(cardFrontsHand2[4]);
 
-        HandEvaluator p1Evaluator = new HandEvaluator(player1, hand1);
-        HandEvaluator p2Evaluator = new HandEvaluator(player2, hand2);
+        HandEvaluator p1Evaluator = new HandEvaluator(hand1);
+        HandEvaluator p2Evaluator = new HandEvaluator(hand2);
         p1HandRankLabel.setText(String.valueOf(p1Evaluator.getHandRank()));
         p2HandRankLabel.setText(String.valueOf(p2Evaluator.getHandRank()));
 

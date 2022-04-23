@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -14,6 +15,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @Getter
@@ -85,5 +87,47 @@ public abstract class Controller {
             }
         });
         stage.show();
+    }
+
+    protected void decrementFromDeckGraphics_RandomTest(ImageView deckTopImageView, Label deckSizeLabel, int numberOfCards) {
+        /*
+            In this method, the graphics for the deck of cards is adjusted for the drawing of a card.
+
+            1. The ImageView representing the top of the deck moves -0.5 pixels in the y-axis per board slot from its
+               current position.
+            2. The label that displays the number of cards in the deck is updated accordingly.
+         */
+
+        deckTopImageView.setY(deckTopImageView.getY() + (float) numberOfCards / 2);
+        deckSizeLabel.setText(String.valueOf(deck.currentSize));
+    }
+    protected void incrementDiscardGraphics(ImageView discardTopImageView, Label discardSizeLabel) throws FileNotFoundException {
+        /*
+            In this method, the graphics for the deck of cards is adjusted for the drawing of a card.
+
+            1. The ImageView representing the top of the discard moves +0.5 pixels in the y-axis per board slot from its
+               current position.
+            2. The label that displays the number of cards in the discard is updated accordingly
+            3. The discard image is changed to be the last card on the board previously.
+         */
+        discardTopImageView.setY(discardTopImageView.getY() - .5);
+        Image discardImage = new Image((new FileInputStream(
+                "src/main/resources/group/playingcardsdemo/Card_Fronts/" + discard.getCards().get(discard.getCurrentSize() - 1).getFront())));
+        discardTopImageView.setImage(discardImage);
+        discardSizeLabel.setText(String.valueOf(discard.currentSize));
+    }
+    protected void resetDeckDiscardGraphics(ImageView deckTopImageView, ImageView discardTopImageView, ImageView discardBottomImageView, Label discardSizeLabel, float initialDeckTopY) throws FileNotFoundException {
+        /*
+            In this method, the graphics for both the deck and discard are reset to their initial state.
+         */
+
+        deckTopImageView.setImage(new Image(new FileInputStream
+                ("src/main/resources/group/playingcardsdemo/Card_Backs/red.png")));
+        deckTopImageView.setY(initialDeckTopY);
+
+        discardTopImageView.setImage(new Image(new FileInputStream(
+                "src/main/resources/group/playingcardsdemo/Card_Fronts/none.png")));
+        discardTopImageView.setY(discardBottomImageView.getY());
+        discardSizeLabel.setText(String.valueOf(discard.getCurrentSize()));
     }
 }
