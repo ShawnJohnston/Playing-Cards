@@ -43,6 +43,7 @@ public class DrawCardsController extends Controller {
     Label promptingShuffleResetLabel;
 
     public DrawCardsController() throws IOException {
+        setInitialDeckTopY(deckTopImageView.getY());
         hand.setCapacity(1);
         super.setCurrentScene("DrawCardsTest.fxml");
     }
@@ -59,13 +60,16 @@ public class DrawCardsController extends Controller {
         adjustForJoker();
     }
     private void adjustForJoker() throws FileNotFoundException {
-        jokerCountLabel.setText(String.valueOf(jokerCount));
+
+
         deck = new DeckOfCards(jokerCount);
         discard = new Discard();
+        hand.clear();
+        jokerCountLabel.setText(String.valueOf(jokerCount));
         deckSizeLabel.setText(String.valueOf(deck.getCurrentSize()));
         discardSizeLabel.setText(String.valueOf(discard.getCurrentSize()));
         deckTopImageView.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Backs/red.png")));
-        hand.clear();
+
         cardImageView1.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Fronts/none.png")));
         discardTopImageView.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Fronts/none.png")));
         discardTopImageView.setY(discardBottomImageView.getY());

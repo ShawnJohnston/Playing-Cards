@@ -76,7 +76,8 @@ public class HandComparisonTest extends Controller {
     Image[] cardFrontsHand1;
     Image[] cardFrontsHand2;
 
-    public HandComparisonTest() {
+    public HandComparisonTest() throws FileNotFoundException {
+        super();
         hand1.setCapacity(handCapacity);
         hand2.setCapacity(handCapacity);
         cardFrontsHand1 = new Image[handCapacity];

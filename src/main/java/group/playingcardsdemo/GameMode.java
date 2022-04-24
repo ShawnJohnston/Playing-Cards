@@ -1,5 +1,6 @@
 package group.playingcardsdemo;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public abstract class GameMode {
@@ -48,7 +49,7 @@ public abstract class GameMode {
         }
     }
 
-    GameMode(String game, Player player) {
+    GameMode(String game, Player player) throws FileNotFoundException {
         gameMode = Games.valueOf(game);
         playersList.add(player);
         configureHandScalingByGame();
@@ -72,7 +73,7 @@ public abstract class GameMode {
             }
         }
     }
-    protected void sessionStart() {
+    protected void sessionStart() throws FileNotFoundException {
         deck = new DeckOfCards(jokersInDeck);
         Shuffler shuffler = new Shuffler();
         shuffler.random(deck);
@@ -98,7 +99,7 @@ public abstract class GameMode {
     }
 }
 class UTH extends GameMode {
-    UTH(String game, Player player) {
+    UTH(String game, Player player) throws FileNotFoundException {
         super(game, player);
     }
 

@@ -87,9 +87,10 @@ public class HandRecognitionTest extends Controller implements Initializable {
     Button randomDrawButton = new Button();
 
     Image[] cardFronts;
-    float initialDeckTopY = (float) deckTopImageView.getY();
 
-    public HandRecognitionTest() {
+    public HandRecognitionTest() throws FileNotFoundException {
+        super();
+        setInitialDeckTopY(deckTopImageView.getY());
         hand.setCapacity(boardSize);
         cardFronts = new Image[boardSize];
 
@@ -432,6 +433,7 @@ public class HandRecognitionTest extends Controller implements Initializable {
 
         if (deck.getCurrentSize() < boardSize || deck.isEmpty()) {
             resetDeck();
+            resetDeckDiscardGraphics(deckTopImageView, discardTopImageView, discardBottomImageView, discardSizeLabel, initialDeckTopY);
             shuffler.random(deck);
         }
         drawCards(7);
@@ -471,17 +473,6 @@ public class HandRecognitionTest extends Controller implements Initializable {
                 break;
             }
         }
-    }
-    private void resetDeck() throws FileNotFoundException {
-        /*
-            In this method, the deck and discard objects are reinitialize, the deck is shuffled, and the visuals for
-            the deck and discard pile are reset.
-         */
-
-        deck = new DeckOfCards();
-        discard = new Discard();
-        hand = new Hand();
-        resetDeckDiscardGraphics(deckTopImageView, discardTopImageView, discardBottomImageView, discardSizeLabel, initialDeckTopY);
     }
 }
 

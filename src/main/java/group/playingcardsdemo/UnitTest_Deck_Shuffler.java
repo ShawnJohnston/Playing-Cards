@@ -3,9 +3,11 @@ package group.playingcardsdemo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
+
 public class UnitTest_Deck_Shuffler {
     @Test
-    public void canInstantiateDeck_WithOrWithoutJokers() {
+    public void canInstantiateDeck_WithOrWithoutJokers() throws FileNotFoundException {
         int deckSize = 52;
 
         for (int i = 0; i < 3; i++) {
@@ -26,7 +28,7 @@ public class UnitTest_Deck_Shuffler {
     }
 
     @Test
-    public void thereAreFourOfEachCardValueInTheDeck() {
+    public void thereAreFourOfEachCardValueInTheDeck() throws FileNotFoundException {
         DeckOfCards deck = new DeckOfCards();
         // This test checks that each face value appears in the deck exactly 4 times.
         int[] valueCounter = new int[PlayingCard.VALUES.length]; // This array is used to run parallel to 'values' array to count each value.
@@ -51,7 +53,7 @@ public class UnitTest_Deck_Shuffler {
         }
     }
     @Test
-    public void thereAreThirteenOfEachCardSuitInTheDeck() {
+    public void thereAreThirteenOfEachCardSuitInTheDeck() throws FileNotFoundException {
         // This test checks that each suit appears in the deck exactly 13 times.
 
         // A while loop will be used to control the logic of this test.
@@ -105,7 +107,7 @@ public class UnitTest_Deck_Shuffler {
     }
 
     @Test
-    public void theDeckCanBeShuffledUsingEachMethodInTheShufflerClass() {
+    public void theDeckCanBeShuffledUsingEachMethodInTheShufflerClass() throws FileNotFoundException {
         DeckOfCards deck = new DeckOfCards();
         DeckOfCards shuffledDeck = new DeckOfCards();
         int step = 0;
@@ -150,7 +152,7 @@ public class UnitTest_Deck_Shuffler {
         }
     }
     @Test
-    public void canDrawDeckDeckToPlayerHandThenDiscard_forEachDeckVariant() {
+    public void canDrawDeckDeckToPlayerHandThenDiscard_forEachDeckVariant() throws FileNotFoundException {
         canDrawFromDeckToPlayerHandAndDiscardFromHand(new DeckOfCards(), 0);
         canDrawFromDeckToPlayerHandAndDiscardFromHand(new DeckOfCards(1), 1);
         canDrawFromDeckToPlayerHandAndDiscardFromHand(new DeckOfCards(2), 2);
@@ -159,7 +161,7 @@ public class UnitTest_Deck_Shuffler {
         canDrawAllCardsFromDeck(new DeckOfCards(1), 1);
         canDrawAllCardsFromDeck(new DeckOfCards(2), 2);
     }
-    public void canDrawFromDeckToPlayerHandAndDiscardFromHand(DeckOfCards deck, int jokerCount) {
+    public void canDrawFromDeckToPlayerHandAndDiscardFromHand(DeckOfCards deck, int jokerCount) throws FileNotFoundException {
         Hand hand = new Hand();
 
         // Draw cards from deck.
@@ -229,7 +231,7 @@ public class UnitTest_Deck_Shuffler {
         Assertions.assertEquals(52 + jokers, hand.getSize());
     }
     @Test
-    public void noDuplicateCardsAfterHandShuffleMultiplier() {
+    public void noDuplicateCardsAfterHandShuffleMultiplier() throws FileNotFoundException {
         int counter = 0;
         while (counter < 100) {
             noDuplicateCardsAfterShuffle(handShuffleDeck());
@@ -237,20 +239,20 @@ public class UnitTest_Deck_Shuffler {
         }
     }
     @Test
-    public void noDuplicateCardsAfterRandomShuffleMultiplier() {
+    public void noDuplicateCardsAfterRandomShuffleMultiplier() throws FileNotFoundException {
         int counter = 0;
         while (counter < 100) {
             noDuplicateCardsAfterShuffle(randomShuffleDeck());
             counter++;
         }
     }
-    public DeckOfCards handShuffleDeck() {
+    public DeckOfCards handShuffleDeck() throws FileNotFoundException {
         DeckOfCards deck = new DeckOfCards();
         Shuffler shuffler = new Shuffler();
         shuffler.handShuffle(deck);
         return deck;
     }
-    public DeckOfCards randomShuffleDeck() {
+    public DeckOfCards randomShuffleDeck() throws FileNotFoundException {
         DeckOfCards deck = new DeckOfCards();
         Shuffler shuffler = new Shuffler();
         shuffler.random(deck);

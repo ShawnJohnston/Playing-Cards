@@ -1,8 +1,12 @@
 package group.playingcardsdemo;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 @Getter
@@ -13,6 +17,9 @@ public class DeckOfCards {
     protected int currentSize = 52;
     protected static int jokerCount = 0;
     protected ArrayList<PlayingCard> cards = new ArrayList<>();
+
+    public static Image[] cardImages = new Image[54];
+    public static ImageView[] cardImageViews = new ImageView[54];
 
     // Constructors
     public DeckOfCards() {
@@ -84,9 +91,34 @@ public class DeckOfCards {
         }
         currentSize = cards.size();
     }
+
+    public static void initializeCardImages() throws FileNotFoundException {
+        /*
+            This method concatenates an image url for every card and stores them in the 'cardImages' static array.
+
+            1.  Outer For Loop: Range 0 <= i <= (length of SUITS array - 1). 'i' times, execute the inner for-loop.
+            2.  Inner For Loop: Range 0 <= j <= (length of VALUES_INDEX - 2). 'j' time, perform the following:
+                -   Declare string 'fileName', containing the current suit (index i) lowercased, then '_', then the
+                    current value (index j) lowercased, then '.png'.
+                -   The fileName will be stored at index (13*i) + j. The beginning of any given suit is 13 indices from
+                    the beginning of the previous or next, so multiplying 13 times 'i' will jump to the correct 1/4th of
+                    the array that starts the correct suit group. Adding 'j' will locate the index for the card value
+                    within the suit section.
+         */
+
+        for (int i = 0; i < PlayingCard.SUITS.length - 1; i++) {
+            for (int j = 0; j < PlayingCard.VALUES_INDEX.length - 2; j++) {
+                String fileName = PlayingCard.SUITS[i].toLowerCase() + "_" + PlayingCard.VALUES_INDEX[j].toLowerCase() + ".png";
+                cardImages[(13*i) + j] = new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Fronts/" + fileName));
+            }
+        }
+        cardImages[52] = new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Fronts/" + "joker_black.png"));
+        cardImages[53] = new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Fronts/" +"joker_red.png"));
+    }
 }
 class Discard extends DeckOfCards {
     public Discard() {
+        super();
         maxSize = 54;
         currentSize = 0;
         cards = new ArrayList<>();

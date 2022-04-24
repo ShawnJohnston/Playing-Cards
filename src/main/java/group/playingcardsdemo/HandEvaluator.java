@@ -3,6 +3,7 @@
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 
 @Getter
 @Setter
+@NoArgsConstructor
 
 public class HandEvaluator {
     public static final String[] STANDARDPOKERRANKS = {"HighCard", "Pair", "TwoPair", "Trips", "Straight", "Flush",
@@ -31,10 +33,7 @@ public class HandEvaluator {
     private int topOfStraight = -1;
     private String flushValue = null;
 
-    public HandEvaluator() {
-    }
     public HandEvaluator(Hand fullHand) {
-        this.player = player;
         this.fullHand = fullHand;
         Arrays.fill(RANKDATA, false);
         RANKDATA[0] = true;

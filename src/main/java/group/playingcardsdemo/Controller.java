@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,9 +28,14 @@ public abstract class Controller {
     protected String currentScene;
     protected DeckOfCards deck = new DeckOfCards();
     protected Discard discard = new Discard();
+    protected Hand hand = new Hand();
     protected Shuffler shuffler = new Shuffler();
+    protected float initialDeckTopY;
 
     protected final String css = this.getClass().getResource("style.css").toExternalForm();
+
+    protected Controller() throws FileNotFoundException {
+    }
 
     public void toReset(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(currentScene));
@@ -87,6 +93,19 @@ public abstract class Controller {
             }
         });
         stage.show();
+    }
+    protected void resetDeck() throws FileNotFoundException {
+        /*
+            In this method, the deck and discard objects are reinitialize, the deck is shuffled, and the visuals for
+            the deck and discard pile are reset.
+         */
+
+        deck = new DeckOfCards();
+        discard = new Discard();
+        hand = new Hand();
+    }
+    protected void setInitialDeckTopY(double y) {
+        initialDeckTopY = (float) y;
     }
 
     protected void decrementFromDeckGraphics_RandomTest(ImageView deckTopImageView, Label deckSizeLabel, int numberOfCards) {
