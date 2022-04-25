@@ -1,17 +1,12 @@
 package group.playingcardsdemo;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -149,7 +144,7 @@ public class ShufflingTestController extends Controller {
         cardFronts = DeckOfCards.cardImages;
         cards = DeckOfCards.cardImageViews;
 
-        DeckOfCards.initializeCardImages();
+        DeckOfCards.initializeCardImages(deck);
         initializeImageViews();
 
         for (int i = 0; i < 4; i++) {
@@ -253,6 +248,7 @@ public class ShufflingTestController extends Controller {
         cards[53] = cardImageView54;
     }
 
+    @Override
     public void toReset(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ShufflingTest.fxml"));
         root = loader.load();

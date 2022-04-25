@@ -92,7 +92,7 @@ public class DeckOfCards {
         currentSize = cards.size();
     }
 
-    public static void initializeCardImages() throws FileNotFoundException {
+    public static void initializeCardImages(DeckOfCards deck) throws FileNotFoundException {
         /*
             This method concatenates an image url for every card and stores them in the 'cardImages' static array.
 

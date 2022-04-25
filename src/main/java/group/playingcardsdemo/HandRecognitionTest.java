@@ -4,6 +4,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -16,6 +17,7 @@ import lombok.SneakyThrows;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
@@ -267,6 +269,11 @@ public class HandRecognitionTest extends Controller implements Initializable {
         stateSecondaryLabel.setText("-");
     }
 
+    public void toReset(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("HandRecognitionTest.fxml"));
+        root = loader.load();
+        sceneBuilder(event);
+    }
     public void runTestState() throws FileNotFoundException {
         resetAllCards();
         updateCardImageViews();

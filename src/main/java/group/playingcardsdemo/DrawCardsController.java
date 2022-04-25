@@ -12,9 +12,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class DrawCardsController extends Controller {
-    int jokerCount = 0;
-    int jokerMin = 0;
-    int jokerMax = 2;
+    private int jokerCount = 0;
+    private final int jokerMin = 0;
+    private final int jokerMax = 2;
 
     @FXML
     ImageView cardImageView1 = new ImageView();

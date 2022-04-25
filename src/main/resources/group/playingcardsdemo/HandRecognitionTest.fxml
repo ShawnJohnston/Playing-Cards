@@ -78,7 +78,7 @@
                      </image>
                   </ImageView>
                   <Label id="textLabelOnBlack" layoutX="25.0" layoutY="190.0" stylesheets="@style.css" text="Deck" />
-                  <Label id="textLabelOnBlack" fx:id="deckSizeLabel" layoutX="36.0" layoutY="220.0" stylesheets="@style.css" text="52" />
+                  <Label id="textLabelOnBlack" fx:id="deckSizeLabel" layoutX="36.0" layoutY="220.0" stylesheets="@style.css" text="-" />
                </children>
             </Group>
             <Group layoutX="600.0" layoutY="60.0">
@@ -94,7 +94,7 @@
                      </image>
                   </ImageView>
                   <Label id="textLabelOnBlack" layoutX="10.0" layoutY="190.0" stylesheets="@style.css" text="Discard" />
-                  <Label id="textLabelOnBlack" fx:id="discardSizeLabel" layoutX="36.0" layoutY="220.0" stylesheets="@style.css" text="0" />
+                  <Label id="textLabelOnBlack" fx:id="discardSizeLabel" layoutX="36.0" layoutY="220.0" stylesheets="@style.css" text="-" />
                </children>
             </Group>
          </children>
