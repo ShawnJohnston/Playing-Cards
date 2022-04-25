@@ -14,10 +14,8 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         PlayingCard.initializeCardValueMap();
         HandEvaluator.initializePokerRanks();
-        //Global.initializeChipMaps();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("TitleScreen.fxml"));
-        //StartingMenuController controller = loader.getController();
 
         Parent root = loader.load();
         Scene scene = new Scene(root);

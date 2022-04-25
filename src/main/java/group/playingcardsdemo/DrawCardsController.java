@@ -12,7 +12,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class DrawCardsController extends Controller {
-    Hand hand = new Hand();
     int jokerCount = 0;
     int jokerMin = 0;
     int jokerMax = 2;
@@ -42,81 +41,95 @@ public class DrawCardsController extends Controller {
     @FXML
     Label promptingShuffleResetLabel;
 
-    public DrawCardsController() throws IOException {
+    public DrawCardsController() {
         setInitialDeckTopY(deckTopImageView.getY());
         hand.setCapacity(1);
         super.setCurrentScene("DrawCardsTest.fxml");
     }
-    public void incrementJokerCount() throws FileNotFoundException {
+    public void incrementJokerCount() {
         if (jokerCount < jokerMax) {
             jokerCount++;
         }
         adjustForJoker();
     }
-    public void decrementJokerCount() throws FileNotFoundException {
+    public void decrementJokerCount() {
         if (jokerCount > jokerMin) {
             jokerCount--;
         }
         adjustForJoker();
     }
-    private void adjustForJoker() throws FileNotFoundException {
-
-
+    public void adjustForJoker() {
+        resetAllCards();
         deck = new DeckOfCards(jokerCount);
-        discard = new Discard();
-        hand.clear();
+        deckSizeLabel.setText(String.valueOf(deck.currentSize));
+        discardSizeLabel.setText(String.valueOf(discard.currentSize));
         jokerCountLabel.setText(String.valueOf(jokerCount));
-        deckSizeLabel.setText(String.valueOf(deck.getCurrentSize()));
-        discardSizeLabel.setText(String.valueOf(discard.getCurrentSize()));
-        deckTopImageView.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Backs/red.png")));
-
-        cardImageView1.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Fronts/none.png")));
-        discardTopImageView.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Fronts/none.png")));
-        discardTopImageView.setY(discardBottomImageView.getY());
-        deckTopImageView.setY(deckBottomImageView.getY());
-        cardNameLabel.setText("");
     }
     public void drawFromDeck(ActionEvent event) throws IOException {
+        /*
+            This method will control the main logic for the test.
+
+            1.  If the hand has a card, it will be discarded.
+            2.  If the deck is empty (before draw), all cards will return to the deck and be shuffled.
+            3.  A card is drawn from deck to hand.
+            4.  If the deck is empty (after draw), the deck will show a green image and a prompt will display.
+         */
+
         if (hand.getSize() > 0) {
-            discard.addCard(hand.getCards().get(0));
-            Image discardFront = new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Fronts/" + hand.getCards().get(0).getFront()));
-
-            discardTopImageView.setImage(discardFront);
-            discardTopImageView.setY(discardTopImageView.getY() - .5);
-            discardSizeLabel.setText(String.valueOf(discard.getCurrentSize()));
+            discardCardFromHand();
         }
-
         if (deck.isEmpty()) {
-            deck.compileFromDiscard(discard);
-            discard = new Discard();
-
-            discardSizeLabel.setText(String.valueOf(discard.currentSize));
-            deckSizeLabel.setText(String.valueOf(deck.currentSize));
-
-            Shuffler shuffler = new Shuffler();
-            shuffler.random(deck);
-            promptingShuffleResetLabel.setText("");
-
-            deckTopImageView.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Backs/red.png")));
-            deckTopImageView.setY(deckTopImageView.getY() - (float) deck.getMaxSize()/2);
-
-            discardTopImageView.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Fronts/none.png")));
-            discardTopImageView.setY(discardTopImageView.getY() + (float) deck.getMaxSize()/2);
-            discardSizeLabel.setText(String.valueOf(discard.getCurrentSize()));
+            moveAllCardsToDeck();
         }
-
-        hand.clear();
-        hand.addCard(deck.drawTopCard());
-        cardNameLabel.setText(hand.getCards().get(0).getName());
-        deckTopImageView.setY(deckTopImageView.getY() + .5);
-        deckSizeLabel.setText(String.valueOf(deck.currentSize));
-
-        if (deck.currentSize == 0) {
+        drawCardFromDeck();
+        if (deck.isEmpty()) {
             deckTopImageView.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Fronts/none.png")));
             promptingShuffleResetLabel.setText("The deck is empty. It will be shuffled.");
         }
+    }
+    public void discardCardFromHand() throws FileNotFoundException {
+        /*
+            1.  The card in the hand is added to the discard.
+            2.  The card in the hand is removed from the hand.
+            3.  The discard pile updates.
+         */
 
-        Image front = new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Fronts/" + hand.getCards().get(0).getFront()));
-        cardImageView1.setImage(front);
+        discard.addCard(hand.getCards().get(0));
+        hand.removeCard(0);
+        incrementDiscardGraphics(discardTopImageView, discardSizeLabel);
+    }
+    public void moveAllCardsToDeck() throws FileNotFoundException {
+        /*
+            This method resets the cards, shuffles them, and draws the top card from the deck.
+
+            1.  All cards in the discard and hand are returned to the deck.
+            2.  The graphics for the deck and discard are reset to their initial states.
+            3.  The prompt previously displayed is cleared.
+            4.  A shuffler is instantiated and shuffles the deck.
+         */
+
+        resetAllCards();
+        resetDeckDiscardGraphics(deckTopImageView, discardTopImageView,discardBottomImageView, discardSizeLabel, initialDeckTopY);
+        promptingShuffleResetLabel.setText("");
+
+        Shuffler shuffler = new Shuffler();
+        shuffler.random(deck);
+    }
+    public void drawCardFromDeck() throws FileNotFoundException {
+        /*
+            This method performs the tasks that must be done for drawing a card in this test.
+
+            1.  The top card in the deck is drawn to the hand.
+            2.  The name of the card is displayed.
+            3.  The card count for the deck and discard are updated.
+            4.   The hand's cardImageView is updated to display the drawn card.
+         */
+
+        hand.addCard(deck.drawTopCard());
+        cardNameLabel.setText(hand.getCards().get(0).getName());
+        deckSizeLabel.setText(String.valueOf(deck.currentSize));
+        discardSizeLabel.setText(String.valueOf(discard.currentSize));
+        decrementFromDeckGraphics_RandomTest(deckTopImageView, deckSizeLabel,1);
+        cardImageView1.setImage(new Image(new FileInputStream(hand.getCards().get(0).getFront())));
     }
 }

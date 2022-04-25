@@ -270,29 +270,12 @@ public class ShufflingTestController extends Controller {
     public void updateScene(ActionEvent event) throws IOException  {
 
         for (int i = 0; i < deck.getMaxSize(); i++) {
-            cardFronts[i] = new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Fronts/" + deck.getCards().get(i).getFront()));
+            cardFronts[i] = new Image(new FileInputStream(deck.getCards().get(i).getFront()));
         }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ShufflingTest.fxml"));
         root = loader.load();
 
         ShufflingTestController controller = loader.getController();
         controller.updateController(event, cardFronts);
-    }
-    private void testSceneBuilder(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ShufflingTest.fxml"));
-        root = loader.load();
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(pane);
-        stage.setScene(scene);
-        scene.getStylesheets().add(css);
-        scene.setOnKeyPressed(e -> {
-            switch (e.getCode()) {
-                case ESCAPE -> {
-                    Platform.exit();
-                }
-            }
-        });
-        stage.show();
     }
 }

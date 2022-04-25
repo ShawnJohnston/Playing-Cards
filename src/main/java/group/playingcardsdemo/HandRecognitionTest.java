@@ -21,22 +21,50 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class HandRecognitionTest extends Controller implements Initializable {
-    private Player player = new Player();
-    private Hand hand = new Hand();
     private final int boardSize = 7;
     private TestState testState = TestState.Random;
-    private String sliderPrimaryState = PlayingCard.VALUES[0], sliderSecondaryState = PlayingCard.VALUES[0];
+    private String sliderPrimaryState = PlayingCard.VALUES[0],
+                    sliderSecondaryState = PlayingCard.VALUES[0];
+    private Image[] cardFronts;
 
     @FXML
     AnchorPane pane;
+
+    //  Hand Labels
     @FXML
     Label handRankLabel = new Label();
+    @FXML
+    Label card1Label = new Label();
+    @FXML
+    Label card2Label = new Label();
+    @FXML
+    Label card3Label = new Label();
+    @FXML
+    Label card4Label = new Label();
+    @FXML
+    Label card5Label = new Label();
+
+    //  Deck & Discard Graphics
+    @FXML
+    ImageView deckTopImageView = new ImageView();
+    @FXML
+    ImageView deckBottomImageView = new ImageView();
+    @FXML
+    ImageView discardTopImageView = new ImageView();
+    @FXML
+    ImageView discardBottomImageView = new ImageView();
     @FXML
     Label deckSizeLabel = new Label();
     @FXML
     Label discardSizeLabel = new Label();
+
+    //  Buttons
     @FXML
     Button sortButton = new Button();
+    @FXML
+    Button randomDrawButton = new Button();
+
+    //  Test State
     @FXML
     ChoiceBox<String> testStateChoiceBox = new ChoiceBox<>();
     @FXML
@@ -47,15 +75,8 @@ public class HandRecognitionTest extends Controller implements Initializable {
     Label statePrimaryLabel;
     @FXML
     Label stateSecondaryLabel;
-    @FXML
-    ImageView deckTopImageView = new ImageView();
-    @FXML
-    ImageView deckBottomImageView = new ImageView();
-    @FXML
-    ImageView discardTopImageView = new ImageView();
-    @FXML
-    ImageView discardBottomImageView = new ImageView();
 
+    //  Card ImageViews
     @FXML
     ImageView cardImageView1 = new ImageView();
     @FXML
@@ -71,30 +92,11 @@ public class HandRecognitionTest extends Controller implements Initializable {
     @FXML
     ImageView cardImageView7 = new ImageView();
 
-
-    @FXML
-    Label card1Label = new Label();
-    @FXML
-    Label card2Label = new Label();
-    @FXML
-    Label card3Label = new Label();
-    @FXML
-    Label card4Label = new Label();
-    @FXML
-    Label card5Label = new Label();
-
-    @FXML
-    Button randomDrawButton = new Button();
-
-    Image[] cardFronts;
-
-    public HandRecognitionTest() throws FileNotFoundException {
+    public HandRecognitionTest() {
         super();
         setInitialDeckTopY(deckTopImageView.getY());
         hand.setCapacity(boardSize);
         cardFronts = new Image[boardSize];
-
-
     }
     private void setCardFronts() throws FileNotFoundException {
         /*
@@ -110,8 +112,7 @@ public class HandRecognitionTest extends Controller implements Initializable {
          */
         if (!(hand.getSize() > boardSize)) {
             for (int i = 0; i < hand.getSize(); i++) {
-                cardFronts[i] = new Image(new FileInputStream(
-                        "src/main/resources/group/playingcardsdemo/Card_Fronts/" + hand.getCards().get(i).getFront()));
+                cardFronts[i] = new Image(new FileInputStream(hand.getCards().get(i).getFront()));
                 if (i >= boardSize) {
                     break;
                 }
@@ -267,7 +268,7 @@ public class HandRecognitionTest extends Controller implements Initializable {
     }
 
     public void runTestState() throws FileNotFoundException {
-        resetDeck();
+        resetAllCards();
         updateCardImageViews();
 
         switch (testState) {
@@ -432,7 +433,7 @@ public class HandRecognitionTest extends Controller implements Initializable {
         hand = new Hand();
 
         if (deck.getCurrentSize() < boardSize || deck.isEmpty()) {
-            resetDeck();
+            resetAllCards();
             resetDeckDiscardGraphics(deckTopImageView, discardTopImageView, discardBottomImageView, discardSizeLabel, initialDeckTopY);
             shuffler.random(deck);
         }
@@ -463,7 +464,7 @@ public class HandRecognitionTest extends Controller implements Initializable {
             incrementDiscardGraphics(discardTopImageView, discardSizeLabel);
         }
     }
-    private void drawCards(int numberToDraw) throws FileNotFoundException {
+    private void drawCards(int numberToDraw) {
         /*
             In this method, the 'numberToDraw' parameter determines how many cards to add to the hand.
          */

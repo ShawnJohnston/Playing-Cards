@@ -35,7 +35,7 @@ public class PlayingCard extends Node {
         setSuit(suit);
         setName();
 
-        String filename = suit.toLowerCase() + "_" + value.toLowerCase() + ".png";
+        String filename = "src/main/resources/group/playingcardsdemo/Card_Fronts/" + suit.toLowerCase() + "_" + value.toLowerCase() + ".png";
         setFront(filename);
     }
     public void setSuit(String suit) {
@@ -86,10 +86,10 @@ class JokerCard extends PlayingCard {
         this.color = color;
 
         if (color.equals("Black")) {
-            setFront("joker_black.png");
+            setFront("src/main/resources/group/playingcardsdemo/Card_Fronts/joker_black.png");
         }
         else if (color.equals("Red")) {
-            setFront("joker_red.png");
+            setFront("src/main/resources/group/playingcardsdemo/Card_Fronts/joker_red.png");
         }
     }
 }

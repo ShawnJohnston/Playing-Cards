@@ -76,7 +76,7 @@ public class HandComparisonTest extends Controller {
     Image[] cardFrontsHand1;
     Image[] cardFrontsHand2;
 
-    public HandComparisonTest() throws FileNotFoundException {
+    public HandComparisonTest() {
         super();
         hand1.setCapacity(handCapacity);
         hand2.setCapacity(handCapacity);
@@ -111,12 +111,10 @@ public class HandComparisonTest extends Controller {
 
         for (int i = 0; i < handCapacity; i++) {
             hand1.addCard(deck.drawTopCard());
-            cardFrontsHand1[i] = new Image(new FileInputStream(
-                    "src/main/resources/group/playingcardsdemo/Card_Fronts/" + hand1.getCards().get(i).getFront()));
+            cardFrontsHand1[i] = new Image(new FileInputStream(hand1.getCards().get(i).getFront()));
 
             hand2.addCard(deck.drawTopCard());
-            cardFrontsHand2[i] = new Image(new FileInputStream(
-                    "src/main/resources/group/playingcardsdemo/Card_Fronts/" + hand2.getCards().get(i).getFront()));
+            cardFrontsHand2[i] = new Image(new FileInputStream(hand2.getCards().get(i).getFront()));
         }
 
         p1CardImageView1.setImage(cardFrontsHand1[0]);

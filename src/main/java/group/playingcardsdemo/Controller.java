@@ -34,7 +34,7 @@ public abstract class Controller {
 
     protected final String css = this.getClass().getResource("style.css").toExternalForm();
 
-    protected Controller() throws FileNotFoundException {
+    protected Controller() {
     }
 
     public void toReset(ActionEvent event) throws IOException {
@@ -80,7 +80,7 @@ public abstract class Controller {
         root = loader.load();
         sceneBuilder(event);
     }
-    protected void sceneBuilder(ActionEvent event) throws IOException {
+    protected void sceneBuilder(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -94,7 +94,24 @@ public abstract class Controller {
         });
         stage.show();
     }
-    protected void resetDeck() throws FileNotFoundException {
+    protected void testSceneBuilder(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ShufflingTest.fxml"));
+        root = loader.load();
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(pane);
+        stage.setScene(scene);
+        scene.getStylesheets().add(css);
+        scene.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case ESCAPE -> {
+                    Platform.exit();
+                }
+            }
+        });
+        stage.show();
+    }
+    protected void resetAllCards() {
         /*
             In this method, the deck and discard objects are reinitialize, the deck is shuffled, and the visuals for
             the deck and discard pile are reset.
@@ -130,8 +147,7 @@ public abstract class Controller {
             3. The discard image is changed to be the last card on the board previously.
          */
         discardTopImageView.setY(discardTopImageView.getY() - .5);
-        Image discardImage = new Image((new FileInputStream(
-                "src/main/resources/group/playingcardsdemo/Card_Fronts/" + discard.getCards().get(discard.getCurrentSize() - 1).getFront())));
+        Image discardImage = new Image((new FileInputStream(discard.getCards().get(discard.getCurrentSize() - 1).getFront())));
         discardTopImageView.setImage(discardImage);
         discardSizeLabel.setText(String.valueOf(discard.currentSize));
     }
