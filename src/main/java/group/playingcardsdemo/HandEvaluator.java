@@ -163,7 +163,7 @@ public class HandEvaluator {
     //    }
     //    return false;
     //}
-    public Boolean isAStraight_ByValueData() {
+    public Boolean isAStraight() {
         int counter = 0;
         
         ArrayList<Integer> indices = new ArrayList<>();
@@ -294,7 +294,7 @@ public class HandEvaluator {
         return false;
     }
 
-    private void moveCardFromRawHandToFiveCardHand(String value) {
+    private void moveCardFromFullHandToFiveCardHand(String value) {
         for (int i = fullHand.getSize() - 1; i  >= 0; i--) {
             if (fullHand.getCards().get(i).getValue().equals(value)) {
                 fiveCardHand.addCard(fullHand.getCards().get(i));
@@ -302,7 +302,7 @@ public class HandEvaluator {
             }
         }
     }
-    private void moveKickersFromRawHandToFiveCardHand() {
+    private void moveKickersFromFullHandToFiveCardHand() {
         if (fiveCardHand.getSize() < 5) {
             for (int i = fullHand.getSize() - 1; i >= 0; i--) {
                 fiveCardHand.addCard(fullHand.getCards().get(i));
@@ -363,14 +363,14 @@ public class HandEvaluator {
             handRank = rankState.valueOf(STANDARDPOKERRANKS[8]);
         }
         else if (isAQuads()){
-            moveCardFromRawHandToFiveCardHand(quadsValue);
-            moveKickersFromRawHandToFiveCardHand();
+            moveCardFromFullHandToFiveCardHand(quadsValue);
+            moveKickersFromFullHandToFiveCardHand();
 
             handRank = rankState.valueOf(STANDARDPOKERRANKS[7]);
         }
         else if (isAFullHouse()){
-            moveCardFromRawHandToFiveCardHand(fullHouseList.get(0));
-            moveCardFromRawHandToFiveCardHand(fullHouseList.get(1));
+            moveCardFromFullHandToFiveCardHand(fullHouseList.get(0));
+            moveCardFromFullHandToFiveCardHand(fullHouseList.get(1));
 
             handRank = rankState.valueOf(STANDARDPOKERRANKS[6]);
         }
@@ -391,15 +391,15 @@ public class HandEvaluator {
 
             handRank = rankState.valueOf(STANDARDPOKERRANKS[5]);
         }
-        else if (isAStraight_ByValueData()){
+        else if (isAStraight()){
 
             handRank = rankState.valueOf(STANDARDPOKERRANKS[4]);
         }
         else if (isATrips()){
             if (tripsList.size() >= 1) {
-                moveCardFromRawHandToFiveCardHand(tripsList.get(0));
+                moveCardFromFullHandToFiveCardHand(tripsList.get(0));
                 while (fiveCardHand.getSize() < 5) {
-                    moveKickersFromRawHandToFiveCardHand();
+                    moveKickersFromFullHandToFiveCardHand();
                 }
             }
             
@@ -409,23 +409,23 @@ public class HandEvaluator {
         }
         else if (isATwoPair()){
             if (pairsList.size() >= 2) {
-                moveCardFromRawHandToFiveCardHand(pairsList.get(0));
-                moveCardFromRawHandToFiveCardHand(pairsList.get(1));
+                moveCardFromFullHandToFiveCardHand(pairsList.get(0));
+                moveCardFromFullHandToFiveCardHand(pairsList.get(1));
 
-                moveKickersFromRawHandToFiveCardHand();
+                moveKickersFromFullHandToFiveCardHand();
             }
 
             handRank = rankState.valueOf(STANDARDPOKERRANKS[2]);
         }
         else if (isAPair()){
-            moveCardFromRawHandToFiveCardHand(pairsList.get(0));
+            moveCardFromFullHandToFiveCardHand(pairsList.get(0));
             while (fiveCardHand.getSize() < 5) {
-                moveKickersFromRawHandToFiveCardHand();
+                moveKickersFromFullHandToFiveCardHand();
             }
             handRank = rankState.valueOf(STANDARDPOKERRANKS[1]);
         }
         else {
-            moveKickersFromRawHandToFiveCardHand();
+            moveKickersFromFullHandToFiveCardHand();
 
             handRank = rankState.valueOf(STANDARDPOKERRANKS[0]);
 

@@ -2,33 +2,54 @@ package group.playingcardsdemo;
 
 import java.util.ArrayList;
 import java.util.Random;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class Shuffler {
-    // Constructor
-    public Shuffler() {
-    }
 
     public DeckOfCards random(DeckOfCards deck) {
-        // This method will shuffle the deck using Java's Random class to randomize the array that contains each card.
-        Random randomizer = new Random(); // 'Random' object.
+        /*
+            This method will shuffle the deck using Java's Random class to randomize the array that contains each card.
 
+            1.  Initialize randomizer.
+            2.  For Loop: Range 0 <= i < current deck size. This loop will iterate through each index of the deck.
+                -   A random index value is initialized using the randomizer to get a pseudorandom integer from 0 to the
+                    numerical size of the deck.
+                -   A temporary 'PlayingCard' variable is initialized to store the 'PlayingCard' at current index 'i'.
+                -   The 'PlayingCard' at the current index is overwritten by the 'PlayingCard' at the random index.
+                -   The 'PlayingCard' at the random index is overwritten by the temporary 'PlayingCard'.
+            3.  After the loop iterates through each index, the deck has completed shuffling and returns.
+         */
 
+        Random randomizer = new Random();
         for (int i = 0; i < deck.getCurrentSize(); i++) {
-            int randomPosition = randomizer.nextInt(deck.currentSize); // Random integer from 0 to the value of the deck size.
-            PlayingCard temp = deck.getCards().get(i); // stores the current card in a temporary variable.
-            deck.getCards().set(i, deck.getCards().get(randomPosition)); // The random index's card is assigned to the current index.
-            deck.getCards().set(randomPosition, temp); // The temporary variable is assigned to the random index.
+            int randomPosition = randomizer.nextInt(deck.currentSize);
+            PlayingCard temp = deck.getCards().get(i);
+            deck.getCards().set(i, deck.getCards().get(randomPosition));
+            deck.getCards().set(randomPosition, temp);
         }
-        return deck; // To the deck object in main.
+        return deck;
     }
     public DeckOfCards handShuffle(DeckOfCards deck) {
-        // This method shuffles the deck using the Casino Poker Shuffle.
-        int proceduralCount = 0; // There are 5 main steps to the hand shuffle procedure.
+        /*
+            This method shuffles the deck using the Casino Poker Shuffle. Note: This algorithm is substantially less
+            computationally efficient than the other card randomizing method and provides no noticeable benefit other
+            than to provide a sense of "procedural correctness" expected in a live casino setting. This method was
+            written mainly to demonstrate what a proper hand shuffle would look like as an algorithm.
 
+            There are 5 main steps to the hand shuffle procedure: riffle, riffle, box, riffle, cut.
+
+            1.  Initialize a procedure counter.
+            2.  While Loop: Range 0 <= x < 5. Uses a switch statement to control which steps to use in which order.
+                Increment the counter at the end of each loop.
+            3.  After the shuffle is complete, the deck returns.
+         */
+
+
+        int proceduralCount = 0;
         while (proceduralCount < 5) {
             int stackNumber = 4; // Represents number of stacks used for the 'box' procedure.
 
-            // Casino Poker Shuffle procedure is riffle, riffle, box, riffle, cut.
             switch (proceduralCount) {
                 case 0, 1, 3 -> deck.setCards(riffle(deck)); // Riffle.
                 case 2 -> deck.setCards(box(deck, stackNumber)); // Box.
@@ -36,19 +57,19 @@ public class Shuffler {
             }
             proceduralCount++;
         }
-        return deck; // To deck object in main.
-    }
-    private int setSplitPoint(DeckOfCards deck) {
-        // This method defines the location in a deck of cards in which a top stack will separate from the rest of the deck.
-        // This default version of the method is intended to separate a full deck of cards into two half stacks.
-
-        int deckMidPoint = deck.getCurrentSize() / 2;
-        int variability = randomValueFromNormalDistribution(5);
-        return deckMidPoint + variability;
+        return deck;
     }
     private int setSplitPoint(DeckOfCards deck, int bounds) {
-        // This overloaded method is used in the "Cut" step of the hand shuffle.
-        int deckMidPoint = deck.getCurrentSize() / 2; // The index position representing the halfway point into the deck.
+        /*
+         This method defines the location in a deck of cards in which a top stack will separate from the rest of the
+         deck. Variability is implemented here to create an element of human imprecision to the procedure.
+
+         1. Initialize the midpoint of the deck. for a 52-card deck, that would be 26.
+         2. Initialize variability using a method that simulates a crude bell curve distribution.
+         3. Variability is added to the midpoint and returned.
+         */
+
+        int deckMidPoint = deck.getCurrentSize() / 2;
         int variability = randomValueFromNormalDistribution(bounds);
         return deckMidPoint + variability;
     }
@@ -90,7 +111,7 @@ public class Shuffler {
 
         // For every card in the deck up to and including the split point (the deck's midpoint with +/- 5 variance),
         // the current card index will be added to the top stack. The rest will be added to the bottom stack.
-        int splitPoint = setSplitPoint(deck);
+        int splitPoint = setSplitPoint(deck, 5);
         for (int i = 0; i < deck.getCurrentSize(); i++) {
             if (i < splitPoint) {
                 topStack.add(deck.getCards().get(i));

@@ -49,6 +49,11 @@ public class Hand {
         updateHand();
     }
     public boolean containsCardValue(String value) {
+        /*
+            This method exists to determine is a specified card value exists in a given hand. The card value is input
+            into a hash map as a key. If the returned value is greater than 0, then there is at least one of that card.
+            The result of the search is returned as true or false.
+         */
         return valueData[PlayingCard.valueMap.get(value)] > 0;
     }
     public void clear() {
@@ -116,5 +121,7 @@ public class Hand {
     }
 }
 class Pocket extends Hand {
-
+    Pocket() {
+        setCapacity(2);
+    }
 }

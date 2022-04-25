@@ -2,10 +2,12 @@ package group.playingcardsdemo;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class Player {
     private String name = "";
     private Hand pocket = new Hand();
@@ -14,8 +16,6 @@ public class Player {
     private int chipTotal;
 
     // Constructors
-    public Player() {
-    }
     public Player(String playerName) {
         this.name = playerName;
     }
