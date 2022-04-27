@@ -86,17 +86,17 @@ public class GameController {
     @FXML
     Label payout72Label = new Label();
 
-    public GameController() throws FileNotFoundException {
+    public GameController() {
     }
 
     public static void setPlayer(Player _player) {
         player = _player;
     }
 
-    public void setCardBack(Image image) throws FileNotFoundException {
+    public void setCardBack(Image image) {
         this.deckTopImageView.setImage(image);
     }
-    public void setAvatar(Image image) throws FileNotFoundException {
+    public void setAvatar(Image image) {
         this.avatarImageView.setImage(image);
     }
     public void displayPayouts() {
@@ -143,7 +143,7 @@ public class GameController {
         root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
         sceneBuilder(event);
     }
-    private void sceneBuilder(ActionEvent event) throws IOException {
+    private void sceneBuilder(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

@@ -60,9 +60,9 @@ public class Hand {
         /*
             Resets the hand object.
 
-            1. Remove all cards from the list.
-            2. The hand size is set to 0.
-            3. The hand data arrays are reinitialized.
+            1.  Remove all cards from the list.
+            2.  The hand size is set to 0.
+            3.  The hand data arrays are reinitialized.
          */
 
         cards.clear();
