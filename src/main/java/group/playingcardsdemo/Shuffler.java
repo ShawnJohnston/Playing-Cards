@@ -2,6 +2,8 @@ package group.playingcardsdemo;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Stack;
+
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
@@ -59,133 +61,154 @@ public class Shuffler {
         }
         return deck;
     }
-    private int setSplitPoint(DeckOfCards deck, int bounds) {
+    private int setSplitPoint(DeckOfCards deck, int standardDeviation) {
         /*
          This method defines the location in a deck of cards in which a top stack will separate from the rest of the
          deck. Variability is implemented here to create an element of human imprecision to the procedure.
 
          1. Initialize the midpoint of the deck. for a 52-card deck, that would be 26.
-         2. Initialize variability using a method that simulates a crude bell curve distribution.
-         3. Variability is added to the midpoint and returned.
+         2. Return the results of a method that gets a random value within some standard deviations of 'deckMidPoint'.
          */
 
         int deckMidPoint = deck.getCurrentSize() / 2;
-        int variability = randomValueFromNormalDistribution(bounds);
-        return deckMidPoint + variability;
+        return randomValueFromNormalDistribution(deckMidPoint, standardDeviation);
     }
     private int setSplitPointForBox(int cardsSize, int boxCount) {
         // This variant of setSplitPoint is intended for the "Box" step in the hand shuffle. Every time the recursive box
         // uses this method, cardsSize (the size of the deck) will be smaller due to previous calls removing from it.
-        Random randomizer = new Random();
         int deckSegment = cardsSize / boxCount; // boxCount is decremented each level into the recursion. The deck gets
         // smaller every level, but the segments become relatively larger.
-        int variability = randomValueFromNormalDistribution(5); // Variability of +/- 5 cards.
-        return deckSegment + variability;
+        return randomValueFromNormalDistribution(deckSegment, 1); // Variability of +/- 5 cards.
     }
-    private int randomValueFromNormalDistribution(int bounds) {
-        // This method is used to create a normal distribution of values (resembling a bell curve). Mainly used in setSplitPoint methods.
-        // The rationale behind this method is that for many situations of random values within a range of possibilities,
-        // some values are more likely than others. For example, when cutting a deck of cards, it is possible for the cut to
-        // happen 10 steps from the midpoint, but it is more likely that the cut will be closer. (Refer to "standard deviation" in Statistics texts.)
-        // To select any random card from a deck of cards, however, all possibilities are equally likely. This results in a flat distribution.
-        // This method is NOT to be used for any scenario of a flat distribution.
-        Random randomizer = new Random();
-        ArrayList<Integer> numberSpread = new ArrayList<>(); // The absoluteBounds range of numbers are added here.
-        // Numbers are included here (absoluteBounds) times - their distance from 0.
-        // This 2D for-loop will add to numberSpread as to create a normal distribution of values, with 0 as the median.
-        // Outer loop: (-absoluteBounds <= i <= absoluteBounds).
-        // Inner loop: The current i value is added to numberSpread i times.
-        for (int i = -bounds; i <= bounds; i++) {
-            int constantMultiplier = bounds - Math.abs(i); // This is used to control the number of times i is added to numberSpread.
-            for (int j = 0; j < constantMultiplier + 1; j++) {
-                numberSpread.add(i);
-            }
-        }
-        int randomIndex = randomizer.nextInt(numberSpread.size());
-        return numberSpread.get(randomIndex); // A random value from the numberSpread returns.
-    }
-    private ArrayList<PlayingCard> riffle(DeckOfCards deck) {
-        // This method will split the deck into two stacks, then be riffled back together to make a new full stack.
-        ArrayList<PlayingCard> topStack = new ArrayList<>(); // Top half of the deck.
-        ArrayList<PlayingCard> bottomStack = new ArrayList<>(); // Bottom half of the deck.
+    private int randomValueFromNormalDistribution(int mean, int standardDeviation) {
+        /*
+            This method uses the  Random class' nextGaussian() to get a normal distribution random value. Mainly used in
+            setSplitPoint methods. In spirit of creating a human-like shuffle, the assumption is that the dealer would
+            split the deck in half somewhere in the middle. It is unlikely that the dealer would split at the exact
+            midpoint every time, but it's still more likely that the split point would be closer to the middle than
+            farther, so the probability of splitting at a more outbound point would decrease the farther that point is.
+            For example, when cutting a deck of cards, it is possible for the cut to happen 10 steps from the midpoint,
+            but it is more likely that the cut will be closer. (Refer to "standard deviation" in Statistics texts.) In a
+             flat distribution, on the other hand, all possibilities are equally likely.
 
-        // For every card in the deck up to and including the split point (the deck's midpoint with +/- 5 variance),
-        // the current card index will be added to the top stack. The rest will be added to the bottom stack.
-        int splitPoint = setSplitPoint(deck, 5);
-        for (int i = 0; i < deck.getCurrentSize(); i++) {
-            if (i < splitPoint) {
-                topStack.add(deck.getCards().get(i));
+             1. Initialize Random class.
+             2. Return a random value within a certain number of standard deviations from the mean.
+         */
+
+        Random randomizer = new Random();
+        return (int) randomizer.nextGaussian(mean, standardDeviation);
+    }
+    private Stack<PlayingCard> riffle(DeckOfCards deck) {
+        /*
+            This method will split the deck into two stacks, then be riffled back together to make a new full stack. To
+            simulate human imperfection, variability is utilized again to avoid a perfect one-one alternating riffle.
+            Every card in the deck up to and including the split point (the deck's midpoint with +/- 5 variability) will
+            be added to the top stack. The rest will be added to the bottom stack.
+
+            1.  Initialize a top stack and bottom stack.
+            2.  initialize a splitPoint. Bounds are set to 5, meaning that the midpoint of the split could be 26 +/- 5.
+            3.  For Loop: Range (deck size - 1) >= i >= 0. While 'i' is an integer >= the 'splitPoint', the card at that
+                index will push to 'bottomStack'. If 'i' < 'splitPoint', the card at that index will push to 'topStack'.
+            4.  A new stack is initialized to contain the cards as they are riffled.
+            5.  While Loop: While the riffled stack has fewer cards than the original deck stack, the riffling method
+                will execute.
+            6.  After the riffling is complete, the original deck will have its cards stack set to the riffle stack.
+            7.  The deck returns to main with a shuffled stack of cards.
+         */
+
+        Stack<PlayingCard> topStack = new Stack<>();
+        Stack<PlayingCard> bottomStack = new Stack<>();
+        int splitPoint = setSplitPoint(deck, 2);
+
+        for (int i = deck.currentSize - 1; i >= 0 ; i--) {
+            if (i >= splitPoint) {
+                bottomStack.push(deck.getCards().get(i));
             }
             else {
-                bottomStack.add(deck.getCards().get(i));
+                topStack.push(deck.getCards().get(i));
             }
         }
-
-        ArrayList<PlayingCard> riffledDeck = new ArrayList<>(); // New arrangement of cards post-riffle.
-
-        // This while-loop controls the riffling of the two stacks together.
-        while (riffledDeck.size() < deck.getCurrentSize()) {
-            // It is unlikely that cards will riffle exactly one at a time from each stack when shuffling by hand.
-            // Variability is used here to create bunching together of the cards randomly.
-            rifflingAction(riffledDeck, topStack, bottomStack);
+        Stack<PlayingCard> riffledStack = new Stack<>();
+        while (riffledStack.size() < deck.getCurrentSize()) {
+            rifflingAction(topStack, bottomStack, riffledStack);
         }
-        // This loop incrementally assigns each card in the riffledDeck list to the deck's corresponding card index.
-        for (int i = 0; i < deck.getCurrentSize(); i++) {
-            deck.getCards().set(i, riffledDeck.get(i));
-        }
-        return deck.getCards(); // The riffle is complete. The result returns to main to overwrite the deck's card array.
+        return riffledStack;
     }
-    private void rifflingAction(ArrayList<PlayingCard> riffledDeck, ArrayList<PlayingCard> topStack, ArrayList<PlayingCard> bottomStack) {
-        // The actual riffling occurs here. Java's Random class is used to make the procedures of the shuffle inexact.
-        Random randomizer = new Random();
+    private void rifflingAction(Stack<PlayingCard> topStack, Stack<PlayingCard> bottomStack, Stack<PlayingCard> riffledStack) {
+        /*
+            This method performs the actual riffling procedure. The parameters include two sub-stacks of cards from
+            the original deck, and an empty stack for the riffled cards. This method uses the Random class to emulate
+            human imperfection in riffling a real deck of cards. A perfect one-to-one alternating riffle is unlikely in
+            real life so the Random class will create some bunching in the cards. The Random class will also be used to
+            determine which of the two stacks will start in riffling.
 
+            1.  Initialize randomizer.
+            2.  Initialize 'stackSelector' and assign a random boolean value using the randomizer. The 'True' value
+                represents the top stack, whereas the 'False' value represents the bottom stack.
+            3.  While Loop: While either of the stacks contain cards:
+                a.   If the top stack is empty, switch 'stackSelector' to false. If the bottom stack is empty, switch
+                    'stackSelector' to true.
+                b.   Initialize variability from 1-3. Used for "bunching" effect in the riffle.
+                c.   If/Else: Determines which stack to perform riffling from. Executes helper method.
+                d.   The 'stackSelector' value flips, so that the stack to riffle from alternates with each cycle.
+         */
+
+        Random randomizer = new Random();
         boolean stackSelector = randomizer.nextBoolean();
+
         while (!topStack.isEmpty() || !bottomStack.isEmpty()) {
+            //  If/Else pair used for when one stack is empty and the other is not.
             if (topStack.isEmpty()) {
                 stackSelector = false;
             }
             else if (bottomStack.isEmpty()) {
                 stackSelector = true;
             }
-            int variability = 1 + randomizer.nextInt(2); // Bunching of cards only happens with up to 3 cards at a time.
+
+            int variability = 1 + randomizer.nextInt(2); // Bunching of cards. Minimum 1, up to 3 cards at a time.
             if (stackSelector) {
-                int counter = 0;
-                while (!topStack.isEmpty()) {
-                    if (counter == variability) {
-                        break;
-                    }
-                    riffledDeck.add(topStack.get(topStack.size() - 1));
-                    topStack.remove(topStack.size() - 1);
-                    counter++;
-                }
+                rifflingHelper(topStack, riffledStack, variability);
             }
             else {
-                int counter = 0;
-                while (!bottomStack.isEmpty()) {
-                    if (counter == variability) {
-                        break;
-                    }
-                    riffledDeck.add(bottomStack.get(bottomStack.size() - 1));
-                    bottomStack.remove(bottomStack.size() - 1);
-                    counter++;
-                }
+                rifflingHelper(bottomStack, riffledStack, variability);
             }
             stackSelector = !stackSelector;
         }
     }
-    private ArrayList<PlayingCard> box(DeckOfCards deck, int boxCount) {
+    private void rifflingHelper(Stack<PlayingCard> stack, Stack<PlayingCard> riffledStack, int variability) {
+        /*
+            This method is used within the rifflingAction method to move a card or cards from a donor stack to the
+            receiver stack. Variability is a random value, with a minimum value of 1 to ensure that at least one card is
+            riffled from the donor stack.
+
+            1.  Initialize a counter for the number of cards riffled from the stack.
+            2.  While Loop: While the stack is not empty:
+                a.   If the counter equals the variability value, break the loop.
+                b.   Pop the top card from the donor stack, which is pushed into the riffled stack.
+                c.   The counter increments at the end of the inner while loop.
+         */
+
+        int counter = 0;
+        while (!stack.isEmpty()) {
+            if (counter == variability) {
+                break;
+            }
+            riffledStack.push(stack.pop());
+            counter++;
+        }
+    }
+    private Stack<PlayingCard> box(DeckOfCards deck, int boxCount) {
         // The box method will use several lists, and use recursion to perform the entire procedure.
 
-        ArrayList<PlayingCard> cards = deck.getCards(); // The deck's cards are stored as a list.
-        ArrayList<PlayingCard> deckBox; // This list will have stacks added to it recursively.
-        ArrayList<PlayingCard> stack = new ArrayList<>(); // Individual stacks will contain cards, and the stack will be added to deckBox.
+        Stack<PlayingCard> cards = deck.getCards(); // The deck's cards are stored as a list.
+        Stack<PlayingCard> deckBox; // This list will have stacks added to it recursively.
+        Stack<PlayingCard> stack = new Stack<>(); // Individual stacks will contain cards, and the stack will be added to deckBox.
         deckBox = boxTail(cards, stack, boxCount); // Recursive method to perform the box procedure.
 
-        deck.setCards(deckBox);
-        return deck.getCards(); // To deck in handShuffle method.
+        return deckBox; // To deck in handShuffle method.
     }
-    private ArrayList<PlayingCard> boxTail(ArrayList<PlayingCard> cards, ArrayList<PlayingCard> stack, int boxCount) {
-        stack = new ArrayList<>();
+    private Stack<PlayingCard> boxTail(Stack<PlayingCard> cards, Stack<PlayingCard> stack, int boxCount) {
+        stack = new Stack<>();
 
         // Recursion base case.
         if (boxCount == 1) {
@@ -216,40 +239,32 @@ public class Shuffler {
         stack.addAll(boxTail(cards, stack, boxCount - 1)); // Tail recursion to continue the procedure.
         return stack; // Returns the stack to the next highest recursion level.
     }
-    private ArrayList<PlayingCard> cutTheDeck(DeckOfCards deck) {
-        // This method will split the deck into two stacks, then swap the position of the top and bottom stacks.
+    private Stack<PlayingCard> cutTheDeck(DeckOfCards deck) {
+        /*
+            This method will split the deck into two halves. The top and bottom halves will swap positions.
 
-        int topStackSize = setSplitPoint(deck, 20); // Top stack will split at the deck midpoint (+/-) 10.
-        int bottomStackSize = deck.getCurrentSize() - topStackSize; // The remaining cards make up the bottom stack.
+            1.  Initialize top stack and bottom stack.
+            2.  Initialize split point within 4 standard deviations from the midpoint of the deck.
+            3.  For Loop: Range (deck size - 1) >= i >= 0. While 'i' is an integer >= the 'splitPoint', the card at that
+                index will push to 'bottomStack'. If 'i' < 'splitPoint', the card at that index will push to 'topStack'.
+            4.  Add all cards from the 'topStack' to the end of 'bottomStack'.
+            5.  Return the resulting stack.
+         */
 
+        Stack<PlayingCard> topStack = new Stack<>();
+        Stack<PlayingCard> bottomStack = new Stack<>();
+        int splitPoint = setSplitPoint(deck, 4);
 
-        ArrayList<PlayingCard> topStack = new ArrayList<>();
-        ArrayList<PlayingCard> bottomStack = new ArrayList<>();
-
-        int j = 0; // Secondary incrementer.
-        // This for loop will assign each index of cards in the deck to the corresponding topStack index.
-        for (int i = 0; i < deck.getCurrentSize(); i++) {
-            if (i < topStackSize) {
-                topStack.add(deck.getCards().get(i));
+        for (int i = deck.currentSize - 1; i >= 0 ; i--) {
+            if (i >= splitPoint) {
+                bottomStack.push(deck.getCards().get(i));
             }
             else {
-                // The split point has been passed, the card is assigned to bottomStack at index j.
-                bottomStack.add(deck.getCards().get(i));
-                j++;
+                topStack.push(deck.getCards().get(i));
             }
         }
+        bottomStack.addAll(topStack);
 
-        ArrayList<PlayingCard> cutDeck = new ArrayList<>(); // For containing the resulting card array.
-        // This for loop will assign each card in bottomStack to the new deck array, then cards from topStack when it
-        // increments beyond the length of bottomStack.
-        for (int i = 0; i < deck.getCurrentSize(); i++) {
-            if (i < bottomStackSize) {
-                cutDeck.add(bottomStack.get(i));
-            }
-            else {
-                cutDeck.add(topStack.get(i - bottomStackSize));
-            }
-        }
-        return cutDeck; // To handShuffle method. Overwrites the deck's card array.
+        return bottomStack;
     }
 }

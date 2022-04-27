@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Stack;
 
 @Getter
@@ -17,7 +16,7 @@ public class DeckOfCards {
     protected int maxSize = 52;
     protected int currentSize = 52;
     protected static int jokerCount = 0;
-    protected ArrayList<PlayingCard> cards = new ArrayList<>();
+    protected Stack<PlayingCard> cards = new Stack<>();
 
     public static Image[] cardImages = new Image[54];
     public static ImageView[] cardImageViews = new ImageView[54];
@@ -56,7 +55,7 @@ public class DeckOfCards {
         }
         for (int i = PlayingCard.SUITS.length - 2; i >= 0; i--) {
             for (int j = PlayingCard.VALUES_INDEX.length - 3; j >= 0; j--) {
-                cards.add(new PlayingCard(PlayingCard.VALUES_INDEX[j], PlayingCard.SUITS[i]));
+                cards.push(new PlayingCard(PlayingCard.VALUES_INDEX[j], PlayingCard.SUITS[i]));
             }
         }
     }
@@ -74,8 +73,7 @@ public class DeckOfCards {
             4. The storage variable is returned.
          */
 
-        PlayingCard drawnCard = cards.get(cards.size() - 1);
-        cards.remove(cards.size() - 1);
+        PlayingCard drawnCard = cards.pop();
         currentSize = cards.size();
         return drawnCard;
     }
@@ -92,7 +90,10 @@ public class DeckOfCards {
         }
         currentSize = cards.size();
     }
-
+    public void clearCards() {
+        cards.clear();
+        currentSize = 0;
+    }
     public static void initializeCardImages(DeckOfCards deck) throws FileNotFoundException {
         /*
             This method concatenates an image url for every card and stores them in the 'cardImages' static array.
@@ -122,7 +123,7 @@ class Discard extends DeckOfCards {
         super();
         maxSize = 54;
         currentSize = 0;
-        cards = new ArrayList<>();
+        cards = new Stack<>();
     }
     public void addCard(PlayingCard card) {
         cards.add(card);
