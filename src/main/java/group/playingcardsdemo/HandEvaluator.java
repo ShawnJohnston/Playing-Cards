@@ -15,7 +15,8 @@ import java.util.HashMap;
 @NoArgsConstructor
 
 public class HandEvaluator {
-    public static final String[] STANDARDPOKERRANKS = {"HighCard", "Pair", "TwoPair", "Trips", "Straight", "Flush",
+    public static final String[] STANDARDPOKERRANKS = {
+            "HighCard", "Pair", "TwoPair", "Trips", "Straight", "Flush",
             "FullHouse", "Quads", "StraightFlush", "RoyalFlush"};
     public static int straightFlushSize = 5;
     private final boolean[] RANKDATA = new boolean[STANDARDPOKERRANKS.length];
@@ -40,9 +41,6 @@ public class HandEvaluator {
         fullHand.sortHandByValue();
         checkForWheel();
 
-        pairsList = new ArrayList<>();
-        tripsList = new ArrayList<>();
-        fullHouseList = new ArrayList<>();
         hasMultiples();
         determineRank();
     }
@@ -105,64 +103,6 @@ public class HandEvaluator {
         RANKDATA[3] = true;
         return !tripsList.isEmpty();
     }
-    //public Boolean isAStraight() {
-    //    // This flow of logic is for game modes where a straight requires 5 consecutive values.
-    //    if (straightFlushSize == 5) {
-    //        boolean handContainsFiveOrTen = false; // All 5 card straights contain either a "5" or "10". Otherwise, it's ruled out.
-    //        if (pairsList.size() > 0 || tripsList.size() > 0 || !(quadsValue == null)) {
-    //            return false;
-    //        }
-    //        for (PlayingCard card: hand.getCards()) {
-    //            if (card.getValue().equals("5") || card.getValue().equals("10")) {
-    //                handContainsFiveOrTen = true; // The hand contains "5" or "10". Evaluation of a straight can proceed.
-    //                break;
-    //            }
-    //        }
-    //        if (!handContainsFiveOrTen) {
-    //            return false; // The hand does not contain a "5" or "10". A straight is not possible.
-    //        }
-    //        else {
-    //            // The hand will be sorted by value. Then, each index of the hand will be compared to an array of values.
-    //            // When the value of the first card in the hand matches an index value, a loop will be used to count value sequences.
-    //            String[] values = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"}; // Reference array.
-    //            int indexPoint = 0; // This integer is used to match the first card in the hand to the corresponding index of the values array.
-//
-    //            // This loop is used to match the first card in the hand with the corresponding value's index in the values array.
-    //            // When the match occurs, the values index is stored in indexPoint, which will be used to establish where
-    //            // counting begins in the next step of the process.
-//
-    //            for (int i = 0; i < values.length; i++) {
-    //                if (hand.getCards().get(0).getValue().equals(values[i])) {
-    //                    // If the first card in the hand has a value that matches the values array at index i, indexPoint
-    //                    // will record the value of i.
-    //                    indexPoint = i;
-    //                    break;
-    //                }
-    //            }
-//
-    //            int straightCount = 0; // Used to count value sequence.
-    //            int handIndex = 0; // Counter used to access the playerHand index.
-    //            // This loop starts where the first card in the hand matches with the corresponding value index in the values array.
-    //            // The loop spans up to (exclusively) the indexPoint value + the integer defining the size of a straight.
-    //            for (int i = indexPoint; i < (indexPoint + straightFlushSize); i++) {
-    //                // This if-statement will compare the string value at current playerHand index to the values array at index i.
-    //                if (hand.getCards().get(handIndex).getValue().equals(values[i])) {
-    //                    // The string value at this playerHand index matches the string value at the values array index i.
-    //                    straightCount++;
-    //                }
-    //                else {
-    //                    straightCount = 0;
-    //                }
-    //                handIndex++;
-    //                if (straightCount == straightFlushSize) {
-    //                    RANKDATA[4] = true;
-    //                    return true;
-    //                }
-    //            }
-    //        }
-    //    }
-    //    return false;
-    //}
     public Boolean isAStraight() {
         int counter = 0;
         
@@ -295,6 +235,15 @@ public class HandEvaluator {
     }
 
     private void moveCardFromFullHandToFiveCardHand(String value) {
+        /*
+            This method will search the full hand for a certain card value. For each playing card with that value, it
+            will be added to the 5-card hand and removed from the full hand.
+
+            1.  For Loop:   Range (full hand size - 1) >= i >= 0.
+                a.  if the card at index 'i' in fullHand is matches the queried value:
+                    -   Add it to the 5-card hand.
+                    -   Remove it from the full hand.
+         */
         for (int i = fullHand.getSize() - 1; i  >= 0; i--) {
             if (fullHand.getCards().get(i).getValue().equals(value)) {
                 fiveCardHand.addCard(fullHand.getCards().get(i));
@@ -303,6 +252,15 @@ public class HandEvaluator {
         }
     }
     private void moveKickersFromFullHandToFiveCardHand() {
+        /*
+            This method will fill the 5 card hand with the highest value cards until it contains 5 cards.
+
+            1.  If the five card hand has less than 5 cards:
+                a.  For Loop: Range (Full hand size - 1) >= 'i' >= 0.
+                b.  Add the card at 'fullHand' index i to fiveCardHand.
+                c.  Remove the card at index 'i' from 'fullHand'.
+                d.  If the 50card hand contains 5 cards, break the loop.
+         */
         if (fiveCardHand.getSize() < 5) {
             for (int i = fullHand.getSize() - 1; i >= 0; i--) {
                 fiveCardHand.addCard(fullHand.getCards().get(i));
@@ -319,10 +277,10 @@ public class HandEvaluator {
             for any existing pairs, trips, and/or full houses.
 
             1.  For Loop: Descending loop from (value data length - 1) >= i >= 0.
-                - If the count at that index is 2, the card value will be added to the 'pairsList' list.
-                - If 3, the card value will be added to the 'tripsList' list.
-                - If 4, the 'quadsValue' variable will have the card value assigned to it.
-                - In any case, the 'RANKDATA' array will update for all applicable results.
+                -   If the count at that index is 2, the card value will be added to the 'pairsList' list.
+                -   If 3, the card value will be added to the 'tripsList' list.
+                -   If 4, the 'quadsValue' variable will have the card value assigned to it.
+                -   In any case, the 'RANKDATA' array will update for all applicable results.
             2.  If there is 2+ pairs in 'pairsList', 'RANKDATA' will set true for Two Pairs.
             3.  If both 'pairsList' and 'tripsList' contain at least one entry, the first items in each list will be
                 added to 'fullHouseList', and 'RANKDATA' will set true for Full House.
@@ -356,6 +314,10 @@ public class HandEvaluator {
         }
     }
     private void determineRank() {
+        /*
+            This method executes each rank query in descending order.
+         */
+
         if (isARoyalFlush()) {
             handRank = rankState.valueOf(STANDARDPOKERRANKS[9]);
         }

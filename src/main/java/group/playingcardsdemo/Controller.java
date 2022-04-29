@@ -37,12 +37,16 @@ public abstract class Controller {
     protected Controller() {
     }
 
+    protected void setInitialDeckTopY(double y) {
+        initialDeckTopY = (float) y;
+    }
+
     public void toReset(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(currentScene));
         root = loader.load();
         sceneBuilder(event);
     }
-    public void exitApplication(ActionEvent event) {
+    public void exitApplication() {
         Platform.exit();
     }
     public void switchToMainMenu(ActionEvent event) throws IOException {
@@ -120,9 +124,6 @@ public abstract class Controller {
         deck = new DeckOfCards();
         discard = new Discard();
         hand = new Hand();
-    }
-    protected void setInitialDeckTopY(double y) {
-        initialDeckTopY = (float) y;
     }
 
     protected void decrementFromDeckGraphics_RandomTest(ImageView deckTopImageView, Label deckSizeLabel, int numberOfCards) {

@@ -171,13 +171,12 @@ public class HandRecognitionTest extends Controller implements Initializable {
         card4Label.setText(evaluator.getFiveCardHand().getCards().get(3).getName());
         card5Label.setText(evaluator.getFiveCardHand().getCards().get(4).getName());
     }
-    public void toSort(ActionEvent event) throws FileNotFoundException {
+    public void toSort() throws FileNotFoundException {
         /*
             This method will sort the 7-card board.
          */
 
         hand.sortHandByValue();
-
         setCardFronts();
         updateCardImageViews();
     }
