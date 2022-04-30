@@ -25,8 +25,8 @@ import java.util.ResourceBundle;
 public class HandRecognitionTest extends Controller implements Initializable {
     private final int boardSize = 7;
     private TestState testState = TestState.Random;
-    private String sliderPrimaryState = PlayingCard.VALUES[0],
-                    sliderSecondaryState = PlayingCard.VALUES[0];
+    private String sliderPrimaryValue = PlayingCard.VALUES[0],
+                    sliderSecondaryValue = PlayingCard.VALUES[0];
     private Image[] cardFronts;
 
     @FXML
@@ -183,31 +183,59 @@ public class HandRecognitionTest extends Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        /*
+            This method will allow changes to be made when the end-user interacts with the sliders.
+
+            1.  Establish stateSliderPrimary listener.
+            2.  Establish stateSliderSecondary listener.
+            3.  Add testStateChoiceBox items.
+            4.  Set testState.
+         */
+
         stateSliderPrimary.valueProperty().addListener(new ChangeListener<Number>() {
             @SneakyThrows
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                /*
+                    1.  If the testState is set to Random:
+                        a.  Set the primary state slider to position 1.
+                        b.  Set the value of primary slider to "None".
+                        c.  Set the primary state label to a non-value.
+                    2.  Else:
+                        a.  Update the primary slider value based on user-selection.
+                        b.  Update the primary state label to the value of the primary slider's value.
+                        c.  Execute method to run update the hand.
+                 */
+                
                 if (testState.equals(TestState.Random)) {
                     stateSliderPrimary.setValue(1);
-                    sliderPrimaryState = "None";
+                    sliderPrimaryValue = "None";
                     statePrimaryLabel.setText("-");
                 }
                 else {
-                    sliderPrimaryState = setSliderState(stateSliderPrimary, statePrimaryLabel);
-                    statePrimaryLabel.setText(sliderPrimaryState);
+                    sliderPrimaryValue = setSliderState(stateSliderPrimary, statePrimaryLabel);
+                    statePrimaryLabel.setText(sliderPrimaryValue);
                     runTestState();
                 }
             }
         });
         stateSliderSecondary.valueProperty().addListener(new ChangeListener<Number>() {
+            /*
+                1.  If the testState is set to 'TwoPair' or 'FullHouse':
+                    a.  Update the secondary slider value based on user-selection.
+                2.  Else:
+                    a.  Set the secondary state slider to position 1.
+                    b.  Set the value of secondary slider to "None".
+                    c.  Set the secondary state label to a non-value.
+             */
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
                 if (testState.equals(TestState.TwoPair) || testState.equals(TestState.FullHouse) ) {
-                    sliderSecondaryState = setSliderState(stateSliderSecondary, stateSecondaryLabel);
+                    sliderSecondaryValue = setSliderState(stateSliderSecondary, stateSecondaryLabel);
                 }
                 else {
                     stateSliderSecondary.setValue(1);
-                    sliderSecondaryState = "None";
+                    sliderSecondaryValue = "None";
                     stateSecondaryLabel.setText("-");
                 }
             }
@@ -228,6 +256,18 @@ public class HandRecognitionTest extends Controller implements Initializable {
     }
     @SneakyThrows
     private void setTestState(ActionEvent event) {
+        /*
+            This method calibrates the test to the settings selected by the end-user.
+
+            1.  Reset the test sliders.
+            2.  Assign the test state to the current value stored in the choice box.
+            3.  Switch statement for the current test state:
+                a.  Updates the state slider label(s).
+                b.  Updates the state slider value(s).
+            4.  Updates the card Imageviews.
+            5.  If the test state is RoyalFlush or Flush, execute runTestState().
+         */
+
         resetSliders();
         testState = TestState.valueOf(testStateChoiceBox.getValue());
         switch (testState) {
@@ -260,11 +300,11 @@ public class HandRecognitionTest extends Controller implements Initializable {
     }
     public void resetSliders() {
         stateSliderPrimary.setValue(1);
-        sliderPrimaryState = "None";
+        sliderPrimaryValue = "None";
         statePrimaryLabel.setText("-");
 
         stateSliderSecondary.setValue(1);
-        sliderSecondaryState = "None";
+        sliderSecondaryValue = "None";
         stateSecondaryLabel.setText("-");
     }
 
