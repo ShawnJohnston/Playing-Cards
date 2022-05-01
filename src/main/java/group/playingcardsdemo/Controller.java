@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.FileInputStream;
@@ -21,6 +22,7 @@ import java.io.IOException;
 
 @Getter
 @Setter
+@NoArgsConstructor
 
 public abstract class Controller {
     protected Parent root;
@@ -33,9 +35,6 @@ public abstract class Controller {
     protected float initialDeckTopY;
 
     protected final String css = this.getClass().getResource("style.css").toExternalForm();
-
-    protected Controller() {
-    }
 
     protected void setInitialDeckTopY(double y) {
         initialDeckTopY = (float) y;

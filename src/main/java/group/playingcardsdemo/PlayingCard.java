@@ -28,6 +28,7 @@ public class PlayingCard extends Node {
     protected String front;
     protected String back;
     protected static HashMap<String, Integer> valueMap = new HashMap<>();
+    protected static HashMap<Integer, String> indexMap = new HashMap<>();
     protected Facing currentFacing = Facing.faceDown;
 
     public PlayingCard(String value, String suit) {
@@ -70,6 +71,22 @@ public class PlayingCard extends Node {
         PlayingCard.valueMap.put("King", 11);
         PlayingCard.valueMap.put("Ace", 12);
         PlayingCard.valueMap.put("Joker", 13);
+    }
+    public static void initializeCardIndexMap() {
+        PlayingCard.indexMap.put(0, "2");
+        PlayingCard.indexMap.put(1, "3");
+        PlayingCard.indexMap.put(2, "4");
+        PlayingCard.indexMap.put(3, "5");
+        PlayingCard.indexMap.put(4, "6");
+        PlayingCard.indexMap.put(5, "7");
+        PlayingCard.indexMap.put(6, "8");
+        PlayingCard.indexMap.put(7, "9");
+        PlayingCard.indexMap.put(8, "10");
+        PlayingCard.indexMap.put(9, "Jack");
+        PlayingCard.indexMap.put(10, "Queen");
+        PlayingCard.indexMap.put(11, "King");
+        PlayingCard.indexMap.put(12, "Ace");
+        PlayingCard.indexMap.put(13, "Joker");
     }
 }
 // The JokerCard class inherits from PlayingCard. Is used to ensure that Jokers are distinct from other cards.

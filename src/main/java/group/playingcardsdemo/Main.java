@@ -13,6 +13,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         PlayingCard.initializeCardValueMap();
+        PlayingCard.initializeCardIndexMap();
         HandEvaluator.initializePokerRanks();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("TitleScreen.fxml"));

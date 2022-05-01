@@ -100,6 +100,21 @@ public class HandRecognitionTest extends Controller implements Initializable {
         hand.setCapacity(boardSize);
         cardFronts = new Image[boardSize];
     }
+    public void toSort() throws FileNotFoundException {
+        /*
+            This method will sort the 7-card board.
+         */
+
+        hand.sortHandByValue();
+        setCardFronts();
+        updateCardImageViews();
+    }
+    public void toReset(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("HandRecognitionTest.fxml"));
+        root = loader.load();
+        sceneBuilder(event);
+    }
+
     private void setCardFronts() throws FileNotFoundException {
         /*
             In this method, the links for each image file corresponding to the cards in the hand will be used to
@@ -171,14 +186,14 @@ public class HandRecognitionTest extends Controller implements Initializable {
         card4Label.setText(evaluator.getFiveCardHand().getCards().get(3).getName());
         card5Label.setText(evaluator.getFiveCardHand().getCards().get(4).getName());
     }
-    public void toSort() throws FileNotFoundException {
-        /*
-            This method will sort the 7-card board.
-         */
+    private void testCaseUpdate() throws FileNotFoundException {
+        deck = new DeckOfCards();
+        deckSizeLabel.setText(String.valueOf(deck.currentSize));
 
-        hand.sortHandByValue();
+        HandEvaluator evaluator = new HandEvaluator(hand);
         setCardFronts();
         updateCardImageViews();
+        updateFiveCardHandLabels(evaluator);
     }
 
     @Override
@@ -249,8 +264,7 @@ public class HandRecognitionTest extends Controller implements Initializable {
                 TestState.Flush.toString(),
                 TestState.FullHouse.toString(),
                 TestState.Quads.toString(),
-                TestState.StraightFlush.toString(),
-                TestState.RoyalFlush.toString()
+                TestState.StraightFlush.toString()
         );
         testStateChoiceBox.setOnAction(this::setTestState);
     }
@@ -264,14 +278,14 @@ public class HandRecognitionTest extends Controller implements Initializable {
             3.  Switch statement for the current test state:
                 a.  Updates the state slider label(s).
                 b.  Updates the state slider value(s).
-            4.  Updates the card Imageviews.
-            5.  If the test state is RoyalFlush or Flush, execute runTestState().
+            4.  Updates the card ImageViews.
+            5.  If the test state is Flush, execute runTestState().
          */
 
         resetSliders();
         testState = TestState.valueOf(testStateChoiceBox.getValue());
         switch (testState) {
-            case Random, RoyalFlush -> {
+            case Random -> {
                 statePrimaryLabel.setText("-");
             }
             case Straight, Flush, StraightFlush -> {
@@ -290,15 +304,28 @@ public class HandRecognitionTest extends Controller implements Initializable {
             }
         }
         updateCardImageViews();
-        if (testState.equals(TestState.RoyalFlush) || testState.equals(TestState.Flush)) {
+        if (testState.equals(TestState.Flush)) {
             runTestState();
         }
     }
     public String setSliderState(Slider slider, Label label) {
+    /*
+        This method updates the slider value to the static VALUES value corresponding to the index of
+        the current slider value. That value is also returned.
+     */
         label.setText(PlayingCard.VALUES[(int) slider.getValue() - 1]);
         return PlayingCard.VALUES[(int) slider.getValue() - 1];
     }
     public void resetSliders() {
+    /*
+        This method will reset the sliders.
+
+        For both the primary and secondary sliders:
+        1.  The slider will change to position 1.
+        2.  The slider value will be set to "None".
+        3.  The slider label will be set to a non-value.
+     */
+
         stateSliderPrimary.setValue(1);
         sliderPrimaryValue = "None";
         statePrimaryLabel.setText("-");
@@ -307,168 +334,92 @@ public class HandRecognitionTest extends Controller implements Initializable {
         sliderSecondaryValue = "None";
         stateSecondaryLabel.setText("-");
     }
-
-    public void toReset(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("HandRecognitionTest.fxml"));
-        root = loader.load();
-        sceneBuilder(event);
-    }
     public void runTestState() throws FileNotFoundException {
+    /*
+        This method will execute the appropriate test given the established settings.
+
+        1.  All cards will return to the deck and the card ImageViews will clear to default.
+        2.  Switch for testState:
+            For most cases, the appropriate method for the test state will execute. For certain
+            tests, the slider positions will change to a new minimum value for logistic purposes.
+     */
+
         resetAllCards();
         updateCardImageViews();
-
         switch (testState) {
-            case Random:
-                shuffler.random(deck);
-                break;
-            case Pair:
-                testPair();
-                break;
-            case TwoPair:
+            case Random -> shuffler.random(deck);
+            case Pair -> testMultiples(2, 0);
+            case TwoPair -> {
                 if (stateSliderPrimary.getValue() < 2) {
                     stateSliderPrimary.setValue(2);
                 }
-                testTwoPair();
-                break;
-            case Trips:
-                testTrips();
-                break;
-            case Straight:
+                testMultiples(2, 2);
+            }
+            case Trips -> testMultiples(3, 0);
+            case Straight -> {
                 if (stateSliderPrimary.getValue() < 4) {
                     stateSliderPrimary.setValue(4);
                 }
                 testStraight();
-                break;
-            case Flush:
+            }
+            case Flush -> {
                 if (stateSliderPrimary.getValue() < 5) {
                     stateSliderPrimary.setValue(5);
                 }
                 testFlush();
-                break;
-            case FullHouse:
-                testFullHouse();
-                break;
-            case Quads:
-                testQuads();
-                break;
-            case StraightFlush:
+            }
+            case FullHouse -> testMultiples(3, 2);
+            case Quads -> testMultiples(4, 0);
+            case StraightFlush -> {
                 if (stateSliderPrimary.getValue() < 4) {
                     stateSliderPrimary.setValue(4);
                 }
                 testStraightFlush();
-                break;
-            case RoyalFlush:
-                testRoyalFlush();
+            }
         }
+        testCaseUpdate();
     }
-    public void testPair() throws FileNotFoundException {
-        for (int i = 0; i < 2; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUES[(int) (stateSliderPrimary.getValue() - 1)], PlayingCard.SUITS[i] );
-            hand.addCard(card);
+    public void testMultiples(int size1, int size2) {
+        for (int i = 0; i < size1; i++) {
+            hand.addCard(testHelper_Card(stateSliderPrimary, i));
         }
-        PlayingCard card = new PlayingCard("2", "Hearts" );
-        PlayingCard card1 = new PlayingCard("3", "Diamonds" );
-        PlayingCard card2 = new PlayingCard("4", "Clubs" );
-        hand.addCard(card);
-        hand.addCard(card1);
-        hand.addCard(card2);
-        testCaseTemplate();
-    }
-    public void testTwoPair() throws FileNotFoundException {
-        for (int i = 0; i < 2; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUES[(int) (stateSliderPrimary.getValue() - 1)], PlayingCard.SUITS[i] );
-            hand.addCard(card);
+        for (int i = 0; i < size2; i++) {
+            hand.addCard(testHelper_Card(stateSliderSecondary, i));
         }
-        for (int i = 0; i < 2; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUES[(int) (stateSliderSecondary.getValue() - 1)], PlayingCard.SUITS[i] );
-            hand.addCard(card);
-        }
-        PlayingCard card = new PlayingCard("Ace", "Spades" );
-        hand.addCard(card);
-        testCaseTemplate();
-    }
-    public void testTrips() throws FileNotFoundException {
-        for (int i = 0; i < 3; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUES[(int) (stateSliderPrimary.getValue() - 1)], PlayingCard.SUITS[i] );
-            hand.addCard(card);
-        }
-        PlayingCard card = new PlayingCard("Ace", "Hearts" );
-        PlayingCard card1 = new PlayingCard("King", "Hearts" );
-        hand.addCard(card);
-        hand.addCard(card1);
 
-        testCaseTemplate();
-    }
-    public void testStraight() throws FileNotFoundException {
-        for (int i = 1; i < HandEvaluator.straightFlushSize; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - i)], "Spades" );
-            hand.addCard(card);
+        int counter = 0;
+        while(hand.getSize() < HandEvaluator.straightFlushSize) {
+            if (!hand.containsCardValue(PlayingCard.indexMap.get(counter))) {
+                hand.addCard(new PlayingCard(PlayingCard.indexMap.get(counter), "Hearts"));
+            }
+            counter++;
         }
-        PlayingCard card = new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue())], "Hearts");
-        hand.addCard(card);
-        testCaseTemplate();
+
     }
-    public void testFlush() throws FileNotFoundException {
+    public void testStraight() {
+        for (int i = 1; i < HandEvaluator.straightFlushSize; i++) {
+            hand.addCard(new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - i)], "Spades"));
+        }
+        hand.addCard(new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue())], "Hearts"));
+
+    }
+    public void testFlush() {
         for (int i = 0; i < HandEvaluator.straightFlushSize - 1; i++) {
             PlayingCard card = new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - i)], "Spades" );
             hand.addCard(card);
         }
         PlayingCard card = new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - 5)], "Spades");
         hand.addCard(card);
-        testCaseTemplate();
     }
-    public void testFullHouse() throws FileNotFoundException {
-        Hand full = new Hand();
-        for (int i = 0; i < 3; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUES[(int) (stateSliderPrimary.getValue() - 1)], PlayingCard.SUITS[i] );
-            full.addCard(card);
-        }
-        Hand of = new Hand();
-        for (int i = 0; i < 2; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUES[(int) (stateSliderSecondary.getValue() - 1)], PlayingCard.SUITS[i] );
-            of.addCard(card);
-        }
-        for (PlayingCard card: full.getCards()) {
-            hand.addCard(card);
-        }
-        for (PlayingCard card: of.getCards()) {
-            hand.addCard(card);
-        }
-        testCaseTemplate();
-    }
-    public void testQuads() throws FileNotFoundException {
-        for (int i = 0; i < 4; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - 1)], PlayingCard.SUITS[i] );
-            hand.addCard(card);
-        }
-        PlayingCard card = new PlayingCard("Ace", "Spades");
-        hand.addCard(card);
-        testCaseTemplate();
-    }
-    public void testStraightFlush() throws FileNotFoundException {
+    public void testStraightFlush() {
         for (int i = 0; i < HandEvaluator.straightFlushSize; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - i)], "Spades" );
-            hand.addCard(card);
+            hand.addCard(new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - i)], "Spades" ));
         }
+    }
+    private PlayingCard testHelper_Card(Slider slider, int i) {
+        return new PlayingCard(PlayingCard.VALUES[(int) (slider.getValue() - 1)], PlayingCard.SUITS[i] );
+    }
 
-        testCaseTemplate();
-    }
-    public void testRoyalFlush() throws FileNotFoundException {
-        for (int i = 0; i < HandEvaluator.straightFlushSize; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUES_INDEX[PlayingCard.VALUES_INDEX.length - 2 - i], "Spades");
-            hand.addCard(card);
-        }
-        testCaseTemplate();
-    }
-    private void testCaseTemplate() throws FileNotFoundException {
-        deck = new DeckOfCards();
-        deckSizeLabel.setText(String.valueOf(deck.currentSize));
-
-        HandEvaluator evaluator = new HandEvaluator(hand);
-        setCardFronts();
-        updateCardImageViews();
-        updateFiveCardHandLabels(evaluator);
-    }
     public void drawRandomHandFromDeck() throws FileNotFoundException {
         if (deck.currentSize == deck.maxSize) {
             shuffler.random(deck);
@@ -495,7 +446,6 @@ public class HandRecognitionTest extends Controller implements Initializable {
 
         updateFiveCardHandLabels(evaluator);
     }
-
     private void discardHand() throws FileNotFoundException {
         /*
             In this method, each card in the hand is added to the discard pile.
