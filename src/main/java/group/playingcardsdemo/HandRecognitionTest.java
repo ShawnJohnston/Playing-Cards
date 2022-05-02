@@ -97,7 +97,7 @@ public class HandRecognitionTest extends Controller implements Initializable {
     public HandRecognitionTest() {
         super();
         setInitialDeckTopY(deckTopImageView.getY());
-        hand.setCapacity(boardSize);
+        hand.setCapacity(HandEvaluator.straightFlushSize);
         cardFronts = new Image[boardSize];
     }
     public void toSort() throws FileNotFoundException {
@@ -186,15 +186,6 @@ public class HandRecognitionTest extends Controller implements Initializable {
         card4Label.setText(evaluator.getFiveCardHand().getCards().get(3).getName());
         card5Label.setText(evaluator.getFiveCardHand().getCards().get(4).getName());
     }
-    private void testCaseUpdate() throws FileNotFoundException {
-        deck = new DeckOfCards();
-        deckSizeLabel.setText(String.valueOf(deck.currentSize));
-
-        HandEvaluator evaluator = new HandEvaluator(hand);
-        setCardFronts();
-        updateCardImageViews();
-        updateFiveCardHandLabels(evaluator);
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -221,7 +212,7 @@ public class HandRecognitionTest extends Controller implements Initializable {
                         b.  Update the primary state label to the value of the primary slider's value.
                         c.  Execute method to run update the hand.
                  */
-                
+
                 if (testState.equals(TestState.Random)) {
                     stateSliderPrimary.setValue(1);
                     sliderPrimaryValue = "None";
@@ -243,10 +234,12 @@ public class HandRecognitionTest extends Controller implements Initializable {
                     b.  Set the value of secondary slider to "None".
                     c.  Set the secondary state label to a non-value.
              */
+            @SneakyThrows
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
                 if (testState.equals(TestState.TwoPair) || testState.equals(TestState.FullHouse) ) {
                     sliderSecondaryValue = setSliderState(stateSliderSecondary, stateSecondaryLabel);
+                    runTestState();
                 }
                 else {
                     stateSliderSecondary.setValue(1);
@@ -303,7 +296,6 @@ public class HandRecognitionTest extends Controller implements Initializable {
                 stateSliderPrimary.setValue(1);
             }
         }
-        updateCardImageViews();
         if (testState.equals(TestState.Flush)) {
             runTestState();
         }
@@ -347,39 +339,63 @@ public class HandRecognitionTest extends Controller implements Initializable {
         resetAllCards();
         updateCardImageViews();
         switch (testState) {
-            case Random -> shuffler.random(deck);
-            case Pair -> testMultiples(2, 0);
+            case Random -> {
+
+                drawRandomHandFromDeck();
+            }
+            case Pair -> {
+                constructMultiplesHand(2, 0);
+            }
             case TwoPair -> {
                 if (stateSliderPrimary.getValue() < 2) {
                     stateSliderPrimary.setValue(2);
                 }
-                testMultiples(2, 2);
+                constructMultiplesHand(2, 2);
             }
-            case Trips -> testMultiples(3, 0);
+            case Trips -> constructMultiplesHand(3, 0);
             case Straight -> {
                 if (stateSliderPrimary.getValue() < 4) {
                     stateSliderPrimary.setValue(4);
                 }
-                testStraight();
+                constructStraightHand();
             }
             case Flush -> {
                 if (stateSliderPrimary.getValue() < 5) {
                     stateSliderPrimary.setValue(5);
                 }
-                testFlush();
+                constructFlushHand();
             }
-            case FullHouse -> testMultiples(3, 2);
-            case Quads -> testMultiples(4, 0);
+            case FullHouse -> constructMultiplesHand(3, 2);
+            case Quads -> constructMultiplesHand(4, 0);
             case StraightFlush -> {
                 if (stateSliderPrimary.getValue() < 4) {
                     stateSliderPrimary.setValue(4);
                 }
-                testStraightFlush();
+                constructStraightFlushHand();
             }
         }
         testCaseUpdate();
     }
-    public void testMultiples(int size1, int size2) {
+    public void constructMultiplesHand(int size1, int size2) {
+        /*
+            This method will construct a hand with duplicate cards and add any necessary kicker(s). The parameters
+            represent sets of 'multiples'. Calling this method implies that there is at least 2 of a given card value,
+            so 'size1' SHOULD always be at least 2. It's not necessary for 'size2' to be at least 2, but neither value
+            should be 1. 'size1' could be 2, representing a pair, or 3, representing trips. 'size2 '
+
+            1.  Exception handling. The function must fail if the method is used with inappropriate arguments. if size1
+                is negative or greater than 4, throw exception. If size2 isn't either 0 or 2, throw exception.
+            1.  For Loop: Range 0 <= i < size1. Adds primary multiples to hand using the helper method.
+            2.  For Loop: Range 0 < i < 2. Adds secondary multiples to hand using the helper method.
+            3.  While Loop: While the hand is under capacity, use a hash map to locate a card value that is not already
+                in the hand and add it. Increment the counter at the end of the loop to change which value is queried.
+         */
+        if (size1 < 2 || size1 > 4 ||
+                (!(size2 == 0) && !(size2 == 2))) {
+            throw new RuntimeException("Misuse of constructMultiplesHand(). This method is used for constructing hands with " +
+                        "multiples of a given card value.");
+        }
+
         for (int i = 0; i < size1; i++) {
             hand.addCard(testHelper_Card(stateSliderPrimary, i));
         }
@@ -394,16 +410,24 @@ public class HandRecognitionTest extends Controller implements Initializable {
             }
             counter++;
         }
-
     }
-    public void testStraight() {
+    public void constructStraightHand() {
+        /*
+            This method will construct a 'Straight' using a for loop. The value in the state slider will be reduced by
+            'i' each iteration and used as an index value to get sequential values. The final card is added out of the
+             loop to prevent the hand from becoming a 'Straight Flush'.
+         */
         for (int i = 1; i < HandEvaluator.straightFlushSize; i++) {
             hand.addCard(new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - i)], "Spades"));
         }
         hand.addCard(new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue())], "Hearts"));
-
     }
-    public void testFlush() {
+    public void constructFlushHand() {
+        /*
+            This method will construct a 'Flush' hand using a for loop. The value stored in the state slider is reduced
+            by 'i' each iteration and used as an index to get values. The final card is added outside the loop and set
+            to be 2 positions apart in order to prevent a 'Straight Flush'..
+         */
         for (int i = 0; i < HandEvaluator.straightFlushSize - 1; i++) {
             PlayingCard card = new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - i)], "Spades" );
             hand.addCard(card);
@@ -411,7 +435,11 @@ public class HandRecognitionTest extends Controller implements Initializable {
         PlayingCard card = new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - 5)], "Spades");
         hand.addCard(card);
     }
-    public void testStraightFlush() {
+    public void constructStraightFlushHand() {
+        /*
+            This method will construct a 'Flush' hand using a for loop. The value stored in the state slider is reduced
+            by 'i' each iteration and used as an index to get values.
+         */
         for (int i = 0; i < HandEvaluator.straightFlushSize; i++) {
             hand.addCard(new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - i)], "Spades" ));
         }
@@ -419,8 +447,16 @@ public class HandRecognitionTest extends Controller implements Initializable {
     private PlayingCard testHelper_Card(Slider slider, int i) {
         return new PlayingCard(PlayingCard.VALUES[(int) (slider.getValue() - 1)], PlayingCard.SUITS[i] );
     }
+    private void testCaseUpdate() throws FileNotFoundException {
+        deckSizeLabel.setText(String.valueOf(deck.currentSize));
 
+        HandEvaluator evaluator = new HandEvaluator(hand);
+        setCardFronts();
+        updateCardImageViews();
+        updateFiveCardHandLabels(evaluator);
+    }
     public void drawRandomHandFromDeck() throws FileNotFoundException {
+        testStateChoiceBox.setValue("Random");
         if (deck.currentSize == deck.maxSize) {
             shuffler.random(deck);
         }
@@ -453,6 +489,11 @@ public class HandRecognitionTest extends Controller implements Initializable {
 
         if (hand.getSize() > 7) {
             System.out.println(Arrays.toString(hand.getValueData()));
+            System.out.println();
+            hand.sortHandByValue();
+            for (int i = 0; i < hand.getSize(); i++) {
+                System.out.println(hand.getCards().get(i).getName());
+            }
         }
 
         for (int i = 0; i < hand.getSize(); i++) {
@@ -464,6 +505,7 @@ public class HandRecognitionTest extends Controller implements Initializable {
         /*
             In this method, the 'numberToDraw' parameter determines how many cards to add to the hand.
          */
+
         for (int i = 0; i < numberToDraw; i++) {
             hand.addCard(deck.drawTopCard());
             if (hand.getSize() >= boardSize) {
@@ -474,5 +516,5 @@ public class HandRecognitionTest extends Controller implements Initializable {
 }
 
 enum TestState {
-    Random, Pair, TwoPair, Trips, Straight, Flush, FullHouse, Quads, StraightFlush, RoyalFlush
+    Random, Pair, TwoPair, Trips, Straight, Flush, FullHouse, Quads, StraightFlush
 }

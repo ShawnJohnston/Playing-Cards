@@ -65,7 +65,7 @@
                   </Group>
                </children>
             </Group>
-            <Group layoutX="300.0" layoutY="60.0">
+            <Group layoutX="240.0" layoutY="60.0">
                <children>
                   <ImageView id="Deckstack" fx:id="deckBottomImageView" fitHeight="150.0" fitWidth="200.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -81,7 +81,7 @@
                   <Label id="textLabelOnBlack" fx:id="deckSizeLabel" layoutX="36.0" layoutY="220.0" stylesheets="@style.css" text="-" />
                </children>
             </Group>
-            <Group layoutX="600.0" layoutY="60.0">
+            <Group layoutX="400.0" layoutY="60.0">
                <children>
                   <ImageView id="Deckstack" fx:id="discardBottomImageView" fitHeight="150.0" fitWidth="200.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -117,6 +117,7 @@
             <Button fx:id="handComparisonTestButton" layoutX="260.0" layoutY="60.0" mnemonicParsing="false" onAction="#switchToHandComparisonTest" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Hand Comparison" />
             <Button fx:id="handRecognitionButton" layoutX="260.0" mnemonicParsing="false" onAction="#switchToHandRecognitionTest" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Hand Recognition" />
             <Button fx:id="DrawingCardsButton" mnemonicParsing="false" onAction="#switchToDrawCardsTest" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="Drawing Cards" />
+            <Button fx:id="boardTestButton" layoutY="60.0" mnemonicParsing="false" onAction="#switchToUTHBoardTest" prefHeight="34.0" prefWidth="221.0" stylesheets="@style.css" text="UTH Board Test" />
          </children>
       </Group>
       <Button fx:id="resetButton" layoutX="60.0" layoutY="800.0" mnemonicParsing="false" onAction="#toReset" prefHeight="34.0" prefWidth="222.0" stylesheets="@style.css" text="Reset" />

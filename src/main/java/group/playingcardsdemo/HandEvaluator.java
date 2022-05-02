@@ -105,7 +105,7 @@ public class HandEvaluator {
     }
     public Boolean isAStraight() {
         int counter = 0;
-        
+
         ArrayList<Integer> indices = new ArrayList<>();
         for (int i = PlayingCard.VALUES_INDEX.length - 2; i > 0 ; i--) {
             if (counter >= 5) {
@@ -175,58 +175,64 @@ public class HandEvaluator {
     }
     public Boolean isAStraightFlush() {
         if (this.isAFlush()) {
-            for (int j = fullHand.getSize() - 1; j >= 0; j--) {
-                if (fullHand.getCards().get(j).getSuit().equals(flushValue)) {
-                    fiveCardHand.addCard(fullHand.getCards().get(j));
+            Hand flushHand = new Hand();
+            for (PlayingCard card: fullHand.getCards()) {
+                if (card.getSuit().equals(flushValue)) {
+                    flushHand.addCard(card);
                 }
             }
-            int counter = 1;
-            int straightFlushTop = 0;
-            for (int i = fiveCardHand.getValueData().length - 1; i > 0 ; i--) {
-                if (fiveCardHand.getValueData()[i] == 1 &&fiveCardHand.getValueData()[i - 1] == 1) {
-                    straightFlushTop = i;
+            int counter = 0;
+
+            ArrayList<Integer> indices = new ArrayList<>();
+            for (int i = PlayingCard.VALUES_INDEX.length - 2; i > 0 ; i--) {
+                if (counter >= 5) {
+                    break;
+                }
+                if (flushHand.getValueData()[i] > 0 && flushHand.getValueData()[i - 1] > 0) {
                     counter++;
+                    indices.add(i);
                 }
                 else {
                     counter = 1;
+                    indices.clear();
+                    indices.add(i);
+
                 }
-                if (counter == 5) {
-                    RANKDATA[8] = true;
-                    counter = 0;
-                    Hand tempHand = new Hand();
-                    for (int j = fiveCardHand.getSize() - 1; j >= 0 ; j--) {
-                        if (fiveCardHand.getCards().get(j).getValue().equals(PlayingCard.VALUES_INDEX[straightFlushTop - counter])) {
-                            tempHand.addCard(fiveCardHand.getCards().get(j));
-                        }
-                        if (tempHand.getSize() >= 5) {
-                            fiveCardHand = new Hand();
-                            for (int k = 0; k < 5; k++) {
-                                fiveCardHand.addCard(tempHand.getCards().get(k));
-                            }
+            }
+            if (indices.size() == 5) {
+                for (Integer index: indices) {
+                    for (int i = flushHand.getSize() - 1; i >= 0 ; i--) {
+                        if (flushHand.getCards().get(i).getValue().equals(PlayingCard.VALUES_INDEX[index])) {
+                            fiveCardHand.addCard(flushHand.getCards().get(i));
                             break;
                         }
                     }
-                    return true;
                 }
+                RANKDATA[4] = true;
+                straightValue = fiveCardHand.getCards().get(0).getValue();
+                return true;
+            }
+            else if (flushHand.getSize() >= 5 && flushHand.getCards().get(0).getValue().equals("Ace") &&
+                    flushHand.getCards().get(1).getValue().equals("2") &&
+                    flushHand.getCards().get(2).getValue().equals("3") &&
+                    flushHand.getCards().get(3).getValue().equals("4") &&
+                    flushHand.getCards().get(4).getValue().equals("5")) {
+                fiveCardHand.addCard(flushHand.getCards().get(0));
+                fiveCardHand.addCard(flushHand.getCards().get(1));
+                fiveCardHand.addCard(flushHand.getCards().get(2));
+                fiveCardHand.addCard(flushHand.getCards().get(3));
+                fiveCardHand.addCard(flushHand.getCards().get(4));
+
+                RANKDATA[8] = true;
+                straightValue = "5";
+                return true;
             }
         }
-        //if (straightFlushSize == 5 && isAFlush()) {
-        //    for (int i = rawHand.getSize() - 1; i >= 0 ; i--) {
-        //        if (rawHand.getCards().get(i).getSuit().equals(flushValue)) {
-        //            fiveCardHand.addCard(rawHand.getCards().get(i));
-        //        }
-        //    }
-        //    HandEvaluator evaluator = new HandEvaluator(player, fiveCardHand);
-        //    if (evaluator.isAStraight_ByValueData()) {
-        //        RANKDATA[8] = true;
-        //        return true;
-        //    }
-        //}
         return false;
     }
     public Boolean isARoyalFlush() {
         if (isAStraightFlush()) {
-            if (fiveCardHand.getCards().get(0).getValue().equals("Ace")) {
+            if (fiveCardHand.containsCardValue("Ace") && !fiveCardHand.containsCardValue("2")) {
                 RANKDATA[9] = true;
                 return true;
             }

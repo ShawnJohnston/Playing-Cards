@@ -22,6 +22,7 @@
             <Label id="textLabelOnBlack" layoutX="10.0" stylesheets="@style.css" text="Debug Tests" />
             <Button fx:id="HandRecognitionTestButton" layoutY="150.0" mnemonicParsing="false" onAction="#switchToHandRecognitionTest" prefWidth="150.0" text="Recognition" />
             <Button fx:id="HandComparisonTestButton" layoutY="200.0" mnemonicParsing="false" onAction="#switchToHandComparisonTest" prefWidth="150.0" text="Comparison" />
+            <Button fx:id="boardTestButton" layoutY="250.0" mnemonicParsing="false" onAction="#switchToUTHBoardTest" prefHeight="34.0" prefWidth="150.0" stylesheets="@style.css" text="UTH Board Test" />
          </children>
       </Group>
     </children>

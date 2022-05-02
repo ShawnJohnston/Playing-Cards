@@ -83,6 +83,11 @@ public abstract class Controller {
         root = loader.load();
         sceneBuilder(event);
     }
+    public void switchToUTHBoardTest(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("UTHBoardTest.fxml"));
+        root = loader.load();
+        sceneBuilder(event);
+    }
     protected void sceneBuilder(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
