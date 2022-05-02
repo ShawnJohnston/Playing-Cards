@@ -19,7 +19,7 @@ public class FileManager {
                 row[rowCount] = line.split(",");
                 rowCount++;
             }
-            Global.payoutSheetUTH = row;
+            PayoutSheet.payoutSheetUTH = row;
         }
         catch(Exception e) {
             e.printStackTrace();

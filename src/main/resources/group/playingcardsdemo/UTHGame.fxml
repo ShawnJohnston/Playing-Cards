@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="pane" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group.playingcardsdemo.GameController">
+   <children>
+      <Group layoutX="360.0" layoutY="60.0">
+         <children>
+            <Group layoutY="200.0">
+               <children>
+                  <ImageView fx:id="boardImageView1" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@none.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="boardImageView2" fitHeight="150.0" fitWidth="200.0" layoutX="105.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@none.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="boardImageView3" fitHeight="150.0" fitWidth="200.0" layoutX="210.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@none.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="boardImageView4" fitHeight="150.0" fitWidth="200.0" layoutX="315.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@none.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="boardImageView5" fitHeight="150.0" fitWidth="200.0" layoutX="420.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@none.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+            <Group layoutX="50.0" layoutY="400.0">
+               <children>
+                  <ImageView fx:id="pocketImageView1" fitHeight="150.0" fitWidth="200.0" layoutX="210.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@none.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="pocketImageView2" fitHeight="150.0" fitWidth="200.0" layoutX="105.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@none.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+            <Group layoutX="150.0">
+               <children>
+                  <ImageView fx:id="pocketImageView11" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@none.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="pocketImageView21" fitHeight="150.0" fitWidth="200.0" layoutX="105.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@none.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+         </children>
+      </Group>
+      <Group layoutX="30.0" layoutY="30.0">
+         <children>
+            <ImageView id="Deckstack" fx:id="deckBottomImageView" fitHeight="150.0" fitWidth="200.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Card_Backs/blank_card.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="deckTopImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Card_Backs/red.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Group>
+      <Group layoutX="200.0" layoutY="30.0">
+         <children>
+            <ImageView id="Deckstack" fx:id="discardBottomImageView" fitHeight="150.0" fitWidth="200.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Card_Backs/blank_card.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="discardTopImageView" fitHeight="150.0" fitWidth="200.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@none.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Group>
+      <Group layoutX="63.0" layoutY="548.0">
+         <children>
+            <Label id="textLabelOnBlack" text="Hand Rank:" />
+            <Label id="textLabelOnBlack" fx:id="handRankLabel" layoutX="140.0" />
+            <Label id="textLabelOnBlack" fx:id="card1Label" layoutX="140.0" layoutY="50.0" text="Card 1" />
+            <Label id="textLabelOnBlack" fx:id="card2Label" layoutX="140.0" layoutY="70.0" text="Card 2" />
+            <Label id="textLabelOnBlack" fx:id="card3Label" layoutX="140.0" layoutY="90.0" text="Card 3" />
+            <Label id="textLabelOnBlack" fx:id="card4Label" layoutX="140.0" layoutY="110.0" text="Card 4" />
+            <Label id="textLabelOnBlack" fx:id="card5Label" layoutX="140.0" layoutY="130.0" text="Card 5" />
+         </children>
+      </Group>
+   </children>
+</AnchorPane>

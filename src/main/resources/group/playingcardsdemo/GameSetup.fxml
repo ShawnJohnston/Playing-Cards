@@ -64,7 +64,7 @@
                </image>
             </ImageView>
             <Button fx:id="rightAvatarButton" layoutX="180.0" layoutY="35.0" mnemonicParsing="false" onAction="#toggleAvatarRight" scaleX="0.8" scaleY="0.8" text="&gt;" />
-            <Button fx:id="LeftAvatarButton" layoutY="35.0" mnemonicParsing="false" onAction="#toggleAvatarLeft" scaleX="0.8" scaleY="0.8" text="&lt;" />
+            <Button fx:id="leftAvatarButton" layoutY="35.0" mnemonicParsing="false" onAction="#toggleAvatarLeft" scaleX="0.8" scaleY="0.8" text="&lt;" />
          </children>
       </Group>
       <Group layoutX="30.0" layoutY="520.0">

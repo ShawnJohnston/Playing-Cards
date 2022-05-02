@@ -100,34 +100,34 @@ public class GameController {
         this.avatarImageView.setImage(image);
     }
     public void displayPayouts() {
-        for (int i = 0; i < Global.payoutSheetUTH.length; i++) {
-            System.out.println(Arrays.toString(Global.payoutSheetUTH[i]));
+        for (int i = 0; i < PayoutSheet.payoutSheetUTH.length; i++) {
+            System.out.println(Arrays.toString(PayoutSheet.payoutSheetUTH[i]));
         }
 
-        payout00Label.setText(Global.payoutSheetUTH[0][0]);
-        payout01Label.setText(Global.payoutSheetUTH[0][1]);
-        payout02Label.setText(Global.payoutSheetUTH[0][2]);
-        payout10Label.setText(Global.payoutSheetUTH[1][0]);
-        payout11Label.setText(Global.payoutSheetUTH[1][1]);
-        payout12Label.setText(Global.payoutSheetUTH[1][2]);
-        payout20Label.setText(Global.payoutSheetUTH[2][0]);
-        payout21Label.setText(Global.payoutSheetUTH[2][1]);
-        payout22Label.setText(Global.payoutSheetUTH[2][2]);
-        payout30Label.setText(Global.payoutSheetUTH[3][0]);
-        payout31Label.setText(Global.payoutSheetUTH[3][1]);
-        payout32Label.setText(Global.payoutSheetUTH[3][2]);
-        payout40Label.setText(Global.payoutSheetUTH[4][0]);
-        payout41Label.setText(Global.payoutSheetUTH[4][1]);
-        payout42Label.setText(Global.payoutSheetUTH[4][2]);
-        payout50Label.setText(Global.payoutSheetUTH[5][0]);
-        payout51Label.setText(Global.payoutSheetUTH[5][1]);
-        payout52Label.setText(Global.payoutSheetUTH[5][2]);
-        payout60Label.setText(Global.payoutSheetUTH[6][0]);
-        payout61Label.setText(Global.payoutSheetUTH[6][1]);
-        payout62Label.setText(Global.payoutSheetUTH[6][2]);
-        payout70Label.setText(Global.payoutSheetUTH[7][0]);
-        payout71Label.setText(Global.payoutSheetUTH[7][1]);
-        payout72Label.setText(Global.payoutSheetUTH[7][2]);
+        payout00Label.setText(PayoutSheet.payoutSheetUTH[0][0]);
+        payout01Label.setText(PayoutSheet.payoutSheetUTH[0][1]);
+        payout02Label.setText(PayoutSheet.payoutSheetUTH[0][2]);
+        payout10Label.setText(PayoutSheet.payoutSheetUTH[1][0]);
+        payout11Label.setText(PayoutSheet.payoutSheetUTH[1][1]);
+        payout12Label.setText(PayoutSheet.payoutSheetUTH[1][2]);
+        payout20Label.setText(PayoutSheet.payoutSheetUTH[2][0]);
+        payout21Label.setText(PayoutSheet.payoutSheetUTH[2][1]);
+        payout22Label.setText(PayoutSheet.payoutSheetUTH[2][2]);
+        payout30Label.setText(PayoutSheet.payoutSheetUTH[3][0]);
+        payout31Label.setText(PayoutSheet.payoutSheetUTH[3][1]);
+        payout32Label.setText(PayoutSheet.payoutSheetUTH[3][2]);
+        payout40Label.setText(PayoutSheet.payoutSheetUTH[4][0]);
+        payout41Label.setText(PayoutSheet.payoutSheetUTH[4][1]);
+        payout42Label.setText(PayoutSheet.payoutSheetUTH[4][2]);
+        payout50Label.setText(PayoutSheet.payoutSheetUTH[5][0]);
+        payout51Label.setText(PayoutSheet.payoutSheetUTH[5][1]);
+        payout52Label.setText(PayoutSheet.payoutSheetUTH[5][2]);
+        payout60Label.setText(PayoutSheet.payoutSheetUTH[6][0]);
+        payout61Label.setText(PayoutSheet.payoutSheetUTH[6][1]);
+        payout62Label.setText(PayoutSheet.payoutSheetUTH[6][2]);
+        payout70Label.setText(PayoutSheet.payoutSheetUTH[7][0]);
+        payout71Label.setText(PayoutSheet.payoutSheetUTH[7][1]);
+        payout72Label.setText(PayoutSheet.payoutSheetUTH[7][2]);
     }
     public void displayName(String name) {
         nameLabel.setText(name);
