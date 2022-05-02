@@ -19,16 +19,18 @@ import java.util.ResourceBundle;
 
 public class StartingMenuController extends Controller implements Initializable {
     public int chipCount;
-    public String room = "Default";
-    public String currentFeltColor = "Red";
-    private HashMap<String, Integer> cardBackMap = new HashMap<>();
-    private final String[] cardBacks = {"red", "red2", "blue", "blue2", "abstract", "abstract_clouds",
+    public String room;
+    public Image cardBackImage;
+    public Image avatarImage;
+    public String currentFeltColor;
+    public String currentCardBack;
+    public String currentAvatar;
+    private HashMap<String, Integer> cardBackMap;
+    private HashMap<String, Integer> avatarMap;
+    private final String[] cardBacks = {
+            "red", "red2", "blue", "blue2", "abstract", "abstract_clouds",
             "abstract_scene", "astronaut", "cars", "castle", "fish", "frog"};
     private final String[] avatars = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
-    public String currentCardBack = "red";
-    public String currentAvatar = avatars[0];
-    public Image cardBackImage = new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Backs/" + cardBacks[0] + ".png"));
-    public Image avatarImage = new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Avatars/" + avatars[0] + ".png"));
 
     @FXML
     TextField nameTextField;
@@ -58,10 +60,19 @@ public class StartingMenuController extends Controller implements Initializable 
     ImageView cardBackImageView = new ImageView();
 
     public StartingMenuController() throws FileNotFoundException {
+        room = "Default";
+        currentFeltColor = "Red";
+        currentCardBack = "red";
+        currentAvatar = avatars[0];
+        cardBackImage = new Image(new FileInputStream(
+                "src/main/resources/group/playingcardsdemo/Card_Backs/" + cardBacks[0] + ".png"));
+        avatarImage = new Image(new FileInputStream(
+                "src/main/resources/group/playingcardsdemo/Avatars/" + avatars[0] + ".png"));
         initializeCardBackMap();
+        initializeAvatarMap();
     }
 
-    public void toggleAvatarLeft(ActionEvent event) throws FileNotFoundException {
+    public void toggleAvatarLeft() throws FileNotFoundException {
         /*
             On clicking the arrow button left of the Avatar image, the Avatar will toggle leftward in the containing
             avatar array.
@@ -73,17 +84,12 @@ public class StartingMenuController extends Controller implements Initializable 
             4.  Concatenate the file path to the avatar image and set it to the avatar ImageView.
          */
         
-        String newAvatar = null;
+        String newAvatar;
         if (currentAvatar.equals(avatars[0])) {
             newAvatar = avatars[avatars.length - 1];
         }
         else {
-            for (int i = 0; i < avatars.length; i++) {
-                if (currentAvatar.equals(avatars[i])) {
-                    newAvatar = avatars[i - 1];
-                    break;
-                }
-            }
+            newAvatar = avatars[avatarMap.get(currentAvatar) - 1];
         }
         currentAvatar = newAvatar;
 
@@ -91,7 +97,7 @@ public class StartingMenuController extends Controller implements Initializable 
                 "src/main/resources/group/playingcardsdemo/Avatars/" + currentAvatar + ".png"));
         avatarImageView.setImage(avatarImage);
     }
-    public void toggleAvatarRight(ActionEvent event) throws FileNotFoundException {
+    public void toggleAvatarRight() throws FileNotFoundException {
         /*
             On clicking the arrow button right of the Avatar image, the Avatar will toggle rightward in the containing
             avatar array.
@@ -103,17 +109,12 @@ public class StartingMenuController extends Controller implements Initializable 
             4.  Concatenate the file path to the avatar image and set it to the avatar ImageView.
          */
         
-        String newAvatar = null;
+        String newAvatar;
         if (currentAvatar.equals(avatars[avatars.length - 1])) {
             newAvatar = avatars[0];
         }
         else {
-            for (int i = 0; i < avatars.length; i++) {
-                if (currentAvatar.equals(avatars[i])) {
-                    newAvatar = avatars[i + 1];
-                    break;
-                }
-            }
+            newAvatar = avatars[avatarMap.get(currentAvatar) + 1];
         }
         currentAvatar = newAvatar;
 
@@ -121,7 +122,7 @@ public class StartingMenuController extends Controller implements Initializable 
                 "src/main/resources/group/playingcardsdemo/Avatars/" + currentAvatar + ".png"));
         avatarImageView.setImage(avatarImage);
     }
-    public void toggleFeltLeft(ActionEvent event) throws FileNotFoundException {
+    public void toggleFeltLeft() throws FileNotFoundException {
         /*
             This method will toggle between felt selections.
          */
@@ -135,7 +136,7 @@ public class StartingMenuController extends Controller implements Initializable 
         }
         feltImageView.setImage(new Image(new FileInputStream(path + currentFeltColor.toLowerCase() + "felt.jpg")));
     }
-    public void toggleFeltRight(ActionEvent event) throws FileNotFoundException {
+    public void toggleFeltRight() throws FileNotFoundException {
         /*
             This method will toggle between felt selections.
          */
@@ -149,7 +150,7 @@ public class StartingMenuController extends Controller implements Initializable 
         }
         feltImageView.setImage(new Image(new FileInputStream(path + currentFeltColor.toLowerCase() + "felt.jpg")));
     }
-    public void toggleCardBackLeft(ActionEvent event) throws FileNotFoundException {
+    public void toggleCardBackLeft() throws FileNotFoundException {
         /*
             This method will cycle leftward through the cardBack container from the current one.
 
@@ -170,7 +171,7 @@ public class StartingMenuController extends Controller implements Initializable 
         cardBackImageView.setImage(new Image(new FileInputStream(
                 "src/main/resources/group/playingcardsdemo/Card_Backs/" + currentCardBack + ".png")));
     }
-    public void toggleCardBackRight(ActionEvent event) throws FileNotFoundException {
+    public void toggleCardBackRight() throws FileNotFoundException {
         /*
             This method will cycle rightward through the cardBack container from the current one.
 
@@ -191,7 +192,6 @@ public class StartingMenuController extends Controller implements Initializable 
         cardBackImageView.setImage(new Image(new FileInputStream(
                 "src/main/resources/group/playingcardsdemo/Card_Backs/" + currentCardBack + ".png")));
     }
-
 
     public void startGame(ActionEvent event) throws IOException {
         /*
@@ -234,6 +234,8 @@ public class StartingMenuController extends Controller implements Initializable 
             case "UTH":
                 fileManager.inputPayoutSheet_UTH(room);
                 break;
+            case "FiveCardStud":
+                break;
             default:
                 break;
         }
@@ -269,8 +271,15 @@ public class StartingMenuController extends Controller implements Initializable 
     }
     
     public void initializeCardBackMap() {
+        cardBackMap = new HashMap<>();
         for (int i = 0; i < cardBacks.length; i++) {
             cardBackMap.put(cardBacks[i], i);
+        }
+    }
+    public void initializeAvatarMap() {
+        avatarMap = new HashMap<>();
+        for (int i = 0; i < avatars.length; i++) {
+            avatarMap.put(avatars[i], i);
         }
     }
     public void setGameLabel(ActionEvent event) {

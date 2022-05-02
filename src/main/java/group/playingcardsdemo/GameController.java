@@ -7,22 +7,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Objects;
 
 public class GameController {
     private Parent root;
-    private final String css = this.getClass().getResource("style.css").toExternalForm();
+    private final String css = Objects.requireNonNull(this.getClass().getResource("style.css")).toExternalForm();
     private static Player player;
 
     @FXML
@@ -136,11 +132,11 @@ public class GameController {
         chipCountLabel.setText(chipCount);
     }
     public void displayBackground() {
-        backgroundImage = new Image(getClass().getResourceAsStream("redfelt-2x.jpg"));
+        backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("redFelt-2x.jpg")));
         backgroundImageView.setImage(backgroundImage);
     }
     public void switchToMainMenu(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
         sceneBuilder(event);
     }
     private void sceneBuilder(ActionEvent event) {

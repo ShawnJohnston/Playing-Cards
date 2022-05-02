@@ -19,6 +19,7 @@ import lombok.Setter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -34,7 +35,7 @@ public abstract class Controller {
     protected Shuffler shuffler = new Shuffler();
     protected float initialDeckTopY;
 
-    protected final String css = this.getClass().getResource("style.css").toExternalForm();
+    protected final String css = Objects.requireNonNull(this.getClass().getResource("style.css")).toExternalForm();
 
     protected void setInitialDeckTopY(double y) {
         initialDeckTopY = (float) y;
@@ -49,7 +50,7 @@ public abstract class Controller {
         Platform.exit();
     }
     public void switchToMainMenu(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
         sceneBuilder(event);
     }
     public void switchToGameSetup(ActionEvent event) throws IOException {

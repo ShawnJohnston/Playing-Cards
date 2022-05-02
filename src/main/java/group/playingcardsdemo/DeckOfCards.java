@@ -94,14 +94,14 @@ public class DeckOfCards {
         cards.clear();
         currentSize = 0;
     }
-    public static void initializeCardImages(DeckOfCards deck) throws FileNotFoundException {
+    public static void initializeCardImages() throws FileNotFoundException {
         /*
             This method concatenates an image url for every card and stores them in the 'cardImages' static array.
 
             1.  Outer For Loop: Range 0 <= i <= (length of SUITS array - 1). 'i' times, execute the inner for-loop.
             2.  Inner For Loop: Range 0 <= j <= (length of VALUES_INDEX - 2). 'j' time, perform the following:
-                -   Declare string 'fileName', containing the current suit (index i) lowercased, then '_', then the
-                    current value (index j) lowercased, then '.png'.
+                -   Declare string 'fileName', containing the current suit (index i) lowercase, then '_', then the
+                    current value (index j) lowercase, then '.png'.
                 -   The fileName will be stored at index (13*i) + j. The beginning of any given suit is 13 indices from
                     the beginning of the previous or next, so multiplying 13 times 'i' will jump to the correct 1/4th of
                     the array that starts the correct suit group. Adding 'j' will locate the index for the card value

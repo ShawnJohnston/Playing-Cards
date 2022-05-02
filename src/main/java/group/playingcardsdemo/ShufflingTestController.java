@@ -144,7 +144,7 @@ public class ShufflingTestController extends Controller {
         cardFronts = DeckOfCards.cardImages;
         cards = DeckOfCards.cardImageViews;
 
-        DeckOfCards.initializeCardImages(deck);
+        DeckOfCards.initializeCardImages();
         initializeImageViews();
 
         for (int i = 0; i < 4; i++) {
