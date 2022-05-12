@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group.playingcardsdemo.GameController">
+   <children>
+      <ImageView fx:id="backgroundImageView" fitHeight="1280.0" fitWidth="1280.0" layoutX="-6.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../redFelt-2x.jpg" />
+         </image>
+      </ImageView>
+      <Label id="textLabelOnBlack" fx:id="nameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="791.0" text="Player Name" textAlignment="CENTER" />
+      <Label id="textLabelOnBlack" fx:id="chipCountLabel" layoutX="45.0" layoutY="744.0" prefHeight="22.0" prefWidth="191.0" text="\$ 0" />
+      <Group layoutX="19.0" layoutY="295.0" visible="false">
+         <children>
+            <Group>
+               <children>
+                  <Label id="textLabelOnBlack" fx:id="payout00Label" text="[0][0]" />
+                  <Label id="textLabelOnBlack" fx:id="payout10Label" layoutY="40.0" text="[1][0]" />
+                  <Label id="textLabelOnBlack" fx:id="payout20Label" layoutY="70.0" text="[2][0]" />
+                  <Label id="textLabelOnBlack" fx:id="payout30Label" layoutY="100.0" text="[3][0]" />
+                  <Label id="textLabelOnBlack" fx:id="payout40Label" layoutY="130.0" text="[4][0]" />
+                  <Label id="textLabelOnBlack" fx:id="payout50Label" layoutY="160.0" text="[5][0]" />
+                  <Label id="textLabelOnBlack" fx:id="payout60Label" layoutY="190.0" text="[6][0]" />
+                  <Label id="textLabelOnBlack" fx:id="payout70Label" layoutY="220.0" text="[7][0]" />
+               </children>
+            </Group>
+            <Group layoutX="200.0">
+               <children>
+                  <Label id="textLabelOnBlack" fx:id="payout01Label" text="[0][1]" />
+                  <Label id="textLabelOnBlack" fx:id="payout11Label" layoutY="40.0" text="[1][1]" />
+                  <Label id="textLabelOnBlack" fx:id="payout21Label" layoutY="70.0" text="[2][1]" />
+                  <Label id="textLabelOnBlack" fx:id="payout31Label" layoutY="100.0" text="[3][1]" />
+                  <Label id="textLabelOnBlack" fx:id="payout41Label" layoutY="130.0" text="[4][1]" />
+                  <Label id="textLabelOnBlack" fx:id="payout51Label" layoutY="160.0" text="[5][1]" />
+                  <Label id="textLabelOnBlack" fx:id="payout61Label" layoutY="190.0" text="[6][1]" />
+                  <Label id="textLabelOnBlack" fx:id="payout71Label" layoutY="220.0" text="[7][1]" />
+               </children>
+            </Group>
+            <Group layoutX="280.0">
+               <children>
+                  <Label id="textLabelOnBlack" fx:id="payout02Label" text="[0][2]" />
+                  <Label id="textLabelOnBlack" fx:id="payout12Label" layoutY="40.0" text="[1][2]" />
+                  <Label id="textLabelOnBlack" fx:id="payout22Label" layoutY="70.0" text="[2][2]" />
+                  <Label id="textLabelOnBlack" fx:id="payout32Label" layoutY="100.0" text="[3][2]" />
+                  <Label id="textLabelOnBlack" fx:id="payout42Label" layoutY="130.0" text="[4][2]" />
+                  <Label id="textLabelOnBlack" fx:id="payout52Label" layoutY="160.0" text="[5][2]" />
+                  <Label id="textLabelOnBlack" fx:id="payout62Label" layoutY="190.0" text="[6][2]" />
+                  <Label id="textLabelOnBlack" fx:id="payout72Label" layoutY="220.0" text="[7][2]" />
+               </children>
+            </Group>
+         </children>
+      </Group>
+      <Group layoutX="17.0" layoutY="14.0">
+         <children>
+            <Group>
+               <children>
+                  <ImageView id="Deckstack" fx:id="deckBottomImageView" fitHeight="150.0" fitWidth="200.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Card_Backs/blank_card.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="deckTopImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../none.png" />
+                     </image>
+                  </ImageView>
+                  <Label id="textLabelOnBlack" layoutX="25.0" layoutY="190.0" stylesheets="@../style.css" text="Deck" />
+                  <Label id="textLabelOnBlack" fx:id="deckSizeLabel" layoutX="36.0" layoutY="220.0" stylesheets="@../style.css" text="52" />
+               </children>
+            </Group>
+            <Group layoutX="160.0">
+               <children>
+                  <ImageView id="Deckstack" fx:id="discardBottomImageView" fitHeight="150.0" fitWidth="200.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Card_Backs/blank_card.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="discardTopImageView" fitHeight="150.0" fitWidth="200.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../none.png" />
+                     </image>
+                  </ImageView>
+                  <Label id="textLabelOnBlack" layoutX="10.0" layoutY="190.0" stylesheets="@../style.css" text="Discard" />
+                  <Label id="textLabelOnBlack" fx:id="discardSizeLabel" layoutX="36.0" layoutY="220.0" stylesheets="@../style.css" text="0" />
+               </children>
+            </Group>
+         </children>
+      </Group>
+      <Button fx:id="mainMenuButton" layoutX="1180.0" layoutY="800.0" mnemonicParsing="false" onAction="#switchToMainMenu" prefHeight="34.0" prefWidth="221.0" stylesheets="@../style.css" text="Main Menu" />
+      <Group layoutX="502.0" layoutY="320.0">
+         <children>
+            <ImageView fx:id="communityCardImageView5" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../none.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="communityCardImageView4" fitHeight="150.0" fitWidth="200.0" layoutX="105.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../none.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="communityCardImageView3" fitHeight="150.0" fitWidth="200.0" layoutX="210.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../none.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="communityCardImageView2" fitHeight="150.0" fitWidth="200.0" layoutX="315.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../none.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="communityCardImageView1" fitHeight="150.0" fitWidth="200.0" layoutX="420.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../none.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Group>
+      <Group layoutX="647.0" layoutY="94.0">
+         <children>
+            <ImageView fx:id="dealerPocketImageView1" fitHeight="150.0" fitWidth="200.0" layoutX="106.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../none.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="dealerPocketImageView2" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../none.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Group>
+      <Group layoutX="634.0" layoutY="662.0">
+         <children>
+            <ImageView fx:id="playerPocketImageView1" fitHeight="150.0" fitWidth="200.0" layoutX="106.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../none.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="playerPocketImageView2" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../none.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Group>
+      <ImageView fx:id="avatarImageView" fitHeight="150.0" fitWidth="200.0" layoutX="19.0" layoutY="556.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>

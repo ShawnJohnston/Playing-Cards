@@ -1,5 +1,6 @@
 package group.playingcardsdemo;
 
+import group.playingcardsdemo.cards.DeckOfCards;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -250,7 +251,7 @@ public class ShufflingTestController extends Controller {
 
     @Override
     public void toReset(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ShufflingTest.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/ShufflingTest.fxml"));
         root = loader.load();
         ShufflingTestController controller = loader.getController();
         controller.initializeController(event);
@@ -268,7 +269,7 @@ public class ShufflingTestController extends Controller {
         for (int i = 0; i < deck.getMaxSize(); i++) {
             cardFronts[i] = new Image(new FileInputStream(deck.getCards().get(i).getFront()));
         }
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ShufflingTest.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/ShufflingTest.fxml"));
         root = loader.load();
 
         ShufflingTestController controller = loader.getController();

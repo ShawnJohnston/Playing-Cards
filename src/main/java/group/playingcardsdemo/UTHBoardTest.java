@@ -1,12 +1,13 @@
 package group.playingcardsdemo;
 
+import group.playingcardsdemo.cards.Hand;
+import group.playingcardsdemo.cards.HandEvaluator;
+import group.playingcardsdemo.cards.Pocket;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -14,7 +15,6 @@ import javafx.scene.layout.AnchorPane;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
 
 public class UTHBoardTest extends Controller {
     private Hand board;
@@ -100,7 +100,7 @@ public class UTHBoardTest extends Controller {
         updateCardImageViews();
     }
     public void toReset(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("UTHBoardTest.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/UTHBoardTest.fxml"));
         root = loader.load();
         sceneBuilder(event);
     }
@@ -172,7 +172,7 @@ public class UTHBoardTest extends Controller {
     }
 
     public void drawRandomHandFromDeck() throws FileNotFoundException {
-        if (deck.currentSize == deck.maxSize) {
+        if (deck.getCurrentSize() == deck.getMaxSize()) {
             shuffler.random(deck);
         }
         else {
@@ -204,7 +204,7 @@ public class UTHBoardTest extends Controller {
     }
 
     public void drawRandomBoardFromDeck() throws FileNotFoundException {
-        if (deck.currentSize == deck.maxSize) {
+        if (deck.getCurrentSize() == deck.getMaxSize()) {
             shuffler.random(deck);
         }
         else {
@@ -224,8 +224,7 @@ public class UTHBoardTest extends Controller {
 
         decrementFromDeckGraphics_RandomTest(deckTopImageView, deckSizeLabel, boardSize);
         hand.setCards(board.getCards());
-        hand.addCard(pocket.getCards().get(0));
-        hand.addCard(pocket.getCards().get(1));
+
         HandEvaluator evaluator = new HandEvaluator(hand);
         hand = evaluator.getFiveCardHand();
 
@@ -233,7 +232,7 @@ public class UTHBoardTest extends Controller {
     }
 
     public void drawRandomPocketFromDeck() throws FileNotFoundException {
-        if (deck.currentSize == deck.maxSize) {
+        if (deck.getCurrentSize() == deck.getMaxSize()) {
             shuffler.random(deck);
         }
         else {
@@ -258,7 +257,13 @@ public class UTHBoardTest extends Controller {
         HandEvaluator evaluator = new HandEvaluator(hand);
         hand = evaluator.getFiveCardHand();
 
-        updateFiveCardHandLabels(evaluator);
+        if (hand.getSize() == 2) {
+            card1Label.setText(evaluator.getFiveCardHand().getCards().get(0).getName());
+            card2Label.setText(evaluator.getFiveCardHand().getCards().get(1).getName());
+        }
+        else {
+            updateFiveCardHandLabels(evaluator);
+        }
     }
     private void discardBoard() throws FileNotFoundException {
         /*

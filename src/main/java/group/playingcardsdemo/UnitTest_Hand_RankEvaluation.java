@@ -1,5 +1,9 @@
 package group.playingcardsdemo;
 
+import group.playingcardsdemo.cards.GameOutcome;
+import group.playingcardsdemo.cards.Hand;
+import group.playingcardsdemo.cards.HandEvaluator;
+import group.playingcardsdemo.cards.PlayingCard;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -177,7 +181,7 @@ public void theHandContainsTwoPair() {
         Assertions.assertEquals(2, evaluator.getPairsList().size());
         Assertions.assertEquals(PlayingCard.VALUES[i], evaluator.getPairsList().get(1));
         Assertions.assertEquals(PlayingCard.VALUES[i + 1], evaluator.getPairsList().get(0));
-        Assertions.assertEquals("TwoPair", evaluator.getHandRank().toString());
+        Assertions.assertEquals("TwoPair", String.valueOf(evaluator.getHandRank()));
     }
 }
 @Test
@@ -220,7 +224,7 @@ public void theHandContainsQuads() {
         System.out.println(evaluator.getQuadsValue());
 
         Assertions.assertEquals(4, hand.getValueData()[i]);
-        Assertions.assertEquals("Quads", evaluator.getHandRank().toString());
+        Assertions.assertEquals("Quads", String.valueOf(evaluator.getHandRank()));
     }
 }
     @Test
@@ -243,7 +247,7 @@ public void theHandContainsQuads() {
 
             Assertions.assertEquals(PlayingCard.VALUES[i], evaluator.getFullHouseList().get(0));
             Assertions.assertEquals(PlayingCard.VALUES[i + 1], evaluator.getFullHouseList().get(1));
-            Assertions.assertEquals("FullHouse", evaluator.getHandRank().toString());
+            Assertions.assertEquals("FullHouse", String.valueOf(evaluator.getHandRank()));
         }
     }
     //@Test

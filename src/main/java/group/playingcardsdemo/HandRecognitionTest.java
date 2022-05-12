@@ -1,5 +1,8 @@
 package group.playingcardsdemo;
 
+import group.playingcardsdemo.cards.Hand;
+import group.playingcardsdemo.cards.HandEvaluator;
+import group.playingcardsdemo.cards.PlayingCard;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -110,7 +113,7 @@ public class HandRecognitionTest extends Controller implements Initializable {
         updateCardImageViews();
     }
     public void toReset(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("HandRecognitionTest.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/HandRecognitionTest.fxml"));
         root = loader.load();
         sceneBuilder(event);
     }
@@ -448,7 +451,7 @@ public class HandRecognitionTest extends Controller implements Initializable {
         return new PlayingCard(PlayingCard.VALUES[(int) (slider.getValue() - 1)], PlayingCard.SUITS[i] );
     }
     private void testCaseUpdate() throws FileNotFoundException {
-        deckSizeLabel.setText(String.valueOf(deck.currentSize));
+        deckSizeLabel.setText(String.valueOf(deck.getCurrentSize()));
 
         HandEvaluator evaluator = new HandEvaluator(hand);
         setCardFronts();
@@ -457,7 +460,7 @@ public class HandRecognitionTest extends Controller implements Initializable {
     }
     public void drawRandomHandFromDeck() throws FileNotFoundException {
         testStateChoiceBox.setValue("Random");
-        if (deck.currentSize == deck.maxSize) {
+        if (deck.getCurrentSize() == deck.getMaxSize()) {
             shuffler.random(deck);
         }
         else {

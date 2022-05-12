@@ -1,5 +1,7 @@
 package group.playingcardsdemo;
 
+import group.playingcardsdemo.cards.HandEvaluator;
+import group.playingcardsdemo.cards.PlayingCard;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +18,7 @@ public class Main extends Application {
         PlayingCard.initializeCardIndexMap();
         HandEvaluator.initializePokerRanks();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("TitleScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/TitleScreen.fxml"));
 
         Parent root = loader.load();
         Scene scene = new Scene(root);

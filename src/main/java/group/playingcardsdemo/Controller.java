@@ -1,5 +1,9 @@
 package group.playingcardsdemo;
 
+import group.playingcardsdemo.cards.DeckOfCards;
+import group.playingcardsdemo.cards.Discard;
+import group.playingcardsdemo.cards.Hand;
+import group.playingcardsdemo.cards.Shuffler;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -50,7 +54,7 @@ public abstract class Controller {
         Platform.exit();
     }
     public void switchToMainMenu(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("fxml/MainMenu.fxml")));
         sceneBuilder(event);
     }
     public void switchToGameSetup(ActionEvent event) throws IOException {
@@ -58,34 +62,34 @@ public abstract class Controller {
         sceneBuilder(event);
     }
     public void switchToShufflingTest(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ShufflingTest.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/ShufflingTest.fxml"));
         root = loader.load();
 
         ShufflingTestController controller = loader.getController();
         controller.initializeController(event);
     }
     public void switchToHandRecognitionTest(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("HandRecognitionTest.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/HandRecognitionTest.fxml"));
         root = loader.load();
         sceneBuilder(event);
     }
     public void switchToHandComparisonTest(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("HandComparisonTest.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/HandComparisonTest.fxml"));
         root = loader.load();
         sceneBuilder(event);
     }
     public void switchToDrawCardsTest(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("DrawCardsTest.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/DrawAndDiscardTest.fxml"));
         root = loader.load();
         sceneBuilder(event);
     }
     public void switchToSettings(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Settings.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/Settings.fxml"));
         root = loader.load();
         sceneBuilder(event);
     }
     public void switchToUTHBoardTest(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("UTHBoardTest.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/UTHBoardTest.fxml"));
         root = loader.load();
         sceneBuilder(event);
     }
@@ -104,7 +108,7 @@ public abstract class Controller {
         stage.show();
     }
     protected void testSceneBuilder(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ShufflingTest.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/ShufflingTest.fxml"));
         root = loader.load();
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -141,7 +145,7 @@ public abstract class Controller {
          */
 
         deckTopImageView.setY(deckTopImageView.getY() + (float) numberOfCards / 2);
-        deckSizeLabel.setText(String.valueOf(deck.currentSize));
+        deckSizeLabel.setText(String.valueOf(deck.getCurrentSize()));
     }
     protected void incrementDiscardGraphics(ImageView discardTopImageView, Label discardSizeLabel) throws FileNotFoundException {
         /*
@@ -155,7 +159,7 @@ public abstract class Controller {
         discardTopImageView.setY(discardTopImageView.getY() - .5);
         Image discardImage = new Image((new FileInputStream(discard.getCards().get(discard.getCurrentSize() - 1).getFront())));
         discardTopImageView.setImage(discardImage);
-        discardSizeLabel.setText(String.valueOf(discard.currentSize));
+        discardSizeLabel.setText(String.valueOf(discard.getCurrentSize()));
     }
     protected void resetDeckDiscardGraphics(ImageView deckTopImageView, ImageView discardTopImageView, ImageView discardBottomImageView, Label discardSizeLabel, float initialDeckTopY) throws FileNotFoundException {
         /*

@@ -1,10 +1,14 @@
 package group.playingcardsdemo;
 
+import group.playingcardsdemo.cards.Hand;
+import group.playingcardsdemo.cards.HandEvaluator;
+import group.playingcardsdemo.cards.PlayingCard;
+
 import java.util.ArrayList;
 
 public class UnitTesting {
     public static ArrayList<PlayingCard> handBuilder(String value1, String value2, String value3, String value4, String value5,
-                                                                    String suit1, String suit2, String suit3, String suit4, String suit5) {
+                                                     String suit1, String suit2, String suit3, String suit4, String suit5) {
     ArrayList<PlayingCard> cards = new ArrayList<>();
     PlayingCard card1 = new PlayingCard(value1, suit1);
     PlayingCard card2 = new PlayingCard(value2, suit2);
@@ -50,6 +54,6 @@ public class UnitTesting {
         //}
     }
     public static void printHandRanking(HandEvaluator evaluator) {
-        System.out.println("Hand rank evaluates to: " + evaluator.getHandRank().toString() + "\n");
+        System.out.println("Hand rank evaluates to: " + evaluator.getHandRank() + "\n");
     }
 }
