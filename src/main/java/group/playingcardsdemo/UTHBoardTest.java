@@ -224,6 +224,8 @@ public class UTHBoardTest extends Controller {
 
         decrementFromDeckGraphics_RandomTest(deckTopImageView, deckSizeLabel, boardSize);
         hand.setCards(board.getCards());
+        hand.addCard(pocket.getCards().get(0));
+        hand.addCard(pocket.getCards().get(1));
 
         HandEvaluator evaluator = new HandEvaluator(hand);
         hand = evaluator.getGameFittedHand();
