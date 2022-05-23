@@ -13,7 +13,7 @@ public abstract class Rank {
         rank = rankState.HighCard.toString();
     }
     Rank(HandEvaluator evaluator) {
-        this.hand = evaluator.getFiveCardHand();
+        this.hand = evaluator.getGameFittedHand();
         this.rank = String.valueOf(evaluator.getHandRank());
     }
 }

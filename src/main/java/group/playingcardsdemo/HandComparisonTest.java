@@ -135,17 +135,17 @@ public class HandComparisonTest extends Controller {
         p1HandRankLabel.setText(String.valueOf(p1Evaluator.getHandRank()));
         p2HandRankLabel.setText(String.valueOf(p2Evaluator.getHandRank()));
 
-        p1Card1Label.setText(p1Evaluator.getFiveCardHand().getCards().get(0).getName());
-        p1Card2Label.setText(p1Evaluator.getFiveCardHand().getCards().get(1).getName());
-        p1Card3Label.setText(p1Evaluator.getFiveCardHand().getCards().get(2).getName());
-        p1Card4Label.setText(p1Evaluator.getFiveCardHand().getCards().get(3).getName());
-        p1Card5Label.setText(p1Evaluator.getFiveCardHand().getCards().get(4).getName());
+        p1Card1Label.setText(p1Evaluator.getGameFittedHand().getCards().get(0).getName());
+        p1Card2Label.setText(p1Evaluator.getGameFittedHand().getCards().get(1).getName());
+        p1Card3Label.setText(p1Evaluator.getGameFittedHand().getCards().get(2).getName());
+        p1Card4Label.setText(p1Evaluator.getGameFittedHand().getCards().get(3).getName());
+        p1Card5Label.setText(p1Evaluator.getGameFittedHand().getCards().get(4).getName());
 
-        p2Card1Label.setText(p2Evaluator.getFiveCardHand().getCards().get(0).getName());
-        p2Card2Label.setText(p2Evaluator.getFiveCardHand().getCards().get(1).getName());
-        p2Card3Label.setText(p2Evaluator.getFiveCardHand().getCards().get(2).getName());
-        p2Card4Label.setText(p2Evaluator.getFiveCardHand().getCards().get(3).getName());
-        p2Card5Label.setText(p2Evaluator.getFiveCardHand().getCards().get(4).getName());
+        p2Card1Label.setText(p2Evaluator.getGameFittedHand().getCards().get(0).getName());
+        p2Card2Label.setText(p2Evaluator.getGameFittedHand().getCards().get(1).getName());
+        p2Card3Label.setText(p2Evaluator.getGameFittedHand().getCards().get(2).getName());
+        p2Card4Label.setText(p2Evaluator.getGameFittedHand().getCards().get(3).getName());
+        p2Card5Label.setText(p2Evaluator.getGameFittedHand().getCards().get(4).getName());
 
         GameOutcome outcome = new GameOutcome(p1Evaluator, p2Evaluator);
         outcomeLabel.setText(outcome.getWinner());

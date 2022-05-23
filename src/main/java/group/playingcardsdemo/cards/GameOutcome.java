@@ -61,16 +61,16 @@ public class GameOutcome {
                 -   Otherwise, each hand is equivalent by value. The players tie.
          */
 
-        for (int i = PLAYER1.getFiveCardHand().getValueData().length - 1; i >= 0; i--) {
-            if (PLAYER1.getFiveCardHand().getValueData()[i] > PLAYER2.getFiveCardHand().getValueData()[i]) {
+        for (int i = PLAYER1.getGameFittedHand().getValueData().length - 1; i >= 0; i--) {
+            if (PLAYER1.getGameFittedHand().getValueData()[i] > PLAYER2.getGameFittedHand().getValueData()[i]) {
                 winner = "Player 1";
                 break;
             }
-            else if (PLAYER1.getFiveCardHand().getValueData()[i] < PLAYER2.getFiveCardHand().getValueData()[i]) {
+            else if (PLAYER1.getGameFittedHand().getValueData()[i] < PLAYER2.getGameFittedHand().getValueData()[i]) {
                 winner = "Player 2";
                 break;
             }
-            if (i == 0 && (PLAYER1.getFiveCardHand().getValueData()[i] == PLAYER2.getFiveCardHand().getValueData()[i])) {
+            if (i == 0 && (PLAYER1.getGameFittedHand().getValueData()[i] == PLAYER2.getGameFittedHand().getValueData()[i])) {
                 winner = "Tie";
             }
         }
@@ -78,14 +78,14 @@ public class GameOutcome {
     private void compareKickerAt(int k) {
         int handPosition = k;
         for (int i = PlayingCard.VALUES.length - 1; i >= 0; i--) {
-            for (int j = handPosition - 1; j >= PLAYER1.getFullHand().getSize() ; j++) {
+            for (int j = handPosition - 1; j >= PLAYER1.getInputHand().getSize() ; j++) {
                 if (HandEvaluator.pokerRanks.get(PLAYER1.getHandRank().toString()) > HandEvaluator.pokerRanks.get(PLAYER2.getHandRank().toString())) {
                     winner = "Player 1";
                 }
                 else if (HandEvaluator.pokerRanks.get(PLAYER1.getHandRank().toString()) < HandEvaluator.pokerRanks.get(PLAYER2.getHandRank().toString())) {
                     winner = "Player 2";
                 }
-                else if (PLAYER1.getFiveCardHand().getCards().get(j).getValue().equals(PlayingCard.VALUES[i]) && PLAYER2.getFiveCardHand().getCards().get(j).getValue().equals(PlayingCard.VALUES[i])) {
+                else if (PLAYER1.getGameFittedHand().getCards().get(j).getValue().equals(PlayingCard.VALUES[i]) && PLAYER2.getGameFittedHand().getCards().get(j).getValue().equals(PlayingCard.VALUES[i])) {
                     handPosition++;
                     break;
                 }

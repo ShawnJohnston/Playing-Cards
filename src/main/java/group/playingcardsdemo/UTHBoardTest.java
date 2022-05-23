@@ -164,11 +164,11 @@ public class UTHBoardTest extends Controller {
          */
 
         handRankLabel.setText(String.valueOf (evaluator.getHandRank()));
-        card1Label.setText(evaluator.getFiveCardHand().getCards().get(0).getName());
-        card2Label.setText(evaluator.getFiveCardHand().getCards().get(1).getName());
-        card3Label.setText(evaluator.getFiveCardHand().getCards().get(2).getName());
-        card4Label.setText(evaluator.getFiveCardHand().getCards().get(3).getName());
-        card5Label.setText(evaluator.getFiveCardHand().getCards().get(4).getName());
+        card1Label.setText(evaluator.getGameFittedHand().getCards().get(0).getName());
+        card2Label.setText(evaluator.getGameFittedHand().getCards().get(1).getName());
+        card3Label.setText(evaluator.getGameFittedHand().getCards().get(2).getName());
+        card4Label.setText(evaluator.getGameFittedHand().getCards().get(3).getName());
+        card5Label.setText(evaluator.getGameFittedHand().getCards().get(4).getName());
     }
 
     public void drawRandomHandFromDeck() throws FileNotFoundException {
@@ -198,7 +198,7 @@ public class UTHBoardTest extends Controller {
         hand.addCard(pocket.getCards().get(0));
         hand.addCard(pocket.getCards().get(1));
         HandEvaluator evaluator = new HandEvaluator(hand);
-        hand = evaluator.getFiveCardHand();
+        hand = evaluator.getGameFittedHand();
 
         updateFiveCardHandLabels(evaluator);
     }
@@ -226,7 +226,7 @@ public class UTHBoardTest extends Controller {
         hand.setCards(board.getCards());
 
         HandEvaluator evaluator = new HandEvaluator(hand);
-        hand = evaluator.getFiveCardHand();
+        hand = evaluator.getGameFittedHand();
 
         updateFiveCardHandLabels(evaluator);
     }
@@ -255,11 +255,11 @@ public class UTHBoardTest extends Controller {
         hand.addCard(pocket.getCards().get(0));
         hand.addCard(pocket.getCards().get(1));
         HandEvaluator evaluator = new HandEvaluator(hand);
-        hand = evaluator.getFiveCardHand();
+        hand = evaluator.getGameFittedHand();
 
         if (hand.getSize() == 2) {
-            card1Label.setText(evaluator.getFiveCardHand().getCards().get(0).getName());
-            card2Label.setText(evaluator.getFiveCardHand().getCards().get(1).getName());
+            card1Label.setText(evaluator.getGameFittedHand().getCards().get(0).getName());
+            card2Label.setText(evaluator.getGameFittedHand().getCards().get(1).getName());
         }
         else {
             updateFiveCardHandLabels(evaluator);

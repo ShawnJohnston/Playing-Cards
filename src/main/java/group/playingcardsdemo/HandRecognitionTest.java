@@ -183,11 +183,11 @@ public class HandRecognitionTest extends Controller implements Initializable {
          */
 
         handRankLabel.setText(String.valueOf (evaluator.getHandRank()));
-        card1Label.setText(evaluator.getFiveCardHand().getCards().get(0).getName());
-        card2Label.setText(evaluator.getFiveCardHand().getCards().get(1).getName());
-        card3Label.setText(evaluator.getFiveCardHand().getCards().get(2).getName());
-        card4Label.setText(evaluator.getFiveCardHand().getCards().get(3).getName());
-        card5Label.setText(evaluator.getFiveCardHand().getCards().get(4).getName());
+        card1Label.setText(evaluator.getGameFittedHand().getCards().get(0).getName());
+        card2Label.setText(evaluator.getGameFittedHand().getCards().get(1).getName());
+        card3Label.setText(evaluator.getGameFittedHand().getCards().get(2).getName());
+        card4Label.setText(evaluator.getGameFittedHand().getCards().get(3).getName());
+        card5Label.setText(evaluator.getGameFittedHand().getCards().get(4).getName());
     }
 
     @Override
@@ -479,9 +479,9 @@ public class HandRecognitionTest extends Controller implements Initializable {
 
         decrementFromDeckGraphics_RandomTest(deckTopImageView, deckSizeLabel, boardSize);
         HandEvaluator evaluator = new HandEvaluator(hand);
-        hand = evaluator.getFiveCardHand();
-        hand.addCard(evaluator.getFullHand().getCards().get(0));
-        hand.addCard(evaluator.getFullHand().getCards().get(1));
+        hand = evaluator.getGameFittedHand();
+        hand.addCard(evaluator.getInputHand().getCards().get(0));
+        hand.addCard(evaluator.getInputHand().getCards().get(1));
 
         updateFiveCardHandLabels(evaluator);
     }
