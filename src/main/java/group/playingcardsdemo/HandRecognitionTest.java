@@ -282,7 +282,10 @@ public class HandRecognitionTest extends Controller implements Initializable {
         testState = TestState.valueOf(testStateChoiceBox.getValue());
         switch (testState) {
             case Random -> {
+                stateSliderPrimary.setValue(0);
+                stateSliderSecondary.setValue(0);
                 statePrimaryLabel.setText("-");
+                stateSecondaryLabel.setText("-");
             }
             case Straight, Flush, StraightFlush -> {
                 statePrimaryLabel.setText("5");
