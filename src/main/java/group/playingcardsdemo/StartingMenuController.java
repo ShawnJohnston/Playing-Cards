@@ -1,5 +1,6 @@
 package group.playingcardsdemo;
 
+import group.playingcardsdemo.cards.CircularArray;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -27,10 +28,10 @@ public class StartingMenuController extends Controller implements Initializable 
     public String currentAvatar;
     private HashMap<String, Integer> cardBackMap;
     private HashMap<String, Integer> avatarMap;
-    private final String[] cardBacks = {
+    private final CircularArray<String> cardBacks = new CircularArray<>(new String[]{
             "red", "red2", "blue", "blue2", "abstract", "abstract_clouds",
-            "abstract_scene", "astronaut", "cars", "castle", "fish", "frog"};
-    private final String[] avatars = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
+            "abstract_scene", "astronaut", "cars", "castle", "fish", "frog"});
+    private final CircularArray<String> avatars = new CircularArray<>(new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"});
 
     @FXML
     TextField nameTextField;
@@ -63,60 +64,24 @@ public class StartingMenuController extends Controller implements Initializable 
         room = "Default";
         currentFeltColor = "Red";
         currentCardBack = "red";
-        currentAvatar = avatars[0];
+        currentAvatar = avatars.get(0);
         cardBackImage = new Image(new FileInputStream(
-                "src/main/resources/group/playingcardsdemo/Card_Backs/" + cardBacks[0] + ".png"));
+                "src/main/resources/group/playingcardsdemo/Card_Backs/" + cardBacks.get(0) + ".png"));
         avatarImage = new Image(new FileInputStream(
-                "src/main/resources/group/playingcardsdemo/Avatars/" + avatars[0] + ".png"));
+                "src/main/resources/group/playingcardsdemo/Avatars/" + avatars.get(0) + ".png"));
         initializeCardBackMap();
         initializeAvatarMap();
     }
 
     public void toggleAvatarLeft() throws FileNotFoundException {
-        /*
-            On clicking the arrow button left of the Avatar image, the Avatar will toggle leftward in the containing
-            avatar array.
-            
-            1.  Initialize buffer array container.
-            2.  If the avatar is already set to index 0, the new avatar will be set to the rightmost index.
-            3.  Else, use a for loop to retrieve the avatar at the next leftward index.
-            4.  Assign the buffer container to the actual avatar container.
-            4.  Concatenate the file path to the avatar image and set it to the avatar ImageView.
-         */
-        
-        String newAvatar;
-        if (currentAvatar.equals(avatars[0])) {
-            newAvatar = avatars[avatars.length - 1];
-        }
-        else {
-            newAvatar = avatars[avatarMap.get(currentAvatar) - 1];
-        }
-        currentAvatar = newAvatar;
+        currentAvatar = avatars.get(avatarMap.get(currentAvatar) - 1);
 
         avatarImage = new Image(new FileInputStream(
                 "src/main/resources/group/playingcardsdemo/Avatars/" + currentAvatar + ".png"));
         avatarImageView.setImage(avatarImage);
     }
     public void toggleAvatarRight() throws FileNotFoundException {
-        /*
-            On clicking the arrow button right of the Avatar image, the Avatar will toggle rightward in the containing
-            avatar array.
-            
-            1.  Initialize buffer array container.
-            2.  If the avatar is already set to index 0, the new avatar will be set to the leftmost index.
-            3.  Else, use a for loop to retrieve the avatar at the next rightward index.
-            4.  Assign the buffer container to the actual avatar container.
-            4.  Concatenate the file path to the avatar image and set it to the avatar ImageView.
-         */
-        
-        String newAvatar;
-        if (currentAvatar.equals(avatars[avatars.length - 1])) {
-            newAvatar = avatars[0];
-        }
-        else {
-            newAvatar = avatars[avatarMap.get(currentAvatar) + 1];
-        }
-        currentAvatar = newAvatar;
+        currentAvatar = avatars.get(avatarMap.get(currentAvatar) + 1);
 
         avatarImage = new Image(new FileInputStream(
                 "src/main/resources/group/playingcardsdemo/Avatars/" + currentAvatar + ".png"));
@@ -151,44 +116,12 @@ public class StartingMenuController extends Controller implements Initializable 
         feltImageView.setImage(new Image(new FileInputStream(path + currentFeltColor.toLowerCase() + "felt.jpg")));
     }
     public void toggleCardBackLeft() throws FileNotFoundException {
-        /*
-            This method will cycle leftward through the cardBack container from the current one.
-
-            1.  Initialize buffer card path.
-            2.  If the current cardBack is at index zero, roll the index to the rightmost index of the container.
-            3.  Else, the image at the leftward index is assigned to the buffer container using the index of the current
-                cardBack as a key in a hashmap and subtracting 1.
-         */
-
-        String newCardBack;
-        if (currentCardBack.equals(cardBacks[0])) {
-            newCardBack = cardBacks[cardBacks.length - 1];
-        }
-        else {
-            newCardBack = cardBacks[cardBackMap.get(currentCardBack) - 1];
-        }
-        currentCardBack = newCardBack;
+        currentCardBack = cardBacks.get(cardBackMap.get(currentCardBack) - 1);
         cardBackImageView.setImage(new Image(new FileInputStream(
                 "src/main/resources/group/playingcardsdemo/Card_Backs/" + currentCardBack + ".png")));
     }
     public void toggleCardBackRight() throws FileNotFoundException {
-        /*
-            This method will cycle rightward through the cardBack container from the current one.
-
-            1.  Initialize buffer card path.
-            2.  If the current cardBack is at index zero, roll the index to the leftmost index of the container.
-            3.  Else, the image at the rightward index is assigned to the buffer container using the index of the current
-                cardBack as a key in a hashmap and subtracting 1.
-         */
-
-        String newCardBack;
-        if (currentCardBack.equals(cardBacks[cardBacks.length - 1])) {
-            newCardBack = cardBacks[0];
-        }
-        else {
-            newCardBack = cardBacks[cardBackMap.get(currentCardBack) + 1];
-        }
-        currentCardBack = newCardBack;
+        currentCardBack = cardBacks.get(cardBackMap.get(currentCardBack) + 1);;
         cardBackImageView.setImage(new Image(new FileInputStream(
                 "src/main/resources/group/playingcardsdemo/Card_Backs/" + currentCardBack + ".png")));
     }
@@ -272,14 +205,14 @@ public class StartingMenuController extends Controller implements Initializable 
     
     public void initializeCardBackMap() {
         cardBackMap = new HashMap<>();
-        for (int i = 0; i < cardBacks.length; i++) {
-            cardBackMap.put(cardBacks[i], i);
+        for (int i = 0; i < cardBacks.getLength(); i++) {
+            cardBackMap.put(cardBacks.get(i), i);
         }
     }
     public void initializeAvatarMap() {
         avatarMap = new HashMap<>();
-        for (int i = 0; i < avatars.length; i++) {
-            avatarMap.put(avatars[i], i);
+        for (int i = 0; i < avatars.getLength(); i++) {
+            avatarMap.put(avatars.get(i), i);
         }
     }
     public void setGameLabel(ActionEvent event) {

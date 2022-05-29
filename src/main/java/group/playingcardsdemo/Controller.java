@@ -59,7 +59,7 @@ public abstract class Controller {
         sceneBuilder(event);
     }
     public void switchToGameSetup(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("GameSetup.fxml"));
+        root = FXMLLoader.load(getClass().getResource("fxml/GameSetup.fxml"));
         sceneBuilder(event);
     }
     public void switchToShufflingTest(ActionEvent event) throws IOException {

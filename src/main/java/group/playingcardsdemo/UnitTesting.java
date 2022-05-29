@@ -50,7 +50,7 @@ public class UnitTesting {
         HandEvaluator evaluator = new HandEvaluator(hand);
         System.out.println("Player hand:");
         //for (PlayingCard card : evaluator.getHand().getCards()) {
-        //    System.out.printf("%s of %s \n", card.getValue(), card.getSuit());
+        //    System.out.printf("%s of %s \length", card.getValue(), card.getSuit());
         //}
     }
     public static void printHandRanking(HandEvaluator evaluator) {
