@@ -15,8 +15,6 @@ import java.io.IOException;
 
 public class DrawAndDiscardTest extends Controller {
     private int jokerCount = 0;
-    private final int jokerMin = 0;
-    private final int jokerMax = 2;
 
     @FXML
     ImageView cardImageView1 = new ImageView();
@@ -48,26 +46,32 @@ public class DrawAndDiscardTest extends Controller {
         hand.setCapacity(1);
         super.setCurrentScene("fxml/DrawAndDiscardTest.fxml");
     }
-    public void incrementJokerCount() {
+    public void incrementJokerCount() throws FileNotFoundException {
+        int jokerMax = 2;
         if (jokerCount < jokerMax) {
             jokerCount++;
         }
         adjustForJoker();
     }
-    public void decrementJokerCount() {
+    public void decrementJokerCount() throws FileNotFoundException {
+        int jokerMin = 0;
         if (jokerCount > jokerMin) {
             jokerCount--;
         }
         adjustForJoker();
     }
-    public void adjustForJoker() {
-        resetAllCards();
-        deck = new DeckOfCards(jokerCount);
+    public void adjustForJoker() throws FileNotFoundException {
+        moveAllCardsToDeck();
+        resetAllCards(jokerCount);
+
         deckSizeLabel.setText(String.valueOf(deck.getCurrentSize()));
         discardSizeLabel.setText(String.valueOf(discard.getCurrentSize()));
         jokerCountLabel.setText(String.valueOf(jokerCount));
+        cardNameLabel.setText("");
+
+        cardImageView1.setImage(new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Fronts/none.png")));
     }
-    public void drawFromDeck(ActionEvent event) throws IOException {
+    public void drawFromDeck() throws IOException {
         /*
             This method will control the main logic for the test.
 

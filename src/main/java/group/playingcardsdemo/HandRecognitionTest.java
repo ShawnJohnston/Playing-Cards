@@ -1,5 +1,6 @@
 package group.playingcardsdemo;
 
+import group.playingcardsdemo.cards.DeckOfCards;
 import group.playingcardsdemo.cards.Hand;
 import group.playingcardsdemo.cards.HandEvaluator;
 import group.playingcardsdemo.cards.PlayingCard;

@@ -15,7 +15,7 @@ import java.util.Stack;
 public class DeckOfCards {
     protected int maxSize = 52;
     protected int currentSize = 52;
-    protected static int jokerCount = 0;
+    protected int jokerCount = 0;
     protected Stack<PlayingCard> cards = new Stack<>();
 
     public static Image[] cardImages = new Image[54];

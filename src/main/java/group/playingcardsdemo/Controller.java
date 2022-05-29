@@ -6,6 +6,7 @@ import group.playingcardsdemo.cards.Hand;
 import group.playingcardsdemo.cards.Shuffler;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -131,6 +132,16 @@ public abstract class Controller {
          */
 
         deck = new DeckOfCards();
+        discard = new Discard();
+        hand = new Hand();
+    }
+    protected void resetAllCards(int jokerCount) {
+        /*
+            In this method, the deck and discard objects are reinitialize, the deck is shuffled, and the visuals for
+            the deck and discard pile are reset.
+         */
+
+        deck = new DeckOfCards(jokerCount);
         discard = new Discard();
         hand = new Hand();
     }
