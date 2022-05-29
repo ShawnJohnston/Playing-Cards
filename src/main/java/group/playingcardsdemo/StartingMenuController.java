@@ -31,7 +31,8 @@ public class StartingMenuController extends Controller implements Initializable 
     private final CircularArray<String> cardBacks = new CircularArray<>(new String[]{
             "red", "red2", "blue", "blue2", "abstract", "abstract_clouds",
             "abstract_scene", "astronaut", "cars", "castle", "fish", "frog"});
-    private final CircularArray<String> avatars = new CircularArray<>(new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"});
+    private final CircularArray<String> avatars = new CircularArray<>(new String[]{
+            "1", "2", "3", "4", "5", "6", "7", "8", "9"});
 
     @FXML
     TextField nameTextField;

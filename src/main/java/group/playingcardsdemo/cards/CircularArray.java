@@ -19,7 +19,13 @@ public class CircularArray <T> {
         if (i < 0) {
             return array[length - 1];
         }
-        return array[i % length];
+        else if (i < length) {
+            return array[i];
+        }
+        else if (i == length) {
+            return array[0];
+        }
+        return null;
     }
     public void set(int i, T item) {
         array[i] = item;
