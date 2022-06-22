@@ -7,8 +7,8 @@
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group.playingcardsdemo.StartingMenuController">
     <children>
-        <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="120.0" prefHeight="18.0" prefWidth="1280.0" stylesheets="@../style.css" text="Poker Game Demo" />
-      <Group layoutX="550.0" layoutY="350.0">
+        <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="126.0" prefHeight="18.0" prefWidth="1280.0" stylesheets="@../style.css" text="Poker Game Demo" AnchorPane.bottomAnchor="878.8" AnchorPane.topAnchor="126.0" />
+      <Group layoutX="550.0" layoutY="350.0" AnchorPane.bottomAnchor="377.29999351501465" AnchorPane.leftAnchor="485.0" AnchorPane.rightAnchor="1175.0" AnchorPane.topAnchor="338.1000003814697">
          <children>
             <Button fx:id="playButton" mnemonicParsing="false" onAction="#switchToGameSetup" prefWidth="130.0" scaleX="2.0" scaleY="2.0" text="Play" />
             <Button fx:id="settingsButton" layoutY="200.0" mnemonicParsing="false" onAction="#switchToSettings" prefWidth="130.0" scaleX="2.0" scaleY="2.0" text="Settings" />
@@ -17,12 +17,12 @@
       </Group>
       <Group layoutX="1000.0" layoutY="350.0">
          <children>
-            <Button fx:id="testButton" layoutY="50.0" mnemonicParsing="false" onAction="#switchToShufflingTest" prefWidth="150.0" text="Shuffling" />
-            <Button fx:id="drawCardsButton" layoutY="100.0" mnemonicParsing="false" onAction="#switchToDrawCardsTest" prefWidth="150.0" text="Draw Cards" />
+            <Button fx:id="testButton" layoutY="50.0" mnemonicParsing="false" onAction="#switchToShufflingTest" prefWidth="200.0" styleClass="debugTestButton" stylesheets="@../style.css" text="Shuffling" />
+            <Button fx:id="drawCardsButton" layoutY="100.0" mnemonicParsing="false" onAction="#switchToDrawCardsTest" prefWidth="200.0" styleClass="debugTestButton" stylesheets="@../style.css" text="Draw Cards" />
             <Label id="textLabelOnBlack" layoutX="10.0" stylesheets="@../style.css" text="Debug Tests" />
-            <Button fx:id="HandRecognitionTestButton" layoutY="150.0" mnemonicParsing="false" onAction="#switchToHandRecognitionTest" prefWidth="150.0" text="Recognition" />
-            <Button fx:id="HandComparisonTestButton" layoutY="200.0" mnemonicParsing="false" onAction="#switchToHandComparisonTest" prefWidth="150.0" text="Comparison" />
-            <Button fx:id="boardTestButton" layoutY="250.0" mnemonicParsing="false" onAction="#switchToUTHBoardTest" prefHeight="34.0" prefWidth="150.0" stylesheets="@../style.css" text="UTH Board Test" />
+            <Button fx:id="HandRecognitionTestButton" layoutY="150.0" mnemonicParsing="false" onAction="#switchToHandRecognitionTest" prefWidth="200.0" styleClass="debugTestButton" stylesheets="@../style.css" text="Recognition" />
+            <Button fx:id="HandComparisonTestButton" layoutY="200.0" mnemonicParsing="false" onAction="#switchToHandComparisonTest" prefWidth="200.0" styleClass="debugTestButton" stylesheets="@../style.css" text="Comparison" />
+            <Button fx:id="boardTestButton" layoutY="250.0" mnemonicParsing="false" onAction="#switchToUTHBoardTest" prefWidth="200.0" styleClass="debugTestButton" stylesheets="@../style.css" text="UTH Board Test" />
          </children>
       </Group>
     </children>

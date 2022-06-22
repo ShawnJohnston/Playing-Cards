@@ -201,6 +201,13 @@ public class UTHBoardTest extends Controller {
         hand = evaluator.getGameFittedHand();
 
         updateFiveCardHandLabels(evaluator);
+
+        if (boardDrawButton.isDisabled()) {
+            boardDrawButton.setDisable(false);
+        }
+        if (pocketDrawButton.isDisabled()) {
+            pocketDrawButton.setDisable(false);
+        }
     }
 
     public void drawRandomBoardFromDeck() throws FileNotFoundException {

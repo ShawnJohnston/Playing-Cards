@@ -8,6 +8,8 @@
 .choice-box{
     -fx-text-fill: "black";
 }
+.debugTestButton{
+}
 #textLabelOnBlack{
     -fx-text-fill: "white";
 }
