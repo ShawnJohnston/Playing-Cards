@@ -1,6 +1,5 @@
 package group.playingcardsdemo;
 
-import group.playingcardsdemo.cards.CircularArray;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
