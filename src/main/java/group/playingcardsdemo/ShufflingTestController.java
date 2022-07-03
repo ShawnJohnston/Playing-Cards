@@ -1,6 +1,6 @@
 package group.playingcardsdemo;
 
-import group.playingcardsdemo.cards.DeckOfCards;
+import group.playingcardsdemo.playingcards.DeckOfCards;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

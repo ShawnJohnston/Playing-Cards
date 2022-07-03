@@ -1,8 +1,6 @@
 package group.playingcardsdemo;
 
-import group.playingcardsdemo.cards.DeckOfCards;
-import group.playingcardsdemo.cards.Shuffler;
-import javafx.event.ActionEvent;
+import group.playingcardsdemo.playingcards.Shuffler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

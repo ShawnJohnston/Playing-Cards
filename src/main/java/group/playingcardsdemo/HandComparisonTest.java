@@ -1,6 +1,6 @@
 package group.playingcardsdemo;
 
-import group.playingcardsdemo.cards.*;
+import group.playingcardsdemo.playingcards.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

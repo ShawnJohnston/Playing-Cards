@@ -1,6 +1,6 @@
 package group.playingcardsdemo;
 
-import group.playingcardsdemo.cards.*;
+import group.playingcardsdemo.playingcards.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

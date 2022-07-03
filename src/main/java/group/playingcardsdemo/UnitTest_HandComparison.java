@@ -1,9 +1,9 @@
 package group.playingcardsdemo;
 
-import group.playingcardsdemo.cards.GameOutcome;
-import group.playingcardsdemo.cards.Hand;
-import group.playingcardsdemo.cards.HandEvaluator;
-import group.playingcardsdemo.cards.PlayingCard;
+import group.playingcardsdemo.playingcards.GameOutcome;
+import group.playingcardsdemo.playingcards.Hand;
+import group.playingcardsdemo.playingcards.HandEvaluator;
+import group.playingcardsdemo.playingcards.PlayingCard;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

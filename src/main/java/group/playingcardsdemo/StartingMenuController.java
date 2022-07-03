@@ -20,18 +20,14 @@ import java.util.ResourceBundle;
 public class StartingMenuController extends Controller implements Initializable {
     public int chipCount;
     public String room;
-    public Image cardBackImage;
-    public Image avatarImage;
     public String currentFeltColor;
-    public String currentCardBack;
-    public String currentAvatar;
-    private HashMap<String, Integer> cardBackMap;
-    private HashMap<String, Integer> avatarMap;
-    private final CircularArray<String> cardBacks = new CircularArray<>(new String[]{
+    private final TogglingArray<String> cardBacks = new TogglingArray<>(new String[]{
             "red", "red2", "blue", "blue2", "abstract", "abstract_clouds",
-            "abstract_scene", "astronaut", "cars", "castle", "fish", "frog"});
-    private final CircularArray<String> avatars = new CircularArray<>(new String[]{
-            "1", "2", "3", "4", "5", "6", "7", "8", "9"});
+            "abstract_scene", "astronaut", "cars", "castle", "fish", "frog"},
+            "src/main/resources/group/playingcardsdemo/Card_Backs/");
+    private final TogglingArray<String> avatars = new TogglingArray<>(new String[]{
+            "1", "2", "3", "4", "5", "6", "7", "8", "9"},
+            "src/main/resources/group/playingcardsdemo/Avatars/");
 
     @FXML
     TextField nameTextField;
@@ -63,29 +59,22 @@ public class StartingMenuController extends Controller implements Initializable 
     public StartingMenuController() throws FileNotFoundException {
         room = "Default";
         currentFeltColor = "Red";
-        currentCardBack = "red";
-        currentAvatar = avatars.get(0);
-        cardBackImage = new Image(new FileInputStream(
-                "src/main/resources/group/playingcardsdemo/Card_Backs/" + cardBacks.get(0) + ".png"));
-        avatarImage = new Image(new FileInputStream(
-                "src/main/resources/group/playingcardsdemo/Avatars/" + avatars.get(0) + ".png"));
-        initializeCardBackMap();
-        initializeAvatarMap();
+
+        cardBackImageView.setImage(new Image(new FileInputStream(
+                cardBacks.getPackagePath() + cardBacks.getCurrentT() + ".png")));
+        avatarImageView.setImage(new Image(new FileInputStream(
+                avatars.getPackagePath() + avatars.getCurrentT() + ".png")));
     }
 
     public void toggleAvatarLeft() throws FileNotFoundException {
-        currentAvatar = avatars.get(avatarMap.get(currentAvatar) - 1);
-
-        avatarImage = new Image(new FileInputStream(
-                "src/main/resources/group/playingcardsdemo/Avatars/" + currentAvatar + ".png"));
-        avatarImageView.setImage(avatarImage);
+        avatars.toggleLeft();
+        avatarImageView.setImage(new Image(new FileInputStream(
+                avatars.getPackagePath() + avatars.getCurrentT() + ".png")));
     }
     public void toggleAvatarRight() throws FileNotFoundException {
-        currentAvatar = avatars.get(avatarMap.get(currentAvatar) + 1);
-
-        avatarImage = new Image(new FileInputStream(
-                "src/main/resources/group/playingcardsdemo/Avatars/" + currentAvatar + ".png"));
-        avatarImageView.setImage(avatarImage);
+        avatars.toggleRight();
+        avatarImageView.setImage(new Image(new FileInputStream(
+                avatars.getPackagePath() + avatars.getCurrentT() + ".png")));
     }
     public void toggleFeltLeft() throws FileNotFoundException {
         /*
@@ -116,14 +105,14 @@ public class StartingMenuController extends Controller implements Initializable 
         feltImageView.setImage(new Image(new FileInputStream(path + currentFeltColor.toLowerCase() + "felt.jpg")));
     }
     public void toggleCardBackLeft() throws FileNotFoundException {
-        currentCardBack = cardBacks.get(cardBackMap.get(currentCardBack) - 1);
+        cardBacks.toggleLeft();
         cardBackImageView.setImage(new Image(new FileInputStream(
-                "src/main/resources/group/playingcardsdemo/Card_Backs/" + currentCardBack + ".png")));
+                cardBacks.getPackagePath() + cardBacks.getCurrentT() + ".png")));
     }
     public void toggleCardBackRight() throws FileNotFoundException {
-        currentCardBack = cardBacks.get(cardBackMap.get(currentCardBack) + 1);;
+        cardBacks.toggleRight();
         cardBackImageView.setImage(new Image(new FileInputStream(
-                "src/main/resources/group/playingcardsdemo/Card_Backs/" + currentCardBack + ".png")));
+                cardBacks.getPackagePath() + cardBacks.getCurrentT() + ".png")));
     }
 
     public void startGame(ActionEvent event) throws IOException {
@@ -150,11 +139,13 @@ public class StartingMenuController extends Controller implements Initializable 
 
         GameController gameController = loader.getController();
         GameController.setPlayer(player);
-        gameController.setAvatar(avatarImage);
+        gameController.setAvatar(new Image(new FileInputStream(
+                avatars.getPackagePath() + avatars.getCurrentT() + ".png")));
         gameController.displayName(player.getName());
         gameController.displayChipCount(chipCountLabel.getText());
         gameController.displayPayouts();
-        gameController.setCardBack(cardBackImage);
+        gameController.setCardBack(new Image(new FileInputStream(
+                cardBacks.getPackagePath() + cardBacks.getCurrentT() + ".png")));
 
         super.setRoot(root);
         sceneBuilder(event);
@@ -201,19 +192,6 @@ public class StartingMenuController extends Controller implements Initializable 
 
         roomChoiceBox.getItems().addAll(roomOptions);
         roomChoiceBox.setOnAction(this::setRoom);
-    }
-    
-    public void initializeCardBackMap() {
-        cardBackMap = new HashMap<>();
-        for (int i = 0; i < cardBacks.getLength(); i++) {
-            cardBackMap.put(cardBacks.get(i), i);
-        }
-    }
-    public void initializeAvatarMap() {
-        avatarMap = new HashMap<>();
-        for (int i = 0; i < avatars.getLength(); i++) {
-            avatarMap.put(avatars.get(i), i);
-        }
     }
     public void setGameLabel(ActionEvent event) {
         String text = gameModeChoiceBox.getValue();

@@ -8,6 +8,6 @@ module group.playingcardsdemo {
 
     opens group.playingcardsdemo to javafx.fxml;
     exports group.playingcardsdemo;
-    exports group.playingcardsdemo.cards;
-    opens group.playingcardsdemo.cards to javafx.fxml;
+    exports group.playingcardsdemo.playingcards;
+    opens group.playingcardsdemo.playingcards to javafx.fxml;
 }
