@@ -8,10 +8,9 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class TogglingArray<T> extends CircularArray<T> {
-
-    private T currentT;
-    private int currentIndex;
-    private String packagePath;
+    protected T currentT;
+    protected int currentIndex;
+    protected String packagePath;
 
     public TogglingArray(T[] array) {
         this.array = array;
@@ -26,20 +25,12 @@ public class TogglingArray<T> extends CircularArray<T> {
     }
     public void toggleLeft() {
         currentIndex--;
-        indexWrap();
+        currentIndex = indexWrap(currentIndex);
         currentT = array[currentIndex];
     }
     public void toggleRight() {
         currentIndex++;
-        indexWrap();
+        currentIndex = indexWrap(currentIndex);
         currentT = array[currentIndex];
-    }
-    private void indexWrap() {
-        if (currentIndex < 0) {
-            currentIndex = array.length - 1;
-        }
-        else if (currentIndex >= array.length) {
-            currentIndex = 0;
-        }
     }
 }
