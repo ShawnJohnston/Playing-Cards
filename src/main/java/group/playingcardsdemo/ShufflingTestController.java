@@ -266,7 +266,7 @@ public class ShufflingTestController extends Controller {
     }
     public void updateScene(ActionEvent event) throws IOException  {
 
-        for (int i = 0; i < deck.getMaxSize(); i++) {
+        for (int i = 0; i < deck.getCapacity(); i++) {
             cardFronts[i] = new Image(new FileInputStream(deck.getCards().get(i).getFront()));
         }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/ShufflingTest.fxml"));

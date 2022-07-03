@@ -172,7 +172,7 @@ public class UTHBoardTest extends Controller {
     }
 
     public void drawRandomHandFromDeck() throws FileNotFoundException {
-        if (deck.getCurrentSize() == deck.getMaxSize()) {
+        if (deck.getCurrentSize() == deck.getCapacity()) {
             shuffler.random(deck);
         }
         else {
@@ -211,7 +211,7 @@ public class UTHBoardTest extends Controller {
     }
 
     public void drawRandomBoardFromDeck() throws FileNotFoundException {
-        if (deck.getCurrentSize() == deck.getMaxSize()) {
+        if (deck.getCurrentSize() == deck.getCapacity()) {
             shuffler.random(deck);
         }
         else {
@@ -241,7 +241,7 @@ public class UTHBoardTest extends Controller {
     }
 
     public void drawRandomPocketFromDeck() throws FileNotFoundException {
-        if (deck.getCurrentSize() == deck.getMaxSize()) {
+        if (deck.getCurrentSize() == deck.getCapacity()) {
             shuffler.random(deck);
         }
         else {

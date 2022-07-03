@@ -22,7 +22,7 @@ public class UnitTest_Deck_Shuffler {
                     deck = new DeckOfCards(i);
                     break;
             }
-            Assertions.assertEquals(deckSize, deck.getMaxSize());
+            Assertions.assertEquals(deckSize, deck.getCapacity());
             Assertions.assertEquals(deckSize, deck.getCurrentSize());
 
         }
@@ -39,7 +39,7 @@ public class UnitTest_Deck_Shuffler {
         // Outer loop runs through each index of the 'values' array.
         // Inner loop runs through each index of 'cards' array that composes the deck object.
         for (int i = 0; i < PlayingCard.VALUES.length; i++) {
-            for (int j = 0; j < deck.getMaxSize(); j++) {
+            for (int j = 0; j < deck.getCapacity(); j++) {
                 if (PlayingCard.VALUES[i].equals(deck.getCards().get(j).getValue())) {
                     // If the current 'i' index of 'values' matches the current 'j' index of cards in the deck.
                     valueCounter[i]++; // Increments the count for that value.
@@ -77,7 +77,7 @@ public class UnitTest_Deck_Shuffler {
                 }
             }
 
-            for (int i = 0; i < deckBeingTested.getMaxSize(); i++) {
+            for (int i = 0; i < deckBeingTested.getCapacity(); i++) {
                 // This loop will run through the entire deck. The suit of the card at the current index will increment
                 // it's corresponding suit counter.
 
@@ -114,7 +114,7 @@ public class UnitTest_Deck_Shuffler {
         int step = 0;
         System.out.println("Pre-Shuffle:");
         System.out.println("Not Shuffled          Shuffled");
-        for (int i = 0; i < shuffledDeck.getMaxSize(); i++) {
+        for (int i = 0; i < shuffledDeck.getCapacity(); i++) {
             // This loop will run through the entire deck. The suit of the card at the current index will increment
             // it's corresponding suit counter.
             System.out.print(i + ". " + deck.getCards().get(i).getName() + "      ");
@@ -134,15 +134,15 @@ public class UnitTest_Deck_Shuffler {
                 shuffledDeck = shuffler.handShuffle(shuffledDeck);
             }
 
-            String[] standardCards = new String[deck.getMaxSize()];
-            String[] shuffledCards = new String[shuffledDeck.getMaxSize()];
+            String[] standardCards = new String[deck.getCapacity()];
+            String[] shuffledCards = new String[shuffledDeck.getCapacity()];
 
-            for (int i = 0; i < shuffledDeck.getMaxSize(); i++) {
+            for (int i = 0; i < shuffledDeck.getCapacity(); i++) {
                 standardCards[i] = deck.getCards().get(i).getName();
                 shuffledCards[i] = shuffledDeck.getCards().get(i).getName();
             }
             System.out.println("Not Shuffled          Shuffled");
-            for (int i = 0; i < shuffledDeck.getMaxSize(); i++) {
+            for (int i = 0; i < shuffledDeck.getCapacity(); i++) {
                 System.out.print(i + ". " + deck.getCards().get(i).getName() + "      ");
                 System.out.print(shuffledDeck.getCards().get(i).getName() + "    ");
                 System.out.println();
@@ -186,7 +186,7 @@ public class UnitTest_Deck_Shuffler {
             hand.addCard(deck.drawTopCard());
 
             Assertions.assertEquals(counter + 1, hand.getSize());
-            Assertions.assertEquals(deck.getMaxSize() - (counter + 1), deck.getCurrentSize());
+            Assertions.assertEquals(deck.getCapacity() - (counter + 1), deck.getCurrentSize());
 
             System.out.println("Deck size: " + deck.getCurrentSize() + "\n");
 
@@ -262,7 +262,7 @@ public class UnitTest_Deck_Shuffler {
     public void noDuplicateCardsAfterShuffle(DeckOfCards deck) {
         int[] valueCounter = new int[14];
 
-        for (int i = 0; i < deck.getMaxSize(); i++) {
+        for (int i = 0; i < deck.getCapacity(); i++) {
             switch (deck.getCards().get(i).getValue()) {
                 case "2" -> valueCounter[0]++;
                 case "3" -> valueCounter[1]++;

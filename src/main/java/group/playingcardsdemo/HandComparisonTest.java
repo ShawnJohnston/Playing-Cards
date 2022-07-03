@@ -100,7 +100,7 @@ public class HandComparisonTest extends Controller {
         hand2.clear();
 
         if (deck.getCurrentSize() < (handCapacity * 2) || deck.isEmpty()) {
-            deck.compileFromDiscard(discard);
+            deck.reBuildFromDiscard(discard);
             discard = new Discard();
 
             Shuffler shuffler = new Shuffler();

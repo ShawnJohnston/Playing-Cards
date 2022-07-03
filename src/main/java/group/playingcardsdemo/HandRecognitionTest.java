@@ -463,7 +463,7 @@ public class HandRecognitionTest extends Controller implements Initializable {
     }
     public void drawRandomHandFromDeck() throws FileNotFoundException {
         testStateChoiceBox.setValue("Random");
-        if (deck.getCurrentSize() == deck.getMaxSize()) {
+        if (deck.getCurrentSize() == deck.getCapacity()) {
             shuffler.random(deck);
         }
         else {
