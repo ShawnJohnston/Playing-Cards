@@ -1,8 +1,8 @@
 package group.playingcardsdemo;
 
-import group.playingcardsdemo.playingcards.Hand;
-import group.playingcardsdemo.playingcards.HandEvaluator;
-import group.playingcardsdemo.playingcards.PlayingCard;
+import group.playingcardsdemo.PlayingCards.Hand;
+import group.playingcardsdemo.PlayingCards.HandEvaluator;
+import group.playingcardsdemo.PlayingCards.PlayingCard;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;

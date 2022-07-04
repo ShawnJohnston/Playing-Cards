@@ -1,4 +1,4 @@
-package group.playingcardsdemo.playingcards;
+package group.playingcardsdemo.PlayingCards;
 
 // The JokerCard class inherits from PlayingCard. Is used to ensure that Jokers are distinct from other cards.
 public class JokerCard extends PlayingCard {

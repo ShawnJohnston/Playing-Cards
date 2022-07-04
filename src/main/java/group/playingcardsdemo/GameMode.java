@@ -1,6 +1,6 @@
 package group.playingcardsdemo;
 
-import group.playingcardsdemo.playingcards.*;
+import group.playingcardsdemo.PlayingCards.*;
 
 import java.util.ArrayList;
 

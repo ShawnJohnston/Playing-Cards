@@ -1,7 +1,7 @@
 package group.playingcardsdemo;
 
-import group.playingcardsdemo.playingcards.HandEvaluator;
-import group.playingcardsdemo.playingcards.PlayingCard;
+import group.playingcardsdemo.PlayingCards.HandEvaluator;
+import group.playingcardsdemo.PlayingCards.PlayingCard;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;

@@ -1,9 +1,9 @@
 package group.playingcardsdemo;
 
-import group.playingcardsdemo.playingcards.DeckOfCards;
-import group.playingcardsdemo.playingcards.Discard;
-import group.playingcardsdemo.playingcards.Hand;
-import group.playingcardsdemo.playingcards.Shuffler;
+import group.playingcardsdemo.PlayingCards.DeckOfCards;
+import group.playingcardsdemo.PlayingCards.Discard;
+import group.playingcardsdemo.PlayingCards.Hand;
+import group.playingcardsdemo.PlayingCards.Shuffler;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;

@@ -1,4 +1,4 @@
-package group.playingcardsdemo.playingcards;
+package group.playingcardsdemo.PlayingCards;
 
 import javafx.scene.Node;
 import lombok.Getter;

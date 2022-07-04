@@ -1,4 +1,4 @@
-package group.playingcardsdemo.playingcards;
+package group.playingcardsdemo.PlayingCards;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

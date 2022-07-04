@@ -1,8 +1,8 @@
 package group.playingcardsdemo;
 
-import group.playingcardsdemo.playingcards.Hand;
-import group.playingcardsdemo.playingcards.HandEvaluator;
-import group.playingcardsdemo.playingcards.Pocket;
+import group.playingcardsdemo.PlayingCards.Hand;
+import group.playingcardsdemo.PlayingCards.HandEvaluator;
+import group.playingcardsdemo.PlayingCards.Pocket;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
