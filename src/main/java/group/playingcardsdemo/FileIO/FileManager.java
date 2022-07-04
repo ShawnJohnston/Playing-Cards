@@ -1,4 +1,4 @@
-package group.playingcardsdemo;
+package group.playingcardsdemo.FileIO;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

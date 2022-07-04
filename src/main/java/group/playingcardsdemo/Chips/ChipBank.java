@@ -1,4 +1,4 @@
-package group.playingcardsdemo;
+package group.playingcardsdemo.Chips;
 
 import lombok.Getter;
 import lombok.Setter;

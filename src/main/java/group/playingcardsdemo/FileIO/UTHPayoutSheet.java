@@ -1,4 +1,4 @@
-package group.playingcardsdemo;
+package group.playingcardsdemo.FileIO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

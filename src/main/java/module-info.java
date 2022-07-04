@@ -10,4 +10,8 @@ module group.playingcardsdemo {
     exports group.playingcardsdemo;
     exports group.playingcardsdemo.PlayingCards;
     opens group.playingcardsdemo.PlayingCards to javafx.fxml;
+    exports group.playingcardsdemo.Chips;
+    opens group.playingcardsdemo.Chips to javafx.fxml;
+    exports group.playingcardsdemo.FileIO;
+    opens group.playingcardsdemo.FileIO to javafx.fxml;
 }
