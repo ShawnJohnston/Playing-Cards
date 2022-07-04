@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -81,7 +82,7 @@ public class StartingMenuController extends Controller implements Initializable 
             This method will toggle between felt selections.
          */
 
-        String path = "src/main/resources/group/playingcardsdemo/";
+        String path = "src/main/resources/group/playingcardsdemo/Payouts/";
         if (currentFeltColor.equals("Red")) {
             currentFeltColor = "Green";
         }
@@ -95,7 +96,7 @@ public class StartingMenuController extends Controller implements Initializable 
             This method will toggle between felt selections.
          */
 
-        String path = "src/main/resources/group/playingcardsdemo/";
+        String path = "src/main/resources/group/playingcardsdemo/PayoutSheets/";
         if (currentFeltColor.equals("Red")) {
             currentFeltColor = "Green";
         }
@@ -134,7 +135,7 @@ public class StartingMenuController extends Controller implements Initializable 
         player.setStartingChips((int) slider.getValue());
         player.setChipTotal((int) slider.getValue());
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Game.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/Game.fxml"));
         root = loader.load();
 
         GameController gameController = loader.getController();
@@ -152,11 +153,9 @@ public class StartingMenuController extends Controller implements Initializable 
     }
 
     public void assignPayoutSheet() {
-        FileManager fileManager = new FileManager();
-
         switch (gameLabel.getText()) {
             case "UTH":
-                fileManager.inputPayoutSheet_UTH(room);
+                FileManager.inputPayoutSheet_UTH(room);
                 break;
             case "FiveCardStud":
                 break;

@@ -1,25 +1,24 @@
 package group.playingcardsdemo;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class FileManager {
-    BufferedReader reader = null;
-    String line = "";
+    public static BufferedReader reader = null;
+    public static String line = "";
 
-    public FileManager() {
-    }
-
-    public void inputPayoutSheet_UTH(String room) {
+    public static void inputPayoutSheet_UTH(String room) {
         try {
-            String[][] row = new String[8][3];
-            reader = new BufferedReader(new FileReader("src/main/resources/group/playingcardsdemo/UTH_" + room + ".csv"));
+            String[][] row = new String[3][15];
+            reader = new BufferedReader(new FileReader("src/main/resources/group/playingcardsdemo/PayoutSheets/UTH_" + room + ".csv"));
 
             int rowCount = 0;
             while((line = reader.readLine()) != null) {
                 row[rowCount] = line.split(",");
                 rowCount++;
             }
-            PayoutSheet.payoutSheetUTH = row;
+            UTHPayoutSheet.rawSheet = row;
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -31,6 +30,6 @@ public class FileManager {
                 e.printStackTrace();
             }
         }
+        UTHPayoutSheet.parseRawSheet();
     }
-
 }

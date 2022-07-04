@@ -11,7 +11,7 @@
    <children>
       <ImageView fx:id="backgroundImageView" fitHeight="1280.0" fitWidth="1280.0" layoutX="-6.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../redFelt-2x.jpg" />
+            <Image url="@../Felts/redFelt-2x.jpg" />
          </image>
       </ImageView>
       <Label id="textLabelOnBlack" fx:id="nameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="791.0" text="Player Name" textAlignment="CENTER" />
