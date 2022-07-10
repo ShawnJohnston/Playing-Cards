@@ -19,6 +19,7 @@ public class FileManager {
                 rowCount++;
             }
             UTHPayoutSheet.rawSheet = row;
+            UTHPayoutSheet.parseRawSheet();
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -30,6 +31,5 @@ public class FileManager {
                 e.printStackTrace();
             }
         }
-        UTHPayoutSheet.parseRawSheet();
     }
 }

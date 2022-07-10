@@ -109,7 +109,7 @@ public class GameController {
         backgroundImageView.setImage(backgroundImage);
     }
     public void switchToMainMenu(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenu.fxml")));
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("fxml/MainMenu.fxml")));
         sceneBuilder(event);
     }
     private void sceneBuilder(ActionEvent event) {
