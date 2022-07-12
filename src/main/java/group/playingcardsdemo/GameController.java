@@ -13,18 +13,18 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class GameController {
     private Parent root;
     private final String css = Objects.requireNonNull(this.getClass().getResource("style.css")).toExternalForm();
-    private static Player player;
+    private Player player;
+    private Games game;
 
     @FXML
-    Label nameLabel;
+    Label nameLabel = new Label();
     @FXML
-    Label chipCountLabel;
+    Label chipCountLabel = new Label();
     @FXML
     ImageView backgroundImageView;
     Image backgroundImage;
@@ -85,7 +85,10 @@ public class GameController {
     public GameController() {
     }
 
-    public static void setPlayer(Player _player) {
+    public GameController(GameConfig config) {
+        configure(config);
+    }
+    public void setPlayer(Player _player) {
         player = _player;
     }
 
@@ -95,19 +98,33 @@ public class GameController {
     public void setAvatar(Image image) {
         this.avatarImageView.setImage(image);
     }
+    public void configure(GameConfig config) {
+        setPlayer(config.getPlayer());
+        setAvatar(config.getAvatar());
+        setCardBack(config.getCardBack());
+
+        //displayPlayerName(config.getPlayer().getName());
+        displayChipCount(String.valueOf(player.getChipTotal()));
+        displayPayouts();
+    }
+
+
     public void displayPayouts() {
 
     }
-    public void displayName(String name) {
-        nameLabel.setText(name);
-    }
     public void displayChipCount(String chipCount) {
         chipCountLabel.setText(chipCount);
+    }
+    public void displayPlayerName(String name) {
+        nameLabel.setText(name);
     }
     public void displayBackground() {
         backgroundImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("redFelt-2x.jpg")));
         backgroundImageView.setImage(backgroundImage);
     }
+
+
+
     public void switchToMainMenu(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("fxml/MainMenu.fxml")));
         sceneBuilder(event);

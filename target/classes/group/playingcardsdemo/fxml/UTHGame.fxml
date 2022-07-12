@@ -7,10 +7,11 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
 
 <AnchorPane fx:id="pane" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group.playingcardsdemo.UTHGameController">
    <children>
-      <Group layoutX="400.0" layoutY="60.0">
+      <Group layoutX="300.0" layoutY="60.0">
          <children>
             <Group layoutY="200.0">
                <children>
@@ -99,12 +100,7 @@
             </ImageView>
          </children>
       </Group>
-      <Group layoutX="60.0" layoutY="260.0">
-         <children>
-            <Label id="textLabelOnBlack" fx:id="handRankLabel" layoutX="140.0" />
-         </children>
-      </Group>
-      <ButtonBar buttonOrder="" layoutY="718.0" prefHeight="40.0" prefWidth="802.0">
+      <ButtonBar buttonOrder="" layoutY="718.0" prefHeight="40.0" prefWidth="705.0">
         <buttons>
             <Button fx:id="foldButton" mnemonicParsing="false" onAction="#toFold" text="Fold" />
           <Button fx:id="checkButton" mnemonicParsing="false" onAction="#toCheck" text="Check" />
@@ -118,6 +114,40 @@
       </ImageView>
       <Label fx:id="playerName" layoutX="110.0" layoutY="680.0" styleClass="root" text="Name" />
       <Label fx:id="Chips" layoutX="110.0" layoutY="720.0" styleClass="root" text="\$ 0" />
-      <Label id="textLabelOnBlack" layoutX="524.0" layoutY="668.0" text="Hand Rank:" />
+      <Group id="bets" layoutX="1000.0" layoutY="214.0">
+         <children>
+            <Group layoutY="420.0">
+               <children>
+                  <Circle fx:id="playBet" fill="#54ff1f" radius="50.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Label fx:id="playBetLabel" layoutX="-31.0" layoutY="-5.0" text="\$ 0" />
+               </children>
+            </Group>
+            <Group layoutY="280.0">
+               <children>
+                  <Circle fx:id="anteBet" fill="#54ff1f" onMouseClicked="#placeAnteBet" radius="50.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Label fx:id="anteBetLabel" layoutX="-31.0" layoutY="-5.0" text="\$ 0" />
+               </children>
+            </Group>
+            <Group layoutX="140.0" layoutY="280.0">
+               <children>
+                  <Circle fx:id="blindBet" fill="#54ff1f" onMouseClicked="#placeAnteBet" radius="50.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Label fx:id="blindBetLabel" layoutX="-31.0" layoutY="-5.0" prefWidth="36.0" text="\$ 0" />
+               </children>
+            </Group>
+            <Group layoutY="140.0">
+               <children>
+                  <Circle fx:id="tripsBet" fill="#54ff1f" onMouseClicked="#placeTripsBet" radius="50.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Label fx:id="tripsBetLabel" layoutX="-31.0" layoutY="-5.0" text="\$ 0" />
+               </children>
+            </Group>
+            <Group>
+               <children>
+                  <Circle fx:id="pocketBet" fill="#54ff1f" onMouseClicked="#placePocketBet" radius="50.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Label fx:id="pocketBetLabel" layoutX="-31.0" layoutY="-5.0" text="\$ 0" />
+               </children>
+            </Group>
+         </children>
+      </Group>
+      <Button fx:id="startButton" layoutX="508.0" layoutY="660.0" mnemonicParsing="false" onAction="#startGame" text="Start" />
    </children>
 </AnchorPane>

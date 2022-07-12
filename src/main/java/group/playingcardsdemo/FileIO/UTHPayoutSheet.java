@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class UTHPayoutSheet {
+public class UTHPayoutSheet extends PayoutSheet {
     public static String[][] rawSheet = new String[3][15];
 
     public static int[] tripsBonus = new int[7];

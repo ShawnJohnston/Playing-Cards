@@ -14,8 +14,8 @@
             <Image url="@../Felts/redFelt-2x.jpg" />
          </image>
       </ImageView>
-      <Label id="textLabelOnBlack" fx:id="nameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="791.0" text="Player Name" textAlignment="CENTER" />
-      <Label id="textLabelOnBlack" fx:id="chipCountLabel" layoutX="45.0" layoutY="744.0" prefHeight="22.0" prefWidth="191.0" text="\$ 0" />
+      <Label id="textLabelOnBlack" fx:id="nameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="45.0" layoutY="716.0" text="Player Name" textAlignment="CENTER" />
+      <Label id="textLabelOnBlack" fx:id="chipCountLabel" layoutX="42.0" layoutY="768.0" prefHeight="22.0" prefWidth="191.0" text="\$ 0" />
       <Group layoutX="19.0" layoutY="295.0" visible="false">
          <children>
             <Group>

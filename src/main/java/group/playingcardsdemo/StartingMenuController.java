@@ -131,23 +131,19 @@ public class StartingMenuController extends Controller implements Initializable 
 
         assignPayoutSheet();
 
-        Player player = new Player(nameTextField.getText());
-        player.setStartingChips((int) slider.getValue());
-        player.setChipTotal((int) slider.getValue());
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/Game.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/" + gameLabel.getText() + "Game.fxml"));
         root = loader.load();
 
-        GameController gameController = loader.getController();
-        GameController.setPlayer(player);
-        gameController.setAvatar(new Image(new FileInputStream(
-                avatars.getPackagePath() + avatars.getCurrentT() + ".png")));
-        gameController.displayName(player.getName());
-        gameController.displayChipCount(chipCountLabel.getText());
-        gameController.displayPayouts();
-        gameController.setCardBack(new Image(new FileInputStream(
-                cardBacks.getPackagePath() + cardBacks.getCurrentT() + ".png")));
+        Player player = new Player(nameTextField.getText(), (int) slider.getValue());
+        GameConfig gameConfig = new GameConfig(
+                player,
+                Games.valueOf(gameLabel.getText()),
+                avatarImageView.getImage(),
+                cardBackImageView.getImage());
 
+        GameController gameController = loader.getController();
+        gameController.configure(gameConfig);
+        //gameController.displayPlayerName(player.getName());
         super.setRoot(root);
         sceneBuilder(event);
     }

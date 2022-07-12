@@ -20,7 +20,7 @@ public abstract class GameMode {
     protected int straightFlushSize;
     protected int jokersInDeck = 0;
 
-    public class CommunityCards {
+    protected class CommunityCards {
         protected int size;
         protected int nextCardToRevealIndex;
         protected ArrayList<PlayingCard> board = new ArrayList<>();
@@ -124,8 +124,8 @@ public abstract class GameMode {
     }
 }
 class UTH extends GameMode implements UTHFormat {
-    UTH(String game, Player player) {
-        super(game, player);
+    UTH(Games game, Player player) {
+        super(String.valueOf(game), player);
     }
 
 
@@ -134,13 +134,14 @@ class UTH extends GameMode implements UTHFormat {
     }
     @Override
     protected void session() {
+        this.community = new CommunityCards(5);
         initialBets();
-        dealingPhase();
-        preFlopPhase();
-        postFlopPhase();
-        turnPhase();
-        riverPhase();
-        showdownPhase();
+        //dealingPhase();
+        //preFlopPhase();
+        //postFlopPhase();
+        //turnPhase();
+        //riverPhase();
+        //showdownPhase();
     }
     @Override
     public void initialBets() {

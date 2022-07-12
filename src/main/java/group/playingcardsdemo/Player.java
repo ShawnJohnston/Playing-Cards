@@ -24,6 +24,7 @@ public class Player {
     public Player(String playerName, int startingChips) {
         this.name = playerName;
         this.startingChips = startingChips;
+        this.chipTotal = startingChips;
     }
     public void setHand(ArrayList<PlayingCard> cards) {
         hand.setCards(cards);
