@@ -1,7 +1,6 @@
 package group.playingcardsdemo;
 
 import group.playingcardsdemo.PlayingCards.HandEvaluator;
-import group.playingcardsdemo.PlayingCards.PlayingCard;
 import group.playingcardsdemo.PlayingCards.Values;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -15,8 +14,8 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        Values.initializeCardValueMap();
-        Values.initializeCardIndexMap();
+        Values.initializeValueMap();
+        Values.initializeIndexMap();
         HandEvaluator.initializePokerRanks();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/TitleScreen.fxml"));

@@ -11,7 +11,7 @@ public enum Values {
     public static final HashMap<String, Integer> VALUEMAP = new HashMap<>();
     public static final HashMap<Integer, String> INDEXMAP = new HashMap<>();
 
-    public static void initializeCardValueMap() {
+    public static void initializeValueMap() {
         Values.VALUEMAP.put("2", 0);
         Values.VALUEMAP.put("3", 1);
         Values.VALUEMAP.put("4", 2);
@@ -27,7 +27,7 @@ public enum Values {
         Values.VALUEMAP.put("Ace", 12);
         Values.VALUEMAP.put("Joker", 13);
     }
-    public static void initializeCardIndexMap() {
+    public static void initializeIndexMap() {
         Values.INDEXMAP.put(0, "2");
         Values.INDEXMAP.put(1, "3");
         Values.INDEXMAP.put(2, "4");
