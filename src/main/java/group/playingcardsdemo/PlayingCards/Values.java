@@ -4,10 +4,10 @@ import java.util.HashMap;
 
 public enum Values {
     TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE, JOKER;
-    
+
     public static final String[] VALUES = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace", "Joker"};
     public static final String[] VALUES_INDEX = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace", "Joker"};
-    
+
     public static final HashMap<String, Integer> VALUEMAP = new HashMap<>();
     public static final HashMap<Integer, String> INDEXMAP = new HashMap<>();
 
