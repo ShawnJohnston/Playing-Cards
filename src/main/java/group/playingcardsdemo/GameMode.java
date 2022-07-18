@@ -170,6 +170,3 @@ class UTH extends GameMode implements UTHFormat {
     }
 }
 
-enum Games {
-    FiveCardStud, UTH
-}
