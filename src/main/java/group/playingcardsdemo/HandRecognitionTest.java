@@ -1,8 +1,6 @@
 package group.playingcardsdemo;
 
-import group.playingcardsdemo.PlayingCards.Hand;
-import group.playingcardsdemo.PlayingCards.HandEvaluator;
-import group.playingcardsdemo.PlayingCards.PlayingCard;
+import group.playingcardsdemo.PlayingCards.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -28,8 +26,8 @@ import java.util.ResourceBundle;
 public class HandRecognitionTest extends Controller implements Initializable {
     private final int boardSize = 7;
     private TestState testState = TestState.Random;
-    private String sliderPrimaryValue = PlayingCard.VALUES[0],
-                    sliderSecondaryValue = PlayingCard.VALUES[0];
+    private String sliderPrimaryValue = Values.VALUES[0],
+                    sliderSecondaryValue = Values.VALUES[0];
     private Image[] cardFronts;
 
     @FXML
@@ -311,8 +309,8 @@ public class HandRecognitionTest extends Controller implements Initializable {
         This method updates the slider value to the static VALUES value corresponding to the index of
         the current slider value. That value is also returned.
      */
-        label.setText(PlayingCard.VALUES[(int) slider.getValue() - 1]);
-        return PlayingCard.VALUES[(int) slider.getValue() - 1];
+        label.setText(Values.VALUES[(int) slider.getValue() - 1]);
+        return Values.VALUES[(int) slider.getValue() - 1];
     }
     public void resetSliders() {
     /*
@@ -411,8 +409,8 @@ public class HandRecognitionTest extends Controller implements Initializable {
 
         int counter = 0;
         while(hand.getSize() < HandEvaluator.straightFlushSize) {
-            if (!hand.containsCardValue(PlayingCard.indexMap.get(counter))) {
-                hand.addCard(new PlayingCard(PlayingCard.indexMap.get(counter), "Hearts"));
+            if (!hand.containsCardValue(Values.INDEXMAP.get(counter))) {
+                hand.addCard(new PlayingCard(Values.INDEXMAP.get(counter), "Hearts"));
             }
             counter++;
         }
@@ -424,9 +422,9 @@ public class HandRecognitionTest extends Controller implements Initializable {
              loop to prevent the hand from becoming a 'Straight Flush'.
          */
         for (int i = 1; i < HandEvaluator.straightFlushSize; i++) {
-            hand.addCard(new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - i)], "Spades"));
+            hand.addCard(new PlayingCard(Values.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - i)], "Spades"));
         }
-        hand.addCard(new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue())], "Hearts"));
+        hand.addCard(new PlayingCard(Values.VALUES_INDEX[(int) (stateSliderPrimary.getValue())], "Hearts"));
     }
     public void constructFlushHand() {
         /*
@@ -435,10 +433,10 @@ public class HandRecognitionTest extends Controller implements Initializable {
             to be 2 positions apart in order to prevent a 'Straight Flush'..
          */
         for (int i = 0; i < HandEvaluator.straightFlushSize - 1; i++) {
-            PlayingCard card = new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - i)], "Spades" );
+            PlayingCard card = new PlayingCard(Values.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - i)], "Spades" );
             hand.addCard(card);
         }
-        PlayingCard card = new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - 5)], "Spades");
+        PlayingCard card = new PlayingCard(Values.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - 5)], "Spades");
         hand.addCard(card);
     }
     public void constructStraightFlushHand() {
@@ -447,11 +445,11 @@ public class HandRecognitionTest extends Controller implements Initializable {
             by 'i' each iteration and used as an index to get values.
          */
         for (int i = 0; i < HandEvaluator.straightFlushSize; i++) {
-            hand.addCard(new PlayingCard(PlayingCard.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - i)], "Spades" ));
+            hand.addCard(new PlayingCard(Values.VALUES_INDEX[(int) (stateSliderPrimary.getValue() - i)], "Spades" ));
         }
     }
     private PlayingCard testHelper_Card(Slider slider, int i) {
-        return new PlayingCard(PlayingCard.VALUES[(int) (slider.getValue() - 1)], PlayingCard.SUITS[i] );
+        return new PlayingCard(Values.VALUES[(int) (slider.getValue() - 1)], Suits.SUITS[i] );
     }
     private void testCaseUpdate() throws FileNotFoundException {
         deckSizeLabel.setText(String.valueOf(deck.getCurrentSize()));

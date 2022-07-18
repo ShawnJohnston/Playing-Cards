@@ -63,9 +63,9 @@ public class DeckOfCards {
             }
         }
 
-        for (int i = PlayingCard.SUITS.length - 2; i >= 0; i--) {
-            for (int j = PlayingCard.VALUES_INDEX.length - 3; j >= 0; j--) {
-                cards.push(new PlayingCard(PlayingCard.VALUES_INDEX[j], PlayingCard.SUITS[i]));
+        for (int i = Suits.SUITS.length - 2; i >= 0; i--) {
+            for (int j = Values.VALUES_INDEX.length - 3; j >= 0; j--) {
+                cards.push(new PlayingCard(Values.VALUES_INDEX[j], Suits.SUITS[i]));
             }
         }
     }
@@ -123,9 +123,9 @@ public class DeckOfCards {
                     within the suit section.
          */
 
-        for (int i = 0; i < PlayingCard.SUITS.length - 1; i++) {
-            for (int j = 0; j < PlayingCard.VALUES_INDEX.length - 2; j++) {
-                String fileName = PlayingCard.SUITS[i].toLowerCase() + "_" + PlayingCard.VALUES_INDEX[j].toLowerCase() + ".png";
+        for (int i = 0; i < Suits.SUITS.length - 1; i++) {
+            for (int j = 0; j < Values.VALUES_INDEX.length - 2; j++) {
+                String fileName = Suits.SUITS[i].toLowerCase() + "_" + Values.VALUES_INDEX[j].toLowerCase() + ".png";
                 cardImages[(13 * i) + j] = new Image(new FileInputStream("src/main/resources/group/playingcardsdemo/Card_Fronts/" + fileName));
             }
         }

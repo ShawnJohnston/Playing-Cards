@@ -74,7 +74,7 @@ public class HandEvaluator {
         int counter = 1;
         if (inputHand.getSize() >= straightFlushSize && inputHand.containsCardValue("Ace")) {
             for (int i = 0; i < inputHand.getSize() - 1; i++) {
-                if (inputHand.containsCardValue(PlayingCard.VALUES[i])) {
+                if (inputHand.containsCardValue(Values.VALUES[i])) {
                     counter++;
                 }
                 else break;
@@ -118,7 +118,7 @@ public class HandEvaluator {
         int counter = 0;
 
         ArrayList<Integer> indices = new ArrayList<>();
-        for (int i = PlayingCard.VALUES_INDEX.length - 2; i > 0 ; i--) {
+        for (int i = Values.VALUES_INDEX.length - 2; i > 0 ; i--) {
             if (counter >= gameHandCapacity) {
                 break;
             }
@@ -136,7 +136,7 @@ public class HandEvaluator {
         if (indices.size() == gameHandCapacity) {
             for (Integer index: indices) {
                 for (int i = inputHand.getSize() - 1; i >= 0 ; i--) {
-                    if (inputHand.getCards().get(i).getValue().equals(PlayingCard.VALUES_INDEX[index])) {
+                    if (inputHand.getCards().get(i).getValue().equals(Values.VALUES_INDEX[index])) {
                         gameFittedHand.addCard(inputHand.getCards().get(i));
                         break;
                     }
@@ -167,7 +167,7 @@ public class HandEvaluator {
         for (int i = 0; i < inputHand.getSuitData().length - 1; i++) {
             if (inputHand.getSuitData()[i] >= gameHandCapacity) {
                 RANKDATA[5] = true;
-                flushValue = PlayingCard.SUITS[i];
+                flushValue = Suits.SUITS[i];
 
                 return true;
             }
@@ -195,7 +195,7 @@ public class HandEvaluator {
             int counter = 0;
 
             ArrayList<Integer> indices = new ArrayList<>();
-            for (int i = PlayingCard.VALUES_INDEX.length - 2; i > 0 ; i--) {
+            for (int i = Values.VALUES.length - 2; i > 0 ; i--) {
                 if (counter >= 5) {
                     break;
                 }
@@ -213,7 +213,7 @@ public class HandEvaluator {
             if (indices.size() == 5) {
                 for (Integer index: indices) {
                     for (int i = flushHand.getSize() - 1; i >= 0 ; i--) {
-                        if (flushHand.getCards().get(i).getValue().equals(PlayingCard.VALUES_INDEX[index])) {
+                        if (flushHand.getCards().get(i).getValue().equals(Values.VALUES_INDEX[index])) {
                             gameFittedHand.addCard(flushHand.getCards().get(i));
                             break;
                         }
@@ -250,9 +250,9 @@ public class HandEvaluator {
 
     private Boolean recursiveStraightCheck(Hand hand, int i) {
         if (i == 1) {
-            return hand.getCards().get(0).getValue().equals(PlayingCard.VALUES_INDEX[i - 1]);
+            return hand.getCards().get(0).getValue().equals(Values.VALUES_INDEX[i - 1]);
         }
-        if (hand.getCards().get(i - 2).getValue().equals(PlayingCard.VALUES_INDEX[i - 2])) {
+        if (hand.getCards().get(i - 2).getValue().equals(Values.VALUES_INDEX[i - 2])) {
             return recursiveStraightCheck(hand, i - 1);
         }
         return false;
@@ -316,14 +316,14 @@ public class HandEvaluator {
                     if (pairsList.size() >= 1) {
                         RANKDATA[1] = true;
                     }
-                    pairsList.add(PlayingCard.VALUES[i]);
+                    pairsList.add(Values.VALUES[i]);
                 }
                 case 3 -> {
-                    tripsList.add(PlayingCard.VALUES[i]);
+                    tripsList.add(Values.VALUES[i]);
                     RANKDATA[3] = true;
                 }
                 case 4 -> {
-                    quadsValue = PlayingCard.VALUES[i];
+                    quadsValue = Values.VALUES[i];
                     RANKDATA[7] = true;
                 }
             }
@@ -361,7 +361,7 @@ public class HandEvaluator {
             handRank = rankState.valueOf(STANDARDPOKERRANKS[6]);
         }
         else if (isAFlush()){
-            for (int i = PlayingCard.VALUES_INDEX.length - 1; i >= 0 ; i--) {
+            for (int i = Values.VALUES_INDEX.length - 1; i >= 0 ; i--) {
                 for (int j = inputHand.getSize() - 1; j >= 0; j--) {
                     if (inputHand.getCards().get(j).getSuit().equals(flushValue)) {
                         gameFittedHand.addCard(inputHand.getCards().get(j));

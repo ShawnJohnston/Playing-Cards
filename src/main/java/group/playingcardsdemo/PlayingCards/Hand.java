@@ -14,8 +14,8 @@ public class Hand {
     private ArrayList<PlayingCard> cards = new ArrayList<>();
     private int capacity;
     private int size;
-    private int[] valueData = new int[PlayingCard.VALUES.length];
-    private int[] suitData = new int[PlayingCard.SUITS.length];
+    private int[] valueData = new int[Values.VALUES.length];
+    private int[] suitData = new int[Suits.SUITS.length];
 
     public Hand(ArrayList<PlayingCard> cards) {
         this.cards = cards;
@@ -54,7 +54,7 @@ public class Hand {
             into a hash map as a key. If the returned value is greater than 0, then there is at least one of that card.
             The result of the search is returned as true or false.
          */
-        return valueData[PlayingCard.valueMap.get(value)] > 0;
+        return valueData[Values.VALUEMAP.get(value)] > 0;
     }
     public void clear() {
         /*
@@ -84,9 +84,9 @@ public class Hand {
         ArrayList<PlayingCard> sortedHand = new ArrayList<>();
         int cardsSorted = 0;
 
-        for (int i = 0; i < PlayingCard.VALUES.length; i++) {
+        for (int i = 0; i < Values.VALUES.length; i++) {
             for (PlayingCard card : cards) {
-                if (card.getValue().equals(PlayingCard.VALUES[i])) {
+                if (card.getValue().equals(Values.VALUES[i])) {
                     sortedHand.add(card);
                     cardsSorted++;
                 }
@@ -102,7 +102,7 @@ public class Hand {
 
         Arrays.fill(valueData, 0);
         for (PlayingCard card : cards) {
-            valueData[PlayingCard.valueMap.get(card.getValue())]++;
+            valueData[Values.VALUEMAP.get(card.getValue())]++;
         }
     }
     private void countSuits() {
