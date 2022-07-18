@@ -1,4 +1,4 @@
-package group.playingcardsdemo;
+package group.playingcardsdemo.Structures;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

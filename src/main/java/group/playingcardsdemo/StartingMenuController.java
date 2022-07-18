@@ -1,6 +1,7 @@
 package group.playingcardsdemo;
 
 import group.playingcardsdemo.FileIO.FileManager;
+import group.playingcardsdemo.Structures.TogglingArray;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;

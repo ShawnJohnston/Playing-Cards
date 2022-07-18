@@ -14,4 +14,6 @@ module group.playingcardsdemo {
     opens group.playingcardsdemo.Chips to javafx.fxml;
     exports group.playingcardsdemo.FileIO;
     opens group.playingcardsdemo.FileIO to javafx.fxml;
+    exports group.playingcardsdemo.Structures;
+    opens group.playingcardsdemo.Structures to javafx.fxml;
 }
