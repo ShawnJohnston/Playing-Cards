@@ -2,7 +2,7 @@ package group.playingcardsdemo.PlayingCards;
 
 import java.util.Objects;
 
-public class GameOutcome {
+public class GameOutcome  {
     private final HandEvaluator PLAYER1;
     private final HandEvaluator PLAYER2;
     private String winner;

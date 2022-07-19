@@ -12,7 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class ShufflingTestController extends Controller {
+public class ShufflingTestController extends SceneController {
     @FXML
     Button handShuffleButton;
     @FXML

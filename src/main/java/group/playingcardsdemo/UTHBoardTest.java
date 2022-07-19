@@ -16,7 +16,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class UTHBoardTest extends Controller {
+public class UTHBoardTest extends SceneController {
     private Hand board;
     private Pocket pocket;
     private final int boardSize = 5;

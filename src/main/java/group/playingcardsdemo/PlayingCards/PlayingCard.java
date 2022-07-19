@@ -14,9 +14,7 @@ import java.util.HashMap;
 // This class is used to represent a playing card object.
 public class PlayingCard implements CardInterface {
     protected String value;
-    protected Values _value;
     protected String suit;
-    protected Suits _suit;
     protected String name;
     protected String color;
     protected String front;

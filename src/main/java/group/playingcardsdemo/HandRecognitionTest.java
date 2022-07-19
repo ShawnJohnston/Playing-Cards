@@ -23,7 +23,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
-public class HandRecognitionTest extends Controller implements Initializable {
+public class HandRecognitionTest extends SceneController implements Initializable {
     private final int boardSize = 7;
     private TestState testState = TestState.Random;
     private String sliderPrimaryValue = Values.VALUES[0],

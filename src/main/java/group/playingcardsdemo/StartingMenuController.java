@@ -1,6 +1,7 @@
 package group.playingcardsdemo;
 
 import group.playingcardsdemo.FileIO.FileManager;
+import group.playingcardsdemo.PlayingCards.Player;
 import group.playingcardsdemo.Structures.TogglingArray;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -19,7 +20,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class StartingMenuController extends Controller implements Initializable {
+public class StartingMenuController extends SceneController implements Initializable {
     public int chipCount;
     public String room;
     public String currentFeltColor;

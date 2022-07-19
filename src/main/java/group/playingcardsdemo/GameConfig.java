@@ -2,8 +2,8 @@ package group.playingcardsdemo;
 
 import group.playingcardsdemo.FileIO.PayoutSheet;
 import group.playingcardsdemo.FileIO.UTHPayoutSheet;
+import group.playingcardsdemo.PlayingCards.Player;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

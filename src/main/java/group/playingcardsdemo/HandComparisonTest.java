@@ -12,7 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class HandComparisonTest extends Controller {
+public class HandComparisonTest extends SceneController {
     Player player1 = new Player();
     Player player2 = new Player();
     Hand hand1 = new Hand();
@@ -100,7 +100,7 @@ public class HandComparisonTest extends Controller {
         hand2.clear();
 
         if (deck.getCurrentSize() < (handCapacity * 2) || deck.isEmpty()) {
-            deck.reBuildFromDiscard(discard);
+            deck.combine(discard);
             discard = new Discard();
 
             Shuffler shuffler = new Shuffler();

@@ -29,7 +29,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 
-public abstract class Controller {
+public abstract class SceneController {
     protected Parent root;
     protected Pane pane;
     protected String currentScene;

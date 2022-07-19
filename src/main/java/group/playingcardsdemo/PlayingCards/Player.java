@@ -1,4 +1,4 @@
-package group.playingcardsdemo;
+package group.playingcardsdemo.PlayingCards;
 
 import group.playingcardsdemo.PlayingCards.Hand;
 import group.playingcardsdemo.PlayingCards.PlayingCard;

@@ -7,12 +7,13 @@ import lombok.Setter;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Collection;
 import java.util.Stack;
 
 @Getter
 @Setter
 
-public class DeckOfCards {
+public class DeckOfCards implements Deck_Interface {
     protected int capacity = 52;
     protected int currentSize = 52;
     protected int jokerCount = 0;
@@ -25,7 +26,6 @@ public class DeckOfCards {
     // Constructors
     public DeckOfCards() {
         build();
-
     }
 
     public DeckOfCards(int jokers) {
@@ -90,7 +90,7 @@ public class DeckOfCards {
         return drawnCard;
     }
 
-    public void reBuildFromDiscard(Discard discard) {
+    public void combine(DeckOfCards discard) {
         /*
             This method copies all cards from the incoming discard object to the deck's cards list.
 

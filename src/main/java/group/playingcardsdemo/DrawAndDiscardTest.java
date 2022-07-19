@@ -11,7 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class DrawAndDiscardTest extends Controller {
+public class DrawAndDiscardTest extends SceneController {
     private int jokerCount = 0;
 
     @FXML

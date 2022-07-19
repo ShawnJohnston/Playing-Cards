@@ -10,7 +10,7 @@ import java.util.Arrays;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Hand {
+public class Hand implements Hand_Interface {
     private ArrayList<PlayingCard> cards = new ArrayList<>();
     private int capacity;
     private int size;
@@ -56,6 +56,16 @@ public class Hand {
          */
         return valueData[Values.VALUEMAP.get(value)] > 0;
     }
+    public boolean containsCard(String value, String suit) {
+        if (containsCardValue(value)) {
+            for (PlayingCard card: cards) {
+                if (card.getValue().equals(value) && card.getSuit().equals(suit)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     public void clear() {
         /*
             Resets the hand object.
@@ -96,6 +106,9 @@ public class Hand {
             }
         }
         cards = sortedHand;
+    }
+    public void sortHandByRank() {
+
     }
     private void countValues() {
         // This method will reset valueData, and then count the numbers of each value that appears in the hand.
