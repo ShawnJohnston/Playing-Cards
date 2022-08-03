@@ -1,18 +1,15 @@
 package group.playingcardsdemo.PlayingCards;
 
-import javafx.scene.Node;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
-
-import java.util.HashMap;
 
 @Getter
 @Setter
 @NoArgsConstructor
 
 // This class is used to represent a playing card object.
-public class PlayingCard implements CardInterface {
+public class PlayingCard {
     protected String value;
     protected String suit;
     protected String name;

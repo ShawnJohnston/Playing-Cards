@@ -13,7 +13,7 @@ import java.util.Stack;
 @Getter
 @Setter
 
-public class DeckOfCards implements Deck_Interface {
+public class DeckOfCards {
     protected int capacity = 52;
     protected int currentSize = 52;
     protected int jokerCount = 0;

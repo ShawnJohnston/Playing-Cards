@@ -10,7 +10,7 @@ import java.util.Arrays;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Hand implements Hand_Interface {
+public class Hand {
     private ArrayList<PlayingCard> cards = new ArrayList<>();
     private int capacity;
     private int size;
