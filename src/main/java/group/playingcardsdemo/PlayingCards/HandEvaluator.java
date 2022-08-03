@@ -1,6 +1,7 @@
  package group.playingcardsdemo.PlayingCards;
 
 
+import group.playingcardsdemo.Player;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
